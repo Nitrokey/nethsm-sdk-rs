@@ -1,0 +1,5 @@
+packageName: nethsm-sdk-rs
+supportAsync: true
+packageVersion: 0.1.0
+infoEmail: Nitrokey <info@nitrokey.com>
+licenseInfo: MIT
