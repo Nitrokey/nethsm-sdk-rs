@@ -26,3 +26,4 @@ generator/*
 generator_conf.yaml
 .gitignore
 update_openapi.sh
+Cargo.toml
