@@ -34,11 +34,7 @@ impl PublicKey {
             mechanisms,
             r#type,
             restrictions: Box::new(restrictions),
-            key: if let Some(x) = key {
-                Some(Box::new(x))
-            } else {
-                None
-            },
+            key: key.map(Box::new),
             operations,
         }
     }
