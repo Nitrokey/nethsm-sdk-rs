@@ -1,17 +1,32 @@
+use base64::{engine::general_purpose, Engine};
+use std::collections::HashMap;
 use std::error;
 use std::fmt;
 
+pub(crate) fn get_header_map(response: &ureq::Response) -> HashMap<String, String> {
+    let mut headers = HashMap::new();
+
+    let names = response.headers_names();
+    for name in names {
+        if let Some(value) = response.header(&name) {
+            headers.insert(name, value.to_string());
+        }
+    }
+
+    headers
+}
+
 #[derive(Debug, Clone)]
 pub struct ResponseContent<T> {
-    pub status: reqwest::StatusCode,
+    pub status: u16,
     pub content: String,
     pub entity: T,
-    pub headers: reqwest::header::HeaderMap,
+    pub headers: HashMap<String, String>,
 }
 
 #[derive(Debug)]
 pub enum Error<T> {
-    Reqwest(reqwest::Error),
+    Ureq(ureq::Error),
     Serde(serde_json::Error),
     Io(std::io::Error),
     ResponseError(ResponseContent<T>),
@@ -20,7 +35,7 @@ pub enum Error<T> {
 impl<T> fmt::Display for Error<T> {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         let (module, e) = match self {
-            Error::Reqwest(e) => ("reqwest", e.to_string()),
+            Error::Ureq(e) => ("ureq", e.to_string()),
             Error::Serde(e) => ("serde", e.to_string()),
             Error::Io(e) => ("IO", e.to_string()),
             Error::ResponseError(e) => ("response", format!("status code {}", e.status)),
@@ -32,7 +47,7 @@ impl<T> fmt::Display for Error<T> {
 impl<T: fmt::Debug> error::Error for Error<T> {
     fn source(&self) -> Option<&(dyn error::Error + 'static)> {
         Some(match self {
-            Error::Reqwest(e) => e,
+            Error::Ureq(e) => e,
             Error::Serde(e) => e,
             Error::Io(e) => e,
             Error::ResponseError(_) => return None,
@@ -40,9 +55,9 @@ impl<T: fmt::Debug> error::Error for Error<T> {
     }
 }
 
-impl<T> From<reqwest::Error> for Error<T> {
-    fn from(e: reqwest::Error) -> Self {
-        Error::Reqwest(e)
+impl<T> From<ureq::Error> for Error<T> {
+    fn from(e: ureq::Error) -> Self {
+        Error::Ureq(e)
     }
 }
 
@@ -91,6 +106,11 @@ pub fn parse_deep_object(prefix: &str, value: &serde_json::Value) -> Vec<(String
     }
 
     unimplemented!("Only objects are supported with style=deepObject")
+}
+
+pub(crate) fn basic_auth(auth: &configuration::BasicAuth) -> String {
+    let string = format!("{}:{}", auth.0, auth.1.as_ref().unwrap_or(&"".to_string()));
+    format!("Basic {}", general_purpose::STANDARD.encode(string)).to_string()
 }
 
 pub mod default_api;
