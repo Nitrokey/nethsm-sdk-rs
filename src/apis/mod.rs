@@ -1,7 +1,8 @@
-use base64::{engine::general_purpose, Engine};
 use std::collections::HashMap;
 use std::error;
 use std::fmt;
+
+use base64ct::{Base64, Encoding};
 
 pub(crate) fn get_header_map(response: &ureq::Response) -> HashMap<String, String> {
     let mut headers = HashMap::new();
@@ -110,7 +111,7 @@ pub fn parse_deep_object(prefix: &str, value: &serde_json::Value) -> Vec<(String
 
 pub(crate) fn basic_auth(auth: &configuration::BasicAuth) -> String {
     let string = format!("{}:{}", auth.0, auth.1.as_ref().unwrap_or(&"".to_string()));
-    format!("Basic {}", general_purpose::STANDARD.encode(string)).to_string()
+    format!("Basic {}", Base64::encode_string(string.as_bytes()))
 }
 
 pub mod default_api;

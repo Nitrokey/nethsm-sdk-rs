@@ -176,9 +176,9 @@ public class CrustGenerator extends AbstractRustCodegen implements CodegenConfig
     typeMapping.put("double", "f64");
     typeMapping.put("boolean", "bool");
     typeMapping.put("string", "String");
-    typeMapping.put("UUID", "uuid::Uuid");
+    typeMapping.put("UUID", "String");
     typeMapping.put("URI", "String");
-    typeMapping.put("date", "string");
+    typeMapping.put("date", "String");
     typeMapping.put("DateTime", "String");
     typeMapping.put("password", "String");
     // TODO(bcourtine): review file mapping.

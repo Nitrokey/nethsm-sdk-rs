@@ -21,11 +21,9 @@ pub struct SystemInfo {
     #[serde(rename = "deviceId")]
     pub device_id: String,
     #[serde(rename = "pcr")]
-    pub pcr: String,
-    #[serde(rename = "akPubP256")]
-    pub ak_pub_p256: String,
-    #[serde(rename = "akPubP384")]
-    pub ak_pub_p384: String,
+    pub pcr: serde_json::Value,
+    #[serde(rename = "akPub")]
+    pub ak_pub: serde_json::Value,
 }
 
 impl SystemInfo {
@@ -35,9 +33,8 @@ impl SystemInfo {
         hardware_version: String,
         build_tag: String,
         device_id: String,
-        pcr: String,
-        ak_pub_p256: String,
-        ak_pub_p384: String,
+        pcr: serde_json::Value,
+        ak_pub: serde_json::Value,
     ) -> SystemInfo {
         SystemInfo {
             firmware_version,
@@ -46,8 +43,7 @@ impl SystemInfo {
             build_tag,
             device_id,
             pcr,
-            ak_pub_p256,
-            ak_pub_p384,
+            ak_pub,
         }
     }
 }
