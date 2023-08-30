@@ -7,7 +7,7 @@ Name | Type | Description | Notes
 **firmware_version** | **String** |  | 
 **software_version** | **String** |  | 
 **hardware_version** | **String** |  | 
-**build_tag** | **String** |  | 
+**software_build** | Option<**String**> |  | [optional]
 **device_id** | **String** |  | 
 **pcr** | [**serde_json::Value**](.md) |  | 
 **ak_pub** | [**serde_json::Value**](.md) |  | 
