@@ -16,8 +16,8 @@ pub struct SystemInfo {
     pub software_version: String,
     #[serde(rename = "hardwareVersion")]
     pub hardware_version: String,
-    #[serde(rename = "buildTag")]
-    pub build_tag: String,
+    #[serde(rename = "softwareBuild", skip_serializing_if = "Option::is_none")]
+    pub software_build: Option<String>,
     #[serde(rename = "deviceId")]
     pub device_id: String,
     #[serde(rename = "pcr")]
@@ -31,7 +31,6 @@ impl SystemInfo {
         firmware_version: String,
         software_version: String,
         hardware_version: String,
-        build_tag: String,
         device_id: String,
         pcr: serde_json::Value,
         ak_pub: serde_json::Value,
@@ -40,7 +39,7 @@ impl SystemInfo {
             firmware_version,
             software_version,
             hardware_version,
-            build_tag,
+            software_build: None,
             device_id,
             pcr,
             ak_pub,
