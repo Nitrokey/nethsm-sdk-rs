@@ -318,15 +318,16 @@ pub fn {{{operationId}}}(configuration: &configuration::Configuration, {{#allPar
     let local_var_resp = local_var_req_builder.call()?;
     {{/hasBodyParam}}
 
+    let local_var_resp : http::Response<String> = local_var_resp.into();
 
-    let local_var_headers = super::get_header_map(&local_var_resp);
+    let local_var_headers = local_var_resp.headers();
     
     let local_var_status = local_var_resp.status();
-    let local_var_content = local_var_resp.into_string()?;
+    let local_var_content = local_var_resp.body().to_owned();
 
     let local_var_content_clone = local_var_content.clone();
 
-    if !local_var_status >= 400 {
+    if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
         {{#vendorExtensions.x-produceMultipleMediaTypes}}
         {{#returnType}}
         let local_var_entity : {{{returnType}}} = if is_json { serde_json::from_str(&local_var_content).map_err(Error::from)? } else { local_var_content };
@@ -344,11 +345,11 @@ pub fn {{{operationId}}}(configuration: &configuration::Configuration, {{#allPar
         {{/mediaIsJson}}
         {{/produces}}
         {{/vendorExtensions.x-produceMultipleMediaTypes}}
-        let local_var_result = ResponseContent { status: local_var_status, content: local_var_content_clone, entity: {{#returnType}}local_var_entity{{/returnType}}{{^returnType}}(){{/returnType}}, headers: local_var_headers };
+        let local_var_result = ResponseContent { status: local_var_status, content: local_var_content_clone, entity: {{#returnType}}local_var_entity{{/returnType}}{{^returnType}}(){{/returnType}}, headers: local_var_headers.to_owned() };
         Ok(local_var_result)
     } else {
         let local_var_entity: {{{operationIdCamelCase}}}Error = serde_json::from_str(&local_var_content)?;
-        let local_var_error = ResponseContent { status: local_var_status, content: local_var_content, entity: local_var_entity, headers: local_var_headers };
+        let local_var_error = ResponseContent { status: local_var_status, content: local_var_content, entity: local_var_entity, headers: local_var_headers.to_owned() };
         Err(Error::ResponseError(local_var_error))
     }
 }

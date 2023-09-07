@@ -19,5 +19,6 @@ serde = { default-features = false, version = "^1.0" }
 serde_derive = "^1.0"
 serde_json = { default-features = false, version = "^1.0" }
 url = "^2.2"
-ureq = { version = "2", features = ["json", "tls"], default-features = false }
+ureq = { version = "2", features = ["json", "tls","http-interop"], default-features = false }
 base64 = { version = "0.21", default-features = false }
+http = "0.2"

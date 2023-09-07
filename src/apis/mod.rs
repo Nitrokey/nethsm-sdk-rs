@@ -1,27 +1,13 @@
 use base64::{engine::general_purpose, Engine};
-use std::collections::HashMap;
 use std::error;
 use std::fmt;
 
-pub(crate) fn get_header_map(response: &ureq::Response) -> HashMap<String, String> {
-    let mut headers = HashMap::new();
-
-    let names = response.headers_names();
-    for name in names {
-        if let Some(value) = response.header(&name) {
-            headers.insert(name, value.to_string());
-        }
-    }
-
-    headers
-}
-
 #[derive(Debug, Clone)]
 pub struct ResponseContent<T> {
-    pub status: u16,
+    pub status: http::StatusCode,
     pub content: String,
     pub entity: T,
-    pub headers: HashMap<String, String>,
+    pub headers: http::HeaderMap,
 }
 
 #[derive(Debug)]

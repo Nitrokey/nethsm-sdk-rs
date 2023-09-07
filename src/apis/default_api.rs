@@ -130,6 +130,7 @@ pub enum ConfigBackupPassphrasePutError {
     Status400(),
     Status401(),
     Status403(),
+    Status406(),
     Status412(),
     UnknownValue(serde_json::Value),
 }
@@ -140,6 +141,7 @@ pub enum ConfigBackupPassphrasePutError {
 pub enum ConfigLoggingGetError {
     Status401(),
     Status403(),
+    Status406(),
     Status412(),
     UnknownValue(serde_json::Value),
 }
@@ -151,6 +153,7 @@ pub enum ConfigLoggingPutError {
     Status400(),
     Status401(),
     Status403(),
+    Status406(),
     Status412(),
     UnknownValue(serde_json::Value),
 }
@@ -161,6 +164,7 @@ pub enum ConfigLoggingPutError {
 pub enum ConfigNetworkGetError {
     Status401(),
     Status403(),
+    Status406(),
     Status412(),
     UnknownValue(serde_json::Value),
 }
@@ -172,6 +176,7 @@ pub enum ConfigNetworkPutError {
     Status400(),
     Status401(),
     Status403(),
+    Status406(),
     Status412(),
     UnknownValue(serde_json::Value),
 }
@@ -182,6 +187,7 @@ pub enum ConfigNetworkPutError {
 pub enum ConfigTimeGetError {
     Status401(),
     Status403(),
+    Status406(),
     Status412(),
     UnknownValue(serde_json::Value),
 }
@@ -193,6 +199,7 @@ pub enum ConfigTimePutError {
     Status400(),
     Status401(),
     Status403(),
+    Status406(),
     Status412(),
     UnknownValue(serde_json::Value),
 }
@@ -203,6 +210,7 @@ pub enum ConfigTimePutError {
 pub enum ConfigTlsCertPemGetError {
     Status401(),
     Status403(),
+    Status406(),
     Status412(),
     UnknownValue(serde_json::Value),
 }
@@ -211,8 +219,10 @@ pub enum ConfigTlsCertPemGetError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ConfigTlsCertPemPutError {
+    Status400(),
     Status401(),
     Status403(),
+    Status406(),
     Status412(),
     UnknownValue(serde_json::Value),
 }
@@ -223,6 +233,7 @@ pub enum ConfigTlsCertPemPutError {
 pub enum ConfigTlsCsrPemPostError {
     Status401(),
     Status403(),
+    Status406(),
     Status412(),
     UnknownValue(serde_json::Value),
 }
@@ -234,6 +245,7 @@ pub enum ConfigTlsGeneratePostError {
     Status400(),
     Status401(),
     Status403(),
+    Status406(),
     Status412(),
     UnknownValue(serde_json::Value),
 }
@@ -244,6 +256,7 @@ pub enum ConfigTlsGeneratePostError {
 pub enum ConfigTlsPublicPemGetError {
     Status401(),
     Status403(),
+    Status406(),
     Status412(),
     UnknownValue(serde_json::Value),
 }
@@ -254,6 +267,7 @@ pub enum ConfigTlsPublicPemGetError {
 pub enum ConfigUnattendedBootGetError {
     Status401(),
     Status403(),
+    Status406(),
     Status412(),
     UnknownValue(serde_json::Value),
 }
@@ -265,6 +279,7 @@ pub enum ConfigUnattendedBootPutError {
     Status400(),
     Status401(),
     Status403(),
+    Status406(),
     Status412(),
     UnknownValue(serde_json::Value),
 }
@@ -276,6 +291,7 @@ pub enum ConfigUnlockPassphrasePutError {
     Status400(),
     Status401(),
     Status403(),
+    Status406(),
     Status412(),
     UnknownValue(serde_json::Value),
 }
@@ -284,6 +300,7 @@ pub enum ConfigUnlockPassphrasePutError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum HealthAliveGetError {
+    Status406(),
     Status412(),
     UnknownValue(serde_json::Value),
 }
@@ -292,6 +309,7 @@ pub enum HealthAliveGetError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum HealthReadyGetError {
+    Status406(),
     Status412(),
     UnknownValue(serde_json::Value),
 }
@@ -300,6 +318,7 @@ pub enum HealthReadyGetError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum HealthStateGetError {
+    Status406(),
     UnknownValue(serde_json::Value),
 }
 
@@ -307,6 +326,7 @@ pub enum HealthStateGetError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum InfoGetError {
+    Status406(),
     UnknownValue(serde_json::Value),
 }
 
@@ -317,6 +337,7 @@ pub enum KeysGeneratePostError {
     Status400(),
     Status401(),
     Status403(),
+    Status406(),
     Status412(),
     UnknownValue(serde_json::Value),
 }
@@ -327,6 +348,7 @@ pub enum KeysGeneratePostError {
 pub enum KeysGetError {
     Status401(),
     Status403(),
+    Status406(),
     Status412(),
     UnknownValue(serde_json::Value),
 }
@@ -338,6 +360,8 @@ pub enum KeysKeyIdCertDeleteError {
     Status401(),
     Status403(),
     Status404(),
+    Status406(),
+    Status409(),
     Status412(),
     UnknownValue(serde_json::Value),
 }
@@ -349,6 +373,7 @@ pub enum KeysKeyIdCertGetError {
     Status401(),
     Status403(),
     Status404(),
+    Status406(),
     Status412(),
     UnknownValue(serde_json::Value),
 }
@@ -359,6 +384,7 @@ pub enum KeysKeyIdCertGetError {
 pub enum KeysKeyIdCertPutError {
     Status401(),
     Status403(),
+    Status406(),
     Status409(),
     Status412(),
     UnknownValue(serde_json::Value),
@@ -371,6 +397,7 @@ pub enum KeysKeyIdCsrPemPostError {
     Status401(),
     Status403(),
     Status404(),
+    Status406(),
     Status412(),
     UnknownValue(serde_json::Value),
 }
@@ -383,6 +410,7 @@ pub enum KeysKeyIdDecryptPostError {
     Status401(),
     Status403(),
     Status404(),
+    Status406(),
     Status412(),
     UnknownValue(serde_json::Value),
 }
@@ -394,6 +422,7 @@ pub enum KeysKeyIdDeleteError {
     Status401(),
     Status403(),
     Status404(),
+    Status406(),
     Status412(),
     UnknownValue(serde_json::Value),
 }
@@ -406,6 +435,7 @@ pub enum KeysKeyIdEncryptPostError {
     Status401(),
     Status403(),
     Status404(),
+    Status406(),
     Status412(),
     UnknownValue(serde_json::Value),
 }
@@ -417,6 +447,7 @@ pub enum KeysKeyIdGetError {
     Status401(),
     Status403(),
     Status404(),
+    Status406(),
     Status412(),
     UnknownValue(serde_json::Value),
 }
@@ -428,6 +459,7 @@ pub enum KeysKeyIdPublicPemGetError {
     Status401(),
     Status403(),
     Status404(),
+    Status406(),
     Status412(),
     UnknownValue(serde_json::Value),
 }
@@ -439,6 +471,7 @@ pub enum KeysKeyIdPutError {
     Status400(),
     Status401(),
     Status403(),
+    Status406(),
     Status409(),
     Status412(),
     UnknownValue(serde_json::Value),
@@ -451,6 +484,7 @@ pub enum KeysKeyIdRestrictionsTagsTagDeleteError {
     Status401(),
     Status403(),
     Status404(),
+    Status406(),
     Status412(),
     UnknownValue(serde_json::Value),
 }
@@ -463,6 +497,7 @@ pub enum KeysKeyIdRestrictionsTagsTagPutError {
     Status401(),
     Status403(),
     Status404(),
+    Status406(),
     Status412(),
     UnknownValue(serde_json::Value),
 }
@@ -475,6 +510,7 @@ pub enum KeysKeyIdSignPostError {
     Status401(),
     Status403(),
     Status404(),
+    Status406(),
     Status412(),
     UnknownValue(serde_json::Value),
 }
@@ -486,6 +522,7 @@ pub enum KeysPostError {
     Status400(),
     Status401(),
     Status403(),
+    Status406(),
     Status412(),
     UnknownValue(serde_json::Value),
 }
@@ -496,6 +533,7 @@ pub enum KeysPostError {
 pub enum LockPostError {
     Status401(),
     Status403(),
+    Status406(),
     Status412(),
     UnknownValue(serde_json::Value),
 }
@@ -506,6 +544,7 @@ pub enum LockPostError {
 pub enum MetricsGetError {
     Status401(),
     Status403(),
+    Status406(),
     Status412(),
     UnknownValue(serde_json::Value),
 }
@@ -515,6 +554,7 @@ pub enum MetricsGetError {
 #[serde(untagged)]
 pub enum ProvisionPostError {
     Status400(),
+    Status406(),
     Status412(),
     UnknownValue(serde_json::Value),
 }
@@ -525,6 +565,7 @@ pub enum ProvisionPostError {
 pub enum RandomPostError {
     Status401(),
     Status403(),
+    Status406(),
     Status412(),
     UnknownValue(serde_json::Value),
 }
@@ -535,6 +576,7 @@ pub enum RandomPostError {
 pub enum SystemBackupPostError {
     Status401(),
     Status403(),
+    Status406(),
     Status412(),
     UnknownValue(serde_json::Value),
 }
@@ -545,6 +587,7 @@ pub enum SystemBackupPostError {
 pub enum SystemCancelUpdatePostError {
     Status401(),
     Status403(),
+    Status406(),
     Status412(),
     UnknownValue(serde_json::Value),
 }
@@ -555,6 +598,7 @@ pub enum SystemCancelUpdatePostError {
 pub enum SystemCommitUpdatePostError {
     Status401(),
     Status403(),
+    Status406(),
     Status412(),
     UnknownValue(serde_json::Value),
 }
@@ -565,6 +609,7 @@ pub enum SystemCommitUpdatePostError {
 pub enum SystemFactoryResetPostError {
     Status401(),
     Status403(),
+    Status406(),
     Status412(),
     UnknownValue(serde_json::Value),
 }
@@ -575,6 +620,7 @@ pub enum SystemFactoryResetPostError {
 pub enum SystemInfoGetError {
     Status401(),
     Status403(),
+    Status406(),
     Status412(),
     UnknownValue(serde_json::Value),
 }
@@ -585,6 +631,7 @@ pub enum SystemInfoGetError {
 pub enum SystemRebootPostError {
     Status401(),
     Status403(),
+    Status406(),
     Status412(),
     UnknownValue(serde_json::Value),
 }
@@ -594,6 +641,7 @@ pub enum SystemRebootPostError {
 #[serde(untagged)]
 pub enum SystemRestorePostError {
     Status400(),
+    Status406(),
     Status412(),
     UnknownValue(serde_json::Value),
 }
@@ -604,6 +652,7 @@ pub enum SystemRestorePostError {
 pub enum SystemShutdownPostError {
     Status401(),
     Status403(),
+    Status406(),
     Status412(),
     UnknownValue(serde_json::Value),
 }
@@ -612,8 +661,10 @@ pub enum SystemShutdownPostError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum SystemUpdatePostError {
+    Status400(),
     Status401(),
     Status403(),
+    Status406(),
     Status409(),
     Status412(),
     UnknownValue(serde_json::Value),
@@ -625,6 +676,7 @@ pub enum SystemUpdatePostError {
 pub enum UnlockPostError {
     Status400(),
     Status403(),
+    Status406(),
     Status412(),
     UnknownValue(serde_json::Value),
 }
@@ -635,6 +687,7 @@ pub enum UnlockPostError {
 pub enum UsersGetError {
     Status401(),
     Status403(),
+    Status406(),
     Status412(),
     UnknownValue(serde_json::Value),
 }
@@ -646,6 +699,7 @@ pub enum UsersPostError {
     Status400(),
     Status401(),
     Status403(),
+    Status406(),
     Status412(),
     UnknownValue(serde_json::Value),
 }
@@ -657,6 +711,7 @@ pub enum UsersUserIdDeleteError {
     Status401(),
     Status403(),
     Status404(),
+    Status406(),
     Status412(),
     UnknownValue(serde_json::Value),
 }
@@ -668,6 +723,7 @@ pub enum UsersUserIdGetError {
     Status401(),
     Status403(),
     Status404(),
+    Status406(),
     Status412(),
     UnknownValue(serde_json::Value),
 }
@@ -680,6 +736,7 @@ pub enum UsersUserIdPassphrasePostError {
     Status401(),
     Status403(),
     Status404(),
+    Status406(),
     Status412(),
     UnknownValue(serde_json::Value),
 }
@@ -691,6 +748,7 @@ pub enum UsersUserIdPutError {
     Status400(),
     Status401(),
     Status403(),
+    Status406(),
     Status409(),
     Status412(),
     UnknownValue(serde_json::Value),
@@ -703,6 +761,7 @@ pub enum UsersUserIdTagsGetError {
     Status401(),
     Status403(),
     Status404(),
+    Status406(),
     Status412(),
     UnknownValue(serde_json::Value),
 }
@@ -714,6 +773,7 @@ pub enum UsersUserIdTagsTagDeleteError {
     Status401(),
     Status403(),
     Status404(),
+    Status406(),
     Status412(),
     UnknownValue(serde_json::Value),
 }
@@ -726,6 +786,7 @@ pub enum UsersUserIdTagsTagPutError {
     Status401(),
     Status403(),
     Status404(),
+    Status406(),
     Status412(),
     UnknownValue(serde_json::Value),
 }
@@ -758,19 +819,21 @@ pub fn config_backup_passphrase_put(
     local_var_req_builder = local_var_req_builder.set("content-type", "application/json");
     let local_var_resp = local_var_req_builder.send_json(backup_passphrase_config)?;
 
-    let local_var_headers = super::get_header_map(&local_var_resp);
+    let local_var_resp: http::Response<String> = local_var_resp.into();
+
+    let local_var_headers = local_var_resp.headers();
 
     let local_var_status = local_var_resp.status();
-    let local_var_content = local_var_resp.into_string()?;
+    let local_var_content = local_var_resp.body().to_owned();
 
     let local_var_content_clone = local_var_content.clone();
 
-    if !local_var_status >= 400 {
+    if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
         let local_var_result = ResponseContent {
             status: local_var_status,
             content: local_var_content_clone,
             entity: (),
-            headers: local_var_headers,
+            headers: local_var_headers.to_owned(),
         };
         Ok(local_var_result)
     } else {
@@ -780,7 +843,7 @@ pub fn config_backup_passphrase_put(
             status: local_var_status,
             content: local_var_content,
             entity: local_var_entity,
-            headers: local_var_headers,
+            headers: local_var_headers.to_owned(),
         };
         Err(Error::ResponseError(local_var_error))
     }
@@ -811,21 +874,23 @@ pub fn config_logging_get(
 
     let local_var_resp = local_var_req_builder.call()?;
 
-    let local_var_headers = super::get_header_map(&local_var_resp);
+    let local_var_resp: http::Response<String> = local_var_resp.into();
+
+    let local_var_headers = local_var_resp.headers();
 
     let local_var_status = local_var_resp.status();
-    let local_var_content = local_var_resp.into_string()?;
+    let local_var_content = local_var_resp.body().to_owned();
 
     let local_var_content_clone = local_var_content.clone();
 
-    if !local_var_status >= 400 {
+    if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
         let local_var_entity: crate::models::LoggingConfig =
             serde_json::from_str(&local_var_content).map_err(Error::from)?;
         let local_var_result = ResponseContent {
             status: local_var_status,
             content: local_var_content_clone,
             entity: local_var_entity,
-            headers: local_var_headers,
+            headers: local_var_headers.to_owned(),
         };
         Ok(local_var_result)
     } else {
@@ -834,7 +899,7 @@ pub fn config_logging_get(
             status: local_var_status,
             content: local_var_content,
             entity: local_var_entity,
-            headers: local_var_headers,
+            headers: local_var_headers.to_owned(),
         };
         Err(Error::ResponseError(local_var_error))
     }
@@ -865,19 +930,21 @@ pub fn config_logging_put(
     local_var_req_builder = local_var_req_builder.set("content-type", "application/json");
     let local_var_resp = local_var_req_builder.send_json(logging_config)?;
 
-    let local_var_headers = super::get_header_map(&local_var_resp);
+    let local_var_resp: http::Response<String> = local_var_resp.into();
+
+    let local_var_headers = local_var_resp.headers();
 
     let local_var_status = local_var_resp.status();
-    let local_var_content = local_var_resp.into_string()?;
+    let local_var_content = local_var_resp.body().to_owned();
 
     let local_var_content_clone = local_var_content.clone();
 
-    if !local_var_status >= 400 {
+    if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
         let local_var_result = ResponseContent {
             status: local_var_status,
             content: local_var_content_clone,
             entity: (),
-            headers: local_var_headers,
+            headers: local_var_headers.to_owned(),
         };
         Ok(local_var_result)
     } else {
@@ -886,7 +953,7 @@ pub fn config_logging_put(
             status: local_var_status,
             content: local_var_content,
             entity: local_var_entity,
-            headers: local_var_headers,
+            headers: local_var_headers.to_owned(),
         };
         Err(Error::ResponseError(local_var_error))
     }
@@ -917,21 +984,23 @@ pub fn config_network_get(
 
     let local_var_resp = local_var_req_builder.call()?;
 
-    let local_var_headers = super::get_header_map(&local_var_resp);
+    let local_var_resp: http::Response<String> = local_var_resp.into();
+
+    let local_var_headers = local_var_resp.headers();
 
     let local_var_status = local_var_resp.status();
-    let local_var_content = local_var_resp.into_string()?;
+    let local_var_content = local_var_resp.body().to_owned();
 
     let local_var_content_clone = local_var_content.clone();
 
-    if !local_var_status >= 400 {
+    if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
         let local_var_entity: crate::models::NetworkConfig =
             serde_json::from_str(&local_var_content).map_err(Error::from)?;
         let local_var_result = ResponseContent {
             status: local_var_status,
             content: local_var_content_clone,
             entity: local_var_entity,
-            headers: local_var_headers,
+            headers: local_var_headers.to_owned(),
         };
         Ok(local_var_result)
     } else {
@@ -940,7 +1009,7 @@ pub fn config_network_get(
             status: local_var_status,
             content: local_var_content,
             entity: local_var_entity,
-            headers: local_var_headers,
+            headers: local_var_headers.to_owned(),
         };
         Err(Error::ResponseError(local_var_error))
     }
@@ -971,19 +1040,21 @@ pub fn config_network_put(
     local_var_req_builder = local_var_req_builder.set("content-type", "application/json");
     let local_var_resp = local_var_req_builder.send_json(network_config)?;
 
-    let local_var_headers = super::get_header_map(&local_var_resp);
+    let local_var_resp: http::Response<String> = local_var_resp.into();
+
+    let local_var_headers = local_var_resp.headers();
 
     let local_var_status = local_var_resp.status();
-    let local_var_content = local_var_resp.into_string()?;
+    let local_var_content = local_var_resp.body().to_owned();
 
     let local_var_content_clone = local_var_content.clone();
 
-    if !local_var_status >= 400 {
+    if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
         let local_var_result = ResponseContent {
             status: local_var_status,
             content: local_var_content_clone,
             entity: (),
-            headers: local_var_headers,
+            headers: local_var_headers.to_owned(),
         };
         Ok(local_var_result)
     } else {
@@ -992,7 +1063,7 @@ pub fn config_network_put(
             status: local_var_status,
             content: local_var_content,
             entity: local_var_entity,
-            headers: local_var_headers,
+            headers: local_var_headers.to_owned(),
         };
         Err(Error::ResponseError(local_var_error))
     }
@@ -1023,21 +1094,23 @@ pub fn config_time_get(
 
     let local_var_resp = local_var_req_builder.call()?;
 
-    let local_var_headers = super::get_header_map(&local_var_resp);
+    let local_var_resp: http::Response<String> = local_var_resp.into();
+
+    let local_var_headers = local_var_resp.headers();
 
     let local_var_status = local_var_resp.status();
-    let local_var_content = local_var_resp.into_string()?;
+    let local_var_content = local_var_resp.body().to_owned();
 
     let local_var_content_clone = local_var_content.clone();
 
-    if !local_var_status >= 400 {
+    if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
         let local_var_entity: crate::models::TimeConfig =
             serde_json::from_str(&local_var_content).map_err(Error::from)?;
         let local_var_result = ResponseContent {
             status: local_var_status,
             content: local_var_content_clone,
             entity: local_var_entity,
-            headers: local_var_headers,
+            headers: local_var_headers.to_owned(),
         };
         Ok(local_var_result)
     } else {
@@ -1046,7 +1119,7 @@ pub fn config_time_get(
             status: local_var_status,
             content: local_var_content,
             entity: local_var_entity,
-            headers: local_var_headers,
+            headers: local_var_headers.to_owned(),
         };
         Err(Error::ResponseError(local_var_error))
     }
@@ -1077,19 +1150,21 @@ pub fn config_time_put(
     local_var_req_builder = local_var_req_builder.set("content-type", "application/json");
     let local_var_resp = local_var_req_builder.send_json(time_config)?;
 
-    let local_var_headers = super::get_header_map(&local_var_resp);
+    let local_var_resp: http::Response<String> = local_var_resp.into();
+
+    let local_var_headers = local_var_resp.headers();
 
     let local_var_status = local_var_resp.status();
-    let local_var_content = local_var_resp.into_string()?;
+    let local_var_content = local_var_resp.body().to_owned();
 
     let local_var_content_clone = local_var_content.clone();
 
-    if !local_var_status >= 400 {
+    if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
         let local_var_result = ResponseContent {
             status: local_var_status,
             content: local_var_content_clone,
             entity: (),
-            headers: local_var_headers,
+            headers: local_var_headers.to_owned(),
         };
         Ok(local_var_result)
     } else {
@@ -1098,7 +1173,7 @@ pub fn config_time_put(
             status: local_var_status,
             content: local_var_content,
             entity: local_var_entity,
-            headers: local_var_headers,
+            headers: local_var_headers.to_owned(),
         };
         Err(Error::ResponseError(local_var_error))
     }
@@ -1129,20 +1204,22 @@ pub fn config_tls_cert_pem_get(
 
     let local_var_resp = local_var_req_builder.call()?;
 
-    let local_var_headers = super::get_header_map(&local_var_resp);
+    let local_var_resp: http::Response<String> = local_var_resp.into();
+
+    let local_var_headers = local_var_resp.headers();
 
     let local_var_status = local_var_resp.status();
-    let local_var_content = local_var_resp.into_string()?;
+    let local_var_content = local_var_resp.body().to_owned();
 
     let local_var_content_clone = local_var_content.clone();
 
-    if !local_var_status >= 400 {
+    if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
         let local_var_entity = local_var_content.clone();
         let local_var_result = ResponseContent {
             status: local_var_status,
             content: local_var_content_clone,
             entity: local_var_entity,
-            headers: local_var_headers,
+            headers: local_var_headers.to_owned(),
         };
         Ok(local_var_result)
     } else {
@@ -1151,7 +1228,7 @@ pub fn config_tls_cert_pem_get(
             status: local_var_status,
             content: local_var_content,
             entity: local_var_entity,
-            headers: local_var_headers,
+            headers: local_var_headers.to_owned(),
         };
         Err(Error::ResponseError(local_var_error))
     }
@@ -1182,19 +1259,21 @@ pub fn config_tls_cert_pem_put(
     local_var_req_builder = local_var_req_builder.set("content-type", "application/x-pem-file");
     let local_var_resp = local_var_req_builder.send_string(body)?;
 
-    let local_var_headers = super::get_header_map(&local_var_resp);
+    let local_var_resp: http::Response<String> = local_var_resp.into();
+
+    let local_var_headers = local_var_resp.headers();
 
     let local_var_status = local_var_resp.status();
-    let local_var_content = local_var_resp.into_string()?;
+    let local_var_content = local_var_resp.body().to_owned();
 
     let local_var_content_clone = local_var_content.clone();
 
-    if !local_var_status >= 400 {
+    if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
         let local_var_result = ResponseContent {
             status: local_var_status,
             content: local_var_content_clone,
             entity: (),
-            headers: local_var_headers,
+            headers: local_var_headers.to_owned(),
         };
         Ok(local_var_result)
     } else {
@@ -1203,7 +1282,7 @@ pub fn config_tls_cert_pem_put(
             status: local_var_status,
             content: local_var_content,
             entity: local_var_entity,
-            headers: local_var_headers,
+            headers: local_var_headers.to_owned(),
         };
         Err(Error::ResponseError(local_var_error))
     }
@@ -1236,20 +1315,22 @@ pub fn config_tls_csr_pem_post(
     local_var_req_builder = local_var_req_builder.set("content-type", "application/json");
     let local_var_resp = local_var_req_builder.send_json(distinguished_name)?;
 
-    let local_var_headers = super::get_header_map(&local_var_resp);
+    let local_var_resp: http::Response<String> = local_var_resp.into();
+
+    let local_var_headers = local_var_resp.headers();
 
     let local_var_status = local_var_resp.status();
-    let local_var_content = local_var_resp.into_string()?;
+    let local_var_content = local_var_resp.body().to_owned();
 
     let local_var_content_clone = local_var_content.clone();
 
-    if !local_var_status >= 400 {
+    if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
         let local_var_entity = local_var_content.clone();
         let local_var_result = ResponseContent {
             status: local_var_status,
             content: local_var_content_clone,
             entity: local_var_entity,
-            headers: local_var_headers,
+            headers: local_var_headers.to_owned(),
         };
         Ok(local_var_result)
     } else {
@@ -1258,7 +1339,7 @@ pub fn config_tls_csr_pem_post(
             status: local_var_status,
             content: local_var_content,
             entity: local_var_entity,
-            headers: local_var_headers,
+            headers: local_var_headers.to_owned(),
         };
         Err(Error::ResponseError(local_var_error))
     }
@@ -1289,19 +1370,21 @@ pub fn config_tls_generate_post(
     local_var_req_builder = local_var_req_builder.set("content-type", "application/json");
     let local_var_resp = local_var_req_builder.send_json(tls_key_generate_request_data)?;
 
-    let local_var_headers = super::get_header_map(&local_var_resp);
+    let local_var_resp: http::Response<String> = local_var_resp.into();
+
+    let local_var_headers = local_var_resp.headers();
 
     let local_var_status = local_var_resp.status();
-    let local_var_content = local_var_resp.into_string()?;
+    let local_var_content = local_var_resp.body().to_owned();
 
     let local_var_content_clone = local_var_content.clone();
 
-    if !local_var_status >= 400 {
+    if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
         let local_var_result = ResponseContent {
             status: local_var_status,
             content: local_var_content_clone,
             entity: (),
-            headers: local_var_headers,
+            headers: local_var_headers.to_owned(),
         };
         Ok(local_var_result)
     } else {
@@ -1311,7 +1394,7 @@ pub fn config_tls_generate_post(
             status: local_var_status,
             content: local_var_content,
             entity: local_var_entity,
-            headers: local_var_headers,
+            headers: local_var_headers.to_owned(),
         };
         Err(Error::ResponseError(local_var_error))
     }
@@ -1345,20 +1428,22 @@ pub fn config_tls_public_pem_get(
 
     let local_var_resp = local_var_req_builder.call()?;
 
-    let local_var_headers = super::get_header_map(&local_var_resp);
+    let local_var_resp: http::Response<String> = local_var_resp.into();
+
+    let local_var_headers = local_var_resp.headers();
 
     let local_var_status = local_var_resp.status();
-    let local_var_content = local_var_resp.into_string()?;
+    let local_var_content = local_var_resp.body().to_owned();
 
     let local_var_content_clone = local_var_content.clone();
 
-    if !local_var_status >= 400 {
+    if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
         let local_var_entity = local_var_content.clone();
         let local_var_result = ResponseContent {
             status: local_var_status,
             content: local_var_content_clone,
             entity: local_var_entity,
-            headers: local_var_headers,
+            headers: local_var_headers.to_owned(),
         };
         Ok(local_var_result)
     } else {
@@ -1368,7 +1453,7 @@ pub fn config_tls_public_pem_get(
             status: local_var_status,
             content: local_var_content,
             entity: local_var_entity,
-            headers: local_var_headers,
+            headers: local_var_headers.to_owned(),
         };
         Err(Error::ResponseError(local_var_error))
     }
@@ -1403,21 +1488,23 @@ pub fn config_unattended_boot_get(
 
     let local_var_resp = local_var_req_builder.call()?;
 
-    let local_var_headers = super::get_header_map(&local_var_resp);
+    let local_var_resp: http::Response<String> = local_var_resp.into();
+
+    let local_var_headers = local_var_resp.headers();
 
     let local_var_status = local_var_resp.status();
-    let local_var_content = local_var_resp.into_string()?;
+    let local_var_content = local_var_resp.body().to_owned();
 
     let local_var_content_clone = local_var_content.clone();
 
-    if !local_var_status >= 400 {
+    if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
         let local_var_entity: crate::models::UnattendedBootConfig =
             serde_json::from_str(&local_var_content).map_err(Error::from)?;
         let local_var_result = ResponseContent {
             status: local_var_status,
             content: local_var_content_clone,
             entity: local_var_entity,
-            headers: local_var_headers,
+            headers: local_var_headers.to_owned(),
         };
         Ok(local_var_result)
     } else {
@@ -1427,7 +1514,7 @@ pub fn config_unattended_boot_get(
             status: local_var_status,
             content: local_var_content,
             entity: local_var_entity,
-            headers: local_var_headers,
+            headers: local_var_headers.to_owned(),
         };
         Err(Error::ResponseError(local_var_error))
     }
@@ -1461,19 +1548,21 @@ pub fn config_unattended_boot_put(
     local_var_req_builder = local_var_req_builder.set("content-type", "application/json");
     let local_var_resp = local_var_req_builder.send_json(unattended_boot_config)?;
 
-    let local_var_headers = super::get_header_map(&local_var_resp);
+    let local_var_resp: http::Response<String> = local_var_resp.into();
+
+    let local_var_headers = local_var_resp.headers();
 
     let local_var_status = local_var_resp.status();
-    let local_var_content = local_var_resp.into_string()?;
+    let local_var_content = local_var_resp.body().to_owned();
 
     let local_var_content_clone = local_var_content.clone();
 
-    if !local_var_status >= 400 {
+    if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
         let local_var_result = ResponseContent {
             status: local_var_status,
             content: local_var_content_clone,
             entity: (),
-            headers: local_var_headers,
+            headers: local_var_headers.to_owned(),
         };
         Ok(local_var_result)
     } else {
@@ -1483,7 +1572,7 @@ pub fn config_unattended_boot_put(
             status: local_var_status,
             content: local_var_content,
             entity: local_var_entity,
-            headers: local_var_headers,
+            headers: local_var_headers.to_owned(),
         };
         Err(Error::ResponseError(local_var_error))
     }
@@ -1517,19 +1606,21 @@ pub fn config_unlock_passphrase_put(
     local_var_req_builder = local_var_req_builder.set("content-type", "application/json");
     let local_var_resp = local_var_req_builder.send_json(unlock_passphrase_config)?;
 
-    let local_var_headers = super::get_header_map(&local_var_resp);
+    let local_var_resp: http::Response<String> = local_var_resp.into();
+
+    let local_var_headers = local_var_resp.headers();
 
     let local_var_status = local_var_resp.status();
-    let local_var_content = local_var_resp.into_string()?;
+    let local_var_content = local_var_resp.body().to_owned();
 
     let local_var_content_clone = local_var_content.clone();
 
-    if !local_var_status >= 400 {
+    if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
         let local_var_result = ResponseContent {
             status: local_var_status,
             content: local_var_content_clone,
             entity: (),
-            headers: local_var_headers,
+            headers: local_var_headers.to_owned(),
         };
         Ok(local_var_result)
     } else {
@@ -1539,7 +1630,7 @@ pub fn config_unlock_passphrase_put(
             status: local_var_status,
             content: local_var_content,
             entity: local_var_entity,
-            headers: local_var_headers,
+            headers: local_var_headers.to_owned(),
         };
         Err(Error::ResponseError(local_var_error))
     }
@@ -1563,19 +1654,21 @@ pub fn health_alive_get(
 
     let local_var_resp = local_var_req_builder.call()?;
 
-    let local_var_headers = super::get_header_map(&local_var_resp);
+    let local_var_resp: http::Response<String> = local_var_resp.into();
+
+    let local_var_headers = local_var_resp.headers();
 
     let local_var_status = local_var_resp.status();
-    let local_var_content = local_var_resp.into_string()?;
+    let local_var_content = local_var_resp.body().to_owned();
 
     let local_var_content_clone = local_var_content.clone();
 
-    if !local_var_status >= 400 {
+    if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
         let local_var_result = ResponseContent {
             status: local_var_status,
             content: local_var_content_clone,
             entity: (),
-            headers: local_var_headers,
+            headers: local_var_headers.to_owned(),
         };
         Ok(local_var_result)
     } else {
@@ -1584,7 +1677,7 @@ pub fn health_alive_get(
             status: local_var_status,
             content: local_var_content,
             entity: local_var_entity,
-            headers: local_var_headers,
+            headers: local_var_headers.to_owned(),
         };
         Err(Error::ResponseError(local_var_error))
     }
@@ -1608,19 +1701,21 @@ pub fn health_ready_get(
 
     let local_var_resp = local_var_req_builder.call()?;
 
-    let local_var_headers = super::get_header_map(&local_var_resp);
+    let local_var_resp: http::Response<String> = local_var_resp.into();
+
+    let local_var_headers = local_var_resp.headers();
 
     let local_var_status = local_var_resp.status();
-    let local_var_content = local_var_resp.into_string()?;
+    let local_var_content = local_var_resp.body().to_owned();
 
     let local_var_content_clone = local_var_content.clone();
 
-    if !local_var_status >= 400 {
+    if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
         let local_var_result = ResponseContent {
             status: local_var_status,
             content: local_var_content_clone,
             entity: (),
-            headers: local_var_headers,
+            headers: local_var_headers.to_owned(),
         };
         Ok(local_var_result)
     } else {
@@ -1629,7 +1724,7 @@ pub fn health_ready_get(
             status: local_var_status,
             content: local_var_content,
             entity: local_var_entity,
-            headers: local_var_headers,
+            headers: local_var_headers.to_owned(),
         };
         Err(Error::ResponseError(local_var_error))
     }
@@ -1655,21 +1750,23 @@ pub fn health_state_get(
 
     let local_var_resp = local_var_req_builder.call()?;
 
-    let local_var_headers = super::get_header_map(&local_var_resp);
+    let local_var_resp: http::Response<String> = local_var_resp.into();
+
+    let local_var_headers = local_var_resp.headers();
 
     let local_var_status = local_var_resp.status();
-    let local_var_content = local_var_resp.into_string()?;
+    let local_var_content = local_var_resp.body().to_owned();
 
     let local_var_content_clone = local_var_content.clone();
 
-    if !local_var_status >= 400 {
+    if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
         let local_var_entity: crate::models::HealthStateData =
             serde_json::from_str(&local_var_content).map_err(Error::from)?;
         let local_var_result = ResponseContent {
             status: local_var_status,
             content: local_var_content_clone,
             entity: local_var_entity,
-            headers: local_var_headers,
+            headers: local_var_headers.to_owned(),
         };
         Ok(local_var_result)
     } else {
@@ -1678,7 +1775,7 @@ pub fn health_state_get(
             status: local_var_status,
             content: local_var_content,
             entity: local_var_entity,
-            headers: local_var_headers,
+            headers: local_var_headers.to_owned(),
         };
         Err(Error::ResponseError(local_var_error))
     }
@@ -1704,21 +1801,23 @@ pub fn info_get(
 
     let local_var_resp = local_var_req_builder.call()?;
 
-    let local_var_headers = super::get_header_map(&local_var_resp);
+    let local_var_resp: http::Response<String> = local_var_resp.into();
+
+    let local_var_headers = local_var_resp.headers();
 
     let local_var_status = local_var_resp.status();
-    let local_var_content = local_var_resp.into_string()?;
+    let local_var_content = local_var_resp.body().to_owned();
 
     let local_var_content_clone = local_var_content.clone();
 
-    if !local_var_status >= 400 {
+    if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
         let local_var_entity: crate::models::InfoData =
             serde_json::from_str(&local_var_content).map_err(Error::from)?;
         let local_var_result = ResponseContent {
             status: local_var_status,
             content: local_var_content_clone,
             entity: local_var_entity,
-            headers: local_var_headers,
+            headers: local_var_headers.to_owned(),
         };
         Ok(local_var_result)
     } else {
@@ -1727,7 +1826,7 @@ pub fn info_get(
             status: local_var_status,
             content: local_var_content,
             entity: local_var_entity,
-            headers: local_var_headers,
+            headers: local_var_headers.to_owned(),
         };
         Err(Error::ResponseError(local_var_error))
     }
@@ -1758,19 +1857,21 @@ pub fn keys_generate_post(
     local_var_req_builder = local_var_req_builder.set("content-type", "application/json");
     let local_var_resp = local_var_req_builder.send_json(key_generate_request_data)?;
 
-    let local_var_headers = super::get_header_map(&local_var_resp);
+    let local_var_resp: http::Response<String> = local_var_resp.into();
+
+    let local_var_headers = local_var_resp.headers();
 
     let local_var_status = local_var_resp.status();
-    let local_var_content = local_var_resp.into_string()?;
+    let local_var_content = local_var_resp.body().to_owned();
 
     let local_var_content_clone = local_var_content.clone();
 
-    if !local_var_status >= 400 {
+    if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
         let local_var_result = ResponseContent {
             status: local_var_status,
             content: local_var_content_clone,
             entity: (),
-            headers: local_var_headers,
+            headers: local_var_headers.to_owned(),
         };
         Ok(local_var_result)
     } else {
@@ -1779,7 +1880,7 @@ pub fn keys_generate_post(
             status: local_var_status,
             content: local_var_content,
             entity: local_var_entity,
-            headers: local_var_headers,
+            headers: local_var_headers.to_owned(),
         };
         Err(Error::ResponseError(local_var_error))
     }
@@ -1815,21 +1916,23 @@ pub fn keys_get(
 
     let local_var_resp = local_var_req_builder.call()?;
 
-    let local_var_headers = super::get_header_map(&local_var_resp);
+    let local_var_resp: http::Response<String> = local_var_resp.into();
+
+    let local_var_headers = local_var_resp.headers();
 
     let local_var_status = local_var_resp.status();
-    let local_var_content = local_var_resp.into_string()?;
+    let local_var_content = local_var_resp.body().to_owned();
 
     let local_var_content_clone = local_var_content.clone();
 
-    if !local_var_status >= 400 {
+    if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
         let local_var_entity: Vec<crate::models::KeyItem> =
             serde_json::from_str(&local_var_content).map_err(Error::from)?;
         let local_var_result = ResponseContent {
             status: local_var_status,
             content: local_var_content_clone,
             entity: local_var_entity,
-            headers: local_var_headers,
+            headers: local_var_headers.to_owned(),
         };
         Ok(local_var_result)
     } else {
@@ -1838,7 +1941,7 @@ pub fn keys_get(
             status: local_var_status,
             content: local_var_content,
             entity: local_var_entity,
-            headers: local_var_headers,
+            headers: local_var_headers.to_owned(),
         };
         Err(Error::ResponseError(local_var_error))
     }
@@ -1872,19 +1975,21 @@ pub fn keys_key_id_cert_delete(
 
     let local_var_resp = local_var_req_builder.call()?;
 
-    let local_var_headers = super::get_header_map(&local_var_resp);
+    let local_var_resp: http::Response<String> = local_var_resp.into();
+
+    let local_var_headers = local_var_resp.headers();
 
     let local_var_status = local_var_resp.status();
-    let local_var_content = local_var_resp.into_string()?;
+    let local_var_content = local_var_resp.body().to_owned();
 
     let local_var_content_clone = local_var_content.clone();
 
-    if !local_var_status >= 400 {
+    if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
         let local_var_result = ResponseContent {
             status: local_var_status,
             content: local_var_content_clone,
             entity: (),
-            headers: local_var_headers,
+            headers: local_var_headers.to_owned(),
         };
         Ok(local_var_result)
     } else {
@@ -1893,7 +1998,7 @@ pub fn keys_key_id_cert_delete(
             status: local_var_status,
             content: local_var_content,
             entity: local_var_entity,
-            headers: local_var_headers,
+            headers: local_var_headers.to_owned(),
         };
         Err(Error::ResponseError(local_var_error))
     }
@@ -1931,14 +2036,16 @@ pub fn keys_key_id_cert_get(
 
     let local_var_resp = local_var_req_builder.call()?;
 
-    let local_var_headers = super::get_header_map(&local_var_resp);
+    let local_var_resp: http::Response<String> = local_var_resp.into();
+
+    let local_var_headers = local_var_resp.headers();
 
     let local_var_status = local_var_resp.status();
-    let local_var_content = local_var_resp.into_string()?;
+    let local_var_content = local_var_resp.body().to_owned();
 
     let local_var_content_clone = local_var_content.clone();
 
-    if !local_var_status >= 400 {
+    if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
         let local_var_entity: String = if is_json {
             serde_json::from_str(&local_var_content).map_err(Error::from)?
         } else {
@@ -1948,7 +2055,7 @@ pub fn keys_key_id_cert_get(
             status: local_var_status,
             content: local_var_content_clone,
             entity: local_var_entity,
-            headers: local_var_headers,
+            headers: local_var_headers.to_owned(),
         };
         Ok(local_var_result)
     } else {
@@ -1957,7 +2064,7 @@ pub fn keys_key_id_cert_get(
             status: local_var_status,
             content: local_var_content,
             entity: local_var_entity,
-            headers: local_var_headers,
+            headers: local_var_headers.to_owned(),
         };
         Err(Error::ResponseError(local_var_error))
     }
@@ -1999,19 +2106,21 @@ pub fn keys_key_id_cert_put(
         local_var_req_builder.send_string(body.get_string().as_str())?
     };
 
-    let local_var_headers = super::get_header_map(&local_var_resp);
+    let local_var_resp: http::Response<String> = local_var_resp.into();
+
+    let local_var_headers = local_var_resp.headers();
 
     let local_var_status = local_var_resp.status();
-    let local_var_content = local_var_resp.into_string()?;
+    let local_var_content = local_var_resp.body().to_owned();
 
     let local_var_content_clone = local_var_content.clone();
 
-    if !local_var_status >= 400 {
+    if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
         let local_var_result = ResponseContent {
             status: local_var_status,
             content: local_var_content_clone,
             entity: (),
-            headers: local_var_headers,
+            headers: local_var_headers.to_owned(),
         };
         Ok(local_var_result)
     } else {
@@ -2020,7 +2129,7 @@ pub fn keys_key_id_cert_put(
             status: local_var_status,
             content: local_var_content,
             entity: local_var_entity,
-            headers: local_var_headers,
+            headers: local_var_headers.to_owned(),
         };
         Err(Error::ResponseError(local_var_error))
     }
@@ -2058,20 +2167,22 @@ pub fn keys_key_id_csr_pem_post(
     local_var_req_builder = local_var_req_builder.set("content-type", "application/json");
     let local_var_resp = local_var_req_builder.send_json(distinguished_name)?;
 
-    let local_var_headers = super::get_header_map(&local_var_resp);
+    let local_var_resp: http::Response<String> = local_var_resp.into();
+
+    let local_var_headers = local_var_resp.headers();
 
     let local_var_status = local_var_resp.status();
-    let local_var_content = local_var_resp.into_string()?;
+    let local_var_content = local_var_resp.body().to_owned();
 
     let local_var_content_clone = local_var_content.clone();
 
-    if !local_var_status >= 400 {
+    if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
         let local_var_entity = local_var_content.clone();
         let local_var_result = ResponseContent {
             status: local_var_status,
             content: local_var_content_clone,
             entity: local_var_entity,
-            headers: local_var_headers,
+            headers: local_var_headers.to_owned(),
         };
         Ok(local_var_result)
     } else {
@@ -2080,7 +2191,7 @@ pub fn keys_key_id_csr_pem_post(
             status: local_var_status,
             content: local_var_content,
             entity: local_var_entity,
-            headers: local_var_headers,
+            headers: local_var_headers.to_owned(),
         };
         Err(Error::ResponseError(local_var_error))
     }
@@ -2118,21 +2229,23 @@ pub fn keys_key_id_decrypt_post(
     local_var_req_builder = local_var_req_builder.set("content-type", "application/json");
     let local_var_resp = local_var_req_builder.send_json(decrypt_request_data)?;
 
-    let local_var_headers = super::get_header_map(&local_var_resp);
+    let local_var_resp: http::Response<String> = local_var_resp.into();
+
+    let local_var_headers = local_var_resp.headers();
 
     let local_var_status = local_var_resp.status();
-    let local_var_content = local_var_resp.into_string()?;
+    let local_var_content = local_var_resp.body().to_owned();
 
     let local_var_content_clone = local_var_content.clone();
 
-    if !local_var_status >= 400 {
+    if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
         let local_var_entity: crate::models::DecryptData =
             serde_json::from_str(&local_var_content).map_err(Error::from)?;
         let local_var_result = ResponseContent {
             status: local_var_status,
             content: local_var_content_clone,
             entity: local_var_entity,
-            headers: local_var_headers,
+            headers: local_var_headers.to_owned(),
         };
         Ok(local_var_result)
     } else {
@@ -2141,7 +2254,7 @@ pub fn keys_key_id_decrypt_post(
             status: local_var_status,
             content: local_var_content,
             entity: local_var_entity,
-            headers: local_var_headers,
+            headers: local_var_headers.to_owned(),
         };
         Err(Error::ResponseError(local_var_error))
     }
@@ -2175,19 +2288,21 @@ pub fn keys_key_id_delete(
 
     let local_var_resp = local_var_req_builder.call()?;
 
-    let local_var_headers = super::get_header_map(&local_var_resp);
+    let local_var_resp: http::Response<String> = local_var_resp.into();
+
+    let local_var_headers = local_var_resp.headers();
 
     let local_var_status = local_var_resp.status();
-    let local_var_content = local_var_resp.into_string()?;
+    let local_var_content = local_var_resp.body().to_owned();
 
     let local_var_content_clone = local_var_content.clone();
 
-    if !local_var_status >= 400 {
+    if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
         let local_var_result = ResponseContent {
             status: local_var_status,
             content: local_var_content_clone,
             entity: (),
-            headers: local_var_headers,
+            headers: local_var_headers.to_owned(),
         };
         Ok(local_var_result)
     } else {
@@ -2196,7 +2311,7 @@ pub fn keys_key_id_delete(
             status: local_var_status,
             content: local_var_content,
             entity: local_var_entity,
-            headers: local_var_headers,
+            headers: local_var_headers.to_owned(),
         };
         Err(Error::ResponseError(local_var_error))
     }
@@ -2234,21 +2349,23 @@ pub fn keys_key_id_encrypt_post(
     local_var_req_builder = local_var_req_builder.set("content-type", "application/json");
     let local_var_resp = local_var_req_builder.send_json(encrypt_request_data)?;
 
-    let local_var_headers = super::get_header_map(&local_var_resp);
+    let local_var_resp: http::Response<String> = local_var_resp.into();
+
+    let local_var_headers = local_var_resp.headers();
 
     let local_var_status = local_var_resp.status();
-    let local_var_content = local_var_resp.into_string()?;
+    let local_var_content = local_var_resp.body().to_owned();
 
     let local_var_content_clone = local_var_content.clone();
 
-    if !local_var_status >= 400 {
+    if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
         let local_var_entity: crate::models::EncryptData =
             serde_json::from_str(&local_var_content).map_err(Error::from)?;
         let local_var_result = ResponseContent {
             status: local_var_status,
             content: local_var_content_clone,
             entity: local_var_entity,
-            headers: local_var_headers,
+            headers: local_var_headers.to_owned(),
         };
         Ok(local_var_result)
     } else {
@@ -2257,7 +2374,7 @@ pub fn keys_key_id_encrypt_post(
             status: local_var_status,
             content: local_var_content,
             entity: local_var_entity,
-            headers: local_var_headers,
+            headers: local_var_headers.to_owned(),
         };
         Err(Error::ResponseError(local_var_error))
     }
@@ -2293,21 +2410,23 @@ pub fn keys_key_id_get(
 
     let local_var_resp = local_var_req_builder.call()?;
 
-    let local_var_headers = super::get_header_map(&local_var_resp);
+    let local_var_resp: http::Response<String> = local_var_resp.into();
+
+    let local_var_headers = local_var_resp.headers();
 
     let local_var_status = local_var_resp.status();
-    let local_var_content = local_var_resp.into_string()?;
+    let local_var_content = local_var_resp.body().to_owned();
 
     let local_var_content_clone = local_var_content.clone();
 
-    if !local_var_status >= 400 {
+    if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
         let local_var_entity: crate::models::PublicKey =
             serde_json::from_str(&local_var_content).map_err(Error::from)?;
         let local_var_result = ResponseContent {
             status: local_var_status,
             content: local_var_content_clone,
             entity: local_var_entity,
-            headers: local_var_headers,
+            headers: local_var_headers.to_owned(),
         };
         Ok(local_var_result)
     } else {
@@ -2316,7 +2435,7 @@ pub fn keys_key_id_get(
             status: local_var_status,
             content: local_var_content,
             entity: local_var_entity,
-            headers: local_var_headers,
+            headers: local_var_headers.to_owned(),
         };
         Err(Error::ResponseError(local_var_error))
     }
@@ -2352,20 +2471,22 @@ pub fn keys_key_id_public_pem_get(
 
     let local_var_resp = local_var_req_builder.call()?;
 
-    let local_var_headers = super::get_header_map(&local_var_resp);
+    let local_var_resp: http::Response<String> = local_var_resp.into();
+
+    let local_var_headers = local_var_resp.headers();
 
     let local_var_status = local_var_resp.status();
-    let local_var_content = local_var_resp.into_string()?;
+    let local_var_content = local_var_resp.body().to_owned();
 
     let local_var_content_clone = local_var_content.clone();
 
-    if !local_var_status >= 400 {
+    if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
         let local_var_entity = local_var_content.clone();
         let local_var_result = ResponseContent {
             status: local_var_status,
             content: local_var_content_clone,
             entity: local_var_entity,
-            headers: local_var_headers,
+            headers: local_var_headers.to_owned(),
         };
         Ok(local_var_result)
     } else {
@@ -2375,7 +2496,7 @@ pub fn keys_key_id_public_pem_get(
             status: local_var_status,
             content: local_var_content,
             entity: local_var_entity,
-            headers: local_var_headers,
+            headers: local_var_headers.to_owned(),
         };
         Err(Error::ResponseError(local_var_error))
     }
@@ -2459,19 +2580,21 @@ pub fn keys_key_id_put(
         local_var_req_builder.send_string(body.get_string().as_str())?
     };
 
-    let local_var_headers = super::get_header_map(&local_var_resp);
+    let local_var_resp: http::Response<String> = local_var_resp.into();
+
+    let local_var_headers = local_var_resp.headers();
 
     let local_var_status = local_var_resp.status();
-    let local_var_content = local_var_resp.into_string()?;
+    let local_var_content = local_var_resp.body().to_owned();
 
     let local_var_content_clone = local_var_content.clone();
 
-    if !local_var_status >= 400 {
+    if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
         let local_var_result = ResponseContent {
             status: local_var_status,
             content: local_var_content_clone,
             entity: (),
-            headers: local_var_headers,
+            headers: local_var_headers.to_owned(),
         };
         Ok(local_var_result)
     } else {
@@ -2480,7 +2603,7 @@ pub fn keys_key_id_put(
             status: local_var_status,
             content: local_var_content,
             entity: local_var_entity,
-            headers: local_var_headers,
+            headers: local_var_headers.to_owned(),
         };
         Err(Error::ResponseError(local_var_error))
     }
@@ -2516,19 +2639,21 @@ pub fn keys_key_id_restrictions_tags_tag_delete(
 
     let local_var_resp = local_var_req_builder.call()?;
 
-    let local_var_headers = super::get_header_map(&local_var_resp);
+    let local_var_resp: http::Response<String> = local_var_resp.into();
+
+    let local_var_headers = local_var_resp.headers();
 
     let local_var_status = local_var_resp.status();
-    let local_var_content = local_var_resp.into_string()?;
+    let local_var_content = local_var_resp.body().to_owned();
 
     let local_var_content_clone = local_var_content.clone();
 
-    if !local_var_status >= 400 {
+    if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
         let local_var_result = ResponseContent {
             status: local_var_status,
             content: local_var_content_clone,
             entity: (),
-            headers: local_var_headers,
+            headers: local_var_headers.to_owned(),
         };
         Ok(local_var_result)
     } else {
@@ -2538,7 +2663,7 @@ pub fn keys_key_id_restrictions_tags_tag_delete(
             status: local_var_status,
             content: local_var_content,
             entity: local_var_entity,
-            headers: local_var_headers,
+            headers: local_var_headers.to_owned(),
         };
         Err(Error::ResponseError(local_var_error))
     }
@@ -2574,19 +2699,21 @@ pub fn keys_key_id_restrictions_tags_tag_put(
 
     let local_var_resp = local_var_req_builder.call()?;
 
-    let local_var_headers = super::get_header_map(&local_var_resp);
+    let local_var_resp: http::Response<String> = local_var_resp.into();
+
+    let local_var_headers = local_var_resp.headers();
 
     let local_var_status = local_var_resp.status();
-    let local_var_content = local_var_resp.into_string()?;
+    let local_var_content = local_var_resp.body().to_owned();
 
     let local_var_content_clone = local_var_content.clone();
 
-    if !local_var_status >= 400 {
+    if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
         let local_var_result = ResponseContent {
             status: local_var_status,
             content: local_var_content_clone,
             entity: (),
-            headers: local_var_headers,
+            headers: local_var_headers.to_owned(),
         };
         Ok(local_var_result)
     } else {
@@ -2596,7 +2723,7 @@ pub fn keys_key_id_restrictions_tags_tag_put(
             status: local_var_status,
             content: local_var_content,
             entity: local_var_entity,
-            headers: local_var_headers,
+            headers: local_var_headers.to_owned(),
         };
         Err(Error::ResponseError(local_var_error))
     }
@@ -2634,21 +2761,23 @@ pub fn keys_key_id_sign_post(
     local_var_req_builder = local_var_req_builder.set("content-type", "application/json");
     let local_var_resp = local_var_req_builder.send_json(sign_request_data)?;
 
-    let local_var_headers = super::get_header_map(&local_var_resp);
+    let local_var_resp: http::Response<String> = local_var_resp.into();
+
+    let local_var_headers = local_var_resp.headers();
 
     let local_var_status = local_var_resp.status();
-    let local_var_content = local_var_resp.into_string()?;
+    let local_var_content = local_var_resp.body().to_owned();
 
     let local_var_content_clone = local_var_content.clone();
 
-    if !local_var_status >= 400 {
+    if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
         let local_var_entity: crate::models::SignData =
             serde_json::from_str(&local_var_content).map_err(Error::from)?;
         let local_var_result = ResponseContent {
             status: local_var_status,
             content: local_var_content_clone,
             entity: local_var_entity,
-            headers: local_var_headers,
+            headers: local_var_headers.to_owned(),
         };
         Ok(local_var_result)
     } else {
@@ -2657,7 +2786,7 @@ pub fn keys_key_id_sign_post(
             status: local_var_status,
             content: local_var_content,
             entity: local_var_entity,
-            headers: local_var_headers,
+            headers: local_var_headers.to_owned(),
         };
         Err(Error::ResponseError(local_var_error))
     }
@@ -2736,19 +2865,21 @@ pub fn keys_post(
         local_var_req_builder.send_string(body.get_string().as_str())?
     };
 
-    let local_var_headers = super::get_header_map(&local_var_resp);
+    let local_var_resp: http::Response<String> = local_var_resp.into();
+
+    let local_var_headers = local_var_resp.headers();
 
     let local_var_status = local_var_resp.status();
-    let local_var_content = local_var_resp.into_string()?;
+    let local_var_content = local_var_resp.body().to_owned();
 
     let local_var_content_clone = local_var_content.clone();
 
-    if !local_var_status >= 400 {
+    if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
         let local_var_result = ResponseContent {
             status: local_var_status,
             content: local_var_content_clone,
             entity: (),
-            headers: local_var_headers,
+            headers: local_var_headers.to_owned(),
         };
         Ok(local_var_result)
     } else {
@@ -2757,7 +2888,7 @@ pub fn keys_post(
             status: local_var_status,
             content: local_var_content,
             entity: local_var_entity,
-            headers: local_var_headers,
+            headers: local_var_headers.to_owned(),
         };
         Err(Error::ResponseError(local_var_error))
     }
@@ -2786,19 +2917,21 @@ pub fn lock_post(
 
     let local_var_resp = local_var_req_builder.call()?;
 
-    let local_var_headers = super::get_header_map(&local_var_resp);
+    let local_var_resp: http::Response<String> = local_var_resp.into();
+
+    let local_var_headers = local_var_resp.headers();
 
     let local_var_status = local_var_resp.status();
-    let local_var_content = local_var_resp.into_string()?;
+    let local_var_content = local_var_resp.body().to_owned();
 
     let local_var_content_clone = local_var_content.clone();
 
-    if !local_var_status >= 400 {
+    if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
         let local_var_result = ResponseContent {
             status: local_var_status,
             content: local_var_content_clone,
             entity: (),
-            headers: local_var_headers,
+            headers: local_var_headers.to_owned(),
         };
         Ok(local_var_result)
     } else {
@@ -2807,7 +2940,7 @@ pub fn lock_post(
             status: local_var_status,
             content: local_var_content,
             entity: local_var_entity,
-            headers: local_var_headers,
+            headers: local_var_headers.to_owned(),
         };
         Err(Error::ResponseError(local_var_error))
     }
@@ -2838,21 +2971,23 @@ pub fn metrics_get(
 
     let local_var_resp = local_var_req_builder.call()?;
 
-    let local_var_headers = super::get_header_map(&local_var_resp);
+    let local_var_resp: http::Response<String> = local_var_resp.into();
+
+    let local_var_headers = local_var_resp.headers();
 
     let local_var_status = local_var_resp.status();
-    let local_var_content = local_var_resp.into_string()?;
+    let local_var_content = local_var_resp.body().to_owned();
 
     let local_var_content_clone = local_var_content.clone();
 
-    if !local_var_status >= 400 {
+    if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
         let local_var_entity: serde_json::Value =
             serde_json::from_str(&local_var_content).map_err(Error::from)?;
         let local_var_result = ResponseContent {
             status: local_var_status,
             content: local_var_content_clone,
             entity: local_var_entity,
-            headers: local_var_headers,
+            headers: local_var_headers.to_owned(),
         };
         Ok(local_var_result)
     } else {
@@ -2861,7 +2996,7 @@ pub fn metrics_get(
             status: local_var_status,
             content: local_var_content,
             entity: local_var_entity,
-            headers: local_var_headers,
+            headers: local_var_headers.to_owned(),
         };
         Err(Error::ResponseError(local_var_error))
     }
@@ -2887,19 +3022,21 @@ pub fn provision_post(
     local_var_req_builder = local_var_req_builder.set("content-type", "application/json");
     let local_var_resp = local_var_req_builder.send_json(provision_request_data)?;
 
-    let local_var_headers = super::get_header_map(&local_var_resp);
+    let local_var_resp: http::Response<String> = local_var_resp.into();
+
+    let local_var_headers = local_var_resp.headers();
 
     let local_var_status = local_var_resp.status();
-    let local_var_content = local_var_resp.into_string()?;
+    let local_var_content = local_var_resp.body().to_owned();
 
     let local_var_content_clone = local_var_content.clone();
 
-    if !local_var_status >= 400 {
+    if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
         let local_var_result = ResponseContent {
             status: local_var_status,
             content: local_var_content_clone,
             entity: (),
-            headers: local_var_headers,
+            headers: local_var_headers.to_owned(),
         };
         Ok(local_var_result)
     } else {
@@ -2908,7 +3045,7 @@ pub fn provision_post(
             status: local_var_status,
             content: local_var_content,
             entity: local_var_entity,
-            headers: local_var_headers,
+            headers: local_var_headers.to_owned(),
         };
         Err(Error::ResponseError(local_var_error))
     }
@@ -2941,21 +3078,23 @@ pub fn random_post(
     local_var_req_builder = local_var_req_builder.set("content-type", "application/json");
     let local_var_resp = local_var_req_builder.send_json(random_request_data)?;
 
-    let local_var_headers = super::get_header_map(&local_var_resp);
+    let local_var_resp: http::Response<String> = local_var_resp.into();
+
+    let local_var_headers = local_var_resp.headers();
 
     let local_var_status = local_var_resp.status();
-    let local_var_content = local_var_resp.into_string()?;
+    let local_var_content = local_var_resp.body().to_owned();
 
     let local_var_content_clone = local_var_content.clone();
 
-    if !local_var_status >= 400 {
+    if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
         let local_var_entity: crate::models::RandomData =
             serde_json::from_str(&local_var_content).map_err(Error::from)?;
         let local_var_result = ResponseContent {
             status: local_var_status,
             content: local_var_content_clone,
             entity: local_var_entity,
-            headers: local_var_headers,
+            headers: local_var_headers.to_owned(),
         };
         Ok(local_var_result)
     } else {
@@ -2964,7 +3103,7 @@ pub fn random_post(
             status: local_var_status,
             content: local_var_content,
             entity: local_var_entity,
-            headers: local_var_headers,
+            headers: local_var_headers.to_owned(),
         };
         Err(Error::ResponseError(local_var_error))
     }
@@ -2993,19 +3132,21 @@ pub fn system_backup_post(
 
     let local_var_resp = local_var_req_builder.call()?;
 
-    let local_var_headers = super::get_header_map(&local_var_resp);
+    let local_var_resp: http::Response<String> = local_var_resp.into();
+
+    let local_var_headers = local_var_resp.headers();
 
     let local_var_status = local_var_resp.status();
-    let local_var_content = local_var_resp.into_string()?;
+    let local_var_content = local_var_resp.body().to_owned();
 
     let local_var_content_clone = local_var_content.clone();
 
-    if !local_var_status >= 400 {
+    if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
         let local_var_result = ResponseContent {
             status: local_var_status,
             content: local_var_content_clone,
             entity: (),
-            headers: local_var_headers,
+            headers: local_var_headers.to_owned(),
         };
         Ok(local_var_result)
     } else {
@@ -3014,7 +3155,7 @@ pub fn system_backup_post(
             status: local_var_status,
             content: local_var_content,
             entity: local_var_entity,
-            headers: local_var_headers,
+            headers: local_var_headers.to_owned(),
         };
         Err(Error::ResponseError(local_var_error))
     }
@@ -3043,19 +3184,21 @@ pub fn system_cancel_update_post(
 
     let local_var_resp = local_var_req_builder.call()?;
 
-    let local_var_headers = super::get_header_map(&local_var_resp);
+    let local_var_resp: http::Response<String> = local_var_resp.into();
+
+    let local_var_headers = local_var_resp.headers();
 
     let local_var_status = local_var_resp.status();
-    let local_var_content = local_var_resp.into_string()?;
+    let local_var_content = local_var_resp.body().to_owned();
 
     let local_var_content_clone = local_var_content.clone();
 
-    if !local_var_status >= 400 {
+    if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
         let local_var_result = ResponseContent {
             status: local_var_status,
             content: local_var_content_clone,
             entity: (),
-            headers: local_var_headers,
+            headers: local_var_headers.to_owned(),
         };
         Ok(local_var_result)
     } else {
@@ -3065,7 +3208,7 @@ pub fn system_cancel_update_post(
             status: local_var_status,
             content: local_var_content,
             entity: local_var_entity,
-            headers: local_var_headers,
+            headers: local_var_headers.to_owned(),
         };
         Err(Error::ResponseError(local_var_error))
     }
@@ -3094,19 +3237,21 @@ pub fn system_commit_update_post(
 
     let local_var_resp = local_var_req_builder.call()?;
 
-    let local_var_headers = super::get_header_map(&local_var_resp);
+    let local_var_resp: http::Response<String> = local_var_resp.into();
+
+    let local_var_headers = local_var_resp.headers();
 
     let local_var_status = local_var_resp.status();
-    let local_var_content = local_var_resp.into_string()?;
+    let local_var_content = local_var_resp.body().to_owned();
 
     let local_var_content_clone = local_var_content.clone();
 
-    if !local_var_status >= 400 {
+    if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
         let local_var_result = ResponseContent {
             status: local_var_status,
             content: local_var_content_clone,
             entity: (),
-            headers: local_var_headers,
+            headers: local_var_headers.to_owned(),
         };
         Ok(local_var_result)
     } else {
@@ -3116,7 +3261,7 @@ pub fn system_commit_update_post(
             status: local_var_status,
             content: local_var_content,
             entity: local_var_entity,
-            headers: local_var_headers,
+            headers: local_var_headers.to_owned(),
         };
         Err(Error::ResponseError(local_var_error))
     }
@@ -3145,19 +3290,21 @@ pub fn system_factory_reset_post(
 
     let local_var_resp = local_var_req_builder.call()?;
 
-    let local_var_headers = super::get_header_map(&local_var_resp);
+    let local_var_resp: http::Response<String> = local_var_resp.into();
+
+    let local_var_headers = local_var_resp.headers();
 
     let local_var_status = local_var_resp.status();
-    let local_var_content = local_var_resp.into_string()?;
+    let local_var_content = local_var_resp.body().to_owned();
 
     let local_var_content_clone = local_var_content.clone();
 
-    if !local_var_status >= 400 {
+    if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
         let local_var_result = ResponseContent {
             status: local_var_status,
             content: local_var_content_clone,
             entity: (),
-            headers: local_var_headers,
+            headers: local_var_headers.to_owned(),
         };
         Ok(local_var_result)
     } else {
@@ -3167,7 +3314,7 @@ pub fn system_factory_reset_post(
             status: local_var_status,
             content: local_var_content,
             entity: local_var_entity,
-            headers: local_var_headers,
+            headers: local_var_headers.to_owned(),
         };
         Err(Error::ResponseError(local_var_error))
     }
@@ -3198,21 +3345,23 @@ pub fn system_info_get(
 
     let local_var_resp = local_var_req_builder.call()?;
 
-    let local_var_headers = super::get_header_map(&local_var_resp);
+    let local_var_resp: http::Response<String> = local_var_resp.into();
+
+    let local_var_headers = local_var_resp.headers();
 
     let local_var_status = local_var_resp.status();
-    let local_var_content = local_var_resp.into_string()?;
+    let local_var_content = local_var_resp.body().to_owned();
 
     let local_var_content_clone = local_var_content.clone();
 
-    if !local_var_status >= 400 {
+    if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
         let local_var_entity: crate::models::SystemInfo =
             serde_json::from_str(&local_var_content).map_err(Error::from)?;
         let local_var_result = ResponseContent {
             status: local_var_status,
             content: local_var_content_clone,
             entity: local_var_entity,
-            headers: local_var_headers,
+            headers: local_var_headers.to_owned(),
         };
         Ok(local_var_result)
     } else {
@@ -3221,7 +3370,7 @@ pub fn system_info_get(
             status: local_var_status,
             content: local_var_content,
             entity: local_var_entity,
-            headers: local_var_headers,
+            headers: local_var_headers.to_owned(),
         };
         Err(Error::ResponseError(local_var_error))
     }
@@ -3250,19 +3399,21 @@ pub fn system_reboot_post(
 
     let local_var_resp = local_var_req_builder.call()?;
 
-    let local_var_headers = super::get_header_map(&local_var_resp);
+    let local_var_resp: http::Response<String> = local_var_resp.into();
+
+    let local_var_headers = local_var_resp.headers();
 
     let local_var_status = local_var_resp.status();
-    let local_var_content = local_var_resp.into_string()?;
+    let local_var_content = local_var_resp.body().to_owned();
 
     let local_var_content_clone = local_var_content.clone();
 
-    if !local_var_status >= 400 {
+    if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
         let local_var_result = ResponseContent {
             status: local_var_status,
             content: local_var_content_clone,
             entity: (),
-            headers: local_var_headers,
+            headers: local_var_headers.to_owned(),
         };
         Ok(local_var_result)
     } else {
@@ -3271,7 +3422,7 @@ pub fn system_reboot_post(
             status: local_var_status,
             content: local_var_content,
             entity: local_var_entity,
-            headers: local_var_headers,
+            headers: local_var_headers.to_owned(),
         };
         Err(Error::ResponseError(local_var_error))
     }
@@ -3305,19 +3456,21 @@ pub fn system_restore_post(
     local_var_req_builder = local_var_req_builder.set("content-type", "application/octet-stream");
     let local_var_resp = local_var_req_builder.send_string(body)?;
 
-    let local_var_headers = super::get_header_map(&local_var_resp);
+    let local_var_resp: http::Response<String> = local_var_resp.into();
+
+    let local_var_headers = local_var_resp.headers();
 
     let local_var_status = local_var_resp.status();
-    let local_var_content = local_var_resp.into_string()?;
+    let local_var_content = local_var_resp.body().to_owned();
 
     let local_var_content_clone = local_var_content.clone();
 
-    if !local_var_status >= 400 {
+    if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
         let local_var_result = ResponseContent {
             status: local_var_status,
             content: local_var_content_clone,
             entity: (),
-            headers: local_var_headers,
+            headers: local_var_headers.to_owned(),
         };
         Ok(local_var_result)
     } else {
@@ -3326,7 +3479,7 @@ pub fn system_restore_post(
             status: local_var_status,
             content: local_var_content,
             entity: local_var_entity,
-            headers: local_var_headers,
+            headers: local_var_headers.to_owned(),
         };
         Err(Error::ResponseError(local_var_error))
     }
@@ -3355,19 +3508,21 @@ pub fn system_shutdown_post(
 
     let local_var_resp = local_var_req_builder.call()?;
 
-    let local_var_headers = super::get_header_map(&local_var_resp);
+    let local_var_resp: http::Response<String> = local_var_resp.into();
+
+    let local_var_headers = local_var_resp.headers();
 
     let local_var_status = local_var_resp.status();
-    let local_var_content = local_var_resp.into_string()?;
+    let local_var_content = local_var_resp.body().to_owned();
 
     let local_var_content_clone = local_var_content.clone();
 
-    if !local_var_status >= 400 {
+    if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
         let local_var_result = ResponseContent {
             status: local_var_status,
             content: local_var_content_clone,
             entity: (),
-            headers: local_var_headers,
+            headers: local_var_headers.to_owned(),
         };
         Ok(local_var_result)
     } else {
@@ -3376,7 +3531,7 @@ pub fn system_shutdown_post(
             status: local_var_status,
             content: local_var_content,
             entity: local_var_entity,
-            headers: local_var_headers,
+            headers: local_var_headers.to_owned(),
         };
         Err(Error::ResponseError(local_var_error))
     }
@@ -3409,21 +3564,23 @@ pub fn system_update_post(
     local_var_req_builder = local_var_req_builder.set("content-type", "application/octet-stream");
     let local_var_resp = local_var_req_builder.send_string(body)?;
 
-    let local_var_headers = super::get_header_map(&local_var_resp);
+    let local_var_resp: http::Response<String> = local_var_resp.into();
+
+    let local_var_headers = local_var_resp.headers();
 
     let local_var_status = local_var_resp.status();
-    let local_var_content = local_var_resp.into_string()?;
+    let local_var_content = local_var_resp.body().to_owned();
 
     let local_var_content_clone = local_var_content.clone();
 
-    if !local_var_status >= 400 {
+    if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
         let local_var_entity: crate::models::SystemUpdateData =
             serde_json::from_str(&local_var_content).map_err(Error::from)?;
         let local_var_result = ResponseContent {
             status: local_var_status,
             content: local_var_content_clone,
             entity: local_var_entity,
-            headers: local_var_headers,
+            headers: local_var_headers.to_owned(),
         };
         Ok(local_var_result)
     } else {
@@ -3432,7 +3589,7 @@ pub fn system_update_post(
             status: local_var_status,
             content: local_var_content,
             entity: local_var_entity,
-            headers: local_var_headers,
+            headers: local_var_headers.to_owned(),
         };
         Err(Error::ResponseError(local_var_error))
     }
@@ -3458,19 +3615,21 @@ pub fn unlock_post(
     local_var_req_builder = local_var_req_builder.set("content-type", "application/json");
     let local_var_resp = local_var_req_builder.send_json(unlock_request_data)?;
 
-    let local_var_headers = super::get_header_map(&local_var_resp);
+    let local_var_resp: http::Response<String> = local_var_resp.into();
+
+    let local_var_headers = local_var_resp.headers();
 
     let local_var_status = local_var_resp.status();
-    let local_var_content = local_var_resp.into_string()?;
+    let local_var_content = local_var_resp.body().to_owned();
 
     let local_var_content_clone = local_var_content.clone();
 
-    if !local_var_status >= 400 {
+    if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
         let local_var_result = ResponseContent {
             status: local_var_status,
             content: local_var_content_clone,
             entity: (),
-            headers: local_var_headers,
+            headers: local_var_headers.to_owned(),
         };
         Ok(local_var_result)
     } else {
@@ -3479,7 +3638,7 @@ pub fn unlock_post(
             status: local_var_status,
             content: local_var_content,
             entity: local_var_entity,
-            headers: local_var_headers,
+            headers: local_var_headers.to_owned(),
         };
         Err(Error::ResponseError(local_var_error))
     }
@@ -3510,21 +3669,23 @@ pub fn users_get(
 
     let local_var_resp = local_var_req_builder.call()?;
 
-    let local_var_headers = super::get_header_map(&local_var_resp);
+    let local_var_resp: http::Response<String> = local_var_resp.into();
+
+    let local_var_headers = local_var_resp.headers();
 
     let local_var_status = local_var_resp.status();
-    let local_var_content = local_var_resp.into_string()?;
+    let local_var_content = local_var_resp.body().to_owned();
 
     let local_var_content_clone = local_var_content.clone();
 
-    if !local_var_status >= 400 {
+    if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
         let local_var_entity: Vec<crate::models::UserItem> =
             serde_json::from_str(&local_var_content).map_err(Error::from)?;
         let local_var_result = ResponseContent {
             status: local_var_status,
             content: local_var_content_clone,
             entity: local_var_entity,
-            headers: local_var_headers,
+            headers: local_var_headers.to_owned(),
         };
         Ok(local_var_result)
     } else {
@@ -3533,7 +3694,7 @@ pub fn users_get(
             status: local_var_status,
             content: local_var_content,
             entity: local_var_entity,
-            headers: local_var_headers,
+            headers: local_var_headers.to_owned(),
         };
         Err(Error::ResponseError(local_var_error))
     }
@@ -3564,19 +3725,21 @@ pub fn users_post(
     local_var_req_builder = local_var_req_builder.set("content-type", "application/json");
     let local_var_resp = local_var_req_builder.send_json(user_post_data)?;
 
-    let local_var_headers = super::get_header_map(&local_var_resp);
+    let local_var_resp: http::Response<String> = local_var_resp.into();
+
+    let local_var_headers = local_var_resp.headers();
 
     let local_var_status = local_var_resp.status();
-    let local_var_content = local_var_resp.into_string()?;
+    let local_var_content = local_var_resp.body().to_owned();
 
     let local_var_content_clone = local_var_content.clone();
 
-    if !local_var_status >= 400 {
+    if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
         let local_var_result = ResponseContent {
             status: local_var_status,
             content: local_var_content_clone,
             entity: (),
-            headers: local_var_headers,
+            headers: local_var_headers.to_owned(),
         };
         Ok(local_var_result)
     } else {
@@ -3585,7 +3748,7 @@ pub fn users_post(
             status: local_var_status,
             content: local_var_content,
             entity: local_var_entity,
-            headers: local_var_headers,
+            headers: local_var_headers.to_owned(),
         };
         Err(Error::ResponseError(local_var_error))
     }
@@ -3619,19 +3782,21 @@ pub fn users_user_id_delete(
 
     let local_var_resp = local_var_req_builder.call()?;
 
-    let local_var_headers = super::get_header_map(&local_var_resp);
+    let local_var_resp: http::Response<String> = local_var_resp.into();
+
+    let local_var_headers = local_var_resp.headers();
 
     let local_var_status = local_var_resp.status();
-    let local_var_content = local_var_resp.into_string()?;
+    let local_var_content = local_var_resp.body().to_owned();
 
     let local_var_content_clone = local_var_content.clone();
 
-    if !local_var_status >= 400 {
+    if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
         let local_var_result = ResponseContent {
             status: local_var_status,
             content: local_var_content_clone,
             entity: (),
-            headers: local_var_headers,
+            headers: local_var_headers.to_owned(),
         };
         Ok(local_var_result)
     } else {
@@ -3640,7 +3805,7 @@ pub fn users_user_id_delete(
             status: local_var_status,
             content: local_var_content,
             entity: local_var_entity,
-            headers: local_var_headers,
+            headers: local_var_headers.to_owned(),
         };
         Err(Error::ResponseError(local_var_error))
     }
@@ -3676,21 +3841,23 @@ pub fn users_user_id_get(
 
     let local_var_resp = local_var_req_builder.call()?;
 
-    let local_var_headers = super::get_header_map(&local_var_resp);
+    let local_var_resp: http::Response<String> = local_var_resp.into();
+
+    let local_var_headers = local_var_resp.headers();
 
     let local_var_status = local_var_resp.status();
-    let local_var_content = local_var_resp.into_string()?;
+    let local_var_content = local_var_resp.body().to_owned();
 
     let local_var_content_clone = local_var_content.clone();
 
-    if !local_var_status >= 400 {
+    if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
         let local_var_entity: crate::models::UserData =
             serde_json::from_str(&local_var_content).map_err(Error::from)?;
         let local_var_result = ResponseContent {
             status: local_var_status,
             content: local_var_content_clone,
             entity: local_var_entity,
-            headers: local_var_headers,
+            headers: local_var_headers.to_owned(),
         };
         Ok(local_var_result)
     } else {
@@ -3699,7 +3866,7 @@ pub fn users_user_id_get(
             status: local_var_status,
             content: local_var_content,
             entity: local_var_entity,
-            headers: local_var_headers,
+            headers: local_var_headers.to_owned(),
         };
         Err(Error::ResponseError(local_var_error))
     }
@@ -3735,19 +3902,21 @@ pub fn users_user_id_passphrase_post(
     local_var_req_builder = local_var_req_builder.set("content-type", "application/json");
     let local_var_resp = local_var_req_builder.send_json(user_passphrase_post_data)?;
 
-    let local_var_headers = super::get_header_map(&local_var_resp);
+    let local_var_resp: http::Response<String> = local_var_resp.into();
+
+    let local_var_headers = local_var_resp.headers();
 
     let local_var_status = local_var_resp.status();
-    let local_var_content = local_var_resp.into_string()?;
+    let local_var_content = local_var_resp.body().to_owned();
 
     let local_var_content_clone = local_var_content.clone();
 
-    if !local_var_status >= 400 {
+    if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
         let local_var_result = ResponseContent {
             status: local_var_status,
             content: local_var_content_clone,
             entity: (),
-            headers: local_var_headers,
+            headers: local_var_headers.to_owned(),
         };
         Ok(local_var_result)
     } else {
@@ -3757,7 +3926,7 @@ pub fn users_user_id_passphrase_post(
             status: local_var_status,
             content: local_var_content,
             entity: local_var_entity,
-            headers: local_var_headers,
+            headers: local_var_headers.to_owned(),
         };
         Err(Error::ResponseError(local_var_error))
     }
@@ -3793,19 +3962,21 @@ pub fn users_user_id_put(
     local_var_req_builder = local_var_req_builder.set("content-type", "application/json");
     let local_var_resp = local_var_req_builder.send_json(user_post_data)?;
 
-    let local_var_headers = super::get_header_map(&local_var_resp);
+    let local_var_resp: http::Response<String> = local_var_resp.into();
+
+    let local_var_headers = local_var_resp.headers();
 
     let local_var_status = local_var_resp.status();
-    let local_var_content = local_var_resp.into_string()?;
+    let local_var_content = local_var_resp.body().to_owned();
 
     let local_var_content_clone = local_var_content.clone();
 
-    if !local_var_status >= 400 {
+    if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
         let local_var_result = ResponseContent {
             status: local_var_status,
             content: local_var_content_clone,
             entity: (),
-            headers: local_var_headers,
+            headers: local_var_headers.to_owned(),
         };
         Ok(local_var_result)
     } else {
@@ -3814,7 +3985,7 @@ pub fn users_user_id_put(
             status: local_var_status,
             content: local_var_content,
             entity: local_var_entity,
-            headers: local_var_headers,
+            headers: local_var_headers.to_owned(),
         };
         Err(Error::ResponseError(local_var_error))
     }
@@ -3850,21 +4021,23 @@ pub fn users_user_id_tags_get(
 
     let local_var_resp = local_var_req_builder.call()?;
 
-    let local_var_headers = super::get_header_map(&local_var_resp);
+    let local_var_resp: http::Response<String> = local_var_resp.into();
+
+    let local_var_headers = local_var_resp.headers();
 
     let local_var_status = local_var_resp.status();
-    let local_var_content = local_var_resp.into_string()?;
+    let local_var_content = local_var_resp.body().to_owned();
 
     let local_var_content_clone = local_var_content.clone();
 
-    if !local_var_status >= 400 {
+    if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
         let local_var_entity: Vec<String> =
             serde_json::from_str(&local_var_content).map_err(Error::from)?;
         let local_var_result = ResponseContent {
             status: local_var_status,
             content: local_var_content_clone,
             entity: local_var_entity,
-            headers: local_var_headers,
+            headers: local_var_headers.to_owned(),
         };
         Ok(local_var_result)
     } else {
@@ -3873,7 +4046,7 @@ pub fn users_user_id_tags_get(
             status: local_var_status,
             content: local_var_content,
             entity: local_var_entity,
-            headers: local_var_headers,
+            headers: local_var_headers.to_owned(),
         };
         Err(Error::ResponseError(local_var_error))
     }
@@ -3909,19 +4082,21 @@ pub fn users_user_id_tags_tag_delete(
 
     let local_var_resp = local_var_req_builder.call()?;
 
-    let local_var_headers = super::get_header_map(&local_var_resp);
+    let local_var_resp: http::Response<String> = local_var_resp.into();
+
+    let local_var_headers = local_var_resp.headers();
 
     let local_var_status = local_var_resp.status();
-    let local_var_content = local_var_resp.into_string()?;
+    let local_var_content = local_var_resp.body().to_owned();
 
     let local_var_content_clone = local_var_content.clone();
 
-    if !local_var_status >= 400 {
+    if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
         let local_var_result = ResponseContent {
             status: local_var_status,
             content: local_var_content_clone,
             entity: (),
-            headers: local_var_headers,
+            headers: local_var_headers.to_owned(),
         };
         Ok(local_var_result)
     } else {
@@ -3931,7 +4106,7 @@ pub fn users_user_id_tags_tag_delete(
             status: local_var_status,
             content: local_var_content,
             entity: local_var_entity,
-            headers: local_var_headers,
+            headers: local_var_headers.to_owned(),
         };
         Err(Error::ResponseError(local_var_error))
     }
@@ -3967,19 +4142,21 @@ pub fn users_user_id_tags_tag_put(
 
     let local_var_resp = local_var_req_builder.call()?;
 
-    let local_var_headers = super::get_header_map(&local_var_resp);
+    let local_var_resp: http::Response<String> = local_var_resp.into();
+
+    let local_var_headers = local_var_resp.headers();
 
     let local_var_status = local_var_resp.status();
-    let local_var_content = local_var_resp.into_string()?;
+    let local_var_content = local_var_resp.body().to_owned();
 
     let local_var_content_clone = local_var_content.clone();
 
-    if !local_var_status >= 400 {
+    if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
         let local_var_result = ResponseContent {
             status: local_var_status,
             content: local_var_content_clone,
             entity: (),
-            headers: local_var_headers,
+            headers: local_var_headers.to_owned(),
         };
         Ok(local_var_result)
     } else {
@@ -3989,7 +4166,7 @@ pub fn users_user_id_tags_tag_put(
             status: local_var_status,
             content: local_var_content,
             entity: local_var_entity,
-            headers: local_var_headers,
+            headers: local_var_headers.to_owned(),
         };
         Err(Error::ResponseError(local_var_error))
     }
