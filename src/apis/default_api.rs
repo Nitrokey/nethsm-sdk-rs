@@ -130,6 +130,7 @@ pub enum ConfigBackupPassphrasePutError {
     Status400(),
     Status401(),
     Status403(),
+    Status406(),
     Status412(),
     UnknownValue(serde_json::Value),
 }
@@ -140,6 +141,7 @@ pub enum ConfigBackupPassphrasePutError {
 pub enum ConfigLoggingGetError {
     Status401(),
     Status403(),
+    Status406(),
     Status412(),
     UnknownValue(serde_json::Value),
 }
@@ -151,6 +153,7 @@ pub enum ConfigLoggingPutError {
     Status400(),
     Status401(),
     Status403(),
+    Status406(),
     Status412(),
     UnknownValue(serde_json::Value),
 }
@@ -161,6 +164,7 @@ pub enum ConfigLoggingPutError {
 pub enum ConfigNetworkGetError {
     Status401(),
     Status403(),
+    Status406(),
     Status412(),
     UnknownValue(serde_json::Value),
 }
@@ -172,6 +176,7 @@ pub enum ConfigNetworkPutError {
     Status400(),
     Status401(),
     Status403(),
+    Status406(),
     Status412(),
     UnknownValue(serde_json::Value),
 }
@@ -182,6 +187,7 @@ pub enum ConfigNetworkPutError {
 pub enum ConfigTimeGetError {
     Status401(),
     Status403(),
+    Status406(),
     Status412(),
     UnknownValue(serde_json::Value),
 }
@@ -193,6 +199,7 @@ pub enum ConfigTimePutError {
     Status400(),
     Status401(),
     Status403(),
+    Status406(),
     Status412(),
     UnknownValue(serde_json::Value),
 }
@@ -203,6 +210,7 @@ pub enum ConfigTimePutError {
 pub enum ConfigTlsCertPemGetError {
     Status401(),
     Status403(),
+    Status406(),
     Status412(),
     UnknownValue(serde_json::Value),
 }
@@ -211,8 +219,10 @@ pub enum ConfigTlsCertPemGetError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ConfigTlsCertPemPutError {
+    Status400(),
     Status401(),
     Status403(),
+    Status406(),
     Status412(),
     UnknownValue(serde_json::Value),
 }
@@ -223,6 +233,7 @@ pub enum ConfigTlsCertPemPutError {
 pub enum ConfigTlsCsrPemPostError {
     Status401(),
     Status403(),
+    Status406(),
     Status412(),
     UnknownValue(serde_json::Value),
 }
@@ -234,6 +245,7 @@ pub enum ConfigTlsGeneratePostError {
     Status400(),
     Status401(),
     Status403(),
+    Status406(),
     Status412(),
     UnknownValue(serde_json::Value),
 }
@@ -244,6 +256,7 @@ pub enum ConfigTlsGeneratePostError {
 pub enum ConfigTlsPublicPemGetError {
     Status401(),
     Status403(),
+    Status406(),
     Status412(),
     UnknownValue(serde_json::Value),
 }
@@ -254,6 +267,7 @@ pub enum ConfigTlsPublicPemGetError {
 pub enum ConfigUnattendedBootGetError {
     Status401(),
     Status403(),
+    Status406(),
     Status412(),
     UnknownValue(serde_json::Value),
 }
@@ -265,6 +279,7 @@ pub enum ConfigUnattendedBootPutError {
     Status400(),
     Status401(),
     Status403(),
+    Status406(),
     Status412(),
     UnknownValue(serde_json::Value),
 }
@@ -276,6 +291,7 @@ pub enum ConfigUnlockPassphrasePutError {
     Status400(),
     Status401(),
     Status403(),
+    Status406(),
     Status412(),
     UnknownValue(serde_json::Value),
 }
@@ -284,6 +300,7 @@ pub enum ConfigUnlockPassphrasePutError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum HealthAliveGetError {
+    Status406(),
     Status412(),
     UnknownValue(serde_json::Value),
 }
@@ -292,6 +309,7 @@ pub enum HealthAliveGetError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum HealthReadyGetError {
+    Status406(),
     Status412(),
     UnknownValue(serde_json::Value),
 }
@@ -300,6 +318,7 @@ pub enum HealthReadyGetError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum HealthStateGetError {
+    Status406(),
     UnknownValue(serde_json::Value),
 }
 
@@ -307,6 +326,7 @@ pub enum HealthStateGetError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum InfoGetError {
+    Status406(),
     UnknownValue(serde_json::Value),
 }
 
@@ -317,6 +337,7 @@ pub enum KeysGeneratePostError {
     Status400(),
     Status401(),
     Status403(),
+    Status406(),
     Status412(),
     UnknownValue(serde_json::Value),
 }
@@ -327,6 +348,7 @@ pub enum KeysGeneratePostError {
 pub enum KeysGetError {
     Status401(),
     Status403(),
+    Status406(),
     Status412(),
     UnknownValue(serde_json::Value),
 }
@@ -338,6 +360,8 @@ pub enum KeysKeyIdCertDeleteError {
     Status401(),
     Status403(),
     Status404(),
+    Status406(),
+    Status409(),
     Status412(),
     UnknownValue(serde_json::Value),
 }
@@ -349,6 +373,7 @@ pub enum KeysKeyIdCertGetError {
     Status401(),
     Status403(),
     Status404(),
+    Status406(),
     Status412(),
     UnknownValue(serde_json::Value),
 }
@@ -359,6 +384,7 @@ pub enum KeysKeyIdCertGetError {
 pub enum KeysKeyIdCertPutError {
     Status401(),
     Status403(),
+    Status406(),
     Status409(),
     Status412(),
     UnknownValue(serde_json::Value),
@@ -371,6 +397,7 @@ pub enum KeysKeyIdCsrPemPostError {
     Status401(),
     Status403(),
     Status404(),
+    Status406(),
     Status412(),
     UnknownValue(serde_json::Value),
 }
@@ -383,6 +410,7 @@ pub enum KeysKeyIdDecryptPostError {
     Status401(),
     Status403(),
     Status404(),
+    Status406(),
     Status412(),
     UnknownValue(serde_json::Value),
 }
@@ -394,6 +422,7 @@ pub enum KeysKeyIdDeleteError {
     Status401(),
     Status403(),
     Status404(),
+    Status406(),
     Status412(),
     UnknownValue(serde_json::Value),
 }
@@ -406,6 +435,7 @@ pub enum KeysKeyIdEncryptPostError {
     Status401(),
     Status403(),
     Status404(),
+    Status406(),
     Status412(),
     UnknownValue(serde_json::Value),
 }
@@ -417,6 +447,7 @@ pub enum KeysKeyIdGetError {
     Status401(),
     Status403(),
     Status404(),
+    Status406(),
     Status412(),
     UnknownValue(serde_json::Value),
 }
@@ -428,6 +459,7 @@ pub enum KeysKeyIdPublicPemGetError {
     Status401(),
     Status403(),
     Status404(),
+    Status406(),
     Status412(),
     UnknownValue(serde_json::Value),
 }
@@ -439,6 +471,7 @@ pub enum KeysKeyIdPutError {
     Status400(),
     Status401(),
     Status403(),
+    Status406(),
     Status409(),
     Status412(),
     UnknownValue(serde_json::Value),
@@ -451,6 +484,7 @@ pub enum KeysKeyIdRestrictionsTagsTagDeleteError {
     Status401(),
     Status403(),
     Status404(),
+    Status406(),
     Status412(),
     UnknownValue(serde_json::Value),
 }
@@ -463,6 +497,7 @@ pub enum KeysKeyIdRestrictionsTagsTagPutError {
     Status401(),
     Status403(),
     Status404(),
+    Status406(),
     Status412(),
     UnknownValue(serde_json::Value),
 }
@@ -475,6 +510,7 @@ pub enum KeysKeyIdSignPostError {
     Status401(),
     Status403(),
     Status404(),
+    Status406(),
     Status412(),
     UnknownValue(serde_json::Value),
 }
@@ -486,6 +522,7 @@ pub enum KeysPostError {
     Status400(),
     Status401(),
     Status403(),
+    Status406(),
     Status412(),
     UnknownValue(serde_json::Value),
 }
@@ -496,6 +533,7 @@ pub enum KeysPostError {
 pub enum LockPostError {
     Status401(),
     Status403(),
+    Status406(),
     Status412(),
     UnknownValue(serde_json::Value),
 }
@@ -506,6 +544,7 @@ pub enum LockPostError {
 pub enum MetricsGetError {
     Status401(),
     Status403(),
+    Status406(),
     Status412(),
     UnknownValue(serde_json::Value),
 }
@@ -515,6 +554,7 @@ pub enum MetricsGetError {
 #[serde(untagged)]
 pub enum ProvisionPostError {
     Status400(),
+    Status406(),
     Status412(),
     UnknownValue(serde_json::Value),
 }
@@ -525,6 +565,7 @@ pub enum ProvisionPostError {
 pub enum RandomPostError {
     Status401(),
     Status403(),
+    Status406(),
     Status412(),
     UnknownValue(serde_json::Value),
 }
@@ -535,6 +576,7 @@ pub enum RandomPostError {
 pub enum SystemBackupPostError {
     Status401(),
     Status403(),
+    Status406(),
     Status412(),
     UnknownValue(serde_json::Value),
 }
@@ -545,6 +587,7 @@ pub enum SystemBackupPostError {
 pub enum SystemCancelUpdatePostError {
     Status401(),
     Status403(),
+    Status406(),
     Status412(),
     UnknownValue(serde_json::Value),
 }
@@ -555,6 +598,7 @@ pub enum SystemCancelUpdatePostError {
 pub enum SystemCommitUpdatePostError {
     Status401(),
     Status403(),
+    Status406(),
     Status412(),
     UnknownValue(serde_json::Value),
 }
@@ -565,6 +609,7 @@ pub enum SystemCommitUpdatePostError {
 pub enum SystemFactoryResetPostError {
     Status401(),
     Status403(),
+    Status406(),
     Status412(),
     UnknownValue(serde_json::Value),
 }
@@ -575,6 +620,7 @@ pub enum SystemFactoryResetPostError {
 pub enum SystemInfoGetError {
     Status401(),
     Status403(),
+    Status406(),
     Status412(),
     UnknownValue(serde_json::Value),
 }
@@ -585,6 +631,7 @@ pub enum SystemInfoGetError {
 pub enum SystemRebootPostError {
     Status401(),
     Status403(),
+    Status406(),
     Status412(),
     UnknownValue(serde_json::Value),
 }
@@ -594,6 +641,7 @@ pub enum SystemRebootPostError {
 #[serde(untagged)]
 pub enum SystemRestorePostError {
     Status400(),
+    Status406(),
     Status412(),
     UnknownValue(serde_json::Value),
 }
@@ -604,6 +652,7 @@ pub enum SystemRestorePostError {
 pub enum SystemShutdownPostError {
     Status401(),
     Status403(),
+    Status406(),
     Status412(),
     UnknownValue(serde_json::Value),
 }
@@ -612,8 +661,10 @@ pub enum SystemShutdownPostError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum SystemUpdatePostError {
+    Status400(),
     Status401(),
     Status403(),
+    Status406(),
     Status409(),
     Status412(),
     UnknownValue(serde_json::Value),
@@ -625,6 +676,7 @@ pub enum SystemUpdatePostError {
 pub enum UnlockPostError {
     Status400(),
     Status403(),
+    Status406(),
     Status412(),
     UnknownValue(serde_json::Value),
 }
@@ -635,6 +687,7 @@ pub enum UnlockPostError {
 pub enum UsersGetError {
     Status401(),
     Status403(),
+    Status406(),
     Status412(),
     UnknownValue(serde_json::Value),
 }
@@ -646,6 +699,7 @@ pub enum UsersPostError {
     Status400(),
     Status401(),
     Status403(),
+    Status406(),
     Status412(),
     UnknownValue(serde_json::Value),
 }
@@ -657,6 +711,7 @@ pub enum UsersUserIdDeleteError {
     Status401(),
     Status403(),
     Status404(),
+    Status406(),
     Status412(),
     UnknownValue(serde_json::Value),
 }
@@ -668,6 +723,7 @@ pub enum UsersUserIdGetError {
     Status401(),
     Status403(),
     Status404(),
+    Status406(),
     Status412(),
     UnknownValue(serde_json::Value),
 }
@@ -680,6 +736,7 @@ pub enum UsersUserIdPassphrasePostError {
     Status401(),
     Status403(),
     Status404(),
+    Status406(),
     Status412(),
     UnknownValue(serde_json::Value),
 }
@@ -691,6 +748,7 @@ pub enum UsersUserIdPutError {
     Status400(),
     Status401(),
     Status403(),
+    Status406(),
     Status409(),
     Status412(),
     UnknownValue(serde_json::Value),
@@ -703,6 +761,7 @@ pub enum UsersUserIdTagsGetError {
     Status401(),
     Status403(),
     Status404(),
+    Status406(),
     Status412(),
     UnknownValue(serde_json::Value),
 }
@@ -714,6 +773,7 @@ pub enum UsersUserIdTagsTagDeleteError {
     Status401(),
     Status403(),
     Status404(),
+    Status406(),
     Status412(),
     UnknownValue(serde_json::Value),
 }
@@ -726,6 +786,7 @@ pub enum UsersUserIdTagsTagPutError {
     Status401(),
     Status403(),
     Status404(),
+    Status406(),
     Status412(),
     UnknownValue(serde_json::Value),
 }
