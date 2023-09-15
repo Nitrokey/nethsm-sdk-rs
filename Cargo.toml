@@ -2,9 +2,13 @@
 name = "nethsm-sdk-rs"
 version = "0.3.0"
 authors = ["Nitrokey <info@nitrokey.com>"]
-description = "All endpoints expect exactly the specified JSON. Additional properties will cause a Bad Request Error (400). All HTTP errors contain a JSON structure with an explanation of type string. All [base64](https://tools.ietf.org/html/rfc4648#section-4) encoded values are Big Endian. "
+description = "Rust SDK to communicate with Nitrokey NetHSM"
+documentation = "https://docs.nitrokey.com/nethsm/"
+homepage = "https://www.nitrokey.com/products/nethsm"
+repository = "https://github.com/Nitrokey/nethsm-sdk-rs"
+readme = "README.md"
 license = "MIT"
-edition = "2018"
+edition = "2021"
 exclude = [
   "generator/*",
   "docs/*",
