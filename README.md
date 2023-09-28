@@ -25,19 +25,19 @@ To get access to the crate's generated documentation, use:
 cargo doc --open
 ```
 
-## Updating the code
+## Updating the Code
 
-Dependencies : Rust toolchain, Docker.
+Dependencies: Rust toolchain, Docker
 
-To update the code from the latest api definition, run :
+To update the code from the latest API definition, execute:
 
 ```sh
 ./update_openapi.sh
 ```
 
-It will build the custom openapi-generator docker image, run it to generate the code from the online api definition and then format the generated code.
+It will build the custom openapi-generator Docker image. Run it to generate the code from the online API definition and then format the generated code.
 
 ## Licence
 
 The Rust crate is licensed under the MIT license.  
-The customized Openapi generator code is modified from the openapi-generator repository, licenced under Apache 2.0.
+The customized OpenAPI generator code is modified from the openapi-generator repository, licenced under Apache 2.0.
