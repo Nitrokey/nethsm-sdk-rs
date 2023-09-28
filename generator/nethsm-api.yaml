@@ -24,6 +24,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/InfoData"
+        "406":
+          description: Content type in Accept header not supported.
       description: Information about the vendor and product.
       x-annotation-state:
         - Locked
@@ -36,6 +38,8 @@ paths:
       responses:
         "200":
           description: Yes, it is alive.
+        "406":
+          description: Content type in Accept header not supported.
         "412":
           description: Not locked or unprovisioned (in operational state).
       description: |
@@ -51,6 +55,8 @@ paths:
       responses:
         "200":
           description: Yes, it is alive and ready.
+        "406":
+          description: Content type in Accept header not supported.
         "412":
           description: Not alive and ready (not in operational state).
       description: |
@@ -69,6 +75,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStateData"
+        "406":
+          description: Content type in Accept header not supported.
       description: Retrieve the state of NetHSM.
       x-annotation-role:
         - Public
@@ -89,6 +97,8 @@ paths:
           description: Authentication required but none provided.
         "403":
           description: Access denied.
+        "406":
+          description: Content type in Accept header not supported.
         "412":
           description: Precondition failed (NetHSM was not *Operational*).
       description: |
@@ -107,6 +117,8 @@ paths:
           description: Provisioning was successful, NetHSM is *Operational* now.
         "400":
           description: Malformed request data (e.g. malformed time, weak passphrase).
+        "406":
+          description: Content type in Accept header not supported.
         "412":
           description: Precondition failed (NetHSM was not *Unprovisioned*).
       description: Initial provisioning, only available in *Unprovisioned* state.
@@ -129,6 +141,8 @@ paths:
           description: Bad request (invalid passphrase).
         "403":
           description: Unlock failed (access denied).
+        "406":
+          description: Content type in Accept header not supported.
         "412":
           description: Precondition failed (NetHSM was not *Locked*).
       description: Brings a *Locked* NetHSM into *Operational* state.
@@ -151,6 +165,8 @@ paths:
           description: Authentication required but none provided.
         "403":
           description: Lock failed (access denied).
+        "406":
+          description: Content type in Accept header not supported.
         "412":
           description: Precondition failed (NetHSM was not *Operational*).
       description: Brings an *Operational* NetHSM into *Locked* state.
@@ -169,10 +185,14 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/RandomData"
+        "400":
+          description: Bad request (invalid length).
         "401":
           description: Authentication required but none provided.
         "403":
           description: Access denied.
+        "406":
+          description: Content type in Accept header not supported.
         "412":
           description: Precondition failed (NetHSM was not *Operational*).
       description: |
@@ -203,6 +223,8 @@ paths:
           description: Authentication required but none provided.
         "403":
           description: Access denied.
+        "406":
+          description: Content type in Accept header not supported.
         "412":
           description: Precondition failed (NetHSM was not *Operational*).
       description: |
@@ -239,6 +261,8 @@ paths:
           description: Authentication required but none provided.
         "403":
           description: Access denied.
+        "406":
+          description: Content type in Accept header not supported.
         "412":
           description: Precondition failed (NetHSM was not *Operational*).
       description: |
@@ -291,6 +315,8 @@ paths:
           description: Authentication required but none provided.
         "403":
           description: Access denied.
+        "406":
+          description: Content type in Accept header not supported.
         "412":
           description: Precondition failed (NetHSM was not *Operational*).
       description: |
@@ -361,7 +387,7 @@ paths:
                       tags:
                         - berlin
                     key:
-                     data: htnjTKRUz3XnLys5YD2+bKvzXZuu9cvXKwsCnWdzR+4=
+                      data: htnjTKRUz3XnLys5YD2+bKvzXZuu9cvXKwsCnWdzR+4=
                 generic:
                   summary: Generic
                   value:
@@ -373,12 +399,16 @@ paths:
                     restrictions:
                       tags:
                         - berlin
+        "400":
+          description: Invalid character in the KeyID.
         "401":
           description: Authentication required but none provided.
         "403":
           description: Access denied.
         "404":
           description: Key for KeyID not found.
+        "406":
+          description: Content type in Accept header not supported.
         "412":
           description: Precondition failed (NetHSM was not *Operational*).
       description: Retrieve the public key.
@@ -400,6 +430,8 @@ paths:
           description: Authentication required but none provided.
         "403":
           description: Access denied.
+        "406":
+          description: Content type in Accept header not supported.
         "409":
           description: Conflict, key already exists for this keyID.
         "412":
@@ -491,6 +523,8 @@ paths:
           description: Access denied.
         "404":
           description: Key for KeyID not found.
+        "406":
+          description: Content type in Accept header not supported.
         "412":
           description: Precondition failed (NetHSM was not *Operational*).
       description: Delete a pair of public and private key.
@@ -518,12 +552,16 @@ paths:
             application/x-pem-file:
               schema:
                 $ref: "#/components/schemas/PemPublicKey"
+        "400":
+          description: Invalid character in the KeyID.
         "401":
           description: Authentication required but none provided.
         "403":
           description: Access denied.
         "404":
           description: Key for KeyID not found.
+        "406":
+          description: Content type in Accept header not supported.
         "412":
           description: Precondition failed (NetHSM was not *Operational*).
       description: Retrieve public key in PEM format.
@@ -550,12 +588,16 @@ paths:
             application/x-pem-file:
               schema:
                 $ref: "#/components/schemas/PemCSR"
+        "400":
+          description: Bad request (specified properties are invalid).
         "401":
           description: Authentication required but none provided.
         "403":
           description: Access denied.
         "404":
           description: Key for KeyID not found.
+        "406":
+          description: Content type in Accept header not supported.
         "412":
           description: Precondition failed (NetHSM was not *Operational*).
       description: Retrieve a certificate signing request in PEM format.
@@ -604,6 +646,8 @@ paths:
           description: Access denied.
         "404":
           description: Key for KeyID not found.
+        "406":
+          description: Content type in Accept header not supported.
         "412":
           description: Precondition failed (NetHSM was not *Operational*).
       description: Decrypt an encrypted message with the secret key.
@@ -648,6 +692,8 @@ paths:
           description: Access denied.
         "404":
           description: Key for KeyID not found.
+        "406":
+          description: Content type in Accept header not supported.
         "412":
           description: Precondition failed (NetHSM was not *Operational*).
       description: Encrypt a message with the secret key.
@@ -701,6 +747,8 @@ paths:
           description: Access denied.
         "404":
           description: Key for KeyID not found.
+        "406":
+          description: Content type in Accept header not supported.
         "412":
           description: Precondition failed (NetHSM was not *Operational*).
       description: Sign a message with the secret key.
@@ -748,12 +796,16 @@ paths:
             application/pgp-keys:
               schema:
                 $ref: "#/components/schemas/PGPPrivateKey"
+        "400":
+          description: Invalid character in the KeyID.
         "401":
           description: Authentication required but none provided.
         "403":
           description: Access denied.
         "404":
           description: Certificate for KeyID not found.
+        "406":
+          description: Content type in Accept header not supported.
         "412":
           description: Precondition failed (NetHSM was not *Operational*).
       description: |
@@ -775,6 +827,8 @@ paths:
           description: Authentication required but none provided.
         "403":
           description: Access denied.
+        "406":
+          description: Content type in Accept header not supported.
         "409":
           description: Conflict, certificate already exists for this KeyID.
         "412":
@@ -814,6 +868,10 @@ paths:
           description: Access denied.
         "404":
           description: Certificate with this KeyID not found.
+        "406":
+          description: Content type in Accept header not supported.
+        "409":
+          description: Certificate for key not found.
         "412":
           description: Precondition failed (NetHSM was not *Operational*).
       description: Delete the certificate.
@@ -846,6 +904,8 @@ paths:
           description: Access denied.
         "404":
           description: KeyID not found.
+        "406":
+          description: Content type in Accept header not supported.
         "412":
           description: Precondition failed (NetHSM was not *Operational*).
       description: Add a tag to the authorized set
@@ -867,6 +927,8 @@ paths:
           description: Access denied.
         "404":
           description: Tag or keyID not found.
+        "406":
+          description: Content type in Accept header not supported.
         "412":
           description: Precondition failed (NetHSM was not *Operational*).
       description: Delete a tag from the authorized set
@@ -902,6 +964,8 @@ paths:
           description: Authentication required but none provided.
         "403":
           description: Access denied.
+        "406":
+          description: Content type in Accept header not supported.
         "412":
           description: Precondition failed (NetHSM was not *Operational*).
       description: Get a list of all user ids that have accounts on NetHSM.
@@ -924,6 +988,8 @@ paths:
           description: Authentication required but none provided.
         "403":
           description: Access denied.
+        "406":
+          description: Content type in Accept header not supported.
         "412":
           description: Precondition failed (NetHSM was not *Operational*).
       description: Create a new user on NetHSM. The user-ID is generated by NetHSM.
@@ -948,12 +1014,17 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/UserData"
+        
+        "400":
+          description: Invalid character in the UserID.
         "401":
           description: Authentication required but none provided.
         "403":
           description: Access denied.
         "404":
           description: User for UserID not found.
+        "406":
+          description: Content type in Accept header not supported.
         "412":
           description: Precondition failed (NetHSM was not *Operational*).
       description: "Get user info: name and role."
@@ -975,6 +1046,8 @@ paths:
           description: Authentication required but none provided.
         "403":
           description: Access denied.
+        "406":
+          description: Content type in Accept header not supported.
         "409":
           description: Conflict - user already exists for this user-ID.
         "412":
@@ -1003,6 +1076,8 @@ paths:
           description: Access denied.
         "404":
           description: User not found for this user-ID.
+        "406":
+          description: Content type in Accept header not supported.
         "412":
           description: Precondition failed (NetHSM was not *Operational*).
       description: Delete a user from keyfender.
@@ -1032,6 +1107,8 @@ paths:
           description: Access denied.
         "404":
           description: User not found for this user-ID.
+        "406":
+          description: Content type in Accept header not supported.
         "412":
           description: Precondition failed (NetHSM was not *Operational*).
       description: Update the passphrase.
@@ -1064,12 +1141,16 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/TagList"
+        "400":
+          description: Invalid character in the UserID.
         "401":
           description: Authentication required but none provided.
         "403":
           description: Access denied.
         "404":
           description: User not found for this user-ID.
+        "406":
+          description: Content type in Accept header not supported.
         "412":
           description: Precondition failed (NetHSM was not *Operational*).
       description: Get the list of tags set to an Operator user.
@@ -1102,6 +1183,8 @@ paths:
           description: Access denied.
         "404":
           description: UserID not found.
+        "406":
+          description: Content type in Accept header not supported.
         "412":
           description: Precondition failed (NetHSM was not *Operational*).
       description: Add a tag to the Operator user.
@@ -1123,6 +1206,8 @@ paths:
           description: Access denied.
         "404":
           description: Tag or user not found.
+        "406":
+          description: Content type in Accept header not supported.
         "412":
           description: Precondition failed (NetHSM was not *Operational*).
       description: Delete a tag from the Operator user
@@ -1156,6 +1241,8 @@ paths:
           description: Authentication required but none provided.
         "403":
           description: Access denied.
+        "406":
+          description: Content type in Accept header not supported.
         "412":
           description: Precondition failed (NetHSM was not *Operational*).
       description: Update the unlock passphrase.
@@ -1184,6 +1271,8 @@ paths:
           description: Authentication required but none provided.
         "403":
           description: Access denied.
+        "406":
+          description: Content type in Accept header not supported.
         "412":
           description: Precondition failed (NetHSM was not *Operational*).
       description: "Read unattended boot configuration: is it on or off?"
@@ -1203,6 +1292,8 @@ paths:
           description: Authentication required but none provided.
         "403":
           description: Access denied.
+        "406":
+          description: Content type in Accept header not supported.
         "412":
           description: Precondition failed (NetHSM was not *Operational*).
       description: "Configure unattended boot: switch it on or off (flip the switch)."
@@ -1231,6 +1322,8 @@ paths:
           description: Authentication required but none provided.
         "403":
           description: Access denied.
+        "406":
+          description: Content type in Accept header not supported.
         "412":
           description: Precondition failed (NetHSM was not *Operational*).
       description: Get public key for NetHSMs https API.
@@ -1253,8 +1346,12 @@ paths:
           description: Authentication required but none provided.
         "403":
           description: Access denied.
+        "406":
+          description: Content type in Accept header not supported.
         "412":
           description: Precondition failed (NetHSM was not *Operational*).
+        "415":
+          description: Content type in Accept header not supported or not present.
       description: Get certificate for NetHSMs https API.
       security:
         - basic: []
@@ -1266,10 +1363,14 @@ paths:
       responses:
         "201":
           description: Successfully set certificate.
+        "400":
+          description: Certificate malformed.
         "401":
           description: Authentication required but none provided.
         "403":
           description: Access denied.
+        "406":
+          description: Content type in Accept header not supported.
         "412":
           description: Precondition failed (NetHSM was not *Operational*).
       description: Set certificate for NetHSMs https API e.g. to replace self-signed intital certificate.
@@ -1298,6 +1399,8 @@ paths:
           description: Authentication required but none provided.
         "403":
           description: Access denied.
+        "406":
+          description: Content type in Accept header not supported.
         "412":
           description: Precondition failed (NetHSM was not *Operational*).
       description: Get NetHSM certificate signing request e.g. to replace self-signed intital certificate.
@@ -1324,6 +1427,8 @@ paths:
           description: Authentication required but none provided.
         "403":
           description: Access denied.
+        "406":
+          description: Content type in Accept header not supported.
         "412":
           description: Precondition failed (NetHSM was not *Operational*).
       description: Generate a new pair of public and private key for NetHSM's https API.
@@ -1352,6 +1457,8 @@ paths:
           description: Authentication required but none provided.
         "403":
           description: Access denied.
+        "406":
+          description: Content type in Accept header not supported.
         "412":
           description: Precondition failed (NetHSM was not *Operational*).
       description: Get network configuration. IP address, netmask, router.
@@ -1371,6 +1478,8 @@ paths:
           description: Authentication required but none provided.
         "403":
           description: Access denied.
+        "406":
+          description: Content type in Accept header not supported.
         "412":
           description: Precondition failed (NetHSM was not *Operational*).
       description: Configure network.
@@ -1399,6 +1508,8 @@ paths:
           description: Authentication required but none provided.
         "403":
           description: Access denied.
+        "406":
+          description: Content type in Accept header not supported.
         "412":
           description: Precondition failed (NetHSM was not *Operational*).
       description: |
@@ -1421,6 +1532,8 @@ paths:
           description: Authentication required but none provided.
         "403":
           description: Access denied.
+        "406":
+          description: Content type in Accept header not supported.
         "412":
           description: Precondition failed (NetHSM was not *Operational*).
       description: Configure log level and destination.
@@ -1447,6 +1560,8 @@ paths:
           description: Authentication required but none provided.
         "403":
           description: Access denied.
+        "406":
+          description: Content type in Accept header not supported.
         "412":
           description: Precondition failed (NetHSM was not *Operational*).
       description: Update the backup passphrase.
@@ -1475,6 +1590,8 @@ paths:
           description: Authentication required but none provided.
         "403":
           description: Access denied.
+        "406":
+          description: Content type in Accept header not supported.
         "412":
           description: Precondition failed (NetHSM was not *Operational*).
       description: Get system time.
@@ -1494,6 +1611,8 @@ paths:
           description: Authentication required but none provided.
         "403":
           description: Access denied.
+        "406":
+          description: Content type in Accept header not supported.
         "412":
           description: Precondition failed (NetHSM was not *Operational*).
       description: Configure system time.
@@ -1522,6 +1641,8 @@ paths:
           description: Authentication required but none provided.
         "403":
           description: Access denied.
+        "406":
+          description: Content type in Accept header not supported.
         "412":
           description: Precondition failed (NetHSM was not *Operational*).
       description: |
@@ -1541,6 +1662,8 @@ paths:
           description: Authentication required but none provided.
         "403":
           description: Access denied.
+        "406":
+          description: Content type in Accept header not supported.
         "412":
           description: Precondition failed (NetHSM was not *Operational*).
       description: Reboot NetHSM.
@@ -1559,6 +1682,8 @@ paths:
           description: Authentication required but none provided.
         "403":
           description: Access denied.
+        "406":
+          description: Content type in Accept header not supported.
         "412":
           description: Precondition failed (NetHSM was not *Operational*).
       description: Shut down NetHSM.
@@ -1577,6 +1702,8 @@ paths:
           description: Authentication required but none provided.
         "403":
           description: Access denied.
+        "406":
+          description: Content type in Accept header not supported.
         "412":
           description: Precondition failed (NetHSM was not *Operational*).
       description: Reset NetHSM to factory settings.
@@ -1595,10 +1722,14 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/SystemUpdateData"
+        "400":
+          description: Update malformed.
         "401":
           description: Authentication required but none provided.
         "403":
           description: Access denied.
+        "406":
+          description: Content type in Accept header not supported.
         "409":
           description: Conflict - Major version downgrade is not allowed.
         "412":
@@ -1608,6 +1739,7 @@ paths:
         content:
           application/octet-stream:
             schema:
+              format: binary
               type: string
         required: true
       security:
@@ -1625,6 +1757,8 @@ paths:
           description: Authentication required but none provided.
         "403":
           description: Access denied.
+        "406":
+          description: Content type in Accept header not supported.
         "412":
           description: |
             Precondition failed (NetHSM was not *Operational* or
@@ -1645,6 +1779,8 @@ paths:
           description: Authentication required but none provided.
         "403":
           description: Access denied.
+        "406":
+          description: Content type in Accept header not supported.
         "412":
           description: |
             Precondition failed (NetHSM was not *Operational* or
@@ -1661,10 +1797,17 @@ paths:
       responses:
         "200":
           description: Successful retrieval of backup data.
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
         "401":
           description: Authentication required but none provided.
         "403":
           description: Access denied.
+        "406":
+          description: Content type in Accept header not supported.
         "412":
           description: |
             Precondition failed (NetHSM was not *Operational* or
@@ -1683,6 +1826,8 @@ paths:
           description: Successful restore from backup data.
         "400":
           description: Bad request - restore did not apply.
+        "406":
+          description: Content type in Accept header not supported.
         "412":
           description: |
             Precondition failed (NetHSM was not *Unprovisioned* or
@@ -1694,6 +1839,7 @@ paths:
         content:
           application/octet-stream:
             schema:
+              format: binary
               type: string
         required: true
       parameters:
@@ -1931,14 +2077,12 @@ components:
         - mechanisms
         - type
         - restrictions
-        - key
         - operations
     KeyPublicData:
       description: |
         The public key data is either a *modulus* and a *publicExponent* or
         a *data* field. The *data* field is used for EC keys.
         This field is null for Generic keys.
-      nullable: true
       type: object
       properties:
         modulus:
@@ -2273,41 +2417,41 @@ components:
         - time
     SystemInfo:
       example:
-        firmwareVersion: N/A
         softwareVersion: "1.7"
-        hardwareVersion: N/A
-        buildTag: TAG-NN-g1234567-dirty
+        softwareBuild: f3f6292
+        firmwareVersion: 1.0-devel
+        hardwareVersion: prodrive-hermes-1.0
         deviceId: 5UMIP364R2
-        pcr: c23c41509273dec732676aea195b983bd5755126874d054325e9e1b1869c47c7
-        akPubP256: MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEup7z8QYvkzkBuLryG1SgVQjlPhSFW3PzYn1l3uLNd+pSBxX0OBpslcbnmPFr5wSs/iP46+H8MFlEAYUkYv6uuQ==
-        akPubP384: MHYwEAYHKoZIzj0CAQYFK4EEACIDYgAEfQiurLvEmjsAmumRtIqu70HKehRo8A/nVrqQGiR8Rcr+SUujwgtQByORX5BoRtv4sZNJW4FyLGqvXCIF9IV1puob2+9Qq5oEjz4x4malLbFdyXDmQK8o2NpvcbgOr215
+        akPub:
+          P256: MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEup7z8QYvkzkBuLryG1SgVQjlPhSFW3PzYn1l3uLNd+pSBxX0OBpslcbnmPFr5wSs/iP46+H8MFlEAYUkYv6uuQ==
+          P384: MHYwEAYHKoZIzj0CAQYFK4EEACIDYgAEfQiurLvEmjsAmumRtIqu70HKehRo8A/nVrqQGiR8Rcr+SUujwgtQByORX5BoRtv4sZNJW4FyLGqvXCIF9IV1puob2+9Qq5oEjz4x4malLbFdyXDmQK8o2NpvcbgOr215
+        pcr:
+          0: 0f6064779fba55b102a6ecc20498c2020deaf2aebef23716ec293b25873647f8
+          2: 2b0d25a4a92b4df5205742954243db9d306a4c3277a6b6958bcbaf3d47def26f
       type: object
       properties:
-        firmwareVersion:
-          type: string
         softwareVersion:
+          type: string
+        softwareBuild:
+          type: string
+        firmwareVersion:
           type: string
         hardwareVersion:
           type: string
-        buildTag:
-          type: string
         deviceId:
           type: string
+        akPub:
+          type: object
         pcr:
-          type: string
-        akPubP256:
-          type: string
-        akPubP384:
-          type: string
+          type: object
       required:
-        - firmwareVersion
         - softwareVersion
+        - softwareBuild
+        - firmwareVersion
         - hardwareVersion
-        - buildTag
         - deviceId
+        - akPub
         - pcr
-        - akPubP256
-        - akPubP384
     SystemUpdateData:
       example:
         releaseNotes: Some new feature is available.

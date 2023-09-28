@@ -1213,7 +1213,7 @@ Name | Type | Description  | Required | Notes
 
 ## system_backup_post
 
-> system_backup_post()
+> std::vec::Vec<u8> system_backup_post()
 
 
 Back up the key store to a backup file.
@@ -1224,7 +1224,7 @@ This endpoint does not need any parameter.
 
 ### Return type
 
- (empty response body)
+[**std::vec::Vec<u8>**](std::vec::Vec<u8>.md)
 
 ### Authorization
 
@@ -1233,7 +1233,7 @@ This endpoint does not need any parameter.
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/octet-stream
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1386,7 +1386,7 @@ Restore the key store and user store from a backup file. If NetHSM is *Unprovisi
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **backup_passphrase** | **String** |  | [required] |
-**body** | **String** |  | [required] |
+**body** | **std::vec::Vec<u8>** |  | [required] |
 **system_time** | Option<**String**> |  |  |
 
 ### Return type
@@ -1444,7 +1444,7 @@ Update NetHSM software.
 
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
-**body** | **String** |  | [required] |
+**body** | **std::vec::Vec<u8>** |  | [required] |
 
 ### Return type
 

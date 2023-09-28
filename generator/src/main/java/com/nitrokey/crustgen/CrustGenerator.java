@@ -181,13 +181,10 @@ public class CrustGenerator extends AbstractRustCodegen implements CodegenConfig
     typeMapping.put("date", "String");
     typeMapping.put("DateTime", "String");
     typeMapping.put("password", "String");
-    // TODO(bcourtine): review file mapping.
-    // I tried to map as "std::io::File", but Reqwest multipart file requires a
-    // "AsRef<Path>" param.
-    // Getting a file from a Path is simple, but the opposite is difficult. So I map
-    // as "std::path::Path".
-    typeMapping.put("file", "std::path::PathBuf");
-    typeMapping.put("binary", "crate::models::File");
+
+    // most versatile way to represent binary data
+    typeMapping.put("file", "std::vec::Vec<u8>");
+    typeMapping.put("binary", "std::vec::Vec<u8>");
     typeMapping.put("ByteArray", "String");
     typeMapping.put("object", "serde_json::Value");
     typeMapping.put("AnyType", "serde_json::Value");

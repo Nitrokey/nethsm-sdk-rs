@@ -2,6 +2,7 @@
 
 use crate::apis::ResponseContent;
 use super::{Error, configuration};
+use std::io::Read;
 
 {{#operations}}
 {{#operation}}
@@ -302,7 +303,17 @@ pub fn {{{operationId}}}(configuration: &configuration::Configuration, {{#allPar
     let local_var_resp = local_var_req_builder.send_json(
     {{/mediaIsJson}}
     {{^mediaIsJson}}
+    {{#hasBodyParam}}
+    {{#bodyParams}}
+    {{#isFile}}
+    let {{{paramName}}} = std::io::Cursor::new({{{paramName}}});
+    let local_var_resp = local_var_req_builder.send(
+    {{/isFile}}
+    {{^isFile}}
     let local_var_resp = local_var_req_builder.send_string(
+    {{/isFile}}
+    {{/bodyParams}}
+    {{/hasBodyParam}}
     {{/mediaIsJson}}
     {{/consumes}}
     {{#hasBodyParam}}
@@ -322,32 +333,40 @@ pub fn {{{operationId}}}(configuration: &configuration::Configuration, {{#allPar
     let local_var_headers = super::get_header_map(&local_var_resp);
     
     let local_var_status = local_var_resp.status();
-    let local_var_content = local_var_resp.into_string()?;
+    let mut local_var_content = vec![];
+    local_var_resp.into_reader().read_to_end(&mut local_var_content)?;
 
     let local_var_content_clone = local_var_content.clone();
 
     if !local_var_status >= 400 {
         {{#vendorExtensions.x-produceMultipleMediaTypes}}
         {{#returnType}}
-        let local_var_entity : {{{returnType}}} = if is_json { serde_json::from_str(&local_var_content).map_err(Error::from)? } else { local_var_content };
+        let local_var_entity : {{{returnType}}} = if is_json { serde_json::from_slice(&local_var_content).map_err(Error::from)? } else {  String::from_utf8(local_var_content)? };
         {{/returnType}}
         {{/vendorExtensions.x-produceMultipleMediaTypes}}
         {{^vendorExtensions.x-produceMultipleMediaTypes}}
         {{#produces}}
         {{#mediaIsJson}}
         {{#returnType}}
-        let local_var_entity : {{{returnType}}} = serde_json::from_str(&local_var_content).map_err(Error::from)?;
+        let local_var_entity : {{{returnType}}} = serde_json::from_slice(&local_var_content).map_err(Error::from)?;
         {{/returnType}}
         {{/mediaIsJson}}
         {{^mediaIsJson}}
+        {{#returnType}}
+        {{#isResponseFile}}
         let local_var_entity = local_var_content.clone();
+        {{/isResponseFile}}
+        {{^isResponseFile}}
+        let local_var_entity = String::from_utf8(local_var_content)?;
+        {{/isResponseFile}}
+        {{/returnType}}       
         {{/mediaIsJson}}
         {{/produces}}
         {{/vendorExtensions.x-produceMultipleMediaTypes}}
         let local_var_result = ResponseContent { status: local_var_status, content: local_var_content_clone, entity: {{#returnType}}local_var_entity{{/returnType}}{{^returnType}}(){{/returnType}}, headers: local_var_headers };
         Ok(local_var_result)
     } else {
-        let local_var_entity: {{{operationIdCamelCase}}}Error = serde_json::from_str(&local_var_content)?;
+        let local_var_entity: {{{operationIdCamelCase}}}Error = serde_json::from_slice(&local_var_content)?;
         let local_var_error = ResponseContent { status: local_var_status, content: local_var_content, entity: local_var_entity, headers: local_var_headers };
         Err(Error::ResponseError(local_var_error))
     }
