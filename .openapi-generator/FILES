@@ -1,4 +1,5 @@
 docs/BackupPassphraseConfig.md
+docs/CreateResourceId.md
 docs/DecryptData.md
 docs/DecryptMode.md
 docs/DecryptRequestData.md
@@ -20,10 +21,12 @@ docs/LogLevel.md
 docs/LoggingConfig.md
 docs/NetworkConfig.md
 docs/PrivateKey.md
+docs/PrivateKeyPemArguments.md
 docs/ProvisionRequestData.md
 docs/PublicKey.md
 docs/RandomData.md
 docs/RandomRequestData.md
+docs/RestoreRequestArguments.md
 docs/SignData.md
 docs/SignMode.md
 docs/SignRequestData.md
@@ -47,6 +50,7 @@ src/apis/default_api.rs
 src/apis/mod.rs
 src/lib.rs
 src/models/backup_passphrase_config.rs
+src/models/create_resource_id.rs
 src/models/decrypt_data.rs
 src/models/decrypt_mode.rs
 src/models/decrypt_request_data.rs
@@ -68,10 +72,12 @@ src/models/logging_config.rs
 src/models/mod.rs
 src/models/network_config.rs
 src/models/private_key.rs
+src/models/private_key_pem_arguments.rs
 src/models/provision_request_data.rs
 src/models/public_key.rs
 src/models/random_data.rs
 src/models/random_request_data.rs
+src/models/restore_request_arguments.rs
 src/models/sign_data.rs
 src/models/sign_mode.rs
 src/models/sign_request_data.rs

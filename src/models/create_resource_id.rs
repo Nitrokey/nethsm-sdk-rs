@@ -9,18 +9,13 @@
  */
 
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
-pub struct UnlockPassphraseConfig {
-    #[serde(rename = "newPassphrase")]
-    pub new_passphrase: String,
-    #[serde(rename = "currentPassphrase")]
-    pub current_passphrase: String,
+pub struct CreateResourceId {
+    #[serde(rename = "id")]
+    pub id: String,
 }
 
-impl UnlockPassphraseConfig {
-    pub fn new(new_passphrase: String, current_passphrase: String) -> UnlockPassphraseConfig {
-        UnlockPassphraseConfig {
-            new_passphrase,
-            current_passphrase,
-        }
+impl CreateResourceId {
+    pub fn new(id: String) -> CreateResourceId {
+        CreateResourceId { id }
     }
 }

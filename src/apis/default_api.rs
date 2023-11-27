@@ -12,86 +12,30 @@ use super::{configuration, Error};
 use crate::apis::ResponseContent;
 use std::io::Read;
 
-#[derive(Clone, Debug)]
-pub enum KeysKeyIdCertGetAccept {
-    ApplicationXPemFile,
-    ApplicationXX509CaCert,
-    ApplicationPgpKeys,
-}
-
-impl KeysKeyIdCertGetAccept {
-    pub fn as_str(&self) -> &'static str {
-        match self {
-            Self::ApplicationXPemFile => "application/x-pem-file",
-            Self::ApplicationXX509CaCert => "application/x-x509-ca-cert",
-            Self::ApplicationPgpKeys => "application/pgp-keys",
-        }
-    }
-
-    pub fn is_json(&self) -> bool {
-        match self {
-            Self::ApplicationXPemFile => false,
-            Self::ApplicationXX509CaCert => false,
-            Self::ApplicationPgpKeys => false,
-        }
-    }
-}
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(untagged)]
-pub enum KeysKeyIdCertPutBody {
-    ApplicationXPemFile(String),
-    ApplicationXX509CaCert(String),
-    ApplicationPgpKeys(String),
-}
-
-impl KeysKeyIdCertPutBody {
-    pub fn content_type(&self) -> &'static str {
-        match self {
-            Self::ApplicationXPemFile(_) => "application/x-pem-file",
-            Self::ApplicationXX509CaCert(_) => "application/x-x509-ca-cert",
-            Self::ApplicationPgpKeys(_) => "application/pgp-keys",
-        }
-    }
-    pub fn is_json(&self) -> bool {
-        match self {
-            Self::ApplicationXPemFile(_) => false,
-            Self::ApplicationXX509CaCert(_) => false,
-            Self::ApplicationPgpKeys(_) => false,
-        }
-    }
-    pub fn get_string(&self) -> String {
-        match self {
-            Self::ApplicationXPemFile(s) => s.clone(),
-            Self::ApplicationXX509CaCert(s) => s.clone(),
-            Self::ApplicationPgpKeys(s) => s.clone(),
-        }
-    }
-}
-
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum KeysKeyIdPutBody {
     ApplicationJson(crate::models::PrivateKey),
-    ApplicationXPemFile(String),
+    MultipartFormData(String),
 }
 
 impl KeysKeyIdPutBody {
     pub fn content_type(&self) -> &'static str {
         match self {
             Self::ApplicationJson(_) => "application/json",
-            Self::ApplicationXPemFile(_) => "application/x-pem-file",
+            Self::MultipartFormData(_) => "multipart/form-data",
         }
     }
     pub fn is_json(&self) -> bool {
         match self {
             Self::ApplicationJson(_) => true,
-            Self::ApplicationXPemFile(_) => false,
+            Self::MultipartFormData(_) => false,
         }
     }
     pub fn get_string(&self) -> String {
         match self {
             Self::ApplicationJson(_) => "".to_string(),
-            Self::ApplicationXPemFile(s) => s.clone(),
+            Self::MultipartFormData(s) => s.clone(),
         }
     }
 }
@@ -100,26 +44,26 @@ impl KeysKeyIdPutBody {
 #[serde(untagged)]
 pub enum KeysPostBody {
     ApplicationJson(crate::models::PrivateKey),
-    ApplicationXPemFile(String),
+    MultipartFormData(String),
 }
 
 impl KeysPostBody {
     pub fn content_type(&self) -> &'static str {
         match self {
             Self::ApplicationJson(_) => "application/json",
-            Self::ApplicationXPemFile(_) => "application/x-pem-file",
+            Self::MultipartFormData(_) => "multipart/form-data",
         }
     }
     pub fn is_json(&self) -> bool {
         match self {
             Self::ApplicationJson(_) => true,
-            Self::ApplicationXPemFile(_) => false,
+            Self::MultipartFormData(_) => false,
         }
     }
     pub fn get_string(&self) -> String {
         match self {
             Self::ApplicationJson(_) => "".to_string(),
-            Self::ApplicationXPemFile(s) => s.clone(),
+            Self::MultipartFormData(s) => s.clone(),
         }
     }
 }
@@ -363,7 +307,6 @@ pub enum KeysKeyIdCertDeleteError {
     Status403(),
     Status404(),
     Status406(),
-    Status409(),
     Status412(),
     UnknownValue(serde_json::Value),
 }
@@ -800,7 +743,7 @@ pub enum UsersUserIdTagsTagPutError {
     UnknownValue(serde_json::Value),
 }
 
-/// Update the backup passphrase.
+/// Update the backup passphrase. If the backup passphrase is not set yet, use \"\" as currentPassphrase.  *WARNING:* Like the unlock passphrase, this configuration can't be reset by an admin user without knowing the current value, so if the backup passphrase is lost, neither can it be reset to a new value nor can the created backups be restored.
 
 pub fn config_backup_passphrase_put(
     configuration: &configuration::Configuration,
@@ -1604,7 +1547,7 @@ pub fn config_unattended_boot_put(
     }
 }
 
-/// Update the unlock passphrase.
+/// Update the unlock passphrase.  *WARNING:* The unlock passphrase can't be reset by an admin user without knowing the current value, so if the unlock passphrase is lost, neither can it be reset to a new value nor can the NetHSM be unlocked.
 
 pub fn config_unlock_passphrase_put(
     configuration: &configuration::Configuration,
@@ -1868,7 +1811,7 @@ pub fn info_get(
 pub fn keys_generate_post(
     configuration: &configuration::Configuration,
     key_generate_request_data: crate::models::KeyGenerateRequestData,
-) -> Result<ResponseContent<()>, Error<KeysGeneratePostError>> {
+) -> Result<ResponseContent<crate::models::CreateResourceId>, Error<KeysGeneratePostError>> {
     let local_var_configuration = configuration;
 
     let local_var_client = &local_var_configuration.client;
@@ -1884,6 +1827,8 @@ pub fn keys_generate_post(
 
         local_var_req_builder = local_var_req_builder.set("authorization", &value);
     };
+    let accept_str = "application/json";
+    local_var_req_builder = local_var_req_builder.set("accept", accept_str);
 
     local_var_req_builder = local_var_req_builder.set("content-type", "application/json");
     let local_var_resp = local_var_req_builder.send_json(key_generate_request_data)?;
@@ -1899,10 +1844,12 @@ pub fn keys_generate_post(
     let local_var_content_clone = local_var_content.clone();
 
     if !local_var_status >= 400 {
+        let local_var_entity: crate::models::CreateResourceId =
+            serde_json::from_slice(&local_var_content).map_err(Error::from)?;
         let local_var_result = ResponseContent {
             status: local_var_status,
             content: local_var_content_clone,
-            entity: (),
+            entity: local_var_entity,
             headers: local_var_headers,
         };
         Ok(local_var_result)
@@ -2039,13 +1986,12 @@ pub fn keys_key_id_cert_delete(
     }
 }
 
-/// Retrieve stored certificate. The content-type header will display the media type of the stored data.
+/// Retrieve a stored certificate in the exact format it was stored.
 
 pub fn keys_key_id_cert_get(
     configuration: &configuration::Configuration,
     key_id: &str,
-    accept: KeysKeyIdCertGetAccept,
-) -> Result<ResponseContent<String>, Error<KeysKeyIdCertGetError>> {
+) -> Result<ResponseContent<std::vec::Vec<u8>>, Error<KeysKeyIdCertGetError>> {
     let local_var_configuration = configuration;
 
     let local_var_client = &local_var_configuration.client;
@@ -2065,8 +2011,7 @@ pub fn keys_key_id_cert_get(
 
         local_var_req_builder = local_var_req_builder.set("authorization", &value);
     };
-    let accept_str = accept.as_str();
-    let is_json = accept.is_json();
+    let accept_str = "application/octet-stream";
     local_var_req_builder = local_var_req_builder.set("accept", accept_str);
 
     let local_var_resp = local_var_req_builder.call()?;
@@ -2082,11 +2027,7 @@ pub fn keys_key_id_cert_get(
     let local_var_content_clone = local_var_content.clone();
 
     if !local_var_status >= 400 {
-        let local_var_entity: String = if is_json {
-            serde_json::from_slice(&local_var_content).map_err(Error::from)?
-        } else {
-            String::from_utf8(local_var_content)?
-        };
+        let local_var_entity = local_var_content.clone();
         let local_var_result = ResponseContent {
             status: local_var_status,
             content: local_var_content_clone,
@@ -2106,12 +2047,12 @@ pub fn keys_key_id_cert_get(
     }
 }
 
-/// Store a certificate. Maximum size 1MB. The content-type header provides the media type. Only application/json, application/x-pem-file, application/x-x509-ca-cert, application/octet-stream, text/plain and application/pgp-keys is allowed.
+/// Store a certificate. Maximum size 1MB. The Content-Type must be application/octet-stream.
 
 pub fn keys_key_id_cert_put(
     configuration: &configuration::Configuration,
     key_id: &str,
-    body: KeysKeyIdCertPutBody,
+    body: std::vec::Vec<u8>,
 ) -> Result<ResponseContent<()>, Error<KeysKeyIdCertPutError>> {
     let local_var_configuration = configuration;
 
@@ -2133,14 +2074,9 @@ pub fn keys_key_id_cert_put(
         local_var_req_builder = local_var_req_builder.set("authorization", &value);
     };
 
-    let body_json = body.is_json();
-    local_var_req_builder = local_var_req_builder.set("content-type", body.content_type());
-
-    let local_var_resp = if body_json {
-        local_var_req_builder.send_json(body)?
-    } else {
-        local_var_req_builder.send_string(body.get_string().as_str())?
-    };
+    local_var_req_builder = local_var_req_builder.set("content-type", "application/octet-stream");
+    let body = std::io::Cursor::new(body);
+    let local_var_resp = local_var_req_builder.send(body)?;
 
     let local_var_headers = super::get_header_map(&local_var_resp);
 
@@ -2554,8 +2490,6 @@ pub fn keys_key_id_put(
     configuration: &configuration::Configuration,
     key_id: &str,
     body: KeysKeyIdPutBody,
-    mechanisms: Option<Vec<crate::models::KeyMechanism>>,
-    tags: Option<Vec<String>>,
 ) -> Result<ResponseContent<()>, Error<KeysKeyIdPutError>> {
     let local_var_configuration = configuration;
 
@@ -2568,46 +2502,6 @@ pub fn keys_key_id_put(
     );
     let mut local_var_req_builder = local_var_client.request("PUT", local_var_uri_str.as_str());
 
-    if let Some(local_var_str) = mechanisms {
-        local_var_req_builder = match "multi" {
-            "multi" => {
-                for i in local_var_str.iter() {
-                    local_var_req_builder =
-                        local_var_req_builder.query("mechanisms", i.to_string().as_str());
-                }
-                local_var_req_builder
-            }
-            _ => local_var_req_builder.query_pairs([(
-                "mechanisms",
-                local_var_str
-                    .iter()
-                    .map(|p| p.to_string())
-                    .collect::<Vec<String>>()
-                    .join(",")
-                    .as_str(),
-            )]),
-        };
-    }
-    if let Some(local_var_str) = tags {
-        local_var_req_builder = match "multi" {
-            "multi" => {
-                for i in local_var_str.iter() {
-                    local_var_req_builder =
-                        local_var_req_builder.query("tags", i.to_string().as_str());
-                }
-                local_var_req_builder
-            }
-            _ => local_var_req_builder.query_pairs([(
-                "tags",
-                local_var_str
-                    .iter()
-                    .map(|p| p.to_string())
-                    .collect::<Vec<String>>()
-                    .join(",")
-                    .as_str(),
-            )]),
-        };
-    }
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
         local_var_req_builder = local_var_req_builder.set("user-agent", local_var_user_agent);
     }
@@ -2847,9 +2741,7 @@ pub fn keys_key_id_sign_post(
 pub fn keys_post(
     configuration: &configuration::Configuration,
     body: KeysPostBody,
-    mechanisms: Option<Vec<crate::models::KeyMechanism>>,
-    tags: Option<Vec<String>>,
-) -> Result<ResponseContent<()>, Error<KeysPostError>> {
+) -> Result<ResponseContent<crate::models::CreateResourceId>, Error<KeysPostError>> {
     let local_var_configuration = configuration;
 
     let local_var_client = &local_var_configuration.client;
@@ -2857,46 +2749,6 @@ pub fn keys_post(
     let local_var_uri_str = format!("{}/keys", local_var_configuration.base_path);
     let mut local_var_req_builder = local_var_client.request("POST", local_var_uri_str.as_str());
 
-    if let Some(local_var_str) = mechanisms {
-        local_var_req_builder = match "multi" {
-            "multi" => {
-                for i in local_var_str.iter() {
-                    local_var_req_builder =
-                        local_var_req_builder.query("mechanisms", i.to_string().as_str());
-                }
-                local_var_req_builder
-            }
-            _ => local_var_req_builder.query_pairs([(
-                "mechanisms",
-                local_var_str
-                    .iter()
-                    .map(|p| p.to_string())
-                    .collect::<Vec<String>>()
-                    .join(",")
-                    .as_str(),
-            )]),
-        };
-    }
-    if let Some(local_var_str) = tags {
-        local_var_req_builder = match "multi" {
-            "multi" => {
-                for i in local_var_str.iter() {
-                    local_var_req_builder =
-                        local_var_req_builder.query("tags", i.to_string().as_str());
-                }
-                local_var_req_builder
-            }
-            _ => local_var_req_builder.query_pairs([(
-                "tags",
-                local_var_str
-                    .iter()
-                    .map(|p| p.to_string())
-                    .collect::<Vec<String>>()
-                    .join(",")
-                    .as_str(),
-            )]),
-        };
-    }
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
         local_var_req_builder = local_var_req_builder.set("user-agent", local_var_user_agent);
     }
@@ -2905,6 +2757,8 @@ pub fn keys_post(
 
         local_var_req_builder = local_var_req_builder.set("authorization", &value);
     };
+    let accept_str = "application/json";
+    local_var_req_builder = local_var_req_builder.set("accept", accept_str);
 
     let body_json = body.is_json();
     local_var_req_builder = local_var_req_builder.set("content-type", body.content_type());
@@ -2926,10 +2780,12 @@ pub fn keys_post(
     let local_var_content_clone = local_var_content.clone();
 
     if !local_var_status >= 400 {
+        let local_var_entity: crate::models::CreateResourceId =
+            serde_json::from_slice(&local_var_content).map_err(Error::from)?;
         let local_var_result = ResponseContent {
             status: local_var_status,
             content: local_var_content_clone,
-            entity: (),
+            entity: local_var_entity,
             headers: local_var_headers,
         };
         Ok(local_var_result)
@@ -3055,7 +2911,7 @@ pub fn metrics_get(
     }
 }
 
-/// Initial provisioning, only available in *Unprovisioned* state.
+/// Initial provisioning, only available in *Unprovisioned* state.  *WARNING:* The unlock passphrase can't be reset by an admin user without knowing the current value, so if the unlock passphrase is lost, neither can it be reset to a new value nor can the NetHSM be unlocked.
 
 pub fn provision_post(
     configuration: &configuration::Configuration,
@@ -3496,9 +3352,8 @@ pub fn system_reboot_post(
 
 pub fn system_restore_post(
     configuration: &configuration::Configuration,
-    backup_passphrase: &str,
-    body: std::vec::Vec<u8>,
-    system_time: Option<String>,
+    arguments: Option<crate::models::RestoreRequestArguments>,
+    backup_file: Option<std::vec::Vec<u8>>,
 ) -> Result<ResponseContent<()>, Error<SystemRestorePostError>> {
     let local_var_configuration = configuration;
 
@@ -3507,19 +3362,13 @@ pub fn system_restore_post(
     let local_var_uri_str = format!("{}/system/restore", local_var_configuration.base_path);
     let mut local_var_req_builder = local_var_client.request("POST", local_var_uri_str.as_str());
 
-    local_var_req_builder =
-        local_var_req_builder.query_pairs([("backupPassphrase", backup_passphrase)]);
-    if let Some(local_var_str) = system_time {
-        local_var_req_builder =
-            local_var_req_builder.query_pairs([("systemTime", local_var_str.to_string().as_str())]);
-    }
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
         local_var_req_builder = local_var_req_builder.set("user-agent", local_var_user_agent);
     }
 
-    local_var_req_builder = local_var_req_builder.set("content-type", "application/octet-stream");
-    let body = std::io::Cursor::new(body);
-    let local_var_resp = local_var_req_builder.send(body)?;
+    local_var_req_builder = local_var_req_builder.set("content-type", "multipart/form-data");
+
+    let local_var_resp = local_var_req_builder.call()?;
 
     let local_var_headers = super::get_header_map(&local_var_resp);
 
@@ -3776,7 +3625,7 @@ pub fn users_get(
 pub fn users_post(
     configuration: &configuration::Configuration,
     user_post_data: crate::models::UserPostData,
-) -> Result<ResponseContent<()>, Error<UsersPostError>> {
+) -> Result<ResponseContent<crate::models::CreateResourceId>, Error<UsersPostError>> {
     let local_var_configuration = configuration;
 
     let local_var_client = &local_var_configuration.client;
@@ -3792,6 +3641,8 @@ pub fn users_post(
 
         local_var_req_builder = local_var_req_builder.set("authorization", &value);
     };
+    let accept_str = "application/json";
+    local_var_req_builder = local_var_req_builder.set("accept", accept_str);
 
     local_var_req_builder = local_var_req_builder.set("content-type", "application/json");
     let local_var_resp = local_var_req_builder.send_json(user_post_data)?;
@@ -3807,10 +3658,12 @@ pub fn users_post(
     let local_var_content_clone = local_var_content.clone();
 
     if !local_var_status >= 400 {
+        let local_var_entity: crate::models::CreateResourceId =
+            serde_json::from_slice(&local_var_content).map_err(Error::from)?;
         let local_var_result = ResponseContent {
             status: local_var_status,
             content: local_var_content_clone,
-            entity: (),
+            entity: local_var_entity,
             headers: local_var_headers,
         };
         Ok(local_var_result)

@@ -16,8 +16,8 @@ pub struct PublicKey {
     pub r#type: crate::models::KeyType,
     #[serde(rename = "restrictions")]
     pub restrictions: Box<crate::models::KeyRestrictions>,
-    #[serde(rename = "key", skip_serializing_if = "Option::is_none")]
-    pub key: Option<Box<crate::models::KeyPublicData>>,
+    #[serde(rename = "public", skip_serializing_if = "Option::is_none")]
+    pub public: Option<Box<crate::models::KeyPublicData>>,
     #[serde(rename = "operations")]
     pub operations: i32,
 }
@@ -33,7 +33,7 @@ impl PublicKey {
             mechanisms,
             r#type,
             restrictions: Box::new(restrictions),
-            key: None,
+            public: None,
             operations,
         }
     }

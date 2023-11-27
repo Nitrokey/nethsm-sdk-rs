@@ -9,18 +9,18 @@
  */
 
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
-pub struct UnlockPassphraseConfig {
-    #[serde(rename = "newPassphrase")]
-    pub new_passphrase: String,
-    #[serde(rename = "currentPassphrase")]
-    pub current_passphrase: String,
+pub struct RestoreRequestArguments {
+    #[serde(rename = "backupPassphrase", skip_serializing_if = "Option::is_none")]
+    pub backup_passphrase: Option<String>,
+    #[serde(rename = "systemTime", skip_serializing_if = "Option::is_none")]
+    pub system_time: Option<String>,
 }
 
-impl UnlockPassphraseConfig {
-    pub fn new(new_passphrase: String, current_passphrase: String) -> UnlockPassphraseConfig {
-        UnlockPassphraseConfig {
-            new_passphrase,
-            current_passphrase,
+impl RestoreRequestArguments {
+    pub fn new() -> RestoreRequestArguments {
+        RestoreRequestArguments {
+            backup_passphrase: None,
+            system_time: None,
         }
     }
 }
