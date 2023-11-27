@@ -9,27 +9,17 @@
  */
 
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
-pub struct PrivateKey {
-    #[serde(rename = "mechanisms")]
-    pub mechanisms: Vec<crate::models::KeyMechanism>,
-    #[serde(rename = "type")]
-    pub r#type: crate::models::KeyType,
-    #[serde(rename = "private")]
-    pub private: Box<crate::models::KeyPrivateData>,
+pub struct PrivateKeyPemArguments {
+    #[serde(rename = "mechanisms", skip_serializing_if = "Option::is_none")]
+    pub mechanisms: Option<Vec<crate::models::KeyMechanism>>,
     #[serde(rename = "restrictions", skip_serializing_if = "Option::is_none")]
     pub restrictions: Option<Box<crate::models::KeyRestrictions>>,
 }
 
-impl PrivateKey {
-    pub fn new(
-        mechanisms: Vec<crate::models::KeyMechanism>,
-        r#type: crate::models::KeyType,
-        private: crate::models::KeyPrivateData,
-    ) -> PrivateKey {
-        PrivateKey {
-            mechanisms,
-            r#type,
-            private: Box::new(private),
+impl PrivateKeyPemArguments {
+    pub fn new() -> PrivateKeyPemArguments {
+        PrivateKeyPemArguments {
+            mechanisms: None,
             restrictions: None,
         }
     }

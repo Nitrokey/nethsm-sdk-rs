@@ -10,12 +10,17 @@
 
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
 pub struct BackupPassphraseConfig {
-    #[serde(rename = "passphrase")]
-    pub passphrase: String,
+    #[serde(rename = "newPassphrase")]
+    pub new_passphrase: String,
+    #[serde(rename = "currentPassphrase")]
+    pub current_passphrase: String,
 }
 
 impl BackupPassphraseConfig {
-    pub fn new(passphrase: String) -> BackupPassphraseConfig {
-        BackupPassphraseConfig { passphrase }
+    pub fn new(new_passphrase: String, current_passphrase: String) -> BackupPassphraseConfig {
+        BackupPassphraseConfig {
+            new_passphrase,
+            current_passphrase,
+        }
     }
 }

@@ -10,12 +10,12 @@
 
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
 pub struct KeyItem {
-    #[serde(rename = "key")]
-    pub key: String,
+    #[serde(rename = "id")]
+    pub id: String,
 }
 
 impl KeyItem {
-    pub fn new(key: String) -> KeyItem {
-        KeyItem { key }
+    pub fn new(id: String) -> KeyItem {
+        KeyItem { id }
     }
 }
