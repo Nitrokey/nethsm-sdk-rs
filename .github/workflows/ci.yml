@@ -14,7 +14,7 @@ jobs:
         toolchain: stable
         override: true
     - name: Check library
-      run: cargo check
+      run: cargo check --all-targets
 
   test:
     name: Run tests
