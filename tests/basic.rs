@@ -41,8 +41,9 @@ async fn test_error() {
     })
     .await
 }
+
 #[tokio::test]
-async fn test_restore_unprovisioned() {
+async fn test_restore() {
     let admin_passphrase = "adminadmin";
     let backup_passphrase = "backupbackup";
     let unlock_passphrase = "unlockunlock";
@@ -67,7 +68,7 @@ async fn test_restore_unprovisioned() {
             .unwrap()
             .entity
             .id;
-        let keys = BTreeSet::from([key_id]);
+        let keys = BTreeSet::from([key_id.clone()]);
 
         assert_eq!(list_keys(&config), keys);
 
@@ -87,6 +88,19 @@ async fn test_restore_unprovisioned() {
         config.basic_auth = Some(("backup".to_owned(), Some(backup_passphrase.to_owned())));
 
         let backup = default_api::system_backup_post(&config).unwrap().entity;
+
+        config.basic_auth = Some(("admin".to_owned(), Some(admin_passphrase.to_owned())));
+
+        default_api::keys_key_id_delete(&config, &key_id).unwrap();
+        assert_eq!(list_keys(&config), BTreeSet::default());
+
+        let request = RestoreRequestArguments {
+            backup_passphrase: Some(backup_passphrase.to_owned()),
+            system_time: Some(Utc::now().to_rfc3339()),
+        };
+        default_api::system_restore_post(&config, Some(request), Some(backup.clone())).unwrap();
+
+        assert_eq!(list_keys(&config), keys);
 
         (keys, backup)
     })

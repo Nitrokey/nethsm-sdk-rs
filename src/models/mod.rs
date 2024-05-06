@@ -1,3 +1,5 @@
+pub mod ak_pub;
+pub use self::ak_pub::AkPub;
 pub mod backup_passphrase_config;
 pub use self::backup_passphrase_config::BackupPassphraseConfig;
 pub mod create_resource_id;
@@ -40,6 +42,8 @@ pub mod logging_config;
 pub use self::logging_config::LoggingConfig;
 pub mod network_config;
 pub use self::network_config::NetworkConfig;
+pub mod pcr;
+pub use self::pcr::Pcr;
 pub mod private_key;
 pub use self::private_key::PrivateKey;
 pub mod private_key_pem_arguments;

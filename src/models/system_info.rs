@@ -21,9 +21,9 @@ pub struct SystemInfo {
     #[serde(rename = "deviceId")]
     pub device_id: String,
     #[serde(rename = "akPub")]
-    pub ak_pub: serde_json::Value,
+    pub ak_pub: Box<crate::models::AkPub>,
     #[serde(rename = "pcr")]
-    pub pcr: serde_json::Value,
+    pub pcr: Box<crate::models::Pcr>,
 }
 
 impl SystemInfo {
@@ -33,8 +33,8 @@ impl SystemInfo {
         firmware_version: String,
         hardware_version: String,
         device_id: String,
-        ak_pub: serde_json::Value,
-        pcr: serde_json::Value,
+        ak_pub: crate::models::AkPub,
+        pcr: crate::models::Pcr,
     ) -> SystemInfo {
         SystemInfo {
             software_version,
@@ -42,8 +42,8 @@ impl SystemInfo {
             firmware_version,
             hardware_version,
             device_id,
-            ak_pub,
-            pcr,
+            ak_pub: Box::new(ak_pub),
+            pcr: Box::new(pcr),
         }
     }
 }

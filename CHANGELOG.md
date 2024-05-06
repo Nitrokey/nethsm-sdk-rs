@@ -6,6 +6,11 @@
 
 - Return `Error::ResponseError` instead of `Error::Transport` for API errors ([#21](https://github.com/Nitrokey/nethsm-sdk-rs/issues/21))
 - Fix multipart requests, namely `system_restore_post` ([#20](https://github.com/Nitrokey/nethsm-sdk-rs/issues/20))
+- Add authentication for `system_restore_post` ([#15](https://github.com/Nitrokey/nethsm-sdk-rs/issues/15))
+
+### Changes
+
+- Add `AkPub` and `Pcr` schemas
 
 [All Changes](https://github.com/Nitrokey/nethsm-sdk-rs/compare/v1.0.1...HEAD)
 

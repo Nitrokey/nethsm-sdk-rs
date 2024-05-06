@@ -37,13 +37,13 @@ paths:
     get:
       responses:
         "200":
-          description: Yes, it is alive.
+          description: NetHSM is fully started and in state *Locked* or *Unprovisioned*.
         "406":
           description: Content type in Accept header not supported.
         "412":
-          description: Not locked or unprovisioned (in operational state).
+          description: NetHSM is not in state *Locked* or *Unprovisioned*.
       description: |
-        Retrieve wether NetHSM is alive (powered up).
+        Retrieve whether NetHSM is fully started but not ready to take traffic.
         This corresponds to the state *Locked* or *Unprovisioned*.
       x-annotation-role:
         - Public
@@ -54,14 +54,13 @@ paths:
     get:
       responses:
         "200":
-          description: Yes, it is alive and ready.
+          description: NetHSM is in state *Operational*.
         "406":
           description: Content type in Accept header not supported.
         "412":
-          description: Not alive and ready (not in operational state).
+          description: NetHSM is not in state *Operational*.
       description: |
-        Retrieve wether NetHSM is alive and ready to take traffic.
-        This corresponds to the state *Operational*.
+        Retrieve whether NetHSM is in state *Operational* and thus ready to take traffic.
       x-annotation-role:
         - Public
       x-annotation-state:
@@ -1839,6 +1838,9 @@ paths:
           multipart/form-data:
             schema:
               $ref: "#/components/schemas/RestoreRequest"
+      security:
+        - {}         # for complete restore
+        - basic: []  # for partial restore
       x-annotation-role:
         - Public
       x-annotation-state:
@@ -1846,6 +1848,26 @@ paths:
         - Operational
 components:
   schemas:
+    AkPub:
+      example:
+        P256: MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEup7z8QYvkzkBuLryG1SgVQjlPhSFW3PzYn1l3uLNd+pSBxX0OBpslcbnmPFr5wSs/iP46+H8MFlEAYUkYv6uuQ==
+        P384: MHYwEAYHKoZIzj0CAQYFK4EEACIDYgAEfQiurLvEmjsAmumRtIqu70HKehRo8A/nVrqQGiR8Rcr+SUujwgtQByORX5BoRtv4sZNJW4FyLGqvXCIF9IV1puob2+9Qq5oEjz4x4malLbFdyXDmQK8o2NpvcbgOr215
+      type: object
+      properties:
+        P256:
+          type: string
+        P384:
+          type: string
+    Pcr:
+      example:
+        0: 0f6064779fba55b102a6ecc20498c2020deaf2aebef23716ec293b25873647f8
+        2: 2b0d25a4a92b4df5205742954243db9d306a4c3277a6b6958bcbaf3d47def26f
+      type: object
+      properties:
+        0:
+          type: string
+        2:
+          type: string
     Passphrase:
       minLength: 10
       type: string
@@ -2478,9 +2500,9 @@ components:
         deviceId:
           type: string
         akPub:
-          type: object
+          $ref: "#/components/schemas/AkPub"
         pcr:
-          type: object
+          $ref: "#/components/schemas/Pcr"
       required:
         - softwareVersion
         - softwareBuild

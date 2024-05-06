@@ -502,7 +502,7 @@ Name | Type | Description  | Required | Notes
 > health_alive_get()
 
 
-Retrieve wether NetHSM is alive (powered up). This corresponds to the state *Locked* or *Unprovisioned*. 
+Retrieve whether NetHSM is fully started but not ready to take traffic. This corresponds to the state *Locked* or *Unprovisioned*. 
 
 ### Parameters
 
@@ -529,7 +529,7 @@ No authorization required
 > health_ready_get()
 
 
-Retrieve wether NetHSM is alive and ready to take traffic. This corresponds to the state *Operational*. 
+Retrieve whether NetHSM is in state *Operational* and thus ready to take traffic. 
 
 ### Parameters
 
@@ -1390,7 +1390,7 @@ Name | Type | Description  | Required | Notes
 
 ### Authorization
 
-No authorization required
+[basic](../README.md#basic)
 
 ### HTTP request headers
 

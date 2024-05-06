@@ -1,3 +1,4 @@
+docs/AkPub.md
 docs/BackupPassphraseConfig.md
 docs/CreateResourceId.md
 docs/DecryptData.md
@@ -20,6 +21,7 @@ docs/KeyType.md
 docs/LogLevel.md
 docs/LoggingConfig.md
 docs/NetworkConfig.md
+docs/Pcr.md
 docs/PrivateKey.md
 docs/PrivateKeyPemArguments.md
 docs/ProvisionRequestData.md
@@ -49,6 +51,7 @@ src/apis/configuration.rs
 src/apis/default_api.rs
 src/apis/mod.rs
 src/lib.rs
+src/models/ak_pub.rs
 src/models/backup_passphrase_config.rs
 src/models/create_resource_id.rs
 src/models/decrypt_data.rs
@@ -71,6 +74,7 @@ src/models/log_level.rs
 src/models/logging_config.rs
 src/models/mod.rs
 src/models/network_config.rs
+src/models/pcr.rs
 src/models/private_key.rs
 src/models/private_key_pem_arguments.rs
 src/models/provision_request_data.rs

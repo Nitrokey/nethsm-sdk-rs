@@ -1681,7 +1681,7 @@ pub fn config_unlock_passphrase_put(
     }
 }
 
-/// Retrieve wether NetHSM is alive (powered up). This corresponds to the state *Locked* or *Unprovisioned*.
+/// Retrieve whether NetHSM is fully started but not ready to take traffic. This corresponds to the state *Locked* or *Unprovisioned*.
 
 pub fn health_alive_get(
     configuration: &configuration::Configuration,
@@ -1734,7 +1734,7 @@ pub fn health_alive_get(
     }
 }
 
-/// Retrieve wether NetHSM is alive and ready to take traffic. This corresponds to the state *Operational*.
+/// Retrieve whether NetHSM is in state *Operational* and thus ready to take traffic.
 
 pub fn health_ready_get(
     configuration: &configuration::Configuration,
@@ -3590,6 +3590,11 @@ pub fn system_restore_post(
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
         local_var_req_builder = local_var_req_builder.set("user-agent", local_var_user_agent);
     }
+    if let Some(ref local_var_auth_conf) = local_var_configuration.basic_auth {
+        let value = super::basic_auth(local_var_auth_conf);
+
+        local_var_req_builder = local_var_req_builder.set("authorization", &value);
+    };
 
     let mut local_var_multipart = ::multipart::client::lazy::Multipart::new();
 
