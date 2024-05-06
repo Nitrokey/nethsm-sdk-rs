@@ -1,6 +1,6 @@
 [package]
 name = "nethsm-sdk-rs"
-version = "1.0.0"
+version = "1.0.1"
 authors = ["Nitrokey <info@nitrokey.com>"]
 description = "Rust SDK to communicate with Nitrokey NetHSM"
 documentation = "https://docs.nitrokey.com/nethsm/"
@@ -24,4 +24,4 @@ serde_derive = "^1.0"
 serde_json = { default-features = false, version = "^1.0" }
 url = "^2.2"
 ureq = { version = "2", features = ["json", "tls"], default-features = false }
-base64 = { version = "0.21", default-features = false }
+base64 = { version = "0.21", default-features = false, features = ["alloc"] }
