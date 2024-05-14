@@ -285,6 +285,45 @@ pub fn {{{operationId}}}(configuration: &configuration::Configuration, {{#allPar
     local_var_req_builder = local_var_req_builder.set("accept", accept_str);
     {{/hasProduces}}
 
+    {{#isMultipart}}
+    let mut local_var_multipart = ::multipart::client::lazy::Multipart::new();
+
+    {{#hasFormParams}}
+    {{#formParams}}
+    {{#isFile}}
+    if let Some({{{paramName}}}) = {{{paramName}}} {
+        local_var_multipart.add_stream(
+            "{{{baseName}}}",
+            ::std::io::Cursor::new({{{paramName}}}),
+            None::<&str>,
+            None,
+        );
+    }
+    {{/isFile}}
+    {{/formParams}}
+    {{#formParams}}
+    {{^isFile}}
+    if let Some({{{paramName}}}) = {{{paramName}}} {
+        let {{{paramName}}} = ::serde_json::to_vec(&{{{paramName}}})?;
+        local_var_multipart.add_stream(
+            "{{{baseName}}}",
+            ::std::io::Cursor::new({{{paramName}}}),
+            None::<&str>,
+            None,
+        );
+    }
+    {{/isFile}}
+    {{/formParams}}
+    {{/hasFormParams}}
+
+    let local_var_multipart = local_var_multipart.prepare()?;
+    local_var_req_builder = local_var_req_builder.set(
+        "content-type",
+        &format!("multipart/form-data; boundary={}", local_var_multipart.boundary()),
+    );
+    let local_var_result = local_var_req_builder.send(local_var_multipart);
+    {{/isMultipart}}
+    {{^isMultipart}}
     {{#vendorExtensions.x-consumeMultipleMediaTypes}}
     {{#hasBodyParam}}{{#bodyParams}}
     let body_json = body.is_json();
@@ -328,6 +367,7 @@ pub fn {{{operationId}}}(configuration: &configuration::Configuration, {{#allPar
     {{^hasBodyParam}}
     let local_var_result = local_var_req_builder.call();
     {{/hasBodyParam}}
+    {{/isMultipart}}
 
     let local_var_resp = local_var_result.or_else(|err| match err {
         ureq::Error::Status(_status, resp) => Ok(resp),

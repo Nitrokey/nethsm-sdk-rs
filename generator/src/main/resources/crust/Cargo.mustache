@@ -41,8 +41,11 @@ serde_json = { default-features = false, version = "^1.0" }
 url = "^2.2"
 ureq = { version = "2", features = ["json", "tls"], default-features = false }
 base64 = { version = "0.21", default-features = false, features = ["alloc"] }
+mime = "0.3"
+multipart = { version = "0.18", default-features = false, features = ["client"] }
 
 [dev-dependencies]
+chrono = "0.4.38"
 env_logger = "0.11.3"
 rustainers = "0.12.0"
 rustls = { version = "0.22.4" }

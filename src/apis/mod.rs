@@ -26,6 +26,10 @@ pub struct ResponseContent<T> {
 
 #[derive(Debug)]
 pub enum Error<T> {
+    Multipart {
+        field: Option<String>,
+        error: std::io::Error,
+    },
     Ureq(ureq::Error),
     Serde(serde_json::Error),
     Io(std::io::Error),
@@ -36,6 +40,13 @@ pub enum Error<T> {
 impl<T> fmt::Display for Error<T> {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         let (module, e) = match self {
+            Error::Multipart { field, error } => {
+                let error = match field {
+                    Some(field) => format!("failed to encode {field}: {error}"),
+                    None => error.to_string(),
+                };
+                ("multipart", error)
+            }
             Error::Ureq(e) => ("ureq", e.to_string()),
             Error::Serde(e) => ("serde", e.to_string()),
             Error::Io(e) => ("IO", e.to_string()),
@@ -49,12 +60,22 @@ impl<T> fmt::Display for Error<T> {
 impl<T: fmt::Debug> error::Error for Error<T> {
     fn source(&self) -> Option<&(dyn error::Error + 'static)> {
         Some(match self {
+            Error::Multipart { error, .. } => error,
             Error::Ureq(e) => e,
             Error::Serde(e) => e,
             Error::Io(e) => e,
             Error::ResponseError(_) => return None,
             Error::StringParse(e) => e,
         })
+    }
+}
+
+impl<T> From<multipart::client::lazy::LazyError<'_, std::io::Error>> for Error<T> {
+    fn from(e: multipart::client::lazy::LazyError<'_, std::io::Error>) -> Self {
+        Self::Multipart {
+            field: e.field_name.map(|s| s.into_owned()),
+            error: e.error,
+        }
     }
 }
 

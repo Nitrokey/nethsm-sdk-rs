@@ -3591,9 +3591,35 @@ pub fn system_restore_post(
         local_var_req_builder = local_var_req_builder.set("user-agent", local_var_user_agent);
     }
 
-    local_var_req_builder = local_var_req_builder.set("content-type", "multipart/form-data");
+    let mut local_var_multipart = ::multipart::client::lazy::Multipart::new();
 
-    let local_var_result = local_var_req_builder.call();
+    if let Some(backup_file) = backup_file {
+        local_var_multipart.add_stream(
+            "backup_file",
+            ::std::io::Cursor::new(backup_file),
+            None::<&str>,
+            None,
+        );
+    }
+    if let Some(arguments) = arguments {
+        let arguments = ::serde_json::to_vec(&arguments)?;
+        local_var_multipart.add_stream(
+            "arguments",
+            ::std::io::Cursor::new(arguments),
+            None::<&str>,
+            None,
+        );
+    }
+
+    let local_var_multipart = local_var_multipart.prepare()?;
+    local_var_req_builder = local_var_req_builder.set(
+        "content-type",
+        &format!(
+            "multipart/form-data; boundary={}",
+            local_var_multipart.boundary()
+        ),
+    );
+    let local_var_result = local_var_req_builder.send(local_var_multipart);
 
     let local_var_resp = local_var_result.or_else(|err| match err {
         ureq::Error::Status(_status, resp) => Ok(resp),
