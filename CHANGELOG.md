@@ -1,5 +1,13 @@
 # Changelog
 
+## Unreleased
+
+### Bugfixes
+
+- Return `Error::ResponseError` instead of `Error::Transport` for API errors ([#21](https://github.com/Nitrokey/nethsm-sdk-rs/issues/21))
+
+[All Changes](https://github.com/Nitrokey/nethsm-sdk-rs/compare/v1.0.1...HEAD)
+
 ## [v1.0.1](https://github.com/Nitrokey/nethsm-sdk-rs/releases/tag/v1.0.1) (2024-05-06)
 
 ### Bugfixes

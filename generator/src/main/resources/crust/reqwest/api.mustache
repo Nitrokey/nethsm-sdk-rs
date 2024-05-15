@@ -290,27 +290,27 @@ pub fn {{{operationId}}}(configuration: &configuration::Configuration, {{#allPar
     let body_json = body.is_json();
     local_var_req_builder = local_var_req_builder.set("content-type", body.content_type());
     {{/bodyParams}}{{/hasBodyParam}} 
-    let local_var_resp = if body_json {
-        local_var_req_builder.send_json(body)?
+    let local_var_result = if body_json {
+        local_var_req_builder.send_json(body)
     } else {
-        local_var_req_builder.send_string(body.get_string().as_str())?
+        local_var_req_builder.send_string(body.get_string().as_str())
     };
     {{/vendorExtensions.x-consumeMultipleMediaTypes}}
     {{^vendorExtensions.x-consumeMultipleMediaTypes}}
     {{#consumes}}
     local_var_req_builder = local_var_req_builder.set("content-type", "{{{mediaType}}}");
     {{#mediaIsJson}}
-    let local_var_resp = local_var_req_builder.send_json(
+    let local_var_result = local_var_req_builder.send_json(
     {{/mediaIsJson}}
     {{^mediaIsJson}}
     {{#hasBodyParam}}
     {{#bodyParams}}
     {{#isFile}}
     let {{{paramName}}} = std::io::Cursor::new({{{paramName}}});
-    let local_var_resp = local_var_req_builder.send(
+    let local_var_result = local_var_req_builder.send(
     {{/isFile}}
     {{^isFile}}
-    let local_var_resp = local_var_req_builder.send_string(
+    let local_var_result = local_var_req_builder.send_string(
     {{/isFile}}
     {{/bodyParams}}
     {{/hasBodyParam}}
@@ -323,11 +323,16 @@ pub fn {{{operationId}}}(configuration: &configuration::Configuration, {{#allPar
     {{/hasBodyParam}}
     {{#consumes}}
     {{/consumes}}
-    {{#hasBodyParam}})?;{{/hasBodyParam}}
+    {{#hasBodyParam}});{{/hasBodyParam}}
     {{/vendorExtensions.x-consumeMultipleMediaTypes}}
     {{^hasBodyParam}}
-    let local_var_resp = local_var_req_builder.call()?;
+    let local_var_result = local_var_req_builder.call();
     {{/hasBodyParam}}
+
+    let local_var_resp = local_var_result.or_else(|err| match err {
+        ureq::Error::Status(_status, resp) => Ok(resp),
+        _ => Err(err),
+    })?;
 
 
     let local_var_headers = super::get_header_map(&local_var_resp);
@@ -338,7 +343,7 @@ pub fn {{{operationId}}}(configuration: &configuration::Configuration, {{#allPar
 
     let local_var_content_clone = local_var_content.clone();
 
-    if !local_var_status >= 400 {
+    if local_var_status < 400 {
         {{#vendorExtensions.x-produceMultipleMediaTypes}}
         {{#returnType}}
         let local_var_entity : {{{returnType}}} = if is_json { serde_json::from_slice(&local_var_content).map_err(Error::from)? } else {  String::from_utf8(local_var_content)? };
