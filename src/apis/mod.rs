@@ -1,9 +1,11 @@
-use base64::{engine::general_purpose, Engine};
 use std::collections::HashMap;
 use std::error;
 use std::fmt;
 
-pub(crate) fn get_header_map(response: &ureq::Response) -> HashMap<String, String> {
+use base64::{engine::general_purpose, Engine};
+use serde::de::DeserializeOwned;
+
+fn get_header_map(response: &ureq::Response) -> HashMap<String, String> {
     let mut headers = HashMap::new();
 
     let names = response.headers_names();
@@ -22,6 +24,53 @@ pub struct ResponseContent<T> {
     pub content: Vec<u8>,
     pub entity: T,
     pub headers: HashMap<String, String>,
+}
+
+impl<T> ResponseContent<T> {
+    fn new<F, E>(response: ureq::Response, f: F) -> Result<Self, Error<E>>
+    where
+        F: FnOnce(&[u8]) -> Result<T, Error<E>>,
+    {
+        let status = response.status();
+        let headers = get_header_map(&response);
+        let mut content = Vec::new();
+        response.into_reader().read_to_end(&mut content)?;
+        let entity = f(&content)?;
+        Ok(Self {
+            status,
+            content,
+            entity,
+            headers,
+        })
+    }
+}
+
+impl ResponseContent<()> {
+    fn unit<E>(response: ureq::Response) -> Result<Self, Error<E>> {
+        Self::new(response, |_| Ok(()))
+    }
+}
+
+impl ResponseContent<Vec<u8>> {
+    fn bytes<E>(response: ureq::Response) -> Result<Self, Error<E>> {
+        Self::new(response, |content| Ok(content.into()))
+    }
+}
+
+impl ResponseContent<String> {
+    fn string<E>(response: ureq::Response) -> Result<Self, Error<E>> {
+        Self::new(response, |content| {
+            String::from_utf8(content.into()).map_err(From::from)
+        })
+    }
+}
+
+impl<T: DeserializeOwned> ResponseContent<T> {
+    fn deserialized<E>(response: ureq::Response) -> Result<Self, Error<E>> {
+        Self::new(response, |content| {
+            serde_json::from_slice(content).map_err(From::from)
+        })
+    }
 }
 
 #[derive(Debug)]

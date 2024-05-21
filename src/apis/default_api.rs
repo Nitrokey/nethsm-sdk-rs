@@ -10,7 +10,6 @@
 
 use super::{configuration, Error};
 use crate::apis::ResponseContent;
-use std::io::Read;
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -776,32 +775,11 @@ pub fn config_backup_passphrase_put(
         _ => Err(err),
     })?;
 
-    let local_var_headers = super::get_header_map(&local_var_resp);
-
-    let local_var_status = local_var_resp.status();
-    let mut local_var_content = vec![];
-    local_var_resp
-        .into_reader()
-        .read_to_end(&mut local_var_content)?;
-
-    if local_var_status < 400 {
-        let local_var_result = ResponseContent {
-            status: local_var_status,
-            content: local_var_content,
-            entity: (),
-            headers: local_var_headers,
-        };
-        Ok(local_var_result)
+    if local_var_resp.status() < 400 {
+        ResponseContent::unit(local_var_resp)
     } else {
-        let local_var_entity: ConfigBackupPassphrasePutError =
-            serde_json::from_slice(&local_var_content)?;
-        let local_var_error = ResponseContent {
-            status: local_var_status,
-            content: local_var_content,
-            entity: local_var_entity,
-            headers: local_var_headers,
-        };
-        Err(Error::ResponseError(local_var_error))
+        ResponseContent::deserialized(local_var_resp)
+            .and_then(|content| Err(Error::ResponseError(content)))
     }
 }
 
@@ -835,33 +813,11 @@ pub fn config_logging_get(
         _ => Err(err),
     })?;
 
-    let local_var_headers = super::get_header_map(&local_var_resp);
-
-    let local_var_status = local_var_resp.status();
-    let mut local_var_content = vec![];
-    local_var_resp
-        .into_reader()
-        .read_to_end(&mut local_var_content)?;
-
-    if local_var_status < 400 {
-        let local_var_entity: crate::models::LoggingConfig =
-            serde_json::from_slice(&local_var_content).map_err(Error::from)?;
-        let local_var_result = ResponseContent {
-            status: local_var_status,
-            content: local_var_content,
-            entity: local_var_entity,
-            headers: local_var_headers,
-        };
-        Ok(local_var_result)
+    if local_var_resp.status() < 400 {
+        ResponseContent::deserialized(local_var_resp)
     } else {
-        let local_var_entity: ConfigLoggingGetError = serde_json::from_slice(&local_var_content)?;
-        let local_var_error = ResponseContent {
-            status: local_var_status,
-            content: local_var_content,
-            entity: local_var_entity,
-            headers: local_var_headers,
-        };
-        Err(Error::ResponseError(local_var_error))
+        ResponseContent::deserialized(local_var_resp)
+            .and_then(|content| Err(Error::ResponseError(content)))
     }
 }
 
@@ -895,31 +851,11 @@ pub fn config_logging_put(
         _ => Err(err),
     })?;
 
-    let local_var_headers = super::get_header_map(&local_var_resp);
-
-    let local_var_status = local_var_resp.status();
-    let mut local_var_content = vec![];
-    local_var_resp
-        .into_reader()
-        .read_to_end(&mut local_var_content)?;
-
-    if local_var_status < 400 {
-        let local_var_result = ResponseContent {
-            status: local_var_status,
-            content: local_var_content,
-            entity: (),
-            headers: local_var_headers,
-        };
-        Ok(local_var_result)
+    if local_var_resp.status() < 400 {
+        ResponseContent::unit(local_var_resp)
     } else {
-        let local_var_entity: ConfigLoggingPutError = serde_json::from_slice(&local_var_content)?;
-        let local_var_error = ResponseContent {
-            status: local_var_status,
-            content: local_var_content,
-            entity: local_var_entity,
-            headers: local_var_headers,
-        };
-        Err(Error::ResponseError(local_var_error))
+        ResponseContent::deserialized(local_var_resp)
+            .and_then(|content| Err(Error::ResponseError(content)))
     }
 }
 
@@ -953,33 +889,11 @@ pub fn config_network_get(
         _ => Err(err),
     })?;
 
-    let local_var_headers = super::get_header_map(&local_var_resp);
-
-    let local_var_status = local_var_resp.status();
-    let mut local_var_content = vec![];
-    local_var_resp
-        .into_reader()
-        .read_to_end(&mut local_var_content)?;
-
-    if local_var_status < 400 {
-        let local_var_entity: crate::models::NetworkConfig =
-            serde_json::from_slice(&local_var_content).map_err(Error::from)?;
-        let local_var_result = ResponseContent {
-            status: local_var_status,
-            content: local_var_content,
-            entity: local_var_entity,
-            headers: local_var_headers,
-        };
-        Ok(local_var_result)
+    if local_var_resp.status() < 400 {
+        ResponseContent::deserialized(local_var_resp)
     } else {
-        let local_var_entity: ConfigNetworkGetError = serde_json::from_slice(&local_var_content)?;
-        let local_var_error = ResponseContent {
-            status: local_var_status,
-            content: local_var_content,
-            entity: local_var_entity,
-            headers: local_var_headers,
-        };
-        Err(Error::ResponseError(local_var_error))
+        ResponseContent::deserialized(local_var_resp)
+            .and_then(|content| Err(Error::ResponseError(content)))
     }
 }
 
@@ -1013,31 +927,11 @@ pub fn config_network_put(
         _ => Err(err),
     })?;
 
-    let local_var_headers = super::get_header_map(&local_var_resp);
-
-    let local_var_status = local_var_resp.status();
-    let mut local_var_content = vec![];
-    local_var_resp
-        .into_reader()
-        .read_to_end(&mut local_var_content)?;
-
-    if local_var_status < 400 {
-        let local_var_result = ResponseContent {
-            status: local_var_status,
-            content: local_var_content,
-            entity: (),
-            headers: local_var_headers,
-        };
-        Ok(local_var_result)
+    if local_var_resp.status() < 400 {
+        ResponseContent::unit(local_var_resp)
     } else {
-        let local_var_entity: ConfigNetworkPutError = serde_json::from_slice(&local_var_content)?;
-        let local_var_error = ResponseContent {
-            status: local_var_status,
-            content: local_var_content,
-            entity: local_var_entity,
-            headers: local_var_headers,
-        };
-        Err(Error::ResponseError(local_var_error))
+        ResponseContent::deserialized(local_var_resp)
+            .and_then(|content| Err(Error::ResponseError(content)))
     }
 }
 
@@ -1071,33 +965,11 @@ pub fn config_time_get(
         _ => Err(err),
     })?;
 
-    let local_var_headers = super::get_header_map(&local_var_resp);
-
-    let local_var_status = local_var_resp.status();
-    let mut local_var_content = vec![];
-    local_var_resp
-        .into_reader()
-        .read_to_end(&mut local_var_content)?;
-
-    if local_var_status < 400 {
-        let local_var_entity: crate::models::TimeConfig =
-            serde_json::from_slice(&local_var_content).map_err(Error::from)?;
-        let local_var_result = ResponseContent {
-            status: local_var_status,
-            content: local_var_content,
-            entity: local_var_entity,
-            headers: local_var_headers,
-        };
-        Ok(local_var_result)
+    if local_var_resp.status() < 400 {
+        ResponseContent::deserialized(local_var_resp)
     } else {
-        let local_var_entity: ConfigTimeGetError = serde_json::from_slice(&local_var_content)?;
-        let local_var_error = ResponseContent {
-            status: local_var_status,
-            content: local_var_content,
-            entity: local_var_entity,
-            headers: local_var_headers,
-        };
-        Err(Error::ResponseError(local_var_error))
+        ResponseContent::deserialized(local_var_resp)
+            .and_then(|content| Err(Error::ResponseError(content)))
     }
 }
 
@@ -1131,31 +1003,11 @@ pub fn config_time_put(
         _ => Err(err),
     })?;
 
-    let local_var_headers = super::get_header_map(&local_var_resp);
-
-    let local_var_status = local_var_resp.status();
-    let mut local_var_content = vec![];
-    local_var_resp
-        .into_reader()
-        .read_to_end(&mut local_var_content)?;
-
-    if local_var_status < 400 {
-        let local_var_result = ResponseContent {
-            status: local_var_status,
-            content: local_var_content,
-            entity: (),
-            headers: local_var_headers,
-        };
-        Ok(local_var_result)
+    if local_var_resp.status() < 400 {
+        ResponseContent::unit(local_var_resp)
     } else {
-        let local_var_entity: ConfigTimePutError = serde_json::from_slice(&local_var_content)?;
-        let local_var_error = ResponseContent {
-            status: local_var_status,
-            content: local_var_content,
-            entity: local_var_entity,
-            headers: local_var_headers,
-        };
-        Err(Error::ResponseError(local_var_error))
+        ResponseContent::deserialized(local_var_resp)
+            .and_then(|content| Err(Error::ResponseError(content)))
     }
 }
 
@@ -1189,33 +1041,11 @@ pub fn config_tls_cert_pem_get(
         _ => Err(err),
     })?;
 
-    let local_var_headers = super::get_header_map(&local_var_resp);
-
-    let local_var_status = local_var_resp.status();
-    let mut local_var_content = vec![];
-    local_var_resp
-        .into_reader()
-        .read_to_end(&mut local_var_content)?;
-
-    if local_var_status < 400 {
-        let local_var_entity = String::from_utf8(local_var_content.clone())?;
-        let local_var_result = ResponseContent {
-            status: local_var_status,
-            content: local_var_content,
-            entity: local_var_entity,
-            headers: local_var_headers,
-        };
-        Ok(local_var_result)
+    if local_var_resp.status() < 400 {
+        ResponseContent::string(local_var_resp)
     } else {
-        let local_var_entity: ConfigTlsCertPemGetError =
-            serde_json::from_slice(&local_var_content)?;
-        let local_var_error = ResponseContent {
-            status: local_var_status,
-            content: local_var_content,
-            entity: local_var_entity,
-            headers: local_var_headers,
-        };
-        Err(Error::ResponseError(local_var_error))
+        ResponseContent::deserialized(local_var_resp)
+            .and_then(|content| Err(Error::ResponseError(content)))
     }
 }
 
@@ -1249,32 +1079,11 @@ pub fn config_tls_cert_pem_put(
         _ => Err(err),
     })?;
 
-    let local_var_headers = super::get_header_map(&local_var_resp);
-
-    let local_var_status = local_var_resp.status();
-    let mut local_var_content = vec![];
-    local_var_resp
-        .into_reader()
-        .read_to_end(&mut local_var_content)?;
-
-    if local_var_status < 400 {
-        let local_var_result = ResponseContent {
-            status: local_var_status,
-            content: local_var_content,
-            entity: (),
-            headers: local_var_headers,
-        };
-        Ok(local_var_result)
+    if local_var_resp.status() < 400 {
+        ResponseContent::unit(local_var_resp)
     } else {
-        let local_var_entity: ConfigTlsCertPemPutError =
-            serde_json::from_slice(&local_var_content)?;
-        let local_var_error = ResponseContent {
-            status: local_var_status,
-            content: local_var_content,
-            entity: local_var_entity,
-            headers: local_var_headers,
-        };
-        Err(Error::ResponseError(local_var_error))
+        ResponseContent::deserialized(local_var_resp)
+            .and_then(|content| Err(Error::ResponseError(content)))
     }
 }
 
@@ -1310,33 +1119,11 @@ pub fn config_tls_csr_pem_post(
         _ => Err(err),
     })?;
 
-    let local_var_headers = super::get_header_map(&local_var_resp);
-
-    let local_var_status = local_var_resp.status();
-    let mut local_var_content = vec![];
-    local_var_resp
-        .into_reader()
-        .read_to_end(&mut local_var_content)?;
-
-    if local_var_status < 400 {
-        let local_var_entity = String::from_utf8(local_var_content.clone())?;
-        let local_var_result = ResponseContent {
-            status: local_var_status,
-            content: local_var_content,
-            entity: local_var_entity,
-            headers: local_var_headers,
-        };
-        Ok(local_var_result)
+    if local_var_resp.status() < 400 {
+        ResponseContent::string(local_var_resp)
     } else {
-        let local_var_entity: ConfigTlsCsrPemPostError =
-            serde_json::from_slice(&local_var_content)?;
-        let local_var_error = ResponseContent {
-            status: local_var_status,
-            content: local_var_content,
-            entity: local_var_entity,
-            headers: local_var_headers,
-        };
-        Err(Error::ResponseError(local_var_error))
+        ResponseContent::deserialized(local_var_resp)
+            .and_then(|content| Err(Error::ResponseError(content)))
     }
 }
 
@@ -1370,32 +1157,11 @@ pub fn config_tls_generate_post(
         _ => Err(err),
     })?;
 
-    let local_var_headers = super::get_header_map(&local_var_resp);
-
-    let local_var_status = local_var_resp.status();
-    let mut local_var_content = vec![];
-    local_var_resp
-        .into_reader()
-        .read_to_end(&mut local_var_content)?;
-
-    if local_var_status < 400 {
-        let local_var_result = ResponseContent {
-            status: local_var_status,
-            content: local_var_content,
-            entity: (),
-            headers: local_var_headers,
-        };
-        Ok(local_var_result)
+    if local_var_resp.status() < 400 {
+        ResponseContent::unit(local_var_resp)
     } else {
-        let local_var_entity: ConfigTlsGeneratePostError =
-            serde_json::from_slice(&local_var_content)?;
-        let local_var_error = ResponseContent {
-            status: local_var_status,
-            content: local_var_content,
-            entity: local_var_entity,
-            headers: local_var_headers,
-        };
-        Err(Error::ResponseError(local_var_error))
+        ResponseContent::deserialized(local_var_resp)
+            .and_then(|content| Err(Error::ResponseError(content)))
     }
 }
 
@@ -1432,33 +1198,11 @@ pub fn config_tls_public_pem_get(
         _ => Err(err),
     })?;
 
-    let local_var_headers = super::get_header_map(&local_var_resp);
-
-    let local_var_status = local_var_resp.status();
-    let mut local_var_content = vec![];
-    local_var_resp
-        .into_reader()
-        .read_to_end(&mut local_var_content)?;
-
-    if local_var_status < 400 {
-        let local_var_entity = String::from_utf8(local_var_content.clone())?;
-        let local_var_result = ResponseContent {
-            status: local_var_status,
-            content: local_var_content,
-            entity: local_var_entity,
-            headers: local_var_headers,
-        };
-        Ok(local_var_result)
+    if local_var_resp.status() < 400 {
+        ResponseContent::string(local_var_resp)
     } else {
-        let local_var_entity: ConfigTlsPublicPemGetError =
-            serde_json::from_slice(&local_var_content)?;
-        let local_var_error = ResponseContent {
-            status: local_var_status,
-            content: local_var_content,
-            entity: local_var_entity,
-            headers: local_var_headers,
-        };
-        Err(Error::ResponseError(local_var_error))
+        ResponseContent::deserialized(local_var_resp)
+            .and_then(|content| Err(Error::ResponseError(content)))
     }
 }
 
@@ -1496,34 +1240,11 @@ pub fn config_unattended_boot_get(
         _ => Err(err),
     })?;
 
-    let local_var_headers = super::get_header_map(&local_var_resp);
-
-    let local_var_status = local_var_resp.status();
-    let mut local_var_content = vec![];
-    local_var_resp
-        .into_reader()
-        .read_to_end(&mut local_var_content)?;
-
-    if local_var_status < 400 {
-        let local_var_entity: crate::models::UnattendedBootConfig =
-            serde_json::from_slice(&local_var_content).map_err(Error::from)?;
-        let local_var_result = ResponseContent {
-            status: local_var_status,
-            content: local_var_content,
-            entity: local_var_entity,
-            headers: local_var_headers,
-        };
-        Ok(local_var_result)
+    if local_var_resp.status() < 400 {
+        ResponseContent::deserialized(local_var_resp)
     } else {
-        let local_var_entity: ConfigUnattendedBootGetError =
-            serde_json::from_slice(&local_var_content)?;
-        let local_var_error = ResponseContent {
-            status: local_var_status,
-            content: local_var_content,
-            entity: local_var_entity,
-            headers: local_var_headers,
-        };
-        Err(Error::ResponseError(local_var_error))
+        ResponseContent::deserialized(local_var_resp)
+            .and_then(|content| Err(Error::ResponseError(content)))
     }
 }
 
@@ -1560,32 +1281,11 @@ pub fn config_unattended_boot_put(
         _ => Err(err),
     })?;
 
-    let local_var_headers = super::get_header_map(&local_var_resp);
-
-    let local_var_status = local_var_resp.status();
-    let mut local_var_content = vec![];
-    local_var_resp
-        .into_reader()
-        .read_to_end(&mut local_var_content)?;
-
-    if local_var_status < 400 {
-        let local_var_result = ResponseContent {
-            status: local_var_status,
-            content: local_var_content,
-            entity: (),
-            headers: local_var_headers,
-        };
-        Ok(local_var_result)
+    if local_var_resp.status() < 400 {
+        ResponseContent::unit(local_var_resp)
     } else {
-        let local_var_entity: ConfigUnattendedBootPutError =
-            serde_json::from_slice(&local_var_content)?;
-        let local_var_error = ResponseContent {
-            status: local_var_status,
-            content: local_var_content,
-            entity: local_var_entity,
-            headers: local_var_headers,
-        };
-        Err(Error::ResponseError(local_var_error))
+        ResponseContent::deserialized(local_var_resp)
+            .and_then(|content| Err(Error::ResponseError(content)))
     }
 }
 
@@ -1622,32 +1322,11 @@ pub fn config_unlock_passphrase_put(
         _ => Err(err),
     })?;
 
-    let local_var_headers = super::get_header_map(&local_var_resp);
-
-    let local_var_status = local_var_resp.status();
-    let mut local_var_content = vec![];
-    local_var_resp
-        .into_reader()
-        .read_to_end(&mut local_var_content)?;
-
-    if local_var_status < 400 {
-        let local_var_result = ResponseContent {
-            status: local_var_status,
-            content: local_var_content,
-            entity: (),
-            headers: local_var_headers,
-        };
-        Ok(local_var_result)
+    if local_var_resp.status() < 400 {
+        ResponseContent::unit(local_var_resp)
     } else {
-        let local_var_entity: ConfigUnlockPassphrasePutError =
-            serde_json::from_slice(&local_var_content)?;
-        let local_var_error = ResponseContent {
-            status: local_var_status,
-            content: local_var_content,
-            entity: local_var_entity,
-            headers: local_var_headers,
-        };
-        Err(Error::ResponseError(local_var_error))
+        ResponseContent::deserialized(local_var_resp)
+            .and_then(|content| Err(Error::ResponseError(content)))
     }
 }
 
@@ -1674,31 +1353,11 @@ pub fn health_alive_get(
         _ => Err(err),
     })?;
 
-    let local_var_headers = super::get_header_map(&local_var_resp);
-
-    let local_var_status = local_var_resp.status();
-    let mut local_var_content = vec![];
-    local_var_resp
-        .into_reader()
-        .read_to_end(&mut local_var_content)?;
-
-    if local_var_status < 400 {
-        let local_var_result = ResponseContent {
-            status: local_var_status,
-            content: local_var_content,
-            entity: (),
-            headers: local_var_headers,
-        };
-        Ok(local_var_result)
+    if local_var_resp.status() < 400 {
+        ResponseContent::unit(local_var_resp)
     } else {
-        let local_var_entity: HealthAliveGetError = serde_json::from_slice(&local_var_content)?;
-        let local_var_error = ResponseContent {
-            status: local_var_status,
-            content: local_var_content,
-            entity: local_var_entity,
-            headers: local_var_headers,
-        };
-        Err(Error::ResponseError(local_var_error))
+        ResponseContent::deserialized(local_var_resp)
+            .and_then(|content| Err(Error::ResponseError(content)))
     }
 }
 
@@ -1725,31 +1384,11 @@ pub fn health_ready_get(
         _ => Err(err),
     })?;
 
-    let local_var_headers = super::get_header_map(&local_var_resp);
-
-    let local_var_status = local_var_resp.status();
-    let mut local_var_content = vec![];
-    local_var_resp
-        .into_reader()
-        .read_to_end(&mut local_var_content)?;
-
-    if local_var_status < 400 {
-        let local_var_result = ResponseContent {
-            status: local_var_status,
-            content: local_var_content,
-            entity: (),
-            headers: local_var_headers,
-        };
-        Ok(local_var_result)
+    if local_var_resp.status() < 400 {
+        ResponseContent::unit(local_var_resp)
     } else {
-        let local_var_entity: HealthReadyGetError = serde_json::from_slice(&local_var_content)?;
-        let local_var_error = ResponseContent {
-            status: local_var_status,
-            content: local_var_content,
-            entity: local_var_entity,
-            headers: local_var_headers,
-        };
-        Err(Error::ResponseError(local_var_error))
+        ResponseContent::deserialized(local_var_resp)
+            .and_then(|content| Err(Error::ResponseError(content)))
     }
 }
 
@@ -1778,33 +1417,11 @@ pub fn health_state_get(
         _ => Err(err),
     })?;
 
-    let local_var_headers = super::get_header_map(&local_var_resp);
-
-    let local_var_status = local_var_resp.status();
-    let mut local_var_content = vec![];
-    local_var_resp
-        .into_reader()
-        .read_to_end(&mut local_var_content)?;
-
-    if local_var_status < 400 {
-        let local_var_entity: crate::models::HealthStateData =
-            serde_json::from_slice(&local_var_content).map_err(Error::from)?;
-        let local_var_result = ResponseContent {
-            status: local_var_status,
-            content: local_var_content,
-            entity: local_var_entity,
-            headers: local_var_headers,
-        };
-        Ok(local_var_result)
+    if local_var_resp.status() < 400 {
+        ResponseContent::deserialized(local_var_resp)
     } else {
-        let local_var_entity: HealthStateGetError = serde_json::from_slice(&local_var_content)?;
-        let local_var_error = ResponseContent {
-            status: local_var_status,
-            content: local_var_content,
-            entity: local_var_entity,
-            headers: local_var_headers,
-        };
-        Err(Error::ResponseError(local_var_error))
+        ResponseContent::deserialized(local_var_resp)
+            .and_then(|content| Err(Error::ResponseError(content)))
     }
 }
 
@@ -1833,33 +1450,11 @@ pub fn info_get(
         _ => Err(err),
     })?;
 
-    let local_var_headers = super::get_header_map(&local_var_resp);
-
-    let local_var_status = local_var_resp.status();
-    let mut local_var_content = vec![];
-    local_var_resp
-        .into_reader()
-        .read_to_end(&mut local_var_content)?;
-
-    if local_var_status < 400 {
-        let local_var_entity: crate::models::InfoData =
-            serde_json::from_slice(&local_var_content).map_err(Error::from)?;
-        let local_var_result = ResponseContent {
-            status: local_var_status,
-            content: local_var_content,
-            entity: local_var_entity,
-            headers: local_var_headers,
-        };
-        Ok(local_var_result)
+    if local_var_resp.status() < 400 {
+        ResponseContent::deserialized(local_var_resp)
     } else {
-        let local_var_entity: InfoGetError = serde_json::from_slice(&local_var_content)?;
-        let local_var_error = ResponseContent {
-            status: local_var_status,
-            content: local_var_content,
-            entity: local_var_entity,
-            headers: local_var_headers,
-        };
-        Err(Error::ResponseError(local_var_error))
+        ResponseContent::deserialized(local_var_resp)
+            .and_then(|content| Err(Error::ResponseError(content)))
     }
 }
 
@@ -1895,33 +1490,11 @@ pub fn keys_generate_post(
         _ => Err(err),
     })?;
 
-    let local_var_headers = super::get_header_map(&local_var_resp);
-
-    let local_var_status = local_var_resp.status();
-    let mut local_var_content = vec![];
-    local_var_resp
-        .into_reader()
-        .read_to_end(&mut local_var_content)?;
-
-    if local_var_status < 400 {
-        let local_var_entity: crate::models::CreateResourceId =
-            serde_json::from_slice(&local_var_content).map_err(Error::from)?;
-        let local_var_result = ResponseContent {
-            status: local_var_status,
-            content: local_var_content,
-            entity: local_var_entity,
-            headers: local_var_headers,
-        };
-        Ok(local_var_result)
+    if local_var_resp.status() < 400 {
+        ResponseContent::deserialized(local_var_resp)
     } else {
-        let local_var_entity: KeysGeneratePostError = serde_json::from_slice(&local_var_content)?;
-        let local_var_error = ResponseContent {
-            status: local_var_status,
-            content: local_var_content,
-            entity: local_var_entity,
-            headers: local_var_headers,
-        };
-        Err(Error::ResponseError(local_var_error))
+        ResponseContent::deserialized(local_var_resp)
+            .and_then(|content| Err(Error::ResponseError(content)))
     }
 }
 
@@ -1960,33 +1533,11 @@ pub fn keys_get(
         _ => Err(err),
     })?;
 
-    let local_var_headers = super::get_header_map(&local_var_resp);
-
-    let local_var_status = local_var_resp.status();
-    let mut local_var_content = vec![];
-    local_var_resp
-        .into_reader()
-        .read_to_end(&mut local_var_content)?;
-
-    if local_var_status < 400 {
-        let local_var_entity: Vec<crate::models::KeyItem> =
-            serde_json::from_slice(&local_var_content).map_err(Error::from)?;
-        let local_var_result = ResponseContent {
-            status: local_var_status,
-            content: local_var_content,
-            entity: local_var_entity,
-            headers: local_var_headers,
-        };
-        Ok(local_var_result)
+    if local_var_resp.status() < 400 {
+        ResponseContent::deserialized(local_var_resp)
     } else {
-        let local_var_entity: KeysGetError = serde_json::from_slice(&local_var_content)?;
-        let local_var_error = ResponseContent {
-            status: local_var_status,
-            content: local_var_content,
-            entity: local_var_entity,
-            headers: local_var_headers,
-        };
-        Err(Error::ResponseError(local_var_error))
+        ResponseContent::deserialized(local_var_resp)
+            .and_then(|content| Err(Error::ResponseError(content)))
     }
 }
 
@@ -2023,32 +1574,11 @@ pub fn keys_key_id_cert_delete(
         _ => Err(err),
     })?;
 
-    let local_var_headers = super::get_header_map(&local_var_resp);
-
-    let local_var_status = local_var_resp.status();
-    let mut local_var_content = vec![];
-    local_var_resp
-        .into_reader()
-        .read_to_end(&mut local_var_content)?;
-
-    if local_var_status < 400 {
-        let local_var_result = ResponseContent {
-            status: local_var_status,
-            content: local_var_content,
-            entity: (),
-            headers: local_var_headers,
-        };
-        Ok(local_var_result)
+    if local_var_resp.status() < 400 {
+        ResponseContent::unit(local_var_resp)
     } else {
-        let local_var_entity: KeysKeyIdCertDeleteError =
-            serde_json::from_slice(&local_var_content)?;
-        let local_var_error = ResponseContent {
-            status: local_var_status,
-            content: local_var_content,
-            entity: local_var_entity,
-            headers: local_var_headers,
-        };
-        Err(Error::ResponseError(local_var_error))
+        ResponseContent::deserialized(local_var_resp)
+            .and_then(|content| Err(Error::ResponseError(content)))
     }
 }
 
@@ -2087,32 +1617,11 @@ pub fn keys_key_id_cert_get(
         _ => Err(err),
     })?;
 
-    let local_var_headers = super::get_header_map(&local_var_resp);
-
-    let local_var_status = local_var_resp.status();
-    let mut local_var_content = vec![];
-    local_var_resp
-        .into_reader()
-        .read_to_end(&mut local_var_content)?;
-
-    if local_var_status < 400 {
-        let local_var_entity = local_var_content.clone();
-        let local_var_result = ResponseContent {
-            status: local_var_status,
-            content: local_var_content,
-            entity: local_var_entity,
-            headers: local_var_headers,
-        };
-        Ok(local_var_result)
+    if local_var_resp.status() < 400 {
+        ResponseContent::bytes(local_var_resp)
     } else {
-        let local_var_entity: KeysKeyIdCertGetError = serde_json::from_slice(&local_var_content)?;
-        let local_var_error = ResponseContent {
-            status: local_var_status,
-            content: local_var_content,
-            entity: local_var_entity,
-            headers: local_var_headers,
-        };
-        Err(Error::ResponseError(local_var_error))
+        ResponseContent::deserialized(local_var_resp)
+            .and_then(|content| Err(Error::ResponseError(content)))
     }
 }
 
@@ -2152,31 +1661,11 @@ pub fn keys_key_id_cert_put(
         _ => Err(err),
     })?;
 
-    let local_var_headers = super::get_header_map(&local_var_resp);
-
-    let local_var_status = local_var_resp.status();
-    let mut local_var_content = vec![];
-    local_var_resp
-        .into_reader()
-        .read_to_end(&mut local_var_content)?;
-
-    if local_var_status < 400 {
-        let local_var_result = ResponseContent {
-            status: local_var_status,
-            content: local_var_content,
-            entity: (),
-            headers: local_var_headers,
-        };
-        Ok(local_var_result)
+    if local_var_resp.status() < 400 {
+        ResponseContent::unit(local_var_resp)
     } else {
-        let local_var_entity: KeysKeyIdCertPutError = serde_json::from_slice(&local_var_content)?;
-        let local_var_error = ResponseContent {
-            status: local_var_status,
-            content: local_var_content,
-            entity: local_var_entity,
-            headers: local_var_headers,
-        };
-        Err(Error::ResponseError(local_var_error))
+        ResponseContent::deserialized(local_var_resp)
+            .and_then(|content| Err(Error::ResponseError(content)))
     }
 }
 
@@ -2217,33 +1706,11 @@ pub fn keys_key_id_csr_pem_post(
         _ => Err(err),
     })?;
 
-    let local_var_headers = super::get_header_map(&local_var_resp);
-
-    let local_var_status = local_var_resp.status();
-    let mut local_var_content = vec![];
-    local_var_resp
-        .into_reader()
-        .read_to_end(&mut local_var_content)?;
-
-    if local_var_status < 400 {
-        let local_var_entity = String::from_utf8(local_var_content.clone())?;
-        let local_var_result = ResponseContent {
-            status: local_var_status,
-            content: local_var_content,
-            entity: local_var_entity,
-            headers: local_var_headers,
-        };
-        Ok(local_var_result)
+    if local_var_resp.status() < 400 {
+        ResponseContent::string(local_var_resp)
     } else {
-        let local_var_entity: KeysKeyIdCsrPemPostError =
-            serde_json::from_slice(&local_var_content)?;
-        let local_var_error = ResponseContent {
-            status: local_var_status,
-            content: local_var_content,
-            entity: local_var_entity,
-            headers: local_var_headers,
-        };
-        Err(Error::ResponseError(local_var_error))
+        ResponseContent::deserialized(local_var_resp)
+            .and_then(|content| Err(Error::ResponseError(content)))
     }
 }
 
@@ -2284,34 +1751,11 @@ pub fn keys_key_id_decrypt_post(
         _ => Err(err),
     })?;
 
-    let local_var_headers = super::get_header_map(&local_var_resp);
-
-    let local_var_status = local_var_resp.status();
-    let mut local_var_content = vec![];
-    local_var_resp
-        .into_reader()
-        .read_to_end(&mut local_var_content)?;
-
-    if local_var_status < 400 {
-        let local_var_entity: crate::models::DecryptData =
-            serde_json::from_slice(&local_var_content).map_err(Error::from)?;
-        let local_var_result = ResponseContent {
-            status: local_var_status,
-            content: local_var_content,
-            entity: local_var_entity,
-            headers: local_var_headers,
-        };
-        Ok(local_var_result)
+    if local_var_resp.status() < 400 {
+        ResponseContent::deserialized(local_var_resp)
     } else {
-        let local_var_entity: KeysKeyIdDecryptPostError =
-            serde_json::from_slice(&local_var_content)?;
-        let local_var_error = ResponseContent {
-            status: local_var_status,
-            content: local_var_content,
-            entity: local_var_entity,
-            headers: local_var_headers,
-        };
-        Err(Error::ResponseError(local_var_error))
+        ResponseContent::deserialized(local_var_resp)
+            .and_then(|content| Err(Error::ResponseError(content)))
     }
 }
 
@@ -2348,31 +1792,11 @@ pub fn keys_key_id_delete(
         _ => Err(err),
     })?;
 
-    let local_var_headers = super::get_header_map(&local_var_resp);
-
-    let local_var_status = local_var_resp.status();
-    let mut local_var_content = vec![];
-    local_var_resp
-        .into_reader()
-        .read_to_end(&mut local_var_content)?;
-
-    if local_var_status < 400 {
-        let local_var_result = ResponseContent {
-            status: local_var_status,
-            content: local_var_content,
-            entity: (),
-            headers: local_var_headers,
-        };
-        Ok(local_var_result)
+    if local_var_resp.status() < 400 {
+        ResponseContent::unit(local_var_resp)
     } else {
-        let local_var_entity: KeysKeyIdDeleteError = serde_json::from_slice(&local_var_content)?;
-        let local_var_error = ResponseContent {
-            status: local_var_status,
-            content: local_var_content,
-            entity: local_var_entity,
-            headers: local_var_headers,
-        };
-        Err(Error::ResponseError(local_var_error))
+        ResponseContent::deserialized(local_var_resp)
+            .and_then(|content| Err(Error::ResponseError(content)))
     }
 }
 
@@ -2413,34 +1837,11 @@ pub fn keys_key_id_encrypt_post(
         _ => Err(err),
     })?;
 
-    let local_var_headers = super::get_header_map(&local_var_resp);
-
-    let local_var_status = local_var_resp.status();
-    let mut local_var_content = vec![];
-    local_var_resp
-        .into_reader()
-        .read_to_end(&mut local_var_content)?;
-
-    if local_var_status < 400 {
-        let local_var_entity: crate::models::EncryptData =
-            serde_json::from_slice(&local_var_content).map_err(Error::from)?;
-        let local_var_result = ResponseContent {
-            status: local_var_status,
-            content: local_var_content,
-            entity: local_var_entity,
-            headers: local_var_headers,
-        };
-        Ok(local_var_result)
+    if local_var_resp.status() < 400 {
+        ResponseContent::deserialized(local_var_resp)
     } else {
-        let local_var_entity: KeysKeyIdEncryptPostError =
-            serde_json::from_slice(&local_var_content)?;
-        let local_var_error = ResponseContent {
-            status: local_var_status,
-            content: local_var_content,
-            entity: local_var_entity,
-            headers: local_var_headers,
-        };
-        Err(Error::ResponseError(local_var_error))
+        ResponseContent::deserialized(local_var_resp)
+            .and_then(|content| Err(Error::ResponseError(content)))
     }
 }
 
@@ -2479,33 +1880,11 @@ pub fn keys_key_id_get(
         _ => Err(err),
     })?;
 
-    let local_var_headers = super::get_header_map(&local_var_resp);
-
-    let local_var_status = local_var_resp.status();
-    let mut local_var_content = vec![];
-    local_var_resp
-        .into_reader()
-        .read_to_end(&mut local_var_content)?;
-
-    if local_var_status < 400 {
-        let local_var_entity: crate::models::PublicKey =
-            serde_json::from_slice(&local_var_content).map_err(Error::from)?;
-        let local_var_result = ResponseContent {
-            status: local_var_status,
-            content: local_var_content,
-            entity: local_var_entity,
-            headers: local_var_headers,
-        };
-        Ok(local_var_result)
+    if local_var_resp.status() < 400 {
+        ResponseContent::deserialized(local_var_resp)
     } else {
-        let local_var_entity: KeysKeyIdGetError = serde_json::from_slice(&local_var_content)?;
-        let local_var_error = ResponseContent {
-            status: local_var_status,
-            content: local_var_content,
-            entity: local_var_entity,
-            headers: local_var_headers,
-        };
-        Err(Error::ResponseError(local_var_error))
+        ResponseContent::deserialized(local_var_resp)
+            .and_then(|content| Err(Error::ResponseError(content)))
     }
 }
 
@@ -2544,33 +1923,11 @@ pub fn keys_key_id_public_pem_get(
         _ => Err(err),
     })?;
 
-    let local_var_headers = super::get_header_map(&local_var_resp);
-
-    let local_var_status = local_var_resp.status();
-    let mut local_var_content = vec![];
-    local_var_resp
-        .into_reader()
-        .read_to_end(&mut local_var_content)?;
-
-    if local_var_status < 400 {
-        let local_var_entity = String::from_utf8(local_var_content.clone())?;
-        let local_var_result = ResponseContent {
-            status: local_var_status,
-            content: local_var_content,
-            entity: local_var_entity,
-            headers: local_var_headers,
-        };
-        Ok(local_var_result)
+    if local_var_resp.status() < 400 {
+        ResponseContent::string(local_var_resp)
     } else {
-        let local_var_entity: KeysKeyIdPublicPemGetError =
-            serde_json::from_slice(&local_var_content)?;
-        let local_var_error = ResponseContent {
-            status: local_var_status,
-            content: local_var_content,
-            entity: local_var_entity,
-            headers: local_var_headers,
-        };
-        Err(Error::ResponseError(local_var_error))
+        ResponseContent::deserialized(local_var_resp)
+            .and_then(|content| Err(Error::ResponseError(content)))
     }
 }
 
@@ -2615,31 +1972,11 @@ pub fn keys_key_id_put(
         _ => Err(err),
     })?;
 
-    let local_var_headers = super::get_header_map(&local_var_resp);
-
-    let local_var_status = local_var_resp.status();
-    let mut local_var_content = vec![];
-    local_var_resp
-        .into_reader()
-        .read_to_end(&mut local_var_content)?;
-
-    if local_var_status < 400 {
-        let local_var_result = ResponseContent {
-            status: local_var_status,
-            content: local_var_content,
-            entity: (),
-            headers: local_var_headers,
-        };
-        Ok(local_var_result)
+    if local_var_resp.status() < 400 {
+        ResponseContent::unit(local_var_resp)
     } else {
-        let local_var_entity: KeysKeyIdPutError = serde_json::from_slice(&local_var_content)?;
-        let local_var_error = ResponseContent {
-            status: local_var_status,
-            content: local_var_content,
-            entity: local_var_entity,
-            headers: local_var_headers,
-        };
-        Err(Error::ResponseError(local_var_error))
+        ResponseContent::deserialized(local_var_resp)
+            .and_then(|content| Err(Error::ResponseError(content)))
     }
 }
 
@@ -2678,32 +2015,11 @@ pub fn keys_key_id_restrictions_tags_tag_delete(
         _ => Err(err),
     })?;
 
-    let local_var_headers = super::get_header_map(&local_var_resp);
-
-    let local_var_status = local_var_resp.status();
-    let mut local_var_content = vec![];
-    local_var_resp
-        .into_reader()
-        .read_to_end(&mut local_var_content)?;
-
-    if local_var_status < 400 {
-        let local_var_result = ResponseContent {
-            status: local_var_status,
-            content: local_var_content,
-            entity: (),
-            headers: local_var_headers,
-        };
-        Ok(local_var_result)
+    if local_var_resp.status() < 400 {
+        ResponseContent::unit(local_var_resp)
     } else {
-        let local_var_entity: KeysKeyIdRestrictionsTagsTagDeleteError =
-            serde_json::from_slice(&local_var_content)?;
-        let local_var_error = ResponseContent {
-            status: local_var_status,
-            content: local_var_content,
-            entity: local_var_entity,
-            headers: local_var_headers,
-        };
-        Err(Error::ResponseError(local_var_error))
+        ResponseContent::deserialized(local_var_resp)
+            .and_then(|content| Err(Error::ResponseError(content)))
     }
 }
 
@@ -2742,32 +2058,11 @@ pub fn keys_key_id_restrictions_tags_tag_put(
         _ => Err(err),
     })?;
 
-    let local_var_headers = super::get_header_map(&local_var_resp);
-
-    let local_var_status = local_var_resp.status();
-    let mut local_var_content = vec![];
-    local_var_resp
-        .into_reader()
-        .read_to_end(&mut local_var_content)?;
-
-    if local_var_status < 400 {
-        let local_var_result = ResponseContent {
-            status: local_var_status,
-            content: local_var_content,
-            entity: (),
-            headers: local_var_headers,
-        };
-        Ok(local_var_result)
+    if local_var_resp.status() < 400 {
+        ResponseContent::unit(local_var_resp)
     } else {
-        let local_var_entity: KeysKeyIdRestrictionsTagsTagPutError =
-            serde_json::from_slice(&local_var_content)?;
-        let local_var_error = ResponseContent {
-            status: local_var_status,
-            content: local_var_content,
-            entity: local_var_entity,
-            headers: local_var_headers,
-        };
-        Err(Error::ResponseError(local_var_error))
+        ResponseContent::deserialized(local_var_resp)
+            .and_then(|content| Err(Error::ResponseError(content)))
     }
 }
 
@@ -2808,33 +2103,11 @@ pub fn keys_key_id_sign_post(
         _ => Err(err),
     })?;
 
-    let local_var_headers = super::get_header_map(&local_var_resp);
-
-    let local_var_status = local_var_resp.status();
-    let mut local_var_content = vec![];
-    local_var_resp
-        .into_reader()
-        .read_to_end(&mut local_var_content)?;
-
-    if local_var_status < 400 {
-        let local_var_entity: crate::models::SignData =
-            serde_json::from_slice(&local_var_content).map_err(Error::from)?;
-        let local_var_result = ResponseContent {
-            status: local_var_status,
-            content: local_var_content,
-            entity: local_var_entity,
-            headers: local_var_headers,
-        };
-        Ok(local_var_result)
+    if local_var_resp.status() < 400 {
+        ResponseContent::deserialized(local_var_resp)
     } else {
-        let local_var_entity: KeysKeyIdSignPostError = serde_json::from_slice(&local_var_content)?;
-        let local_var_error = ResponseContent {
-            status: local_var_status,
-            content: local_var_content,
-            entity: local_var_entity,
-            headers: local_var_headers,
-        };
-        Err(Error::ResponseError(local_var_error))
+        ResponseContent::deserialized(local_var_resp)
+            .and_then(|content| Err(Error::ResponseError(content)))
     }
 }
 
@@ -2876,33 +2149,11 @@ pub fn keys_post(
         _ => Err(err),
     })?;
 
-    let local_var_headers = super::get_header_map(&local_var_resp);
-
-    let local_var_status = local_var_resp.status();
-    let mut local_var_content = vec![];
-    local_var_resp
-        .into_reader()
-        .read_to_end(&mut local_var_content)?;
-
-    if local_var_status < 400 {
-        let local_var_entity: crate::models::CreateResourceId =
-            serde_json::from_slice(&local_var_content).map_err(Error::from)?;
-        let local_var_result = ResponseContent {
-            status: local_var_status,
-            content: local_var_content,
-            entity: local_var_entity,
-            headers: local_var_headers,
-        };
-        Ok(local_var_result)
+    if local_var_resp.status() < 400 {
+        ResponseContent::deserialized(local_var_resp)
     } else {
-        let local_var_entity: KeysPostError = serde_json::from_slice(&local_var_content)?;
-        let local_var_error = ResponseContent {
-            status: local_var_status,
-            content: local_var_content,
-            entity: local_var_entity,
-            headers: local_var_headers,
-        };
-        Err(Error::ResponseError(local_var_error))
+        ResponseContent::deserialized(local_var_resp)
+            .and_then(|content| Err(Error::ResponseError(content)))
     }
 }
 
@@ -2934,31 +2185,11 @@ pub fn lock_post(
         _ => Err(err),
     })?;
 
-    let local_var_headers = super::get_header_map(&local_var_resp);
-
-    let local_var_status = local_var_resp.status();
-    let mut local_var_content = vec![];
-    local_var_resp
-        .into_reader()
-        .read_to_end(&mut local_var_content)?;
-
-    if local_var_status < 400 {
-        let local_var_result = ResponseContent {
-            status: local_var_status,
-            content: local_var_content,
-            entity: (),
-            headers: local_var_headers,
-        };
-        Ok(local_var_result)
+    if local_var_resp.status() < 400 {
+        ResponseContent::unit(local_var_resp)
     } else {
-        let local_var_entity: LockPostError = serde_json::from_slice(&local_var_content)?;
-        let local_var_error = ResponseContent {
-            status: local_var_status,
-            content: local_var_content,
-            entity: local_var_entity,
-            headers: local_var_headers,
-        };
-        Err(Error::ResponseError(local_var_error))
+        ResponseContent::deserialized(local_var_resp)
+            .and_then(|content| Err(Error::ResponseError(content)))
     }
 }
 
@@ -2992,33 +2223,11 @@ pub fn metrics_get(
         _ => Err(err),
     })?;
 
-    let local_var_headers = super::get_header_map(&local_var_resp);
-
-    let local_var_status = local_var_resp.status();
-    let mut local_var_content = vec![];
-    local_var_resp
-        .into_reader()
-        .read_to_end(&mut local_var_content)?;
-
-    if local_var_status < 400 {
-        let local_var_entity: serde_json::Value =
-            serde_json::from_slice(&local_var_content).map_err(Error::from)?;
-        let local_var_result = ResponseContent {
-            status: local_var_status,
-            content: local_var_content,
-            entity: local_var_entity,
-            headers: local_var_headers,
-        };
-        Ok(local_var_result)
+    if local_var_resp.status() < 400 {
+        ResponseContent::deserialized(local_var_resp)
     } else {
-        let local_var_entity: MetricsGetError = serde_json::from_slice(&local_var_content)?;
-        let local_var_error = ResponseContent {
-            status: local_var_status,
-            content: local_var_content,
-            entity: local_var_entity,
-            headers: local_var_headers,
-        };
-        Err(Error::ResponseError(local_var_error))
+        ResponseContent::deserialized(local_var_resp)
+            .and_then(|content| Err(Error::ResponseError(content)))
     }
 }
 
@@ -3047,31 +2256,11 @@ pub fn provision_post(
         _ => Err(err),
     })?;
 
-    let local_var_headers = super::get_header_map(&local_var_resp);
-
-    let local_var_status = local_var_resp.status();
-    let mut local_var_content = vec![];
-    local_var_resp
-        .into_reader()
-        .read_to_end(&mut local_var_content)?;
-
-    if local_var_status < 400 {
-        let local_var_result = ResponseContent {
-            status: local_var_status,
-            content: local_var_content,
-            entity: (),
-            headers: local_var_headers,
-        };
-        Ok(local_var_result)
+    if local_var_resp.status() < 400 {
+        ResponseContent::unit(local_var_resp)
     } else {
-        let local_var_entity: ProvisionPostError = serde_json::from_slice(&local_var_content)?;
-        let local_var_error = ResponseContent {
-            status: local_var_status,
-            content: local_var_content,
-            entity: local_var_entity,
-            headers: local_var_headers,
-        };
-        Err(Error::ResponseError(local_var_error))
+        ResponseContent::deserialized(local_var_resp)
+            .and_then(|content| Err(Error::ResponseError(content)))
     }
 }
 
@@ -3107,33 +2296,11 @@ pub fn random_post(
         _ => Err(err),
     })?;
 
-    let local_var_headers = super::get_header_map(&local_var_resp);
-
-    let local_var_status = local_var_resp.status();
-    let mut local_var_content = vec![];
-    local_var_resp
-        .into_reader()
-        .read_to_end(&mut local_var_content)?;
-
-    if local_var_status < 400 {
-        let local_var_entity: crate::models::RandomData =
-            serde_json::from_slice(&local_var_content).map_err(Error::from)?;
-        let local_var_result = ResponseContent {
-            status: local_var_status,
-            content: local_var_content,
-            entity: local_var_entity,
-            headers: local_var_headers,
-        };
-        Ok(local_var_result)
+    if local_var_resp.status() < 400 {
+        ResponseContent::deserialized(local_var_resp)
     } else {
-        let local_var_entity: RandomPostError = serde_json::from_slice(&local_var_content)?;
-        let local_var_error = ResponseContent {
-            status: local_var_status,
-            content: local_var_content,
-            entity: local_var_entity,
-            headers: local_var_headers,
-        };
-        Err(Error::ResponseError(local_var_error))
+        ResponseContent::deserialized(local_var_resp)
+            .and_then(|content| Err(Error::ResponseError(content)))
     }
 }
 
@@ -3167,32 +2334,11 @@ pub fn system_backup_post(
         _ => Err(err),
     })?;
 
-    let local_var_headers = super::get_header_map(&local_var_resp);
-
-    let local_var_status = local_var_resp.status();
-    let mut local_var_content = vec![];
-    local_var_resp
-        .into_reader()
-        .read_to_end(&mut local_var_content)?;
-
-    if local_var_status < 400 {
-        let local_var_entity = local_var_content.clone();
-        let local_var_result = ResponseContent {
-            status: local_var_status,
-            content: local_var_content,
-            entity: local_var_entity,
-            headers: local_var_headers,
-        };
-        Ok(local_var_result)
+    if local_var_resp.status() < 400 {
+        ResponseContent::bytes(local_var_resp)
     } else {
-        let local_var_entity: SystemBackupPostError = serde_json::from_slice(&local_var_content)?;
-        let local_var_error = ResponseContent {
-            status: local_var_status,
-            content: local_var_content,
-            entity: local_var_entity,
-            headers: local_var_headers,
-        };
-        Err(Error::ResponseError(local_var_error))
+        ResponseContent::deserialized(local_var_resp)
+            .and_then(|content| Err(Error::ResponseError(content)))
     }
 }
 
@@ -3224,32 +2370,11 @@ pub fn system_cancel_update_post(
         _ => Err(err),
     })?;
 
-    let local_var_headers = super::get_header_map(&local_var_resp);
-
-    let local_var_status = local_var_resp.status();
-    let mut local_var_content = vec![];
-    local_var_resp
-        .into_reader()
-        .read_to_end(&mut local_var_content)?;
-
-    if local_var_status < 400 {
-        let local_var_result = ResponseContent {
-            status: local_var_status,
-            content: local_var_content,
-            entity: (),
-            headers: local_var_headers,
-        };
-        Ok(local_var_result)
+    if local_var_resp.status() < 400 {
+        ResponseContent::unit(local_var_resp)
     } else {
-        let local_var_entity: SystemCancelUpdatePostError =
-            serde_json::from_slice(&local_var_content)?;
-        let local_var_error = ResponseContent {
-            status: local_var_status,
-            content: local_var_content,
-            entity: local_var_entity,
-            headers: local_var_headers,
-        };
-        Err(Error::ResponseError(local_var_error))
+        ResponseContent::deserialized(local_var_resp)
+            .and_then(|content| Err(Error::ResponseError(content)))
     }
 }
 
@@ -3281,32 +2406,11 @@ pub fn system_commit_update_post(
         _ => Err(err),
     })?;
 
-    let local_var_headers = super::get_header_map(&local_var_resp);
-
-    let local_var_status = local_var_resp.status();
-    let mut local_var_content = vec![];
-    local_var_resp
-        .into_reader()
-        .read_to_end(&mut local_var_content)?;
-
-    if local_var_status < 400 {
-        let local_var_result = ResponseContent {
-            status: local_var_status,
-            content: local_var_content,
-            entity: (),
-            headers: local_var_headers,
-        };
-        Ok(local_var_result)
+    if local_var_resp.status() < 400 {
+        ResponseContent::unit(local_var_resp)
     } else {
-        let local_var_entity: SystemCommitUpdatePostError =
-            serde_json::from_slice(&local_var_content)?;
-        let local_var_error = ResponseContent {
-            status: local_var_status,
-            content: local_var_content,
-            entity: local_var_entity,
-            headers: local_var_headers,
-        };
-        Err(Error::ResponseError(local_var_error))
+        ResponseContent::deserialized(local_var_resp)
+            .and_then(|content| Err(Error::ResponseError(content)))
     }
 }
 
@@ -3338,32 +2442,11 @@ pub fn system_factory_reset_post(
         _ => Err(err),
     })?;
 
-    let local_var_headers = super::get_header_map(&local_var_resp);
-
-    let local_var_status = local_var_resp.status();
-    let mut local_var_content = vec![];
-    local_var_resp
-        .into_reader()
-        .read_to_end(&mut local_var_content)?;
-
-    if local_var_status < 400 {
-        let local_var_result = ResponseContent {
-            status: local_var_status,
-            content: local_var_content,
-            entity: (),
-            headers: local_var_headers,
-        };
-        Ok(local_var_result)
+    if local_var_resp.status() < 400 {
+        ResponseContent::unit(local_var_resp)
     } else {
-        let local_var_entity: SystemFactoryResetPostError =
-            serde_json::from_slice(&local_var_content)?;
-        let local_var_error = ResponseContent {
-            status: local_var_status,
-            content: local_var_content,
-            entity: local_var_entity,
-            headers: local_var_headers,
-        };
-        Err(Error::ResponseError(local_var_error))
+        ResponseContent::deserialized(local_var_resp)
+            .and_then(|content| Err(Error::ResponseError(content)))
     }
 }
 
@@ -3397,33 +2480,11 @@ pub fn system_info_get(
         _ => Err(err),
     })?;
 
-    let local_var_headers = super::get_header_map(&local_var_resp);
-
-    let local_var_status = local_var_resp.status();
-    let mut local_var_content = vec![];
-    local_var_resp
-        .into_reader()
-        .read_to_end(&mut local_var_content)?;
-
-    if local_var_status < 400 {
-        let local_var_entity: crate::models::SystemInfo =
-            serde_json::from_slice(&local_var_content).map_err(Error::from)?;
-        let local_var_result = ResponseContent {
-            status: local_var_status,
-            content: local_var_content,
-            entity: local_var_entity,
-            headers: local_var_headers,
-        };
-        Ok(local_var_result)
+    if local_var_resp.status() < 400 {
+        ResponseContent::deserialized(local_var_resp)
     } else {
-        let local_var_entity: SystemInfoGetError = serde_json::from_slice(&local_var_content)?;
-        let local_var_error = ResponseContent {
-            status: local_var_status,
-            content: local_var_content,
-            entity: local_var_entity,
-            headers: local_var_headers,
-        };
-        Err(Error::ResponseError(local_var_error))
+        ResponseContent::deserialized(local_var_resp)
+            .and_then(|content| Err(Error::ResponseError(content)))
     }
 }
 
@@ -3455,31 +2516,11 @@ pub fn system_reboot_post(
         _ => Err(err),
     })?;
 
-    let local_var_headers = super::get_header_map(&local_var_resp);
-
-    let local_var_status = local_var_resp.status();
-    let mut local_var_content = vec![];
-    local_var_resp
-        .into_reader()
-        .read_to_end(&mut local_var_content)?;
-
-    if local_var_status < 400 {
-        let local_var_result = ResponseContent {
-            status: local_var_status,
-            content: local_var_content,
-            entity: (),
-            headers: local_var_headers,
-        };
-        Ok(local_var_result)
+    if local_var_resp.status() < 400 {
+        ResponseContent::unit(local_var_resp)
     } else {
-        let local_var_entity: SystemRebootPostError = serde_json::from_slice(&local_var_content)?;
-        let local_var_error = ResponseContent {
-            status: local_var_status,
-            content: local_var_content,
-            entity: local_var_entity,
-            headers: local_var_headers,
-        };
-        Err(Error::ResponseError(local_var_error))
+        ResponseContent::deserialized(local_var_resp)
+            .and_then(|content| Err(Error::ResponseError(content)))
     }
 }
 
@@ -3541,31 +2582,11 @@ pub fn system_restore_post(
         _ => Err(err),
     })?;
 
-    let local_var_headers = super::get_header_map(&local_var_resp);
-
-    let local_var_status = local_var_resp.status();
-    let mut local_var_content = vec![];
-    local_var_resp
-        .into_reader()
-        .read_to_end(&mut local_var_content)?;
-
-    if local_var_status < 400 {
-        let local_var_result = ResponseContent {
-            status: local_var_status,
-            content: local_var_content,
-            entity: (),
-            headers: local_var_headers,
-        };
-        Ok(local_var_result)
+    if local_var_resp.status() < 400 {
+        ResponseContent::unit(local_var_resp)
     } else {
-        let local_var_entity: SystemRestorePostError = serde_json::from_slice(&local_var_content)?;
-        let local_var_error = ResponseContent {
-            status: local_var_status,
-            content: local_var_content,
-            entity: local_var_entity,
-            headers: local_var_headers,
-        };
-        Err(Error::ResponseError(local_var_error))
+        ResponseContent::deserialized(local_var_resp)
+            .and_then(|content| Err(Error::ResponseError(content)))
     }
 }
 
@@ -3597,31 +2618,11 @@ pub fn system_shutdown_post(
         _ => Err(err),
     })?;
 
-    let local_var_headers = super::get_header_map(&local_var_resp);
-
-    let local_var_status = local_var_resp.status();
-    let mut local_var_content = vec![];
-    local_var_resp
-        .into_reader()
-        .read_to_end(&mut local_var_content)?;
-
-    if local_var_status < 400 {
-        let local_var_result = ResponseContent {
-            status: local_var_status,
-            content: local_var_content,
-            entity: (),
-            headers: local_var_headers,
-        };
-        Ok(local_var_result)
+    if local_var_resp.status() < 400 {
+        ResponseContent::unit(local_var_resp)
     } else {
-        let local_var_entity: SystemShutdownPostError = serde_json::from_slice(&local_var_content)?;
-        let local_var_error = ResponseContent {
-            status: local_var_status,
-            content: local_var_content,
-            entity: local_var_entity,
-            headers: local_var_headers,
-        };
-        Err(Error::ResponseError(local_var_error))
+        ResponseContent::deserialized(local_var_resp)
+            .and_then(|content| Err(Error::ResponseError(content)))
     }
 }
 
@@ -3658,33 +2659,11 @@ pub fn system_update_post(
         _ => Err(err),
     })?;
 
-    let local_var_headers = super::get_header_map(&local_var_resp);
-
-    let local_var_status = local_var_resp.status();
-    let mut local_var_content = vec![];
-    local_var_resp
-        .into_reader()
-        .read_to_end(&mut local_var_content)?;
-
-    if local_var_status < 400 {
-        let local_var_entity: crate::models::SystemUpdateData =
-            serde_json::from_slice(&local_var_content).map_err(Error::from)?;
-        let local_var_result = ResponseContent {
-            status: local_var_status,
-            content: local_var_content,
-            entity: local_var_entity,
-            headers: local_var_headers,
-        };
-        Ok(local_var_result)
+    if local_var_resp.status() < 400 {
+        ResponseContent::deserialized(local_var_resp)
     } else {
-        let local_var_entity: SystemUpdatePostError = serde_json::from_slice(&local_var_content)?;
-        let local_var_error = ResponseContent {
-            status: local_var_status,
-            content: local_var_content,
-            entity: local_var_entity,
-            headers: local_var_headers,
-        };
-        Err(Error::ResponseError(local_var_error))
+        ResponseContent::deserialized(local_var_resp)
+            .and_then(|content| Err(Error::ResponseError(content)))
     }
 }
 
@@ -3713,31 +2692,11 @@ pub fn unlock_post(
         _ => Err(err),
     })?;
 
-    let local_var_headers = super::get_header_map(&local_var_resp);
-
-    let local_var_status = local_var_resp.status();
-    let mut local_var_content = vec![];
-    local_var_resp
-        .into_reader()
-        .read_to_end(&mut local_var_content)?;
-
-    if local_var_status < 400 {
-        let local_var_result = ResponseContent {
-            status: local_var_status,
-            content: local_var_content,
-            entity: (),
-            headers: local_var_headers,
-        };
-        Ok(local_var_result)
+    if local_var_resp.status() < 400 {
+        ResponseContent::unit(local_var_resp)
     } else {
-        let local_var_entity: UnlockPostError = serde_json::from_slice(&local_var_content)?;
-        let local_var_error = ResponseContent {
-            status: local_var_status,
-            content: local_var_content,
-            entity: local_var_entity,
-            headers: local_var_headers,
-        };
-        Err(Error::ResponseError(local_var_error))
+        ResponseContent::deserialized(local_var_resp)
+            .and_then(|content| Err(Error::ResponseError(content)))
     }
 }
 
@@ -3771,33 +2730,11 @@ pub fn users_get(
         _ => Err(err),
     })?;
 
-    let local_var_headers = super::get_header_map(&local_var_resp);
-
-    let local_var_status = local_var_resp.status();
-    let mut local_var_content = vec![];
-    local_var_resp
-        .into_reader()
-        .read_to_end(&mut local_var_content)?;
-
-    if local_var_status < 400 {
-        let local_var_entity: Vec<crate::models::UserItem> =
-            serde_json::from_slice(&local_var_content).map_err(Error::from)?;
-        let local_var_result = ResponseContent {
-            status: local_var_status,
-            content: local_var_content,
-            entity: local_var_entity,
-            headers: local_var_headers,
-        };
-        Ok(local_var_result)
+    if local_var_resp.status() < 400 {
+        ResponseContent::deserialized(local_var_resp)
     } else {
-        let local_var_entity: UsersGetError = serde_json::from_slice(&local_var_content)?;
-        let local_var_error = ResponseContent {
-            status: local_var_status,
-            content: local_var_content,
-            entity: local_var_entity,
-            headers: local_var_headers,
-        };
-        Err(Error::ResponseError(local_var_error))
+        ResponseContent::deserialized(local_var_resp)
+            .and_then(|content| Err(Error::ResponseError(content)))
     }
 }
 
@@ -3833,33 +2770,11 @@ pub fn users_post(
         _ => Err(err),
     })?;
 
-    let local_var_headers = super::get_header_map(&local_var_resp);
-
-    let local_var_status = local_var_resp.status();
-    let mut local_var_content = vec![];
-    local_var_resp
-        .into_reader()
-        .read_to_end(&mut local_var_content)?;
-
-    if local_var_status < 400 {
-        let local_var_entity: crate::models::CreateResourceId =
-            serde_json::from_slice(&local_var_content).map_err(Error::from)?;
-        let local_var_result = ResponseContent {
-            status: local_var_status,
-            content: local_var_content,
-            entity: local_var_entity,
-            headers: local_var_headers,
-        };
-        Ok(local_var_result)
+    if local_var_resp.status() < 400 {
+        ResponseContent::deserialized(local_var_resp)
     } else {
-        let local_var_entity: UsersPostError = serde_json::from_slice(&local_var_content)?;
-        let local_var_error = ResponseContent {
-            status: local_var_status,
-            content: local_var_content,
-            entity: local_var_entity,
-            headers: local_var_headers,
-        };
-        Err(Error::ResponseError(local_var_error))
+        ResponseContent::deserialized(local_var_resp)
+            .and_then(|content| Err(Error::ResponseError(content)))
     }
 }
 
@@ -3896,31 +2811,11 @@ pub fn users_user_id_delete(
         _ => Err(err),
     })?;
 
-    let local_var_headers = super::get_header_map(&local_var_resp);
-
-    let local_var_status = local_var_resp.status();
-    let mut local_var_content = vec![];
-    local_var_resp
-        .into_reader()
-        .read_to_end(&mut local_var_content)?;
-
-    if local_var_status < 400 {
-        let local_var_result = ResponseContent {
-            status: local_var_status,
-            content: local_var_content,
-            entity: (),
-            headers: local_var_headers,
-        };
-        Ok(local_var_result)
+    if local_var_resp.status() < 400 {
+        ResponseContent::unit(local_var_resp)
     } else {
-        let local_var_entity: UsersUserIdDeleteError = serde_json::from_slice(&local_var_content)?;
-        let local_var_error = ResponseContent {
-            status: local_var_status,
-            content: local_var_content,
-            entity: local_var_entity,
-            headers: local_var_headers,
-        };
-        Err(Error::ResponseError(local_var_error))
+        ResponseContent::deserialized(local_var_resp)
+            .and_then(|content| Err(Error::ResponseError(content)))
     }
 }
 
@@ -3959,33 +2854,11 @@ pub fn users_user_id_get(
         _ => Err(err),
     })?;
 
-    let local_var_headers = super::get_header_map(&local_var_resp);
-
-    let local_var_status = local_var_resp.status();
-    let mut local_var_content = vec![];
-    local_var_resp
-        .into_reader()
-        .read_to_end(&mut local_var_content)?;
-
-    if local_var_status < 400 {
-        let local_var_entity: crate::models::UserData =
-            serde_json::from_slice(&local_var_content).map_err(Error::from)?;
-        let local_var_result = ResponseContent {
-            status: local_var_status,
-            content: local_var_content,
-            entity: local_var_entity,
-            headers: local_var_headers,
-        };
-        Ok(local_var_result)
+    if local_var_resp.status() < 400 {
+        ResponseContent::deserialized(local_var_resp)
     } else {
-        let local_var_entity: UsersUserIdGetError = serde_json::from_slice(&local_var_content)?;
-        let local_var_error = ResponseContent {
-            status: local_var_status,
-            content: local_var_content,
-            entity: local_var_entity,
-            headers: local_var_headers,
-        };
-        Err(Error::ResponseError(local_var_error))
+        ResponseContent::deserialized(local_var_resp)
+            .and_then(|content| Err(Error::ResponseError(content)))
     }
 }
 
@@ -4024,32 +2897,11 @@ pub fn users_user_id_passphrase_post(
         _ => Err(err),
     })?;
 
-    let local_var_headers = super::get_header_map(&local_var_resp);
-
-    let local_var_status = local_var_resp.status();
-    let mut local_var_content = vec![];
-    local_var_resp
-        .into_reader()
-        .read_to_end(&mut local_var_content)?;
-
-    if local_var_status < 400 {
-        let local_var_result = ResponseContent {
-            status: local_var_status,
-            content: local_var_content,
-            entity: (),
-            headers: local_var_headers,
-        };
-        Ok(local_var_result)
+    if local_var_resp.status() < 400 {
+        ResponseContent::unit(local_var_resp)
     } else {
-        let local_var_entity: UsersUserIdPassphrasePostError =
-            serde_json::from_slice(&local_var_content)?;
-        let local_var_error = ResponseContent {
-            status: local_var_status,
-            content: local_var_content,
-            entity: local_var_entity,
-            headers: local_var_headers,
-        };
-        Err(Error::ResponseError(local_var_error))
+        ResponseContent::deserialized(local_var_resp)
+            .and_then(|content| Err(Error::ResponseError(content)))
     }
 }
 
@@ -4088,31 +2940,11 @@ pub fn users_user_id_put(
         _ => Err(err),
     })?;
 
-    let local_var_headers = super::get_header_map(&local_var_resp);
-
-    let local_var_status = local_var_resp.status();
-    let mut local_var_content = vec![];
-    local_var_resp
-        .into_reader()
-        .read_to_end(&mut local_var_content)?;
-
-    if local_var_status < 400 {
-        let local_var_result = ResponseContent {
-            status: local_var_status,
-            content: local_var_content,
-            entity: (),
-            headers: local_var_headers,
-        };
-        Ok(local_var_result)
+    if local_var_resp.status() < 400 {
+        ResponseContent::unit(local_var_resp)
     } else {
-        let local_var_entity: UsersUserIdPutError = serde_json::from_slice(&local_var_content)?;
-        let local_var_error = ResponseContent {
-            status: local_var_status,
-            content: local_var_content,
-            entity: local_var_entity,
-            headers: local_var_headers,
-        };
-        Err(Error::ResponseError(local_var_error))
+        ResponseContent::deserialized(local_var_resp)
+            .and_then(|content| Err(Error::ResponseError(content)))
     }
 }
 
@@ -4151,33 +2983,11 @@ pub fn users_user_id_tags_get(
         _ => Err(err),
     })?;
 
-    let local_var_headers = super::get_header_map(&local_var_resp);
-
-    let local_var_status = local_var_resp.status();
-    let mut local_var_content = vec![];
-    local_var_resp
-        .into_reader()
-        .read_to_end(&mut local_var_content)?;
-
-    if local_var_status < 400 {
-        let local_var_entity: Vec<String> =
-            serde_json::from_slice(&local_var_content).map_err(Error::from)?;
-        let local_var_result = ResponseContent {
-            status: local_var_status,
-            content: local_var_content,
-            entity: local_var_entity,
-            headers: local_var_headers,
-        };
-        Ok(local_var_result)
+    if local_var_resp.status() < 400 {
+        ResponseContent::deserialized(local_var_resp)
     } else {
-        let local_var_entity: UsersUserIdTagsGetError = serde_json::from_slice(&local_var_content)?;
-        let local_var_error = ResponseContent {
-            status: local_var_status,
-            content: local_var_content,
-            entity: local_var_entity,
-            headers: local_var_headers,
-        };
-        Err(Error::ResponseError(local_var_error))
+        ResponseContent::deserialized(local_var_resp)
+            .and_then(|content| Err(Error::ResponseError(content)))
     }
 }
 
@@ -4216,32 +3026,11 @@ pub fn users_user_id_tags_tag_delete(
         _ => Err(err),
     })?;
 
-    let local_var_headers = super::get_header_map(&local_var_resp);
-
-    let local_var_status = local_var_resp.status();
-    let mut local_var_content = vec![];
-    local_var_resp
-        .into_reader()
-        .read_to_end(&mut local_var_content)?;
-
-    if local_var_status < 400 {
-        let local_var_result = ResponseContent {
-            status: local_var_status,
-            content: local_var_content,
-            entity: (),
-            headers: local_var_headers,
-        };
-        Ok(local_var_result)
+    if local_var_resp.status() < 400 {
+        ResponseContent::unit(local_var_resp)
     } else {
-        let local_var_entity: UsersUserIdTagsTagDeleteError =
-            serde_json::from_slice(&local_var_content)?;
-        let local_var_error = ResponseContent {
-            status: local_var_status,
-            content: local_var_content,
-            entity: local_var_entity,
-            headers: local_var_headers,
-        };
-        Err(Error::ResponseError(local_var_error))
+        ResponseContent::deserialized(local_var_resp)
+            .and_then(|content| Err(Error::ResponseError(content)))
     }
 }
 
@@ -4280,31 +3069,10 @@ pub fn users_user_id_tags_tag_put(
         _ => Err(err),
     })?;
 
-    let local_var_headers = super::get_header_map(&local_var_resp);
-
-    let local_var_status = local_var_resp.status();
-    let mut local_var_content = vec![];
-    local_var_resp
-        .into_reader()
-        .read_to_end(&mut local_var_content)?;
-
-    if local_var_status < 400 {
-        let local_var_result = ResponseContent {
-            status: local_var_status,
-            content: local_var_content,
-            entity: (),
-            headers: local_var_headers,
-        };
-        Ok(local_var_result)
+    if local_var_resp.status() < 400 {
+        ResponseContent::unit(local_var_resp)
     } else {
-        let local_var_entity: UsersUserIdTagsTagPutError =
-            serde_json::from_slice(&local_var_content)?;
-        let local_var_error = ResponseContent {
-            status: local_var_status,
-            content: local_var_content,
-            entity: local_var_entity,
-            headers: local_var_headers,
-        };
-        Err(Error::ResponseError(local_var_error))
+        ResponseContent::deserialized(local_var_resp)
+            .and_then(|content| Err(Error::ResponseError(content)))
     }
 }
