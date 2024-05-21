@@ -784,12 +784,10 @@ pub fn config_backup_passphrase_put(
         .into_reader()
         .read_to_end(&mut local_var_content)?;
 
-    let local_var_content_clone = local_var_content.clone();
-
     if local_var_status < 400 {
         let local_var_result = ResponseContent {
             status: local_var_status,
-            content: local_var_content_clone,
+            content: local_var_content,
             entity: (),
             headers: local_var_headers,
         };
@@ -845,14 +843,12 @@ pub fn config_logging_get(
         .into_reader()
         .read_to_end(&mut local_var_content)?;
 
-    let local_var_content_clone = local_var_content.clone();
-
     if local_var_status < 400 {
         let local_var_entity: crate::models::LoggingConfig =
             serde_json::from_slice(&local_var_content).map_err(Error::from)?;
         let local_var_result = ResponseContent {
             status: local_var_status,
-            content: local_var_content_clone,
+            content: local_var_content,
             entity: local_var_entity,
             headers: local_var_headers,
         };
@@ -907,12 +903,10 @@ pub fn config_logging_put(
         .into_reader()
         .read_to_end(&mut local_var_content)?;
 
-    let local_var_content_clone = local_var_content.clone();
-
     if local_var_status < 400 {
         let local_var_result = ResponseContent {
             status: local_var_status,
-            content: local_var_content_clone,
+            content: local_var_content,
             entity: (),
             headers: local_var_headers,
         };
@@ -967,14 +961,12 @@ pub fn config_network_get(
         .into_reader()
         .read_to_end(&mut local_var_content)?;
 
-    let local_var_content_clone = local_var_content.clone();
-
     if local_var_status < 400 {
         let local_var_entity: crate::models::NetworkConfig =
             serde_json::from_slice(&local_var_content).map_err(Error::from)?;
         let local_var_result = ResponseContent {
             status: local_var_status,
-            content: local_var_content_clone,
+            content: local_var_content,
             entity: local_var_entity,
             headers: local_var_headers,
         };
@@ -1029,12 +1021,10 @@ pub fn config_network_put(
         .into_reader()
         .read_to_end(&mut local_var_content)?;
 
-    let local_var_content_clone = local_var_content.clone();
-
     if local_var_status < 400 {
         let local_var_result = ResponseContent {
             status: local_var_status,
-            content: local_var_content_clone,
+            content: local_var_content,
             entity: (),
             headers: local_var_headers,
         };
@@ -1089,14 +1079,12 @@ pub fn config_time_get(
         .into_reader()
         .read_to_end(&mut local_var_content)?;
 
-    let local_var_content_clone = local_var_content.clone();
-
     if local_var_status < 400 {
         let local_var_entity: crate::models::TimeConfig =
             serde_json::from_slice(&local_var_content).map_err(Error::from)?;
         let local_var_result = ResponseContent {
             status: local_var_status,
-            content: local_var_content_clone,
+            content: local_var_content,
             entity: local_var_entity,
             headers: local_var_headers,
         };
@@ -1151,12 +1139,10 @@ pub fn config_time_put(
         .into_reader()
         .read_to_end(&mut local_var_content)?;
 
-    let local_var_content_clone = local_var_content.clone();
-
     if local_var_status < 400 {
         let local_var_result = ResponseContent {
             status: local_var_status,
-            content: local_var_content_clone,
+            content: local_var_content,
             entity: (),
             headers: local_var_headers,
         };
@@ -1211,13 +1197,11 @@ pub fn config_tls_cert_pem_get(
         .into_reader()
         .read_to_end(&mut local_var_content)?;
 
-    let local_var_content_clone = local_var_content.clone();
-
     if local_var_status < 400 {
-        let local_var_entity = String::from_utf8(local_var_content)?;
+        let local_var_entity = String::from_utf8(local_var_content.clone())?;
         let local_var_result = ResponseContent {
             status: local_var_status,
-            content: local_var_content_clone,
+            content: local_var_content,
             entity: local_var_entity,
             headers: local_var_headers,
         };
@@ -1273,12 +1257,10 @@ pub fn config_tls_cert_pem_put(
         .into_reader()
         .read_to_end(&mut local_var_content)?;
 
-    let local_var_content_clone = local_var_content.clone();
-
     if local_var_status < 400 {
         let local_var_result = ResponseContent {
             status: local_var_status,
-            content: local_var_content_clone,
+            content: local_var_content,
             entity: (),
             headers: local_var_headers,
         };
@@ -1336,13 +1318,11 @@ pub fn config_tls_csr_pem_post(
         .into_reader()
         .read_to_end(&mut local_var_content)?;
 
-    let local_var_content_clone = local_var_content.clone();
-
     if local_var_status < 400 {
-        let local_var_entity = String::from_utf8(local_var_content)?;
+        let local_var_entity = String::from_utf8(local_var_content.clone())?;
         let local_var_result = ResponseContent {
             status: local_var_status,
-            content: local_var_content_clone,
+            content: local_var_content,
             entity: local_var_entity,
             headers: local_var_headers,
         };
@@ -1398,12 +1378,10 @@ pub fn config_tls_generate_post(
         .into_reader()
         .read_to_end(&mut local_var_content)?;
 
-    let local_var_content_clone = local_var_content.clone();
-
     if local_var_status < 400 {
         let local_var_result = ResponseContent {
             status: local_var_status,
-            content: local_var_content_clone,
+            content: local_var_content,
             entity: (),
             headers: local_var_headers,
         };
@@ -1462,13 +1440,11 @@ pub fn config_tls_public_pem_get(
         .into_reader()
         .read_to_end(&mut local_var_content)?;
 
-    let local_var_content_clone = local_var_content.clone();
-
     if local_var_status < 400 {
-        let local_var_entity = String::from_utf8(local_var_content)?;
+        let local_var_entity = String::from_utf8(local_var_content.clone())?;
         let local_var_result = ResponseContent {
             status: local_var_status,
-            content: local_var_content_clone,
+            content: local_var_content,
             entity: local_var_entity,
             headers: local_var_headers,
         };
@@ -1528,14 +1504,12 @@ pub fn config_unattended_boot_get(
         .into_reader()
         .read_to_end(&mut local_var_content)?;
 
-    let local_var_content_clone = local_var_content.clone();
-
     if local_var_status < 400 {
         let local_var_entity: crate::models::UnattendedBootConfig =
             serde_json::from_slice(&local_var_content).map_err(Error::from)?;
         let local_var_result = ResponseContent {
             status: local_var_status,
-            content: local_var_content_clone,
+            content: local_var_content,
             entity: local_var_entity,
             headers: local_var_headers,
         };
@@ -1594,12 +1568,10 @@ pub fn config_unattended_boot_put(
         .into_reader()
         .read_to_end(&mut local_var_content)?;
 
-    let local_var_content_clone = local_var_content.clone();
-
     if local_var_status < 400 {
         let local_var_result = ResponseContent {
             status: local_var_status,
-            content: local_var_content_clone,
+            content: local_var_content,
             entity: (),
             headers: local_var_headers,
         };
@@ -1658,12 +1630,10 @@ pub fn config_unlock_passphrase_put(
         .into_reader()
         .read_to_end(&mut local_var_content)?;
 
-    let local_var_content_clone = local_var_content.clone();
-
     if local_var_status < 400 {
         let local_var_result = ResponseContent {
             status: local_var_status,
-            content: local_var_content_clone,
+            content: local_var_content,
             entity: (),
             headers: local_var_headers,
         };
@@ -1712,12 +1682,10 @@ pub fn health_alive_get(
         .into_reader()
         .read_to_end(&mut local_var_content)?;
 
-    let local_var_content_clone = local_var_content.clone();
-
     if local_var_status < 400 {
         let local_var_result = ResponseContent {
             status: local_var_status,
-            content: local_var_content_clone,
+            content: local_var_content,
             entity: (),
             headers: local_var_headers,
         };
@@ -1765,12 +1733,10 @@ pub fn health_ready_get(
         .into_reader()
         .read_to_end(&mut local_var_content)?;
 
-    let local_var_content_clone = local_var_content.clone();
-
     if local_var_status < 400 {
         let local_var_result = ResponseContent {
             status: local_var_status,
-            content: local_var_content_clone,
+            content: local_var_content,
             entity: (),
             headers: local_var_headers,
         };
@@ -1820,14 +1786,12 @@ pub fn health_state_get(
         .into_reader()
         .read_to_end(&mut local_var_content)?;
 
-    let local_var_content_clone = local_var_content.clone();
-
     if local_var_status < 400 {
         let local_var_entity: crate::models::HealthStateData =
             serde_json::from_slice(&local_var_content).map_err(Error::from)?;
         let local_var_result = ResponseContent {
             status: local_var_status,
-            content: local_var_content_clone,
+            content: local_var_content,
             entity: local_var_entity,
             headers: local_var_headers,
         };
@@ -1877,14 +1841,12 @@ pub fn info_get(
         .into_reader()
         .read_to_end(&mut local_var_content)?;
 
-    let local_var_content_clone = local_var_content.clone();
-
     if local_var_status < 400 {
         let local_var_entity: crate::models::InfoData =
             serde_json::from_slice(&local_var_content).map_err(Error::from)?;
         let local_var_result = ResponseContent {
             status: local_var_status,
-            content: local_var_content_clone,
+            content: local_var_content,
             entity: local_var_entity,
             headers: local_var_headers,
         };
@@ -1941,14 +1903,12 @@ pub fn keys_generate_post(
         .into_reader()
         .read_to_end(&mut local_var_content)?;
 
-    let local_var_content_clone = local_var_content.clone();
-
     if local_var_status < 400 {
         let local_var_entity: crate::models::CreateResourceId =
             serde_json::from_slice(&local_var_content).map_err(Error::from)?;
         let local_var_result = ResponseContent {
             status: local_var_status,
-            content: local_var_content_clone,
+            content: local_var_content,
             entity: local_var_entity,
             headers: local_var_headers,
         };
@@ -2008,14 +1968,12 @@ pub fn keys_get(
         .into_reader()
         .read_to_end(&mut local_var_content)?;
 
-    let local_var_content_clone = local_var_content.clone();
-
     if local_var_status < 400 {
         let local_var_entity: Vec<crate::models::KeyItem> =
             serde_json::from_slice(&local_var_content).map_err(Error::from)?;
         let local_var_result = ResponseContent {
             status: local_var_status,
-            content: local_var_content_clone,
+            content: local_var_content,
             entity: local_var_entity,
             headers: local_var_headers,
         };
@@ -2073,12 +2031,10 @@ pub fn keys_key_id_cert_delete(
         .into_reader()
         .read_to_end(&mut local_var_content)?;
 
-    let local_var_content_clone = local_var_content.clone();
-
     if local_var_status < 400 {
         let local_var_result = ResponseContent {
             status: local_var_status,
-            content: local_var_content_clone,
+            content: local_var_content,
             entity: (),
             headers: local_var_headers,
         };
@@ -2139,13 +2095,11 @@ pub fn keys_key_id_cert_get(
         .into_reader()
         .read_to_end(&mut local_var_content)?;
 
-    let local_var_content_clone = local_var_content.clone();
-
     if local_var_status < 400 {
         let local_var_entity = local_var_content.clone();
         let local_var_result = ResponseContent {
             status: local_var_status,
-            content: local_var_content_clone,
+            content: local_var_content,
             entity: local_var_entity,
             headers: local_var_headers,
         };
@@ -2206,12 +2160,10 @@ pub fn keys_key_id_cert_put(
         .into_reader()
         .read_to_end(&mut local_var_content)?;
 
-    let local_var_content_clone = local_var_content.clone();
-
     if local_var_status < 400 {
         let local_var_result = ResponseContent {
             status: local_var_status,
-            content: local_var_content_clone,
+            content: local_var_content,
             entity: (),
             headers: local_var_headers,
         };
@@ -2273,13 +2225,11 @@ pub fn keys_key_id_csr_pem_post(
         .into_reader()
         .read_to_end(&mut local_var_content)?;
 
-    let local_var_content_clone = local_var_content.clone();
-
     if local_var_status < 400 {
-        let local_var_entity = String::from_utf8(local_var_content)?;
+        let local_var_entity = String::from_utf8(local_var_content.clone())?;
         let local_var_result = ResponseContent {
             status: local_var_status,
-            content: local_var_content_clone,
+            content: local_var_content,
             entity: local_var_entity,
             headers: local_var_headers,
         };
@@ -2342,14 +2292,12 @@ pub fn keys_key_id_decrypt_post(
         .into_reader()
         .read_to_end(&mut local_var_content)?;
 
-    let local_var_content_clone = local_var_content.clone();
-
     if local_var_status < 400 {
         let local_var_entity: crate::models::DecryptData =
             serde_json::from_slice(&local_var_content).map_err(Error::from)?;
         let local_var_result = ResponseContent {
             status: local_var_status,
-            content: local_var_content_clone,
+            content: local_var_content,
             entity: local_var_entity,
             headers: local_var_headers,
         };
@@ -2408,12 +2356,10 @@ pub fn keys_key_id_delete(
         .into_reader()
         .read_to_end(&mut local_var_content)?;
 
-    let local_var_content_clone = local_var_content.clone();
-
     if local_var_status < 400 {
         let local_var_result = ResponseContent {
             status: local_var_status,
-            content: local_var_content_clone,
+            content: local_var_content,
             entity: (),
             headers: local_var_headers,
         };
@@ -2475,14 +2421,12 @@ pub fn keys_key_id_encrypt_post(
         .into_reader()
         .read_to_end(&mut local_var_content)?;
 
-    let local_var_content_clone = local_var_content.clone();
-
     if local_var_status < 400 {
         let local_var_entity: crate::models::EncryptData =
             serde_json::from_slice(&local_var_content).map_err(Error::from)?;
         let local_var_result = ResponseContent {
             status: local_var_status,
-            content: local_var_content_clone,
+            content: local_var_content,
             entity: local_var_entity,
             headers: local_var_headers,
         };
@@ -2543,14 +2487,12 @@ pub fn keys_key_id_get(
         .into_reader()
         .read_to_end(&mut local_var_content)?;
 
-    let local_var_content_clone = local_var_content.clone();
-
     if local_var_status < 400 {
         let local_var_entity: crate::models::PublicKey =
             serde_json::from_slice(&local_var_content).map_err(Error::from)?;
         let local_var_result = ResponseContent {
             status: local_var_status,
-            content: local_var_content_clone,
+            content: local_var_content,
             entity: local_var_entity,
             headers: local_var_headers,
         };
@@ -2610,13 +2552,11 @@ pub fn keys_key_id_public_pem_get(
         .into_reader()
         .read_to_end(&mut local_var_content)?;
 
-    let local_var_content_clone = local_var_content.clone();
-
     if local_var_status < 400 {
-        let local_var_entity = String::from_utf8(local_var_content)?;
+        let local_var_entity = String::from_utf8(local_var_content.clone())?;
         let local_var_result = ResponseContent {
             status: local_var_status,
-            content: local_var_content_clone,
+            content: local_var_content,
             entity: local_var_entity,
             headers: local_var_headers,
         };
@@ -2683,12 +2623,10 @@ pub fn keys_key_id_put(
         .into_reader()
         .read_to_end(&mut local_var_content)?;
 
-    let local_var_content_clone = local_var_content.clone();
-
     if local_var_status < 400 {
         let local_var_result = ResponseContent {
             status: local_var_status,
-            content: local_var_content_clone,
+            content: local_var_content,
             entity: (),
             headers: local_var_headers,
         };
@@ -2748,12 +2686,10 @@ pub fn keys_key_id_restrictions_tags_tag_delete(
         .into_reader()
         .read_to_end(&mut local_var_content)?;
 
-    let local_var_content_clone = local_var_content.clone();
-
     if local_var_status < 400 {
         let local_var_result = ResponseContent {
             status: local_var_status,
-            content: local_var_content_clone,
+            content: local_var_content,
             entity: (),
             headers: local_var_headers,
         };
@@ -2814,12 +2750,10 @@ pub fn keys_key_id_restrictions_tags_tag_put(
         .into_reader()
         .read_to_end(&mut local_var_content)?;
 
-    let local_var_content_clone = local_var_content.clone();
-
     if local_var_status < 400 {
         let local_var_result = ResponseContent {
             status: local_var_status,
-            content: local_var_content_clone,
+            content: local_var_content,
             entity: (),
             headers: local_var_headers,
         };
@@ -2882,14 +2816,12 @@ pub fn keys_key_id_sign_post(
         .into_reader()
         .read_to_end(&mut local_var_content)?;
 
-    let local_var_content_clone = local_var_content.clone();
-
     if local_var_status < 400 {
         let local_var_entity: crate::models::SignData =
             serde_json::from_slice(&local_var_content).map_err(Error::from)?;
         let local_var_result = ResponseContent {
             status: local_var_status,
-            content: local_var_content_clone,
+            content: local_var_content,
             entity: local_var_entity,
             headers: local_var_headers,
         };
@@ -2952,14 +2884,12 @@ pub fn keys_post(
         .into_reader()
         .read_to_end(&mut local_var_content)?;
 
-    let local_var_content_clone = local_var_content.clone();
-
     if local_var_status < 400 {
         let local_var_entity: crate::models::CreateResourceId =
             serde_json::from_slice(&local_var_content).map_err(Error::from)?;
         let local_var_result = ResponseContent {
             status: local_var_status,
-            content: local_var_content_clone,
+            content: local_var_content,
             entity: local_var_entity,
             headers: local_var_headers,
         };
@@ -3012,12 +2942,10 @@ pub fn lock_post(
         .into_reader()
         .read_to_end(&mut local_var_content)?;
 
-    let local_var_content_clone = local_var_content.clone();
-
     if local_var_status < 400 {
         let local_var_result = ResponseContent {
             status: local_var_status,
-            content: local_var_content_clone,
+            content: local_var_content,
             entity: (),
             headers: local_var_headers,
         };
@@ -3072,14 +3000,12 @@ pub fn metrics_get(
         .into_reader()
         .read_to_end(&mut local_var_content)?;
 
-    let local_var_content_clone = local_var_content.clone();
-
     if local_var_status < 400 {
         let local_var_entity: serde_json::Value =
             serde_json::from_slice(&local_var_content).map_err(Error::from)?;
         let local_var_result = ResponseContent {
             status: local_var_status,
-            content: local_var_content_clone,
+            content: local_var_content,
             entity: local_var_entity,
             headers: local_var_headers,
         };
@@ -3129,12 +3055,10 @@ pub fn provision_post(
         .into_reader()
         .read_to_end(&mut local_var_content)?;
 
-    let local_var_content_clone = local_var_content.clone();
-
     if local_var_status < 400 {
         let local_var_result = ResponseContent {
             status: local_var_status,
-            content: local_var_content_clone,
+            content: local_var_content,
             entity: (),
             headers: local_var_headers,
         };
@@ -3191,14 +3115,12 @@ pub fn random_post(
         .into_reader()
         .read_to_end(&mut local_var_content)?;
 
-    let local_var_content_clone = local_var_content.clone();
-
     if local_var_status < 400 {
         let local_var_entity: crate::models::RandomData =
             serde_json::from_slice(&local_var_content).map_err(Error::from)?;
         let local_var_result = ResponseContent {
             status: local_var_status,
-            content: local_var_content_clone,
+            content: local_var_content,
             entity: local_var_entity,
             headers: local_var_headers,
         };
@@ -3253,13 +3175,11 @@ pub fn system_backup_post(
         .into_reader()
         .read_to_end(&mut local_var_content)?;
 
-    let local_var_content_clone = local_var_content.clone();
-
     if local_var_status < 400 {
         let local_var_entity = local_var_content.clone();
         let local_var_result = ResponseContent {
             status: local_var_status,
-            content: local_var_content_clone,
+            content: local_var_content,
             entity: local_var_entity,
             headers: local_var_headers,
         };
@@ -3312,12 +3232,10 @@ pub fn system_cancel_update_post(
         .into_reader()
         .read_to_end(&mut local_var_content)?;
 
-    let local_var_content_clone = local_var_content.clone();
-
     if local_var_status < 400 {
         let local_var_result = ResponseContent {
             status: local_var_status,
-            content: local_var_content_clone,
+            content: local_var_content,
             entity: (),
             headers: local_var_headers,
         };
@@ -3371,12 +3289,10 @@ pub fn system_commit_update_post(
         .into_reader()
         .read_to_end(&mut local_var_content)?;
 
-    let local_var_content_clone = local_var_content.clone();
-
     if local_var_status < 400 {
         let local_var_result = ResponseContent {
             status: local_var_status,
-            content: local_var_content_clone,
+            content: local_var_content,
             entity: (),
             headers: local_var_headers,
         };
@@ -3430,12 +3346,10 @@ pub fn system_factory_reset_post(
         .into_reader()
         .read_to_end(&mut local_var_content)?;
 
-    let local_var_content_clone = local_var_content.clone();
-
     if local_var_status < 400 {
         let local_var_result = ResponseContent {
             status: local_var_status,
-            content: local_var_content_clone,
+            content: local_var_content,
             entity: (),
             headers: local_var_headers,
         };
@@ -3491,14 +3405,12 @@ pub fn system_info_get(
         .into_reader()
         .read_to_end(&mut local_var_content)?;
 
-    let local_var_content_clone = local_var_content.clone();
-
     if local_var_status < 400 {
         let local_var_entity: crate::models::SystemInfo =
             serde_json::from_slice(&local_var_content).map_err(Error::from)?;
         let local_var_result = ResponseContent {
             status: local_var_status,
-            content: local_var_content_clone,
+            content: local_var_content,
             entity: local_var_entity,
             headers: local_var_headers,
         };
@@ -3551,12 +3463,10 @@ pub fn system_reboot_post(
         .into_reader()
         .read_to_end(&mut local_var_content)?;
 
-    let local_var_content_clone = local_var_content.clone();
-
     if local_var_status < 400 {
         let local_var_result = ResponseContent {
             status: local_var_status,
-            content: local_var_content_clone,
+            content: local_var_content,
             entity: (),
             headers: local_var_headers,
         };
@@ -3639,12 +3549,10 @@ pub fn system_restore_post(
         .into_reader()
         .read_to_end(&mut local_var_content)?;
 
-    let local_var_content_clone = local_var_content.clone();
-
     if local_var_status < 400 {
         let local_var_result = ResponseContent {
             status: local_var_status,
-            content: local_var_content_clone,
+            content: local_var_content,
             entity: (),
             headers: local_var_headers,
         };
@@ -3697,12 +3605,10 @@ pub fn system_shutdown_post(
         .into_reader()
         .read_to_end(&mut local_var_content)?;
 
-    let local_var_content_clone = local_var_content.clone();
-
     if local_var_status < 400 {
         let local_var_result = ResponseContent {
             status: local_var_status,
-            content: local_var_content_clone,
+            content: local_var_content,
             entity: (),
             headers: local_var_headers,
         };
@@ -3760,14 +3666,12 @@ pub fn system_update_post(
         .into_reader()
         .read_to_end(&mut local_var_content)?;
 
-    let local_var_content_clone = local_var_content.clone();
-
     if local_var_status < 400 {
         let local_var_entity: crate::models::SystemUpdateData =
             serde_json::from_slice(&local_var_content).map_err(Error::from)?;
         let local_var_result = ResponseContent {
             status: local_var_status,
-            content: local_var_content_clone,
+            content: local_var_content,
             entity: local_var_entity,
             headers: local_var_headers,
         };
@@ -3817,12 +3721,10 @@ pub fn unlock_post(
         .into_reader()
         .read_to_end(&mut local_var_content)?;
 
-    let local_var_content_clone = local_var_content.clone();
-
     if local_var_status < 400 {
         let local_var_result = ResponseContent {
             status: local_var_status,
-            content: local_var_content_clone,
+            content: local_var_content,
             entity: (),
             headers: local_var_headers,
         };
@@ -3877,14 +3779,12 @@ pub fn users_get(
         .into_reader()
         .read_to_end(&mut local_var_content)?;
 
-    let local_var_content_clone = local_var_content.clone();
-
     if local_var_status < 400 {
         let local_var_entity: Vec<crate::models::UserItem> =
             serde_json::from_slice(&local_var_content).map_err(Error::from)?;
         let local_var_result = ResponseContent {
             status: local_var_status,
-            content: local_var_content_clone,
+            content: local_var_content,
             entity: local_var_entity,
             headers: local_var_headers,
         };
@@ -3941,14 +3841,12 @@ pub fn users_post(
         .into_reader()
         .read_to_end(&mut local_var_content)?;
 
-    let local_var_content_clone = local_var_content.clone();
-
     if local_var_status < 400 {
         let local_var_entity: crate::models::CreateResourceId =
             serde_json::from_slice(&local_var_content).map_err(Error::from)?;
         let local_var_result = ResponseContent {
             status: local_var_status,
-            content: local_var_content_clone,
+            content: local_var_content,
             entity: local_var_entity,
             headers: local_var_headers,
         };
@@ -4006,12 +3904,10 @@ pub fn users_user_id_delete(
         .into_reader()
         .read_to_end(&mut local_var_content)?;
 
-    let local_var_content_clone = local_var_content.clone();
-
     if local_var_status < 400 {
         let local_var_result = ResponseContent {
             status: local_var_status,
-            content: local_var_content_clone,
+            content: local_var_content,
             entity: (),
             headers: local_var_headers,
         };
@@ -4071,14 +3967,12 @@ pub fn users_user_id_get(
         .into_reader()
         .read_to_end(&mut local_var_content)?;
 
-    let local_var_content_clone = local_var_content.clone();
-
     if local_var_status < 400 {
         let local_var_entity: crate::models::UserData =
             serde_json::from_slice(&local_var_content).map_err(Error::from)?;
         let local_var_result = ResponseContent {
             status: local_var_status,
-            content: local_var_content_clone,
+            content: local_var_content,
             entity: local_var_entity,
             headers: local_var_headers,
         };
@@ -4138,12 +4032,10 @@ pub fn users_user_id_passphrase_post(
         .into_reader()
         .read_to_end(&mut local_var_content)?;
 
-    let local_var_content_clone = local_var_content.clone();
-
     if local_var_status < 400 {
         let local_var_result = ResponseContent {
             status: local_var_status,
-            content: local_var_content_clone,
+            content: local_var_content,
             entity: (),
             headers: local_var_headers,
         };
@@ -4204,12 +4096,10 @@ pub fn users_user_id_put(
         .into_reader()
         .read_to_end(&mut local_var_content)?;
 
-    let local_var_content_clone = local_var_content.clone();
-
     if local_var_status < 400 {
         let local_var_result = ResponseContent {
             status: local_var_status,
-            content: local_var_content_clone,
+            content: local_var_content,
             entity: (),
             headers: local_var_headers,
         };
@@ -4269,14 +4159,12 @@ pub fn users_user_id_tags_get(
         .into_reader()
         .read_to_end(&mut local_var_content)?;
 
-    let local_var_content_clone = local_var_content.clone();
-
     if local_var_status < 400 {
         let local_var_entity: Vec<String> =
             serde_json::from_slice(&local_var_content).map_err(Error::from)?;
         let local_var_result = ResponseContent {
             status: local_var_status,
-            content: local_var_content_clone,
+            content: local_var_content,
             entity: local_var_entity,
             headers: local_var_headers,
         };
@@ -4336,12 +4224,10 @@ pub fn users_user_id_tags_tag_delete(
         .into_reader()
         .read_to_end(&mut local_var_content)?;
 
-    let local_var_content_clone = local_var_content.clone();
-
     if local_var_status < 400 {
         let local_var_result = ResponseContent {
             status: local_var_status,
-            content: local_var_content_clone,
+            content: local_var_content,
             entity: (),
             headers: local_var_headers,
         };
@@ -4402,12 +4288,10 @@ pub fn users_user_id_tags_tag_put(
         .into_reader()
         .read_to_end(&mut local_var_content)?;
 
-    let local_var_content_clone = local_var_content.clone();
-
     if local_var_status < 400 {
         let local_var_result = ResponseContent {
             status: local_var_status,
-            content: local_var_content_clone,
+            content: local_var_content,
             entity: (),
             headers: local_var_headers,
         };

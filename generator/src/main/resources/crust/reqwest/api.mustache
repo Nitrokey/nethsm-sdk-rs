@@ -381,12 +381,10 @@ pub fn {{{operationId}}}(configuration: &configuration::Configuration, {{#allPar
     let mut local_var_content = vec![];
     local_var_resp.into_reader().read_to_end(&mut local_var_content)?;
 
-    let local_var_content_clone = local_var_content.clone();
-
     if local_var_status < 400 {
         {{#vendorExtensions.x-produceMultipleMediaTypes}}
         {{#returnType}}
-        let local_var_entity : {{{returnType}}} = if is_json { serde_json::from_slice(&local_var_content).map_err(Error::from)? } else {  String::from_utf8(local_var_content)? };
+        let local_var_entity : {{{returnType}}} = if is_json { serde_json::from_slice(&local_var_content).map_err(Error::from)? } else {  String::from_utf8(local_var_content.clone())? };
         {{/returnType}}
         {{/vendorExtensions.x-produceMultipleMediaTypes}}
         {{^vendorExtensions.x-produceMultipleMediaTypes}}
@@ -402,13 +400,13 @@ pub fn {{{operationId}}}(configuration: &configuration::Configuration, {{#allPar
         let local_var_entity = local_var_content.clone();
         {{/isResponseFile}}
         {{^isResponseFile}}
-        let local_var_entity = String::from_utf8(local_var_content)?;
+        let local_var_entity = String::from_utf8(local_var_content.clone())?;
         {{/isResponseFile}}
         {{/returnType}}       
         {{/mediaIsJson}}
         {{/produces}}
         {{/vendorExtensions.x-produceMultipleMediaTypes}}
-        let local_var_result = ResponseContent { status: local_var_status, content: local_var_content_clone, entity: {{#returnType}}local_var_entity{{/returnType}}{{^returnType}}(){{/returnType}}, headers: local_var_headers };
+        let local_var_result = ResponseContent { status: local_var_status, content: local_var_content, entity: {{#returnType}}local_var_entity{{/returnType}}{{^returnType}}(){{/returnType}}, headers: local_var_headers };
         Ok(local_var_result)
     } else {
         let local_var_entity: {{{operationIdCamelCase}}}Error = serde_json::from_slice(&local_var_content)?;
