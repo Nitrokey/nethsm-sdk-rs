@@ -43,6 +43,69 @@ async fn test_error() {
 }
 
 #[tokio::test]
+async fn test_namespaces() {
+    let admin_passphrase = "adminadmin";
+    let n_admin_passphrase = "admin2admin2";
+    let unlock_passphrase = "unlockunlock";
+
+    utils::with_container(|mut config| {
+        let request = ProvisionRequestData {
+            unlock_passphrase: unlock_passphrase.to_owned(),
+            admin_passphrase: admin_passphrase.to_owned(),
+            system_time: Utc::now().to_rfc3339(),
+        };
+        default_api::provision_post(&config, request).unwrap();
+
+        config.basic_auth = Some(("admin".to_owned(), Some(admin_passphrase.to_owned())));
+
+        let request = UserPostData {
+            real_name: "N-Admin".to_owned(),
+            role: UserRole::Administrator,
+            passphrase: n_admin_passphrase.to_owned(),
+        };
+        let user_id = default_api::users_user_id_post(&config, "mynamespace~", request)
+            .unwrap()
+            .entity
+            .id;
+        assert!(user_id.starts_with("mynamespace~"));
+
+        assert_eq!(list_namespaces(&config), BTreeSet::new());
+
+        default_api::namespaces_namespace_id_put(&config, "mynamespace").unwrap();
+
+        assert_eq!(
+            list_namespaces(&config),
+            ["mynamespace".to_owned()].into_iter().collect()
+        );
+
+        config.basic_auth = Some((user_id, Some(n_admin_passphrase.to_owned())));
+
+        let request = KeyGenerateRequestData {
+            r#type: KeyType::Rsa,
+            length: Some(2048),
+            mechanisms: vec![KeyMechanism::RsaDecryptionRaw],
+            ..Default::default()
+        };
+        let key_id = default_api::keys_generate_post(&config, request)
+            .unwrap()
+            .entity
+            .id;
+        let keys = BTreeSet::from([key_id.clone()]);
+
+        assert_eq!(list_keys(&config), keys);
+
+        config.basic_auth = Some(("admin".to_owned(), Some(admin_passphrase.to_owned())));
+
+        assert_eq!(list_keys(&config), BTreeSet::new());
+
+        default_api::namespaces_namespace_id_delete(&config, "mynamespace").unwrap();
+
+        assert_eq!(list_namespaces(&config), BTreeSet::new());
+    })
+    .await
+}
+
+#[tokio::test]
 async fn test_restore() {
     let admin_passphrase = "adminadmin";
     let backup_passphrase = "backupbackup";
@@ -135,6 +198,15 @@ async fn test_restore() {
 
 fn list_keys(config: &Configuration) -> BTreeSet<String> {
     default_api::keys_get(&config, None)
+        .unwrap()
+        .entity
+        .into_iter()
+        .map(|item| item.id)
+        .collect()
+}
+
+fn list_namespaces(config: &Configuration) -> BTreeSet<String> {
+    default_api::namespaces_get(&config)
         .unwrap()
         .entity
         .into_iter()
