@@ -79,6 +79,26 @@ pub enum ConfigBackupPassphrasePutError {
     UnknownValue(serde_json::Value),
 }
 
+impl ConfigBackupPassphrasePutError {
+    fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
+        // to do: support payloads once added to API spec
+        match status {
+            400 => Ok(Self::Status400()),
+            401 => Ok(Self::Status401()),
+            403 => Ok(Self::Status403()),
+            406 => Ok(Self::Status406()),
+            412 => Ok(Self::Status412()),
+            _ => {
+                if data.is_empty() {
+                    Ok(Self::UnknownValue(serde_json::Value::Null))
+                } else {
+                    serde_json::from_slice(data).map(Self::UnknownValue)
+                }
+            }
+        }
+    }
+}
+
 /// struct for typed errors of method [`config_logging_get`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -88,6 +108,25 @@ pub enum ConfigLoggingGetError {
     Status406(),
     Status412(),
     UnknownValue(serde_json::Value),
+}
+
+impl ConfigLoggingGetError {
+    fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
+        // to do: support payloads once added to API spec
+        match status {
+            401 => Ok(Self::Status401()),
+            403 => Ok(Self::Status403()),
+            406 => Ok(Self::Status406()),
+            412 => Ok(Self::Status412()),
+            _ => {
+                if data.is_empty() {
+                    Ok(Self::UnknownValue(serde_json::Value::Null))
+                } else {
+                    serde_json::from_slice(data).map(Self::UnknownValue)
+                }
+            }
+        }
+    }
 }
 
 /// struct for typed errors of method [`config_logging_put`]
@@ -102,6 +141,26 @@ pub enum ConfigLoggingPutError {
     UnknownValue(serde_json::Value),
 }
 
+impl ConfigLoggingPutError {
+    fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
+        // to do: support payloads once added to API spec
+        match status {
+            400 => Ok(Self::Status400()),
+            401 => Ok(Self::Status401()),
+            403 => Ok(Self::Status403()),
+            406 => Ok(Self::Status406()),
+            412 => Ok(Self::Status412()),
+            _ => {
+                if data.is_empty() {
+                    Ok(Self::UnknownValue(serde_json::Value::Null))
+                } else {
+                    serde_json::from_slice(data).map(Self::UnknownValue)
+                }
+            }
+        }
+    }
+}
+
 /// struct for typed errors of method [`config_network_get`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -111,6 +170,25 @@ pub enum ConfigNetworkGetError {
     Status406(),
     Status412(),
     UnknownValue(serde_json::Value),
+}
+
+impl ConfigNetworkGetError {
+    fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
+        // to do: support payloads once added to API spec
+        match status {
+            401 => Ok(Self::Status401()),
+            403 => Ok(Self::Status403()),
+            406 => Ok(Self::Status406()),
+            412 => Ok(Self::Status412()),
+            _ => {
+                if data.is_empty() {
+                    Ok(Self::UnknownValue(serde_json::Value::Null))
+                } else {
+                    serde_json::from_slice(data).map(Self::UnknownValue)
+                }
+            }
+        }
+    }
 }
 
 /// struct for typed errors of method [`config_network_put`]
@@ -125,6 +203,26 @@ pub enum ConfigNetworkPutError {
     UnknownValue(serde_json::Value),
 }
 
+impl ConfigNetworkPutError {
+    fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
+        // to do: support payloads once added to API spec
+        match status {
+            400 => Ok(Self::Status400()),
+            401 => Ok(Self::Status401()),
+            403 => Ok(Self::Status403()),
+            406 => Ok(Self::Status406()),
+            412 => Ok(Self::Status412()),
+            _ => {
+                if data.is_empty() {
+                    Ok(Self::UnknownValue(serde_json::Value::Null))
+                } else {
+                    serde_json::from_slice(data).map(Self::UnknownValue)
+                }
+            }
+        }
+    }
+}
+
 /// struct for typed errors of method [`config_time_get`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -134,6 +232,25 @@ pub enum ConfigTimeGetError {
     Status406(),
     Status412(),
     UnknownValue(serde_json::Value),
+}
+
+impl ConfigTimeGetError {
+    fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
+        // to do: support payloads once added to API spec
+        match status {
+            401 => Ok(Self::Status401()),
+            403 => Ok(Self::Status403()),
+            406 => Ok(Self::Status406()),
+            412 => Ok(Self::Status412()),
+            _ => {
+                if data.is_empty() {
+                    Ok(Self::UnknownValue(serde_json::Value::Null))
+                } else {
+                    serde_json::from_slice(data).map(Self::UnknownValue)
+                }
+            }
+        }
+    }
 }
 
 /// struct for typed errors of method [`config_time_put`]
@@ -148,6 +265,26 @@ pub enum ConfigTimePutError {
     UnknownValue(serde_json::Value),
 }
 
+impl ConfigTimePutError {
+    fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
+        // to do: support payloads once added to API spec
+        match status {
+            400 => Ok(Self::Status400()),
+            401 => Ok(Self::Status401()),
+            403 => Ok(Self::Status403()),
+            406 => Ok(Self::Status406()),
+            412 => Ok(Self::Status412()),
+            _ => {
+                if data.is_empty() {
+                    Ok(Self::UnknownValue(serde_json::Value::Null))
+                } else {
+                    serde_json::from_slice(data).map(Self::UnknownValue)
+                }
+            }
+        }
+    }
+}
+
 /// struct for typed errors of method [`config_tls_cert_pem_get`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -158,6 +295,26 @@ pub enum ConfigTlsCertPemGetError {
     Status412(),
     Status415(),
     UnknownValue(serde_json::Value),
+}
+
+impl ConfigTlsCertPemGetError {
+    fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
+        // to do: support payloads once added to API spec
+        match status {
+            401 => Ok(Self::Status401()),
+            403 => Ok(Self::Status403()),
+            406 => Ok(Self::Status406()),
+            412 => Ok(Self::Status412()),
+            415 => Ok(Self::Status415()),
+            _ => {
+                if data.is_empty() {
+                    Ok(Self::UnknownValue(serde_json::Value::Null))
+                } else {
+                    serde_json::from_slice(data).map(Self::UnknownValue)
+                }
+            }
+        }
+    }
 }
 
 /// struct for typed errors of method [`config_tls_cert_pem_put`]
@@ -172,6 +329,26 @@ pub enum ConfigTlsCertPemPutError {
     UnknownValue(serde_json::Value),
 }
 
+impl ConfigTlsCertPemPutError {
+    fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
+        // to do: support payloads once added to API spec
+        match status {
+            400 => Ok(Self::Status400()),
+            401 => Ok(Self::Status401()),
+            403 => Ok(Self::Status403()),
+            406 => Ok(Self::Status406()),
+            412 => Ok(Self::Status412()),
+            _ => {
+                if data.is_empty() {
+                    Ok(Self::UnknownValue(serde_json::Value::Null))
+                } else {
+                    serde_json::from_slice(data).map(Self::UnknownValue)
+                }
+            }
+        }
+    }
+}
+
 /// struct for typed errors of method [`config_tls_csr_pem_post`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -181,6 +358,25 @@ pub enum ConfigTlsCsrPemPostError {
     Status406(),
     Status412(),
     UnknownValue(serde_json::Value),
+}
+
+impl ConfigTlsCsrPemPostError {
+    fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
+        // to do: support payloads once added to API spec
+        match status {
+            401 => Ok(Self::Status401()),
+            403 => Ok(Self::Status403()),
+            406 => Ok(Self::Status406()),
+            412 => Ok(Self::Status412()),
+            _ => {
+                if data.is_empty() {
+                    Ok(Self::UnknownValue(serde_json::Value::Null))
+                } else {
+                    serde_json::from_slice(data).map(Self::UnknownValue)
+                }
+            }
+        }
+    }
 }
 
 /// struct for typed errors of method [`config_tls_generate_post`]
@@ -195,6 +391,26 @@ pub enum ConfigTlsGeneratePostError {
     UnknownValue(serde_json::Value),
 }
 
+impl ConfigTlsGeneratePostError {
+    fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
+        // to do: support payloads once added to API spec
+        match status {
+            400 => Ok(Self::Status400()),
+            401 => Ok(Self::Status401()),
+            403 => Ok(Self::Status403()),
+            406 => Ok(Self::Status406()),
+            412 => Ok(Self::Status412()),
+            _ => {
+                if data.is_empty() {
+                    Ok(Self::UnknownValue(serde_json::Value::Null))
+                } else {
+                    serde_json::from_slice(data).map(Self::UnknownValue)
+                }
+            }
+        }
+    }
+}
+
 /// struct for typed errors of method [`config_tls_public_pem_get`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -206,6 +422,25 @@ pub enum ConfigTlsPublicPemGetError {
     UnknownValue(serde_json::Value),
 }
 
+impl ConfigTlsPublicPemGetError {
+    fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
+        // to do: support payloads once added to API spec
+        match status {
+            401 => Ok(Self::Status401()),
+            403 => Ok(Self::Status403()),
+            406 => Ok(Self::Status406()),
+            412 => Ok(Self::Status412()),
+            _ => {
+                if data.is_empty() {
+                    Ok(Self::UnknownValue(serde_json::Value::Null))
+                } else {
+                    serde_json::from_slice(data).map(Self::UnknownValue)
+                }
+            }
+        }
+    }
+}
+
 /// struct for typed errors of method [`config_unattended_boot_get`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -215,6 +450,25 @@ pub enum ConfigUnattendedBootGetError {
     Status406(),
     Status412(),
     UnknownValue(serde_json::Value),
+}
+
+impl ConfigUnattendedBootGetError {
+    fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
+        // to do: support payloads once added to API spec
+        match status {
+            401 => Ok(Self::Status401()),
+            403 => Ok(Self::Status403()),
+            406 => Ok(Self::Status406()),
+            412 => Ok(Self::Status412()),
+            _ => {
+                if data.is_empty() {
+                    Ok(Self::UnknownValue(serde_json::Value::Null))
+                } else {
+                    serde_json::from_slice(data).map(Self::UnknownValue)
+                }
+            }
+        }
+    }
 }
 
 /// struct for typed errors of method [`config_unattended_boot_put`]
@@ -229,6 +483,26 @@ pub enum ConfigUnattendedBootPutError {
     UnknownValue(serde_json::Value),
 }
 
+impl ConfigUnattendedBootPutError {
+    fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
+        // to do: support payloads once added to API spec
+        match status {
+            400 => Ok(Self::Status400()),
+            401 => Ok(Self::Status401()),
+            403 => Ok(Self::Status403()),
+            406 => Ok(Self::Status406()),
+            412 => Ok(Self::Status412()),
+            _ => {
+                if data.is_empty() {
+                    Ok(Self::UnknownValue(serde_json::Value::Null))
+                } else {
+                    serde_json::from_slice(data).map(Self::UnknownValue)
+                }
+            }
+        }
+    }
+}
+
 /// struct for typed errors of method [`config_unlock_passphrase_put`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -241,6 +515,26 @@ pub enum ConfigUnlockPassphrasePutError {
     UnknownValue(serde_json::Value),
 }
 
+impl ConfigUnlockPassphrasePutError {
+    fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
+        // to do: support payloads once added to API spec
+        match status {
+            400 => Ok(Self::Status400()),
+            401 => Ok(Self::Status401()),
+            403 => Ok(Self::Status403()),
+            406 => Ok(Self::Status406()),
+            412 => Ok(Self::Status412()),
+            _ => {
+                if data.is_empty() {
+                    Ok(Self::UnknownValue(serde_json::Value::Null))
+                } else {
+                    serde_json::from_slice(data).map(Self::UnknownValue)
+                }
+            }
+        }
+    }
+}
+
 /// struct for typed errors of method [`health_alive_get`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -248,6 +542,23 @@ pub enum HealthAliveGetError {
     Status406(),
     Status412(),
     UnknownValue(serde_json::Value),
+}
+
+impl HealthAliveGetError {
+    fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
+        // to do: support payloads once added to API spec
+        match status {
+            406 => Ok(Self::Status406()),
+            412 => Ok(Self::Status412()),
+            _ => {
+                if data.is_empty() {
+                    Ok(Self::UnknownValue(serde_json::Value::Null))
+                } else {
+                    serde_json::from_slice(data).map(Self::UnknownValue)
+                }
+            }
+        }
+    }
 }
 
 /// struct for typed errors of method [`health_ready_get`]
@@ -259,6 +570,23 @@ pub enum HealthReadyGetError {
     UnknownValue(serde_json::Value),
 }
 
+impl HealthReadyGetError {
+    fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
+        // to do: support payloads once added to API spec
+        match status {
+            406 => Ok(Self::Status406()),
+            412 => Ok(Self::Status412()),
+            _ => {
+                if data.is_empty() {
+                    Ok(Self::UnknownValue(serde_json::Value::Null))
+                } else {
+                    serde_json::from_slice(data).map(Self::UnknownValue)
+                }
+            }
+        }
+    }
+}
+
 /// struct for typed errors of method [`health_state_get`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -267,12 +595,44 @@ pub enum HealthStateGetError {
     UnknownValue(serde_json::Value),
 }
 
+impl HealthStateGetError {
+    fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
+        // to do: support payloads once added to API spec
+        match status {
+            406 => Ok(Self::Status406()),
+            _ => {
+                if data.is_empty() {
+                    Ok(Self::UnknownValue(serde_json::Value::Null))
+                } else {
+                    serde_json::from_slice(data).map(Self::UnknownValue)
+                }
+            }
+        }
+    }
+}
+
 /// struct for typed errors of method [`info_get`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum InfoGetError {
     Status406(),
     UnknownValue(serde_json::Value),
+}
+
+impl InfoGetError {
+    fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
+        // to do: support payloads once added to API spec
+        match status {
+            406 => Ok(Self::Status406()),
+            _ => {
+                if data.is_empty() {
+                    Ok(Self::UnknownValue(serde_json::Value::Null))
+                } else {
+                    serde_json::from_slice(data).map(Self::UnknownValue)
+                }
+            }
+        }
+    }
 }
 
 /// struct for typed errors of method [`keys_generate_post`]
@@ -287,6 +647,26 @@ pub enum KeysGeneratePostError {
     UnknownValue(serde_json::Value),
 }
 
+impl KeysGeneratePostError {
+    fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
+        // to do: support payloads once added to API spec
+        match status {
+            400 => Ok(Self::Status400()),
+            401 => Ok(Self::Status401()),
+            403 => Ok(Self::Status403()),
+            406 => Ok(Self::Status406()),
+            412 => Ok(Self::Status412()),
+            _ => {
+                if data.is_empty() {
+                    Ok(Self::UnknownValue(serde_json::Value::Null))
+                } else {
+                    serde_json::from_slice(data).map(Self::UnknownValue)
+                }
+            }
+        }
+    }
+}
+
 /// struct for typed errors of method [`keys_get`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -296,6 +676,25 @@ pub enum KeysGetError {
     Status406(),
     Status412(),
     UnknownValue(serde_json::Value),
+}
+
+impl KeysGetError {
+    fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
+        // to do: support payloads once added to API spec
+        match status {
+            401 => Ok(Self::Status401()),
+            403 => Ok(Self::Status403()),
+            406 => Ok(Self::Status406()),
+            412 => Ok(Self::Status412()),
+            _ => {
+                if data.is_empty() {
+                    Ok(Self::UnknownValue(serde_json::Value::Null))
+                } else {
+                    serde_json::from_slice(data).map(Self::UnknownValue)
+                }
+            }
+        }
+    }
 }
 
 /// struct for typed errors of method [`keys_key_id_cert_delete`]
@@ -308,6 +707,26 @@ pub enum KeysKeyIdCertDeleteError {
     Status406(),
     Status412(),
     UnknownValue(serde_json::Value),
+}
+
+impl KeysKeyIdCertDeleteError {
+    fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
+        // to do: support payloads once added to API spec
+        match status {
+            401 => Ok(Self::Status401()),
+            403 => Ok(Self::Status403()),
+            404 => Ok(Self::Status404()),
+            406 => Ok(Self::Status406()),
+            412 => Ok(Self::Status412()),
+            _ => {
+                if data.is_empty() {
+                    Ok(Self::UnknownValue(serde_json::Value::Null))
+                } else {
+                    serde_json::from_slice(data).map(Self::UnknownValue)
+                }
+            }
+        }
+    }
 }
 
 /// struct for typed errors of method [`keys_key_id_cert_get`]
@@ -323,6 +742,27 @@ pub enum KeysKeyIdCertGetError {
     UnknownValue(serde_json::Value),
 }
 
+impl KeysKeyIdCertGetError {
+    fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
+        // to do: support payloads once added to API spec
+        match status {
+            400 => Ok(Self::Status400()),
+            401 => Ok(Self::Status401()),
+            403 => Ok(Self::Status403()),
+            404 => Ok(Self::Status404()),
+            406 => Ok(Self::Status406()),
+            412 => Ok(Self::Status412()),
+            _ => {
+                if data.is_empty() {
+                    Ok(Self::UnknownValue(serde_json::Value::Null))
+                } else {
+                    serde_json::from_slice(data).map(Self::UnknownValue)
+                }
+            }
+        }
+    }
+}
+
 /// struct for typed errors of method [`keys_key_id_cert_put`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -333,6 +773,26 @@ pub enum KeysKeyIdCertPutError {
     Status409(),
     Status412(),
     UnknownValue(serde_json::Value),
+}
+
+impl KeysKeyIdCertPutError {
+    fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
+        // to do: support payloads once added to API spec
+        match status {
+            401 => Ok(Self::Status401()),
+            403 => Ok(Self::Status403()),
+            406 => Ok(Self::Status406()),
+            409 => Ok(Self::Status409()),
+            412 => Ok(Self::Status412()),
+            _ => {
+                if data.is_empty() {
+                    Ok(Self::UnknownValue(serde_json::Value::Null))
+                } else {
+                    serde_json::from_slice(data).map(Self::UnknownValue)
+                }
+            }
+        }
+    }
 }
 
 /// struct for typed errors of method [`keys_key_id_csr_pem_post`]
@@ -348,6 +808,27 @@ pub enum KeysKeyIdCsrPemPostError {
     UnknownValue(serde_json::Value),
 }
 
+impl KeysKeyIdCsrPemPostError {
+    fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
+        // to do: support payloads once added to API spec
+        match status {
+            400 => Ok(Self::Status400()),
+            401 => Ok(Self::Status401()),
+            403 => Ok(Self::Status403()),
+            404 => Ok(Self::Status404()),
+            406 => Ok(Self::Status406()),
+            412 => Ok(Self::Status412()),
+            _ => {
+                if data.is_empty() {
+                    Ok(Self::UnknownValue(serde_json::Value::Null))
+                } else {
+                    serde_json::from_slice(data).map(Self::UnknownValue)
+                }
+            }
+        }
+    }
+}
+
 /// struct for typed errors of method [`keys_key_id_decrypt_post`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -361,6 +842,27 @@ pub enum KeysKeyIdDecryptPostError {
     UnknownValue(serde_json::Value),
 }
 
+impl KeysKeyIdDecryptPostError {
+    fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
+        // to do: support payloads once added to API spec
+        match status {
+            400 => Ok(Self::Status400()),
+            401 => Ok(Self::Status401()),
+            403 => Ok(Self::Status403()),
+            404 => Ok(Self::Status404()),
+            406 => Ok(Self::Status406()),
+            412 => Ok(Self::Status412()),
+            _ => {
+                if data.is_empty() {
+                    Ok(Self::UnknownValue(serde_json::Value::Null))
+                } else {
+                    serde_json::from_slice(data).map(Self::UnknownValue)
+                }
+            }
+        }
+    }
+}
+
 /// struct for typed errors of method [`keys_key_id_delete`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -371,6 +873,26 @@ pub enum KeysKeyIdDeleteError {
     Status406(),
     Status412(),
     UnknownValue(serde_json::Value),
+}
+
+impl KeysKeyIdDeleteError {
+    fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
+        // to do: support payloads once added to API spec
+        match status {
+            401 => Ok(Self::Status401()),
+            403 => Ok(Self::Status403()),
+            404 => Ok(Self::Status404()),
+            406 => Ok(Self::Status406()),
+            412 => Ok(Self::Status412()),
+            _ => {
+                if data.is_empty() {
+                    Ok(Self::UnknownValue(serde_json::Value::Null))
+                } else {
+                    serde_json::from_slice(data).map(Self::UnknownValue)
+                }
+            }
+        }
+    }
 }
 
 /// struct for typed errors of method [`keys_key_id_encrypt_post`]
@@ -386,6 +908,27 @@ pub enum KeysKeyIdEncryptPostError {
     UnknownValue(serde_json::Value),
 }
 
+impl KeysKeyIdEncryptPostError {
+    fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
+        // to do: support payloads once added to API spec
+        match status {
+            400 => Ok(Self::Status400()),
+            401 => Ok(Self::Status401()),
+            403 => Ok(Self::Status403()),
+            404 => Ok(Self::Status404()),
+            406 => Ok(Self::Status406()),
+            412 => Ok(Self::Status412()),
+            _ => {
+                if data.is_empty() {
+                    Ok(Self::UnknownValue(serde_json::Value::Null))
+                } else {
+                    serde_json::from_slice(data).map(Self::UnknownValue)
+                }
+            }
+        }
+    }
+}
+
 /// struct for typed errors of method [`keys_key_id_get`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -397,6 +940,27 @@ pub enum KeysKeyIdGetError {
     Status406(),
     Status412(),
     UnknownValue(serde_json::Value),
+}
+
+impl KeysKeyIdGetError {
+    fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
+        // to do: support payloads once added to API spec
+        match status {
+            400 => Ok(Self::Status400()),
+            401 => Ok(Self::Status401()),
+            403 => Ok(Self::Status403()),
+            404 => Ok(Self::Status404()),
+            406 => Ok(Self::Status406()),
+            412 => Ok(Self::Status412()),
+            _ => {
+                if data.is_empty() {
+                    Ok(Self::UnknownValue(serde_json::Value::Null))
+                } else {
+                    serde_json::from_slice(data).map(Self::UnknownValue)
+                }
+            }
+        }
+    }
 }
 
 /// struct for typed errors of method [`keys_key_id_public_pem_get`]
@@ -412,6 +976,27 @@ pub enum KeysKeyIdPublicPemGetError {
     UnknownValue(serde_json::Value),
 }
 
+impl KeysKeyIdPublicPemGetError {
+    fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
+        // to do: support payloads once added to API spec
+        match status {
+            400 => Ok(Self::Status400()),
+            401 => Ok(Self::Status401()),
+            403 => Ok(Self::Status403()),
+            404 => Ok(Self::Status404()),
+            406 => Ok(Self::Status406()),
+            412 => Ok(Self::Status412()),
+            _ => {
+                if data.is_empty() {
+                    Ok(Self::UnknownValue(serde_json::Value::Null))
+                } else {
+                    serde_json::from_slice(data).map(Self::UnknownValue)
+                }
+            }
+        }
+    }
+}
+
 /// struct for typed errors of method [`keys_key_id_put`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -425,6 +1010,27 @@ pub enum KeysKeyIdPutError {
     UnknownValue(serde_json::Value),
 }
 
+impl KeysKeyIdPutError {
+    fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
+        // to do: support payloads once added to API spec
+        match status {
+            400 => Ok(Self::Status400()),
+            401 => Ok(Self::Status401()),
+            403 => Ok(Self::Status403()),
+            406 => Ok(Self::Status406()),
+            409 => Ok(Self::Status409()),
+            412 => Ok(Self::Status412()),
+            _ => {
+                if data.is_empty() {
+                    Ok(Self::UnknownValue(serde_json::Value::Null))
+                } else {
+                    serde_json::from_slice(data).map(Self::UnknownValue)
+                }
+            }
+        }
+    }
+}
+
 /// struct for typed errors of method [`keys_key_id_restrictions_tags_tag_delete`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -435,6 +1041,26 @@ pub enum KeysKeyIdRestrictionsTagsTagDeleteError {
     Status406(),
     Status412(),
     UnknownValue(serde_json::Value),
+}
+
+impl KeysKeyIdRestrictionsTagsTagDeleteError {
+    fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
+        // to do: support payloads once added to API spec
+        match status {
+            401 => Ok(Self::Status401()),
+            403 => Ok(Self::Status403()),
+            404 => Ok(Self::Status404()),
+            406 => Ok(Self::Status406()),
+            412 => Ok(Self::Status412()),
+            _ => {
+                if data.is_empty() {
+                    Ok(Self::UnknownValue(serde_json::Value::Null))
+                } else {
+                    serde_json::from_slice(data).map(Self::UnknownValue)
+                }
+            }
+        }
+    }
 }
 
 /// struct for typed errors of method [`keys_key_id_restrictions_tags_tag_put`]
@@ -450,6 +1076,27 @@ pub enum KeysKeyIdRestrictionsTagsTagPutError {
     UnknownValue(serde_json::Value),
 }
 
+impl KeysKeyIdRestrictionsTagsTagPutError {
+    fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
+        // to do: support payloads once added to API spec
+        match status {
+            400 => Ok(Self::Status400()),
+            401 => Ok(Self::Status401()),
+            403 => Ok(Self::Status403()),
+            404 => Ok(Self::Status404()),
+            406 => Ok(Self::Status406()),
+            412 => Ok(Self::Status412()),
+            _ => {
+                if data.is_empty() {
+                    Ok(Self::UnknownValue(serde_json::Value::Null))
+                } else {
+                    serde_json::from_slice(data).map(Self::UnknownValue)
+                }
+            }
+        }
+    }
+}
+
 /// struct for typed errors of method [`keys_key_id_sign_post`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -461,6 +1108,27 @@ pub enum KeysKeyIdSignPostError {
     Status406(),
     Status412(),
     UnknownValue(serde_json::Value),
+}
+
+impl KeysKeyIdSignPostError {
+    fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
+        // to do: support payloads once added to API spec
+        match status {
+            400 => Ok(Self::Status400()),
+            401 => Ok(Self::Status401()),
+            403 => Ok(Self::Status403()),
+            404 => Ok(Self::Status404()),
+            406 => Ok(Self::Status406()),
+            412 => Ok(Self::Status412()),
+            _ => {
+                if data.is_empty() {
+                    Ok(Self::UnknownValue(serde_json::Value::Null))
+                } else {
+                    serde_json::from_slice(data).map(Self::UnknownValue)
+                }
+            }
+        }
+    }
 }
 
 /// struct for typed errors of method [`keys_post`]
@@ -475,6 +1143,26 @@ pub enum KeysPostError {
     UnknownValue(serde_json::Value),
 }
 
+impl KeysPostError {
+    fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
+        // to do: support payloads once added to API spec
+        match status {
+            400 => Ok(Self::Status400()),
+            401 => Ok(Self::Status401()),
+            403 => Ok(Self::Status403()),
+            406 => Ok(Self::Status406()),
+            412 => Ok(Self::Status412()),
+            _ => {
+                if data.is_empty() {
+                    Ok(Self::UnknownValue(serde_json::Value::Null))
+                } else {
+                    serde_json::from_slice(data).map(Self::UnknownValue)
+                }
+            }
+        }
+    }
+}
+
 /// struct for typed errors of method [`lock_post`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -484,6 +1172,25 @@ pub enum LockPostError {
     Status406(),
     Status412(),
     UnknownValue(serde_json::Value),
+}
+
+impl LockPostError {
+    fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
+        // to do: support payloads once added to API spec
+        match status {
+            401 => Ok(Self::Status401()),
+            403 => Ok(Self::Status403()),
+            406 => Ok(Self::Status406()),
+            412 => Ok(Self::Status412()),
+            _ => {
+                if data.is_empty() {
+                    Ok(Self::UnknownValue(serde_json::Value::Null))
+                } else {
+                    serde_json::from_slice(data).map(Self::UnknownValue)
+                }
+            }
+        }
+    }
 }
 
 /// struct for typed errors of method [`metrics_get`]
@@ -497,6 +1204,25 @@ pub enum MetricsGetError {
     UnknownValue(serde_json::Value),
 }
 
+impl MetricsGetError {
+    fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
+        // to do: support payloads once added to API spec
+        match status {
+            401 => Ok(Self::Status401()),
+            403 => Ok(Self::Status403()),
+            406 => Ok(Self::Status406()),
+            412 => Ok(Self::Status412()),
+            _ => {
+                if data.is_empty() {
+                    Ok(Self::UnknownValue(serde_json::Value::Null))
+                } else {
+                    serde_json::from_slice(data).map(Self::UnknownValue)
+                }
+            }
+        }
+    }
+}
+
 /// struct for typed errors of method [`namespaces_get`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -506,6 +1232,25 @@ pub enum NamespacesGetError {
     Status406(),
     Status412(),
     UnknownValue(serde_json::Value),
+}
+
+impl NamespacesGetError {
+    fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
+        // to do: support payloads once added to API spec
+        match status {
+            401 => Ok(Self::Status401()),
+            403 => Ok(Self::Status403()),
+            406 => Ok(Self::Status406()),
+            412 => Ok(Self::Status412()),
+            _ => {
+                if data.is_empty() {
+                    Ok(Self::UnknownValue(serde_json::Value::Null))
+                } else {
+                    serde_json::from_slice(data).map(Self::UnknownValue)
+                }
+            }
+        }
+    }
 }
 
 /// struct for typed errors of method [`namespaces_namespace_id_delete`]
@@ -518,6 +1263,26 @@ pub enum NamespacesNamespaceIdDeleteError {
     Status404(),
     Status412(),
     UnknownValue(serde_json::Value),
+}
+
+impl NamespacesNamespaceIdDeleteError {
+    fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
+        // to do: support payloads once added to API spec
+        match status {
+            400 => Ok(Self::Status400()),
+            401 => Ok(Self::Status401()),
+            403 => Ok(Self::Status403()),
+            404 => Ok(Self::Status404()),
+            412 => Ok(Self::Status412()),
+            _ => {
+                if data.is_empty() {
+                    Ok(Self::UnknownValue(serde_json::Value::Null))
+                } else {
+                    serde_json::from_slice(data).map(Self::UnknownValue)
+                }
+            }
+        }
+    }
 }
 
 /// struct for typed errors of method [`namespaces_namespace_id_put`]
@@ -533,6 +1298,27 @@ pub enum NamespacesNamespaceIdPutError {
     UnknownValue(serde_json::Value),
 }
 
+impl NamespacesNamespaceIdPutError {
+    fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
+        // to do: support payloads once added to API spec
+        match status {
+            400 => Ok(Self::Status400()),
+            401 => Ok(Self::Status401()),
+            403 => Ok(Self::Status403()),
+            406 => Ok(Self::Status406()),
+            409 => Ok(Self::Status409()),
+            412 => Ok(Self::Status412()),
+            _ => {
+                if data.is_empty() {
+                    Ok(Self::UnknownValue(serde_json::Value::Null))
+                } else {
+                    serde_json::from_slice(data).map(Self::UnknownValue)
+                }
+            }
+        }
+    }
+}
+
 /// struct for typed errors of method [`provision_post`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -541,6 +1327,24 @@ pub enum ProvisionPostError {
     Status406(),
     Status412(),
     UnknownValue(serde_json::Value),
+}
+
+impl ProvisionPostError {
+    fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
+        // to do: support payloads once added to API spec
+        match status {
+            400 => Ok(Self::Status400()),
+            406 => Ok(Self::Status406()),
+            412 => Ok(Self::Status412()),
+            _ => {
+                if data.is_empty() {
+                    Ok(Self::UnknownValue(serde_json::Value::Null))
+                } else {
+                    serde_json::from_slice(data).map(Self::UnknownValue)
+                }
+            }
+        }
+    }
 }
 
 /// struct for typed errors of method [`random_post`]
@@ -555,6 +1359,26 @@ pub enum RandomPostError {
     UnknownValue(serde_json::Value),
 }
 
+impl RandomPostError {
+    fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
+        // to do: support payloads once added to API spec
+        match status {
+            400 => Ok(Self::Status400()),
+            401 => Ok(Self::Status401()),
+            403 => Ok(Self::Status403()),
+            406 => Ok(Self::Status406()),
+            412 => Ok(Self::Status412()),
+            _ => {
+                if data.is_empty() {
+                    Ok(Self::UnknownValue(serde_json::Value::Null))
+                } else {
+                    serde_json::from_slice(data).map(Self::UnknownValue)
+                }
+            }
+        }
+    }
+}
+
 /// struct for typed errors of method [`system_backup_post`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -564,6 +1388,25 @@ pub enum SystemBackupPostError {
     Status406(),
     Status412(),
     UnknownValue(serde_json::Value),
+}
+
+impl SystemBackupPostError {
+    fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
+        // to do: support payloads once added to API spec
+        match status {
+            401 => Ok(Self::Status401()),
+            403 => Ok(Self::Status403()),
+            406 => Ok(Self::Status406()),
+            412 => Ok(Self::Status412()),
+            _ => {
+                if data.is_empty() {
+                    Ok(Self::UnknownValue(serde_json::Value::Null))
+                } else {
+                    serde_json::from_slice(data).map(Self::UnknownValue)
+                }
+            }
+        }
+    }
 }
 
 /// struct for typed errors of method [`system_cancel_update_post`]
@@ -577,6 +1420,25 @@ pub enum SystemCancelUpdatePostError {
     UnknownValue(serde_json::Value),
 }
 
+impl SystemCancelUpdatePostError {
+    fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
+        // to do: support payloads once added to API spec
+        match status {
+            401 => Ok(Self::Status401()),
+            403 => Ok(Self::Status403()),
+            406 => Ok(Self::Status406()),
+            412 => Ok(Self::Status412()),
+            _ => {
+                if data.is_empty() {
+                    Ok(Self::UnknownValue(serde_json::Value::Null))
+                } else {
+                    serde_json::from_slice(data).map(Self::UnknownValue)
+                }
+            }
+        }
+    }
+}
+
 /// struct for typed errors of method [`system_commit_update_post`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -586,6 +1448,25 @@ pub enum SystemCommitUpdatePostError {
     Status406(),
     Status412(),
     UnknownValue(serde_json::Value),
+}
+
+impl SystemCommitUpdatePostError {
+    fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
+        // to do: support payloads once added to API spec
+        match status {
+            401 => Ok(Self::Status401()),
+            403 => Ok(Self::Status403()),
+            406 => Ok(Self::Status406()),
+            412 => Ok(Self::Status412()),
+            _ => {
+                if data.is_empty() {
+                    Ok(Self::UnknownValue(serde_json::Value::Null))
+                } else {
+                    serde_json::from_slice(data).map(Self::UnknownValue)
+                }
+            }
+        }
+    }
 }
 
 /// struct for typed errors of method [`system_factory_reset_post`]
@@ -599,6 +1480,25 @@ pub enum SystemFactoryResetPostError {
     UnknownValue(serde_json::Value),
 }
 
+impl SystemFactoryResetPostError {
+    fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
+        // to do: support payloads once added to API spec
+        match status {
+            401 => Ok(Self::Status401()),
+            403 => Ok(Self::Status403()),
+            406 => Ok(Self::Status406()),
+            412 => Ok(Self::Status412()),
+            _ => {
+                if data.is_empty() {
+                    Ok(Self::UnknownValue(serde_json::Value::Null))
+                } else {
+                    serde_json::from_slice(data).map(Self::UnknownValue)
+                }
+            }
+        }
+    }
+}
+
 /// struct for typed errors of method [`system_info_get`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -608,6 +1508,25 @@ pub enum SystemInfoGetError {
     Status406(),
     Status412(),
     UnknownValue(serde_json::Value),
+}
+
+impl SystemInfoGetError {
+    fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
+        // to do: support payloads once added to API spec
+        match status {
+            401 => Ok(Self::Status401()),
+            403 => Ok(Self::Status403()),
+            406 => Ok(Self::Status406()),
+            412 => Ok(Self::Status412()),
+            _ => {
+                if data.is_empty() {
+                    Ok(Self::UnknownValue(serde_json::Value::Null))
+                } else {
+                    serde_json::from_slice(data).map(Self::UnknownValue)
+                }
+            }
+        }
+    }
 }
 
 /// struct for typed errors of method [`system_reboot_post`]
@@ -621,6 +1540,25 @@ pub enum SystemRebootPostError {
     UnknownValue(serde_json::Value),
 }
 
+impl SystemRebootPostError {
+    fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
+        // to do: support payloads once added to API spec
+        match status {
+            401 => Ok(Self::Status401()),
+            403 => Ok(Self::Status403()),
+            406 => Ok(Self::Status406()),
+            412 => Ok(Self::Status412()),
+            _ => {
+                if data.is_empty() {
+                    Ok(Self::UnknownValue(serde_json::Value::Null))
+                } else {
+                    serde_json::from_slice(data).map(Self::UnknownValue)
+                }
+            }
+        }
+    }
+}
+
 /// struct for typed errors of method [`system_restore_post`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -629,6 +1567,24 @@ pub enum SystemRestorePostError {
     Status406(),
     Status412(),
     UnknownValue(serde_json::Value),
+}
+
+impl SystemRestorePostError {
+    fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
+        // to do: support payloads once added to API spec
+        match status {
+            400 => Ok(Self::Status400()),
+            406 => Ok(Self::Status406()),
+            412 => Ok(Self::Status412()),
+            _ => {
+                if data.is_empty() {
+                    Ok(Self::UnknownValue(serde_json::Value::Null))
+                } else {
+                    serde_json::from_slice(data).map(Self::UnknownValue)
+                }
+            }
+        }
+    }
 }
 
 /// struct for typed errors of method [`system_shutdown_post`]
@@ -640,6 +1596,25 @@ pub enum SystemShutdownPostError {
     Status406(),
     Status412(),
     UnknownValue(serde_json::Value),
+}
+
+impl SystemShutdownPostError {
+    fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
+        // to do: support payloads once added to API spec
+        match status {
+            401 => Ok(Self::Status401()),
+            403 => Ok(Self::Status403()),
+            406 => Ok(Self::Status406()),
+            412 => Ok(Self::Status412()),
+            _ => {
+                if data.is_empty() {
+                    Ok(Self::UnknownValue(serde_json::Value::Null))
+                } else {
+                    serde_json::from_slice(data).map(Self::UnknownValue)
+                }
+            }
+        }
+    }
 }
 
 /// struct for typed errors of method [`system_update_post`]
@@ -655,6 +1630,27 @@ pub enum SystemUpdatePostError {
     UnknownValue(serde_json::Value),
 }
 
+impl SystemUpdatePostError {
+    fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
+        // to do: support payloads once added to API spec
+        match status {
+            400 => Ok(Self::Status400()),
+            401 => Ok(Self::Status401()),
+            403 => Ok(Self::Status403()),
+            406 => Ok(Self::Status406()),
+            409 => Ok(Self::Status409()),
+            412 => Ok(Self::Status412()),
+            _ => {
+                if data.is_empty() {
+                    Ok(Self::UnknownValue(serde_json::Value::Null))
+                } else {
+                    serde_json::from_slice(data).map(Self::UnknownValue)
+                }
+            }
+        }
+    }
+}
+
 /// struct for typed errors of method [`unlock_post`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -664,6 +1660,25 @@ pub enum UnlockPostError {
     Status406(),
     Status412(),
     UnknownValue(serde_json::Value),
+}
+
+impl UnlockPostError {
+    fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
+        // to do: support payloads once added to API spec
+        match status {
+            400 => Ok(Self::Status400()),
+            403 => Ok(Self::Status403()),
+            406 => Ok(Self::Status406()),
+            412 => Ok(Self::Status412()),
+            _ => {
+                if data.is_empty() {
+                    Ok(Self::UnknownValue(serde_json::Value::Null))
+                } else {
+                    serde_json::from_slice(data).map(Self::UnknownValue)
+                }
+            }
+        }
+    }
 }
 
 /// struct for typed errors of method [`users_get`]
@@ -677,6 +1692,25 @@ pub enum UsersGetError {
     UnknownValue(serde_json::Value),
 }
 
+impl UsersGetError {
+    fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
+        // to do: support payloads once added to API spec
+        match status {
+            401 => Ok(Self::Status401()),
+            403 => Ok(Self::Status403()),
+            406 => Ok(Self::Status406()),
+            412 => Ok(Self::Status412()),
+            _ => {
+                if data.is_empty() {
+                    Ok(Self::UnknownValue(serde_json::Value::Null))
+                } else {
+                    serde_json::from_slice(data).map(Self::UnknownValue)
+                }
+            }
+        }
+    }
+}
+
 /// struct for typed errors of method [`users_post`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -687,6 +1721,26 @@ pub enum UsersPostError {
     Status406(),
     Status412(),
     UnknownValue(serde_json::Value),
+}
+
+impl UsersPostError {
+    fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
+        // to do: support payloads once added to API spec
+        match status {
+            400 => Ok(Self::Status400()),
+            401 => Ok(Self::Status401()),
+            403 => Ok(Self::Status403()),
+            406 => Ok(Self::Status406()),
+            412 => Ok(Self::Status412()),
+            _ => {
+                if data.is_empty() {
+                    Ok(Self::UnknownValue(serde_json::Value::Null))
+                } else {
+                    serde_json::from_slice(data).map(Self::UnknownValue)
+                }
+            }
+        }
+    }
 }
 
 /// struct for typed errors of method [`users_user_id_delete`]
@@ -702,6 +1756,27 @@ pub enum UsersUserIdDeleteError {
     UnknownValue(serde_json::Value),
 }
 
+impl UsersUserIdDeleteError {
+    fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
+        // to do: support payloads once added to API spec
+        match status {
+            400 => Ok(Self::Status400()),
+            401 => Ok(Self::Status401()),
+            403 => Ok(Self::Status403()),
+            404 => Ok(Self::Status404()),
+            406 => Ok(Self::Status406()),
+            412 => Ok(Self::Status412()),
+            _ => {
+                if data.is_empty() {
+                    Ok(Self::UnknownValue(serde_json::Value::Null))
+                } else {
+                    serde_json::from_slice(data).map(Self::UnknownValue)
+                }
+            }
+        }
+    }
+}
+
 /// struct for typed errors of method [`users_user_id_get`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -713,6 +1788,27 @@ pub enum UsersUserIdGetError {
     Status406(),
     Status412(),
     UnknownValue(serde_json::Value),
+}
+
+impl UsersUserIdGetError {
+    fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
+        // to do: support payloads once added to API spec
+        match status {
+            400 => Ok(Self::Status400()),
+            401 => Ok(Self::Status401()),
+            403 => Ok(Self::Status403()),
+            404 => Ok(Self::Status404()),
+            406 => Ok(Self::Status406()),
+            412 => Ok(Self::Status412()),
+            _ => {
+                if data.is_empty() {
+                    Ok(Self::UnknownValue(serde_json::Value::Null))
+                } else {
+                    serde_json::from_slice(data).map(Self::UnknownValue)
+                }
+            }
+        }
+    }
 }
 
 /// struct for typed errors of method [`users_user_id_passphrase_post`]
@@ -728,6 +1824,27 @@ pub enum UsersUserIdPassphrasePostError {
     UnknownValue(serde_json::Value),
 }
 
+impl UsersUserIdPassphrasePostError {
+    fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
+        // to do: support payloads once added to API spec
+        match status {
+            400 => Ok(Self::Status400()),
+            401 => Ok(Self::Status401()),
+            403 => Ok(Self::Status403()),
+            404 => Ok(Self::Status404()),
+            406 => Ok(Self::Status406()),
+            412 => Ok(Self::Status412()),
+            _ => {
+                if data.is_empty() {
+                    Ok(Self::UnknownValue(serde_json::Value::Null))
+                } else {
+                    serde_json::from_slice(data).map(Self::UnknownValue)
+                }
+            }
+        }
+    }
+}
+
 /// struct for typed errors of method [`users_user_id_post`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -738,6 +1855,26 @@ pub enum UsersUserIdPostError {
     Status406(),
     Status412(),
     UnknownValue(serde_json::Value),
+}
+
+impl UsersUserIdPostError {
+    fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
+        // to do: support payloads once added to API spec
+        match status {
+            400 => Ok(Self::Status400()),
+            401 => Ok(Self::Status401()),
+            403 => Ok(Self::Status403()),
+            406 => Ok(Self::Status406()),
+            412 => Ok(Self::Status412()),
+            _ => {
+                if data.is_empty() {
+                    Ok(Self::UnknownValue(serde_json::Value::Null))
+                } else {
+                    serde_json::from_slice(data).map(Self::UnknownValue)
+                }
+            }
+        }
+    }
 }
 
 /// struct for typed errors of method [`users_user_id_put`]
@@ -753,6 +1890,27 @@ pub enum UsersUserIdPutError {
     UnknownValue(serde_json::Value),
 }
 
+impl UsersUserIdPutError {
+    fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
+        // to do: support payloads once added to API spec
+        match status {
+            400 => Ok(Self::Status400()),
+            401 => Ok(Self::Status401()),
+            403 => Ok(Self::Status403()),
+            406 => Ok(Self::Status406()),
+            409 => Ok(Self::Status409()),
+            412 => Ok(Self::Status412()),
+            _ => {
+                if data.is_empty() {
+                    Ok(Self::UnknownValue(serde_json::Value::Null))
+                } else {
+                    serde_json::from_slice(data).map(Self::UnknownValue)
+                }
+            }
+        }
+    }
+}
+
 /// struct for typed errors of method [`users_user_id_tags_get`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -764,6 +1922,27 @@ pub enum UsersUserIdTagsGetError {
     Status406(),
     Status412(),
     UnknownValue(serde_json::Value),
+}
+
+impl UsersUserIdTagsGetError {
+    fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
+        // to do: support payloads once added to API spec
+        match status {
+            400 => Ok(Self::Status400()),
+            401 => Ok(Self::Status401()),
+            403 => Ok(Self::Status403()),
+            404 => Ok(Self::Status404()),
+            406 => Ok(Self::Status406()),
+            412 => Ok(Self::Status412()),
+            _ => {
+                if data.is_empty() {
+                    Ok(Self::UnknownValue(serde_json::Value::Null))
+                } else {
+                    serde_json::from_slice(data).map(Self::UnknownValue)
+                }
+            }
+        }
+    }
 }
 
 /// struct for typed errors of method [`users_user_id_tags_tag_delete`]
@@ -778,6 +1957,26 @@ pub enum UsersUserIdTagsTagDeleteError {
     UnknownValue(serde_json::Value),
 }
 
+impl UsersUserIdTagsTagDeleteError {
+    fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
+        // to do: support payloads once added to API spec
+        match status {
+            401 => Ok(Self::Status401()),
+            403 => Ok(Self::Status403()),
+            404 => Ok(Self::Status404()),
+            406 => Ok(Self::Status406()),
+            412 => Ok(Self::Status412()),
+            _ => {
+                if data.is_empty() {
+                    Ok(Self::UnknownValue(serde_json::Value::Null))
+                } else {
+                    serde_json::from_slice(data).map(Self::UnknownValue)
+                }
+            }
+        }
+    }
+}
+
 /// struct for typed errors of method [`users_user_id_tags_tag_put`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -789,6 +1988,27 @@ pub enum UsersUserIdTagsTagPutError {
     Status406(),
     Status412(),
     UnknownValue(serde_json::Value),
+}
+
+impl UsersUserIdTagsTagPutError {
+    fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
+        // to do: support payloads once added to API spec
+        match status {
+            400 => Ok(Self::Status400()),
+            401 => Ok(Self::Status401()),
+            403 => Ok(Self::Status403()),
+            404 => Ok(Self::Status404()),
+            406 => Ok(Self::Status406()),
+            412 => Ok(Self::Status412()),
+            _ => {
+                if data.is_empty() {
+                    Ok(Self::UnknownValue(serde_json::Value::Null))
+                } else {
+                    serde_json::from_slice(data).map(Self::UnknownValue)
+                }
+            }
+        }
+    }
 }
 
 /// Update the backup passphrase. If the backup passphrase is not set yet, use \"\" as currentPassphrase.  *WARNING:* Like the unlock passphrase, this configuration can't be reset by an admin user without knowing the current value, so if the backup passphrase is lost, neither can it be reset to a new value nor can the created backups be restored.
@@ -824,11 +2044,14 @@ pub fn config_backup_passphrase_put(
         _ => Err(err),
     })?;
 
-    if local_var_resp.status() < 400 {
+    let local_var_status = local_var_resp.status();
+    if local_var_status < 400 {
         ResponseContent::unit(local_var_resp)
     } else {
-        ResponseContent::deserialized(local_var_resp)
-            .and_then(|content| Err(Error::ResponseError(content)))
+        ResponseContent::new(local_var_resp, |data| {
+            ConfigBackupPassphrasePutError::new(local_var_status, data).map_err(From::from)
+        })
+        .and_then(|content| Err(Error::ResponseError(content)))
     }
 }
 
@@ -862,11 +2085,14 @@ pub fn config_logging_get(
         _ => Err(err),
     })?;
 
-    if local_var_resp.status() < 400 {
+    let local_var_status = local_var_resp.status();
+    if local_var_status < 400 {
         ResponseContent::deserialized(local_var_resp)
     } else {
-        ResponseContent::deserialized(local_var_resp)
-            .and_then(|content| Err(Error::ResponseError(content)))
+        ResponseContent::new(local_var_resp, |data| {
+            ConfigLoggingGetError::new(local_var_status, data).map_err(From::from)
+        })
+        .and_then(|content| Err(Error::ResponseError(content)))
     }
 }
 
@@ -900,11 +2126,14 @@ pub fn config_logging_put(
         _ => Err(err),
     })?;
 
-    if local_var_resp.status() < 400 {
+    let local_var_status = local_var_resp.status();
+    if local_var_status < 400 {
         ResponseContent::unit(local_var_resp)
     } else {
-        ResponseContent::deserialized(local_var_resp)
-            .and_then(|content| Err(Error::ResponseError(content)))
+        ResponseContent::new(local_var_resp, |data| {
+            ConfigLoggingPutError::new(local_var_status, data).map_err(From::from)
+        })
+        .and_then(|content| Err(Error::ResponseError(content)))
     }
 }
 
@@ -938,11 +2167,14 @@ pub fn config_network_get(
         _ => Err(err),
     })?;
 
-    if local_var_resp.status() < 400 {
+    let local_var_status = local_var_resp.status();
+    if local_var_status < 400 {
         ResponseContent::deserialized(local_var_resp)
     } else {
-        ResponseContent::deserialized(local_var_resp)
-            .and_then(|content| Err(Error::ResponseError(content)))
+        ResponseContent::new(local_var_resp, |data| {
+            ConfigNetworkGetError::new(local_var_status, data).map_err(From::from)
+        })
+        .and_then(|content| Err(Error::ResponseError(content)))
     }
 }
 
@@ -976,11 +2208,14 @@ pub fn config_network_put(
         _ => Err(err),
     })?;
 
-    if local_var_resp.status() < 400 {
+    let local_var_status = local_var_resp.status();
+    if local_var_status < 400 {
         ResponseContent::unit(local_var_resp)
     } else {
-        ResponseContent::deserialized(local_var_resp)
-            .and_then(|content| Err(Error::ResponseError(content)))
+        ResponseContent::new(local_var_resp, |data| {
+            ConfigNetworkPutError::new(local_var_status, data).map_err(From::from)
+        })
+        .and_then(|content| Err(Error::ResponseError(content)))
     }
 }
 
@@ -1014,11 +2249,14 @@ pub fn config_time_get(
         _ => Err(err),
     })?;
 
-    if local_var_resp.status() < 400 {
+    let local_var_status = local_var_resp.status();
+    if local_var_status < 400 {
         ResponseContent::deserialized(local_var_resp)
     } else {
-        ResponseContent::deserialized(local_var_resp)
-            .and_then(|content| Err(Error::ResponseError(content)))
+        ResponseContent::new(local_var_resp, |data| {
+            ConfigTimeGetError::new(local_var_status, data).map_err(From::from)
+        })
+        .and_then(|content| Err(Error::ResponseError(content)))
     }
 }
 
@@ -1052,11 +2290,14 @@ pub fn config_time_put(
         _ => Err(err),
     })?;
 
-    if local_var_resp.status() < 400 {
+    let local_var_status = local_var_resp.status();
+    if local_var_status < 400 {
         ResponseContent::unit(local_var_resp)
     } else {
-        ResponseContent::deserialized(local_var_resp)
-            .and_then(|content| Err(Error::ResponseError(content)))
+        ResponseContent::new(local_var_resp, |data| {
+            ConfigTimePutError::new(local_var_status, data).map_err(From::from)
+        })
+        .and_then(|content| Err(Error::ResponseError(content)))
     }
 }
 
@@ -1090,11 +2331,14 @@ pub fn config_tls_cert_pem_get(
         _ => Err(err),
     })?;
 
-    if local_var_resp.status() < 400 {
+    let local_var_status = local_var_resp.status();
+    if local_var_status < 400 {
         ResponseContent::string(local_var_resp)
     } else {
-        ResponseContent::deserialized(local_var_resp)
-            .and_then(|content| Err(Error::ResponseError(content)))
+        ResponseContent::new(local_var_resp, |data| {
+            ConfigTlsCertPemGetError::new(local_var_status, data).map_err(From::from)
+        })
+        .and_then(|content| Err(Error::ResponseError(content)))
     }
 }
 
@@ -1128,11 +2372,14 @@ pub fn config_tls_cert_pem_put(
         _ => Err(err),
     })?;
 
-    if local_var_resp.status() < 400 {
+    let local_var_status = local_var_resp.status();
+    if local_var_status < 400 {
         ResponseContent::unit(local_var_resp)
     } else {
-        ResponseContent::deserialized(local_var_resp)
-            .and_then(|content| Err(Error::ResponseError(content)))
+        ResponseContent::new(local_var_resp, |data| {
+            ConfigTlsCertPemPutError::new(local_var_status, data).map_err(From::from)
+        })
+        .and_then(|content| Err(Error::ResponseError(content)))
     }
 }
 
@@ -1168,11 +2415,14 @@ pub fn config_tls_csr_pem_post(
         _ => Err(err),
     })?;
 
-    if local_var_resp.status() < 400 {
+    let local_var_status = local_var_resp.status();
+    if local_var_status < 400 {
         ResponseContent::string(local_var_resp)
     } else {
-        ResponseContent::deserialized(local_var_resp)
-            .and_then(|content| Err(Error::ResponseError(content)))
+        ResponseContent::new(local_var_resp, |data| {
+            ConfigTlsCsrPemPostError::new(local_var_status, data).map_err(From::from)
+        })
+        .and_then(|content| Err(Error::ResponseError(content)))
     }
 }
 
@@ -1206,11 +2456,14 @@ pub fn config_tls_generate_post(
         _ => Err(err),
     })?;
 
-    if local_var_resp.status() < 400 {
+    let local_var_status = local_var_resp.status();
+    if local_var_status < 400 {
         ResponseContent::unit(local_var_resp)
     } else {
-        ResponseContent::deserialized(local_var_resp)
-            .and_then(|content| Err(Error::ResponseError(content)))
+        ResponseContent::new(local_var_resp, |data| {
+            ConfigTlsGeneratePostError::new(local_var_status, data).map_err(From::from)
+        })
+        .and_then(|content| Err(Error::ResponseError(content)))
     }
 }
 
@@ -1247,11 +2500,14 @@ pub fn config_tls_public_pem_get(
         _ => Err(err),
     })?;
 
-    if local_var_resp.status() < 400 {
+    let local_var_status = local_var_resp.status();
+    if local_var_status < 400 {
         ResponseContent::string(local_var_resp)
     } else {
-        ResponseContent::deserialized(local_var_resp)
-            .and_then(|content| Err(Error::ResponseError(content)))
+        ResponseContent::new(local_var_resp, |data| {
+            ConfigTlsPublicPemGetError::new(local_var_status, data).map_err(From::from)
+        })
+        .and_then(|content| Err(Error::ResponseError(content)))
     }
 }
 
@@ -1289,11 +2545,14 @@ pub fn config_unattended_boot_get(
         _ => Err(err),
     })?;
 
-    if local_var_resp.status() < 400 {
+    let local_var_status = local_var_resp.status();
+    if local_var_status < 400 {
         ResponseContent::deserialized(local_var_resp)
     } else {
-        ResponseContent::deserialized(local_var_resp)
-            .and_then(|content| Err(Error::ResponseError(content)))
+        ResponseContent::new(local_var_resp, |data| {
+            ConfigUnattendedBootGetError::new(local_var_status, data).map_err(From::from)
+        })
+        .and_then(|content| Err(Error::ResponseError(content)))
     }
 }
 
@@ -1330,11 +2589,14 @@ pub fn config_unattended_boot_put(
         _ => Err(err),
     })?;
 
-    if local_var_resp.status() < 400 {
+    let local_var_status = local_var_resp.status();
+    if local_var_status < 400 {
         ResponseContent::unit(local_var_resp)
     } else {
-        ResponseContent::deserialized(local_var_resp)
-            .and_then(|content| Err(Error::ResponseError(content)))
+        ResponseContent::new(local_var_resp, |data| {
+            ConfigUnattendedBootPutError::new(local_var_status, data).map_err(From::from)
+        })
+        .and_then(|content| Err(Error::ResponseError(content)))
     }
 }
 
@@ -1371,11 +2633,14 @@ pub fn config_unlock_passphrase_put(
         _ => Err(err),
     })?;
 
-    if local_var_resp.status() < 400 {
+    let local_var_status = local_var_resp.status();
+    if local_var_status < 400 {
         ResponseContent::unit(local_var_resp)
     } else {
-        ResponseContent::deserialized(local_var_resp)
-            .and_then(|content| Err(Error::ResponseError(content)))
+        ResponseContent::new(local_var_resp, |data| {
+            ConfigUnlockPassphrasePutError::new(local_var_status, data).map_err(From::from)
+        })
+        .and_then(|content| Err(Error::ResponseError(content)))
     }
 }
 
@@ -1402,11 +2667,14 @@ pub fn health_alive_get(
         _ => Err(err),
     })?;
 
-    if local_var_resp.status() < 400 {
+    let local_var_status = local_var_resp.status();
+    if local_var_status < 400 {
         ResponseContent::unit(local_var_resp)
     } else {
-        ResponseContent::deserialized(local_var_resp)
-            .and_then(|content| Err(Error::ResponseError(content)))
+        ResponseContent::new(local_var_resp, |data| {
+            HealthAliveGetError::new(local_var_status, data).map_err(From::from)
+        })
+        .and_then(|content| Err(Error::ResponseError(content)))
     }
 }
 
@@ -1433,11 +2701,14 @@ pub fn health_ready_get(
         _ => Err(err),
     })?;
 
-    if local_var_resp.status() < 400 {
+    let local_var_status = local_var_resp.status();
+    if local_var_status < 400 {
         ResponseContent::unit(local_var_resp)
     } else {
-        ResponseContent::deserialized(local_var_resp)
-            .and_then(|content| Err(Error::ResponseError(content)))
+        ResponseContent::new(local_var_resp, |data| {
+            HealthReadyGetError::new(local_var_status, data).map_err(From::from)
+        })
+        .and_then(|content| Err(Error::ResponseError(content)))
     }
 }
 
@@ -1466,11 +2737,14 @@ pub fn health_state_get(
         _ => Err(err),
     })?;
 
-    if local_var_resp.status() < 400 {
+    let local_var_status = local_var_resp.status();
+    if local_var_status < 400 {
         ResponseContent::deserialized(local_var_resp)
     } else {
-        ResponseContent::deserialized(local_var_resp)
-            .and_then(|content| Err(Error::ResponseError(content)))
+        ResponseContent::new(local_var_resp, |data| {
+            HealthStateGetError::new(local_var_status, data).map_err(From::from)
+        })
+        .and_then(|content| Err(Error::ResponseError(content)))
     }
 }
 
@@ -1499,11 +2773,14 @@ pub fn info_get(
         _ => Err(err),
     })?;
 
-    if local_var_resp.status() < 400 {
+    let local_var_status = local_var_resp.status();
+    if local_var_status < 400 {
         ResponseContent::deserialized(local_var_resp)
     } else {
-        ResponseContent::deserialized(local_var_resp)
-            .and_then(|content| Err(Error::ResponseError(content)))
+        ResponseContent::new(local_var_resp, |data| {
+            InfoGetError::new(local_var_status, data).map_err(From::from)
+        })
+        .and_then(|content| Err(Error::ResponseError(content)))
     }
 }
 
@@ -1539,11 +2816,14 @@ pub fn keys_generate_post(
         _ => Err(err),
     })?;
 
-    if local_var_resp.status() < 400 {
+    let local_var_status = local_var_resp.status();
+    if local_var_status < 400 {
         ResponseContent::deserialized(local_var_resp)
     } else {
-        ResponseContent::deserialized(local_var_resp)
-            .and_then(|content| Err(Error::ResponseError(content)))
+        ResponseContent::new(local_var_resp, |data| {
+            KeysGeneratePostError::new(local_var_status, data).map_err(From::from)
+        })
+        .and_then(|content| Err(Error::ResponseError(content)))
     }
 }
 
@@ -1582,11 +2862,14 @@ pub fn keys_get(
         _ => Err(err),
     })?;
 
-    if local_var_resp.status() < 400 {
+    let local_var_status = local_var_resp.status();
+    if local_var_status < 400 {
         ResponseContent::deserialized(local_var_resp)
     } else {
-        ResponseContent::deserialized(local_var_resp)
-            .and_then(|content| Err(Error::ResponseError(content)))
+        ResponseContent::new(local_var_resp, |data| {
+            KeysGetError::new(local_var_status, data).map_err(From::from)
+        })
+        .and_then(|content| Err(Error::ResponseError(content)))
     }
 }
 
@@ -1623,11 +2906,14 @@ pub fn keys_key_id_cert_delete(
         _ => Err(err),
     })?;
 
-    if local_var_resp.status() < 400 {
+    let local_var_status = local_var_resp.status();
+    if local_var_status < 400 {
         ResponseContent::unit(local_var_resp)
     } else {
-        ResponseContent::deserialized(local_var_resp)
-            .and_then(|content| Err(Error::ResponseError(content)))
+        ResponseContent::new(local_var_resp, |data| {
+            KeysKeyIdCertDeleteError::new(local_var_status, data).map_err(From::from)
+        })
+        .and_then(|content| Err(Error::ResponseError(content)))
     }
 }
 
@@ -1666,11 +2952,14 @@ pub fn keys_key_id_cert_get(
         _ => Err(err),
     })?;
 
-    if local_var_resp.status() < 400 {
+    let local_var_status = local_var_resp.status();
+    if local_var_status < 400 {
         ResponseContent::bytes(local_var_resp)
     } else {
-        ResponseContent::deserialized(local_var_resp)
-            .and_then(|content| Err(Error::ResponseError(content)))
+        ResponseContent::new(local_var_resp, |data| {
+            KeysKeyIdCertGetError::new(local_var_status, data).map_err(From::from)
+        })
+        .and_then(|content| Err(Error::ResponseError(content)))
     }
 }
 
@@ -1710,11 +2999,14 @@ pub fn keys_key_id_cert_put(
         _ => Err(err),
     })?;
 
-    if local_var_resp.status() < 400 {
+    let local_var_status = local_var_resp.status();
+    if local_var_status < 400 {
         ResponseContent::unit(local_var_resp)
     } else {
-        ResponseContent::deserialized(local_var_resp)
-            .and_then(|content| Err(Error::ResponseError(content)))
+        ResponseContent::new(local_var_resp, |data| {
+            KeysKeyIdCertPutError::new(local_var_status, data).map_err(From::from)
+        })
+        .and_then(|content| Err(Error::ResponseError(content)))
     }
 }
 
@@ -1755,11 +3047,14 @@ pub fn keys_key_id_csr_pem_post(
         _ => Err(err),
     })?;
 
-    if local_var_resp.status() < 400 {
+    let local_var_status = local_var_resp.status();
+    if local_var_status < 400 {
         ResponseContent::string(local_var_resp)
     } else {
-        ResponseContent::deserialized(local_var_resp)
-            .and_then(|content| Err(Error::ResponseError(content)))
+        ResponseContent::new(local_var_resp, |data| {
+            KeysKeyIdCsrPemPostError::new(local_var_status, data).map_err(From::from)
+        })
+        .and_then(|content| Err(Error::ResponseError(content)))
     }
 }
 
@@ -1800,11 +3095,14 @@ pub fn keys_key_id_decrypt_post(
         _ => Err(err),
     })?;
 
-    if local_var_resp.status() < 400 {
+    let local_var_status = local_var_resp.status();
+    if local_var_status < 400 {
         ResponseContent::deserialized(local_var_resp)
     } else {
-        ResponseContent::deserialized(local_var_resp)
-            .and_then(|content| Err(Error::ResponseError(content)))
+        ResponseContent::new(local_var_resp, |data| {
+            KeysKeyIdDecryptPostError::new(local_var_status, data).map_err(From::from)
+        })
+        .and_then(|content| Err(Error::ResponseError(content)))
     }
 }
 
@@ -1841,11 +3139,14 @@ pub fn keys_key_id_delete(
         _ => Err(err),
     })?;
 
-    if local_var_resp.status() < 400 {
+    let local_var_status = local_var_resp.status();
+    if local_var_status < 400 {
         ResponseContent::unit(local_var_resp)
     } else {
-        ResponseContent::deserialized(local_var_resp)
-            .and_then(|content| Err(Error::ResponseError(content)))
+        ResponseContent::new(local_var_resp, |data| {
+            KeysKeyIdDeleteError::new(local_var_status, data).map_err(From::from)
+        })
+        .and_then(|content| Err(Error::ResponseError(content)))
     }
 }
 
@@ -1886,11 +3187,14 @@ pub fn keys_key_id_encrypt_post(
         _ => Err(err),
     })?;
 
-    if local_var_resp.status() < 400 {
+    let local_var_status = local_var_resp.status();
+    if local_var_status < 400 {
         ResponseContent::deserialized(local_var_resp)
     } else {
-        ResponseContent::deserialized(local_var_resp)
-            .and_then(|content| Err(Error::ResponseError(content)))
+        ResponseContent::new(local_var_resp, |data| {
+            KeysKeyIdEncryptPostError::new(local_var_status, data).map_err(From::from)
+        })
+        .and_then(|content| Err(Error::ResponseError(content)))
     }
 }
 
@@ -1929,11 +3233,14 @@ pub fn keys_key_id_get(
         _ => Err(err),
     })?;
 
-    if local_var_resp.status() < 400 {
+    let local_var_status = local_var_resp.status();
+    if local_var_status < 400 {
         ResponseContent::deserialized(local_var_resp)
     } else {
-        ResponseContent::deserialized(local_var_resp)
-            .and_then(|content| Err(Error::ResponseError(content)))
+        ResponseContent::new(local_var_resp, |data| {
+            KeysKeyIdGetError::new(local_var_status, data).map_err(From::from)
+        })
+        .and_then(|content| Err(Error::ResponseError(content)))
     }
 }
 
@@ -1972,11 +3279,14 @@ pub fn keys_key_id_public_pem_get(
         _ => Err(err),
     })?;
 
-    if local_var_resp.status() < 400 {
+    let local_var_status = local_var_resp.status();
+    if local_var_status < 400 {
         ResponseContent::string(local_var_resp)
     } else {
-        ResponseContent::deserialized(local_var_resp)
-            .and_then(|content| Err(Error::ResponseError(content)))
+        ResponseContent::new(local_var_resp, |data| {
+            KeysKeyIdPublicPemGetError::new(local_var_status, data).map_err(From::from)
+        })
+        .and_then(|content| Err(Error::ResponseError(content)))
     }
 }
 
@@ -2021,11 +3331,14 @@ pub fn keys_key_id_put(
         _ => Err(err),
     })?;
 
-    if local_var_resp.status() < 400 {
+    let local_var_status = local_var_resp.status();
+    if local_var_status < 400 {
         ResponseContent::unit(local_var_resp)
     } else {
-        ResponseContent::deserialized(local_var_resp)
-            .and_then(|content| Err(Error::ResponseError(content)))
+        ResponseContent::new(local_var_resp, |data| {
+            KeysKeyIdPutError::new(local_var_status, data).map_err(From::from)
+        })
+        .and_then(|content| Err(Error::ResponseError(content)))
     }
 }
 
@@ -2064,11 +3377,14 @@ pub fn keys_key_id_restrictions_tags_tag_delete(
         _ => Err(err),
     })?;
 
-    if local_var_resp.status() < 400 {
+    let local_var_status = local_var_resp.status();
+    if local_var_status < 400 {
         ResponseContent::unit(local_var_resp)
     } else {
-        ResponseContent::deserialized(local_var_resp)
-            .and_then(|content| Err(Error::ResponseError(content)))
+        ResponseContent::new(local_var_resp, |data| {
+            KeysKeyIdRestrictionsTagsTagDeleteError::new(local_var_status, data).map_err(From::from)
+        })
+        .and_then(|content| Err(Error::ResponseError(content)))
     }
 }
 
@@ -2107,11 +3423,14 @@ pub fn keys_key_id_restrictions_tags_tag_put(
         _ => Err(err),
     })?;
 
-    if local_var_resp.status() < 400 {
+    let local_var_status = local_var_resp.status();
+    if local_var_status < 400 {
         ResponseContent::unit(local_var_resp)
     } else {
-        ResponseContent::deserialized(local_var_resp)
-            .and_then(|content| Err(Error::ResponseError(content)))
+        ResponseContent::new(local_var_resp, |data| {
+            KeysKeyIdRestrictionsTagsTagPutError::new(local_var_status, data).map_err(From::from)
+        })
+        .and_then(|content| Err(Error::ResponseError(content)))
     }
 }
 
@@ -2152,11 +3471,14 @@ pub fn keys_key_id_sign_post(
         _ => Err(err),
     })?;
 
-    if local_var_resp.status() < 400 {
+    let local_var_status = local_var_resp.status();
+    if local_var_status < 400 {
         ResponseContent::deserialized(local_var_resp)
     } else {
-        ResponseContent::deserialized(local_var_resp)
-            .and_then(|content| Err(Error::ResponseError(content)))
+        ResponseContent::new(local_var_resp, |data| {
+            KeysKeyIdSignPostError::new(local_var_status, data).map_err(From::from)
+        })
+        .and_then(|content| Err(Error::ResponseError(content)))
     }
 }
 
@@ -2198,11 +3520,14 @@ pub fn keys_post(
         _ => Err(err),
     })?;
 
-    if local_var_resp.status() < 400 {
+    let local_var_status = local_var_resp.status();
+    if local_var_status < 400 {
         ResponseContent::deserialized(local_var_resp)
     } else {
-        ResponseContent::deserialized(local_var_resp)
-            .and_then(|content| Err(Error::ResponseError(content)))
+        ResponseContent::new(local_var_resp, |data| {
+            KeysPostError::new(local_var_status, data).map_err(From::from)
+        })
+        .and_then(|content| Err(Error::ResponseError(content)))
     }
 }
 
@@ -2234,11 +3559,14 @@ pub fn lock_post(
         _ => Err(err),
     })?;
 
-    if local_var_resp.status() < 400 {
+    let local_var_status = local_var_resp.status();
+    if local_var_status < 400 {
         ResponseContent::unit(local_var_resp)
     } else {
-        ResponseContent::deserialized(local_var_resp)
-            .and_then(|content| Err(Error::ResponseError(content)))
+        ResponseContent::new(local_var_resp, |data| {
+            LockPostError::new(local_var_status, data).map_err(From::from)
+        })
+        .and_then(|content| Err(Error::ResponseError(content)))
     }
 }
 
@@ -2272,11 +3600,14 @@ pub fn metrics_get(
         _ => Err(err),
     })?;
 
-    if local_var_resp.status() < 400 {
+    let local_var_status = local_var_resp.status();
+    if local_var_status < 400 {
         ResponseContent::deserialized(local_var_resp)
     } else {
-        ResponseContent::deserialized(local_var_resp)
-            .and_then(|content| Err(Error::ResponseError(content)))
+        ResponseContent::new(local_var_resp, |data| {
+            MetricsGetError::new(local_var_status, data).map_err(From::from)
+        })
+        .and_then(|content| Err(Error::ResponseError(content)))
     }
 }
 
@@ -2310,11 +3641,14 @@ pub fn namespaces_get(
         _ => Err(err),
     })?;
 
-    if local_var_resp.status() < 400 {
+    let local_var_status = local_var_resp.status();
+    if local_var_status < 400 {
         ResponseContent::deserialized(local_var_resp)
     } else {
-        ResponseContent::deserialized(local_var_resp)
-            .and_then(|content| Err(Error::ResponseError(content)))
+        ResponseContent::new(local_var_resp, |data| {
+            NamespacesGetError::new(local_var_status, data).map_err(From::from)
+        })
+        .and_then(|content| Err(Error::ResponseError(content)))
     }
 }
 
@@ -2351,11 +3685,14 @@ pub fn namespaces_namespace_id_delete(
         _ => Err(err),
     })?;
 
-    if local_var_resp.status() < 400 {
+    let local_var_status = local_var_resp.status();
+    if local_var_status < 400 {
         ResponseContent::unit(local_var_resp)
     } else {
-        ResponseContent::deserialized(local_var_resp)
-            .and_then(|content| Err(Error::ResponseError(content)))
+        ResponseContent::new(local_var_resp, |data| {
+            NamespacesNamespaceIdDeleteError::new(local_var_status, data).map_err(From::from)
+        })
+        .and_then(|content| Err(Error::ResponseError(content)))
     }
 }
 
@@ -2392,11 +3729,14 @@ pub fn namespaces_namespace_id_put(
         _ => Err(err),
     })?;
 
-    if local_var_resp.status() < 400 {
+    let local_var_status = local_var_resp.status();
+    if local_var_status < 400 {
         ResponseContent::unit(local_var_resp)
     } else {
-        ResponseContent::deserialized(local_var_resp)
-            .and_then(|content| Err(Error::ResponseError(content)))
+        ResponseContent::new(local_var_resp, |data| {
+            NamespacesNamespaceIdPutError::new(local_var_status, data).map_err(From::from)
+        })
+        .and_then(|content| Err(Error::ResponseError(content)))
     }
 }
 
@@ -2425,11 +3765,14 @@ pub fn provision_post(
         _ => Err(err),
     })?;
 
-    if local_var_resp.status() < 400 {
+    let local_var_status = local_var_resp.status();
+    if local_var_status < 400 {
         ResponseContent::unit(local_var_resp)
     } else {
-        ResponseContent::deserialized(local_var_resp)
-            .and_then(|content| Err(Error::ResponseError(content)))
+        ResponseContent::new(local_var_resp, |data| {
+            ProvisionPostError::new(local_var_status, data).map_err(From::from)
+        })
+        .and_then(|content| Err(Error::ResponseError(content)))
     }
 }
 
@@ -2465,11 +3808,14 @@ pub fn random_post(
         _ => Err(err),
     })?;
 
-    if local_var_resp.status() < 400 {
+    let local_var_status = local_var_resp.status();
+    if local_var_status < 400 {
         ResponseContent::deserialized(local_var_resp)
     } else {
-        ResponseContent::deserialized(local_var_resp)
-            .and_then(|content| Err(Error::ResponseError(content)))
+        ResponseContent::new(local_var_resp, |data| {
+            RandomPostError::new(local_var_status, data).map_err(From::from)
+        })
+        .and_then(|content| Err(Error::ResponseError(content)))
     }
 }
 
@@ -2503,11 +3849,14 @@ pub fn system_backup_post(
         _ => Err(err),
     })?;
 
-    if local_var_resp.status() < 400 {
+    let local_var_status = local_var_resp.status();
+    if local_var_status < 400 {
         ResponseContent::bytes(local_var_resp)
     } else {
-        ResponseContent::deserialized(local_var_resp)
-            .and_then(|content| Err(Error::ResponseError(content)))
+        ResponseContent::new(local_var_resp, |data| {
+            SystemBackupPostError::new(local_var_status, data).map_err(From::from)
+        })
+        .and_then(|content| Err(Error::ResponseError(content)))
     }
 }
 
@@ -2539,11 +3888,14 @@ pub fn system_cancel_update_post(
         _ => Err(err),
     })?;
 
-    if local_var_resp.status() < 400 {
+    let local_var_status = local_var_resp.status();
+    if local_var_status < 400 {
         ResponseContent::unit(local_var_resp)
     } else {
-        ResponseContent::deserialized(local_var_resp)
-            .and_then(|content| Err(Error::ResponseError(content)))
+        ResponseContent::new(local_var_resp, |data| {
+            SystemCancelUpdatePostError::new(local_var_status, data).map_err(From::from)
+        })
+        .and_then(|content| Err(Error::ResponseError(content)))
     }
 }
 
@@ -2575,11 +3927,14 @@ pub fn system_commit_update_post(
         _ => Err(err),
     })?;
 
-    if local_var_resp.status() < 400 {
+    let local_var_status = local_var_resp.status();
+    if local_var_status < 400 {
         ResponseContent::unit(local_var_resp)
     } else {
-        ResponseContent::deserialized(local_var_resp)
-            .and_then(|content| Err(Error::ResponseError(content)))
+        ResponseContent::new(local_var_resp, |data| {
+            SystemCommitUpdatePostError::new(local_var_status, data).map_err(From::from)
+        })
+        .and_then(|content| Err(Error::ResponseError(content)))
     }
 }
 
@@ -2611,11 +3966,14 @@ pub fn system_factory_reset_post(
         _ => Err(err),
     })?;
 
-    if local_var_resp.status() < 400 {
+    let local_var_status = local_var_resp.status();
+    if local_var_status < 400 {
         ResponseContent::unit(local_var_resp)
     } else {
-        ResponseContent::deserialized(local_var_resp)
-            .and_then(|content| Err(Error::ResponseError(content)))
+        ResponseContent::new(local_var_resp, |data| {
+            SystemFactoryResetPostError::new(local_var_status, data).map_err(From::from)
+        })
+        .and_then(|content| Err(Error::ResponseError(content)))
     }
 }
 
@@ -2649,11 +4007,14 @@ pub fn system_info_get(
         _ => Err(err),
     })?;
 
-    if local_var_resp.status() < 400 {
+    let local_var_status = local_var_resp.status();
+    if local_var_status < 400 {
         ResponseContent::deserialized(local_var_resp)
     } else {
-        ResponseContent::deserialized(local_var_resp)
-            .and_then(|content| Err(Error::ResponseError(content)))
+        ResponseContent::new(local_var_resp, |data| {
+            SystemInfoGetError::new(local_var_status, data).map_err(From::from)
+        })
+        .and_then(|content| Err(Error::ResponseError(content)))
     }
 }
 
@@ -2685,11 +4046,14 @@ pub fn system_reboot_post(
         _ => Err(err),
     })?;
 
-    if local_var_resp.status() < 400 {
+    let local_var_status = local_var_resp.status();
+    if local_var_status < 400 {
         ResponseContent::unit(local_var_resp)
     } else {
-        ResponseContent::deserialized(local_var_resp)
-            .and_then(|content| Err(Error::ResponseError(content)))
+        ResponseContent::new(local_var_resp, |data| {
+            SystemRebootPostError::new(local_var_status, data).map_err(From::from)
+        })
+        .and_then(|content| Err(Error::ResponseError(content)))
     }
 }
 
@@ -2751,11 +4115,14 @@ pub fn system_restore_post(
         _ => Err(err),
     })?;
 
-    if local_var_resp.status() < 400 {
+    let local_var_status = local_var_resp.status();
+    if local_var_status < 400 {
         ResponseContent::unit(local_var_resp)
     } else {
-        ResponseContent::deserialized(local_var_resp)
-            .and_then(|content| Err(Error::ResponseError(content)))
+        ResponseContent::new(local_var_resp, |data| {
+            SystemRestorePostError::new(local_var_status, data).map_err(From::from)
+        })
+        .and_then(|content| Err(Error::ResponseError(content)))
     }
 }
 
@@ -2787,11 +4154,14 @@ pub fn system_shutdown_post(
         _ => Err(err),
     })?;
 
-    if local_var_resp.status() < 400 {
+    let local_var_status = local_var_resp.status();
+    if local_var_status < 400 {
         ResponseContent::unit(local_var_resp)
     } else {
-        ResponseContent::deserialized(local_var_resp)
-            .and_then(|content| Err(Error::ResponseError(content)))
+        ResponseContent::new(local_var_resp, |data| {
+            SystemShutdownPostError::new(local_var_status, data).map_err(From::from)
+        })
+        .and_then(|content| Err(Error::ResponseError(content)))
     }
 }
 
@@ -2828,11 +4198,14 @@ pub fn system_update_post(
         _ => Err(err),
     })?;
 
-    if local_var_resp.status() < 400 {
+    let local_var_status = local_var_resp.status();
+    if local_var_status < 400 {
         ResponseContent::deserialized(local_var_resp)
     } else {
-        ResponseContent::deserialized(local_var_resp)
-            .and_then(|content| Err(Error::ResponseError(content)))
+        ResponseContent::new(local_var_resp, |data| {
+            SystemUpdatePostError::new(local_var_status, data).map_err(From::from)
+        })
+        .and_then(|content| Err(Error::ResponseError(content)))
     }
 }
 
@@ -2861,11 +4234,14 @@ pub fn unlock_post(
         _ => Err(err),
     })?;
 
-    if local_var_resp.status() < 400 {
+    let local_var_status = local_var_resp.status();
+    if local_var_status < 400 {
         ResponseContent::unit(local_var_resp)
     } else {
-        ResponseContent::deserialized(local_var_resp)
-            .and_then(|content| Err(Error::ResponseError(content)))
+        ResponseContent::new(local_var_resp, |data| {
+            UnlockPostError::new(local_var_status, data).map_err(From::from)
+        })
+        .and_then(|content| Err(Error::ResponseError(content)))
     }
 }
 
@@ -2899,11 +4275,14 @@ pub fn users_get(
         _ => Err(err),
     })?;
 
-    if local_var_resp.status() < 400 {
+    let local_var_status = local_var_resp.status();
+    if local_var_status < 400 {
         ResponseContent::deserialized(local_var_resp)
     } else {
-        ResponseContent::deserialized(local_var_resp)
-            .and_then(|content| Err(Error::ResponseError(content)))
+        ResponseContent::new(local_var_resp, |data| {
+            UsersGetError::new(local_var_status, data).map_err(From::from)
+        })
+        .and_then(|content| Err(Error::ResponseError(content)))
     }
 }
 
@@ -2939,11 +4318,14 @@ pub fn users_post(
         _ => Err(err),
     })?;
 
-    if local_var_resp.status() < 400 {
+    let local_var_status = local_var_resp.status();
+    if local_var_status < 400 {
         ResponseContent::deserialized(local_var_resp)
     } else {
-        ResponseContent::deserialized(local_var_resp)
-            .and_then(|content| Err(Error::ResponseError(content)))
+        ResponseContent::new(local_var_resp, |data| {
+            UsersPostError::new(local_var_status, data).map_err(From::from)
+        })
+        .and_then(|content| Err(Error::ResponseError(content)))
     }
 }
 
@@ -2980,11 +4362,14 @@ pub fn users_user_id_delete(
         _ => Err(err),
     })?;
 
-    if local_var_resp.status() < 400 {
+    let local_var_status = local_var_resp.status();
+    if local_var_status < 400 {
         ResponseContent::unit(local_var_resp)
     } else {
-        ResponseContent::deserialized(local_var_resp)
-            .and_then(|content| Err(Error::ResponseError(content)))
+        ResponseContent::new(local_var_resp, |data| {
+            UsersUserIdDeleteError::new(local_var_status, data).map_err(From::from)
+        })
+        .and_then(|content| Err(Error::ResponseError(content)))
     }
 }
 
@@ -3023,11 +4408,14 @@ pub fn users_user_id_get(
         _ => Err(err),
     })?;
 
-    if local_var_resp.status() < 400 {
+    let local_var_status = local_var_resp.status();
+    if local_var_status < 400 {
         ResponseContent::deserialized(local_var_resp)
     } else {
-        ResponseContent::deserialized(local_var_resp)
-            .and_then(|content| Err(Error::ResponseError(content)))
+        ResponseContent::new(local_var_resp, |data| {
+            UsersUserIdGetError::new(local_var_status, data).map_err(From::from)
+        })
+        .and_then(|content| Err(Error::ResponseError(content)))
     }
 }
 
@@ -3066,11 +4454,14 @@ pub fn users_user_id_passphrase_post(
         _ => Err(err),
     })?;
 
-    if local_var_resp.status() < 400 {
+    let local_var_status = local_var_resp.status();
+    if local_var_status < 400 {
         ResponseContent::unit(local_var_resp)
     } else {
-        ResponseContent::deserialized(local_var_resp)
-            .and_then(|content| Err(Error::ResponseError(content)))
+        ResponseContent::new(local_var_resp, |data| {
+            UsersUserIdPassphrasePostError::new(local_var_status, data).map_err(From::from)
+        })
+        .and_then(|content| Err(Error::ResponseError(content)))
     }
 }
 
@@ -3111,11 +4502,14 @@ pub fn users_user_id_post(
         _ => Err(err),
     })?;
 
-    if local_var_resp.status() < 400 {
+    let local_var_status = local_var_resp.status();
+    if local_var_status < 400 {
         ResponseContent::deserialized(local_var_resp)
     } else {
-        ResponseContent::deserialized(local_var_resp)
-            .and_then(|content| Err(Error::ResponseError(content)))
+        ResponseContent::new(local_var_resp, |data| {
+            UsersUserIdPostError::new(local_var_status, data).map_err(From::from)
+        })
+        .and_then(|content| Err(Error::ResponseError(content)))
     }
 }
 
@@ -3154,11 +4548,14 @@ pub fn users_user_id_put(
         _ => Err(err),
     })?;
 
-    if local_var_resp.status() < 400 {
+    let local_var_status = local_var_resp.status();
+    if local_var_status < 400 {
         ResponseContent::unit(local_var_resp)
     } else {
-        ResponseContent::deserialized(local_var_resp)
-            .and_then(|content| Err(Error::ResponseError(content)))
+        ResponseContent::new(local_var_resp, |data| {
+            UsersUserIdPutError::new(local_var_status, data).map_err(From::from)
+        })
+        .and_then(|content| Err(Error::ResponseError(content)))
     }
 }
 
@@ -3197,11 +4594,14 @@ pub fn users_user_id_tags_get(
         _ => Err(err),
     })?;
 
-    if local_var_resp.status() < 400 {
+    let local_var_status = local_var_resp.status();
+    if local_var_status < 400 {
         ResponseContent::deserialized(local_var_resp)
     } else {
-        ResponseContent::deserialized(local_var_resp)
-            .and_then(|content| Err(Error::ResponseError(content)))
+        ResponseContent::new(local_var_resp, |data| {
+            UsersUserIdTagsGetError::new(local_var_status, data).map_err(From::from)
+        })
+        .and_then(|content| Err(Error::ResponseError(content)))
     }
 }
 
@@ -3240,11 +4640,14 @@ pub fn users_user_id_tags_tag_delete(
         _ => Err(err),
     })?;
 
-    if local_var_resp.status() < 400 {
+    let local_var_status = local_var_resp.status();
+    if local_var_status < 400 {
         ResponseContent::unit(local_var_resp)
     } else {
-        ResponseContent::deserialized(local_var_resp)
-            .and_then(|content| Err(Error::ResponseError(content)))
+        ResponseContent::new(local_var_resp, |data| {
+            UsersUserIdTagsTagDeleteError::new(local_var_status, data).map_err(From::from)
+        })
+        .and_then(|content| Err(Error::ResponseError(content)))
     }
 }
 
@@ -3283,10 +4686,13 @@ pub fn users_user_id_tags_tag_put(
         _ => Err(err),
     })?;
 
-    if local_var_resp.status() < 400 {
+    let local_var_status = local_var_resp.status();
+    if local_var_status < 400 {
         ResponseContent::unit(local_var_resp)
     } else {
-        ResponseContent::deserialized(local_var_resp)
-            .and_then(|content| Err(Error::ResponseError(content)))
+        ResponseContent::new(local_var_resp, |data| {
+            UsersUserIdTagsTagPutError::new(local_var_status, data).map_err(From::from)
+        })
+        .and_then(|content| Err(Error::ResponseError(content)))
     }
 }

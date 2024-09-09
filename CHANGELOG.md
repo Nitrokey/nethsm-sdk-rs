@@ -5,6 +5,7 @@
 ### Features
 
 - Implement `Display` for enums (@wiktor-k, [#33](https://github.com/Nitrokey/nethsm-sdk-rs/pull/33))
+- Return correct error variants for API errors ([#30](https://github.com/Nitrokey/nethsm-sdk-rs/issues/30))
 
 [All Changes](https://github.com/Nitrokey/nethsm-sdk-rs/compare/v1.1.0...HEAD)
 

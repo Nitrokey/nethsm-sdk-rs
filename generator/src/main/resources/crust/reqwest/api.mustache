@@ -115,6 +115,32 @@ pub enum {{{operationIdCamelCase}}}Error {
     UnknownValue(serde_json::Value),
 }
 
+impl {{{operationIdCamelCase}}}Error {
+    fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
+        // to do: support payloads once added to API spec
+        match status {
+            {{#responses}}
+            {{#is4xx}}
+            {{code}} => Ok(Self::Status{{code}}()),
+            {{/is4xx}}
+            {{#is5xx}}
+            {{code}} => Ok(Self::Status{{code}}()),
+            {{/is5xx}}
+            {{#isDefault}}
+            {{code}} => Ok(Self::DefaultResponse()),
+            {{/isDefault}}
+            {{/responses}}
+            _ => {
+                if data.is_empty() {
+                    Ok(Self::UnknownValue(serde_json::Value::Null))
+                } else {
+                    serde_json::from_slice(data).map(Self::UnknownValue)
+                }
+            }
+        }
+    }
+}
+
 {{/operation}}
 {{/operations}}
 
@@ -373,7 +399,8 @@ pub fn {{{operationId}}}(configuration: &configuration::Configuration, {{#allPar
         _ => Err(err),
     })?;
 
-    if local_var_resp.status() < 400 {
+    let local_var_status = local_var_resp.status();
+    if local_var_status < 400 {
         {{#returnType}}
         {{#vendorExtensions.x-produceMultipleMediaTypes}}
         if is_json {
@@ -402,7 +429,7 @@ pub fn {{{operationId}}}(configuration: &configuration::Configuration, {{#allPar
         ResponseContent::unit(local_var_resp)
         {{/returnType}}
     } else {
-        ResponseContent::deserialized(local_var_resp)
+        ResponseContent::new(local_var_resp, |data| {{{operationIdCamelCase}}}Error::new(local_var_status, data).map_err(From::from))
             .and_then(|content| Err(Error::ResponseError(content)))
     }
 }

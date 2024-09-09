@@ -22,7 +22,7 @@ async fn test_health_state() {
 }
 
 #[tokio::test]
-async fn test_error() {
+async fn test_error_with_body() {
     utils::with_container(|config| {
         let err = default_api::keys_get(&config, None).err().unwrap();
         match err {
@@ -33,6 +33,10 @@ async fn test_error() {
                     err.contains("Service not available"),
                     "unexpected error message: {err}"
                 );
+                match content.entity {
+                    default_api::KeysGetError::Status412() => {}
+                    err => panic!("Unexpected error variant: {err:?}"),
+                }
             }
             _ => {
                 panic!("Unexpected error variant: {err:?}");
