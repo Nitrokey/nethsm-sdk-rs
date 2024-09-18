@@ -15,11 +15,15 @@ pub enum EncryptMode {
     AesCbc,
 }
 
-impl ToString for EncryptMode {
-    fn to_string(&self) -> String {
-        match self {
-            Self::AesCbc => String::from("AES_CBC"),
-        }
+impl std::fmt::Display for EncryptMode {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(
+            f,
+            "{}",
+            match self {
+                Self::AesCbc => "AES_CBC",
+            }
+        )
     }
 }
 

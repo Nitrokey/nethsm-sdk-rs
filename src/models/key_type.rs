@@ -27,17 +27,21 @@ pub enum KeyType {
     Generic,
 }
 
-impl ToString for KeyType {
-    fn to_string(&self) -> String {
-        match self {
-            Self::Rsa => String::from("RSA"),
-            Self::Curve25519 => String::from("Curve25519"),
-            Self::EcP224 => String::from("EC_P224"),
-            Self::EcP256 => String::from("EC_P256"),
-            Self::EcP384 => String::from("EC_P384"),
-            Self::EcP521 => String::from("EC_P521"),
-            Self::Generic => String::from("Generic"),
-        }
+impl std::fmt::Display for KeyType {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(
+            f,
+            "{}",
+            match self {
+                Self::Rsa => "RSA",
+                Self::Curve25519 => "Curve25519",
+                Self::EcP224 => "EC_P224",
+                Self::EcP256 => "EC_P256",
+                Self::EcP384 => "EC_P384",
+                Self::EcP521 => "EC_P521",
+                Self::Generic => "Generic",
+            }
+        )
     }
 }
 

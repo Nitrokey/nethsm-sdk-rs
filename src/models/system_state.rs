@@ -19,13 +19,17 @@ pub enum SystemState {
     Operational,
 }
 
-impl ToString for SystemState {
-    fn to_string(&self) -> String {
-        match self {
-            Self::Unprovisioned => String::from("Unprovisioned"),
-            Self::Locked => String::from("Locked"),
-            Self::Operational => String::from("Operational"),
-        }
+impl std::fmt::Display for SystemState {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(
+            f,
+            "{}",
+            match self {
+                Self::Unprovisioned => "Unprovisioned",
+                Self::Locked => "Locked",
+                Self::Operational => "Operational",
+            }
+        )
     }
 }
 

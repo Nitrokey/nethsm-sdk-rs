@@ -31,19 +31,23 @@ pub enum DecryptMode {
     AesCbc,
 }
 
-impl ToString for DecryptMode {
-    fn to_string(&self) -> String {
-        match self {
-            Self::Raw => String::from("RAW"),
-            Self::Pkcs1 => String::from("PKCS1"),
-            Self::OaepMd5 => String::from("OAEP_MD5"),
-            Self::OaepSha1 => String::from("OAEP_SHA1"),
-            Self::OaepSha224 => String::from("OAEP_SHA224"),
-            Self::OaepSha256 => String::from("OAEP_SHA256"),
-            Self::OaepSha384 => String::from("OAEP_SHA384"),
-            Self::OaepSha512 => String::from("OAEP_SHA512"),
-            Self::AesCbc => String::from("AES_CBC"),
-        }
+impl std::fmt::Display for DecryptMode {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(
+            f,
+            "{}",
+            match self {
+                Self::Raw => "RAW",
+                Self::Pkcs1 => "PKCS1",
+                Self::OaepMd5 => "OAEP_MD5",
+                Self::OaepSha1 => "OAEP_SHA1",
+                Self::OaepSha224 => "OAEP_SHA224",
+                Self::OaepSha256 => "OAEP_SHA256",
+                Self::OaepSha384 => "OAEP_SHA384",
+                Self::OaepSha512 => "OAEP_SHA512",
+                Self::AesCbc => "AES_CBC",
+            }
+        )
     }
 }
 

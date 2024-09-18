@@ -21,14 +21,18 @@ pub enum LogLevel {
     Error,
 }
 
-impl ToString for LogLevel {
-    fn to_string(&self) -> String {
-        match self {
-            Self::Debug => String::from("debug"),
-            Self::Info => String::from("info"),
-            Self::Warning => String::from("warning"),
-            Self::Error => String::from("error"),
-        }
+impl std::fmt::Display for LogLevel {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(
+            f,
+            "{}",
+            match self {
+                Self::Debug => "debug",
+                Self::Info => "info",
+                Self::Warning => "warning",
+                Self::Error => "error",
+            }
+        )
     }
 }
 

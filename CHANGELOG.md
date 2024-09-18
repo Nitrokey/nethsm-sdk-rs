@@ -2,7 +2,9 @@
 
 ## Unreleased
 
--
+### Features
+
+- Implement `Display` for enums (@wiktor-k, [#33](https://github.com/Nitrokey/nethsm-sdk-rs/pull/33))
 
 [All Changes](https://github.com/Nitrokey/nethsm-sdk-rs/compare/v1.1.0...HEAD)
 

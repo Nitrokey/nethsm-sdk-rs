@@ -51,29 +51,33 @@ pub enum KeyMechanism {
     AesDecryptionCbc,
 }
 
-impl ToString for KeyMechanism {
-    fn to_string(&self) -> String {
-        match self {
-            Self::RsaDecryptionRaw => String::from("RSA_Decryption_RAW"),
-            Self::RsaDecryptionPkcs1 => String::from("RSA_Decryption_PKCS1"),
-            Self::RsaDecryptionOaepMd5 => String::from("RSA_Decryption_OAEP_MD5"),
-            Self::RsaDecryptionOaepSha1 => String::from("RSA_Decryption_OAEP_SHA1"),
-            Self::RsaDecryptionOaepSha224 => String::from("RSA_Decryption_OAEP_SHA224"),
-            Self::RsaDecryptionOaepSha256 => String::from("RSA_Decryption_OAEP_SHA256"),
-            Self::RsaDecryptionOaepSha384 => String::from("RSA_Decryption_OAEP_SHA384"),
-            Self::RsaDecryptionOaepSha512 => String::from("RSA_Decryption_OAEP_SHA512"),
-            Self::RsaSignaturePkcs1 => String::from("RSA_Signature_PKCS1"),
-            Self::RsaSignaturePssMd5 => String::from("RSA_Signature_PSS_MD5"),
-            Self::RsaSignaturePssSha1 => String::from("RSA_Signature_PSS_SHA1"),
-            Self::RsaSignaturePssSha224 => String::from("RSA_Signature_PSS_SHA224"),
-            Self::RsaSignaturePssSha256 => String::from("RSA_Signature_PSS_SHA256"),
-            Self::RsaSignaturePssSha384 => String::from("RSA_Signature_PSS_SHA384"),
-            Self::RsaSignaturePssSha512 => String::from("RSA_Signature_PSS_SHA512"),
-            Self::EdDsaSignature => String::from("EdDSA_Signature"),
-            Self::EcdsaSignature => String::from("ECDSA_Signature"),
-            Self::AesEncryptionCbc => String::from("AES_Encryption_CBC"),
-            Self::AesDecryptionCbc => String::from("AES_Decryption_CBC"),
-        }
+impl std::fmt::Display for KeyMechanism {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(
+            f,
+            "{}",
+            match self {
+                Self::RsaDecryptionRaw => "RSA_Decryption_RAW",
+                Self::RsaDecryptionPkcs1 => "RSA_Decryption_PKCS1",
+                Self::RsaDecryptionOaepMd5 => "RSA_Decryption_OAEP_MD5",
+                Self::RsaDecryptionOaepSha1 => "RSA_Decryption_OAEP_SHA1",
+                Self::RsaDecryptionOaepSha224 => "RSA_Decryption_OAEP_SHA224",
+                Self::RsaDecryptionOaepSha256 => "RSA_Decryption_OAEP_SHA256",
+                Self::RsaDecryptionOaepSha384 => "RSA_Decryption_OAEP_SHA384",
+                Self::RsaDecryptionOaepSha512 => "RSA_Decryption_OAEP_SHA512",
+                Self::RsaSignaturePkcs1 => "RSA_Signature_PKCS1",
+                Self::RsaSignaturePssMd5 => "RSA_Signature_PSS_MD5",
+                Self::RsaSignaturePssSha1 => "RSA_Signature_PSS_SHA1",
+                Self::RsaSignaturePssSha224 => "RSA_Signature_PSS_SHA224",
+                Self::RsaSignaturePssSha256 => "RSA_Signature_PSS_SHA256",
+                Self::RsaSignaturePssSha384 => "RSA_Signature_PSS_SHA384",
+                Self::RsaSignaturePssSha512 => "RSA_Signature_PSS_SHA512",
+                Self::EdDsaSignature => "EdDSA_Signature",
+                Self::EcdsaSignature => "ECDSA_Signature",
+                Self::AesEncryptionCbc => "AES_Encryption_CBC",
+                Self::AesDecryptionCbc => "AES_Decryption_CBC",
+            }
+        )
     }
 }
 

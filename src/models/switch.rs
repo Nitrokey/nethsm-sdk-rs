@@ -17,12 +17,16 @@ pub enum Switch {
     Off,
 }
 
-impl ToString for Switch {
-    fn to_string(&self) -> String {
-        match self {
-            Self::On => String::from("on"),
-            Self::Off => String::from("off"),
-        }
+impl std::fmt::Display for Switch {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(
+            f,
+            "{}",
+            match self {
+                Self::On => "on",
+                Self::Off => "off",
+            }
+        )
     }
 }
 

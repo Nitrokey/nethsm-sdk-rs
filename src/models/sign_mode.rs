@@ -31,19 +31,23 @@ pub enum SignMode {
     Ecdsa,
 }
 
-impl ToString for SignMode {
-    fn to_string(&self) -> String {
-        match self {
-            Self::Pkcs1 => String::from("PKCS1"),
-            Self::PssMd5 => String::from("PSS_MD5"),
-            Self::PssSha1 => String::from("PSS_SHA1"),
-            Self::PssSha224 => String::from("PSS_SHA224"),
-            Self::PssSha256 => String::from("PSS_SHA256"),
-            Self::PssSha384 => String::from("PSS_SHA384"),
-            Self::PssSha512 => String::from("PSS_SHA512"),
-            Self::EdDsa => String::from("EdDSA"),
-            Self::Ecdsa => String::from("ECDSA"),
-        }
+impl std::fmt::Display for SignMode {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(
+            f,
+            "{}",
+            match self {
+                Self::Pkcs1 => "PKCS1",
+                Self::PssMd5 => "PSS_MD5",
+                Self::PssSha1 => "PSS_SHA1",
+                Self::PssSha224 => "PSS_SHA224",
+                Self::PssSha256 => "PSS_SHA256",
+                Self::PssSha384 => "PSS_SHA384",
+                Self::PssSha512 => "PSS_SHA512",
+                Self::EdDsa => "EdDSA",
+                Self::Ecdsa => "ECDSA",
+            }
+        )
     }
 }
 

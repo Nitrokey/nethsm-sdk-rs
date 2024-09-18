@@ -21,14 +21,18 @@ pub enum UserRole {
     Backup,
 }
 
-impl ToString for UserRole {
-    fn to_string(&self) -> String {
-        match self {
-            Self::Administrator => String::from("Administrator"),
-            Self::Operator => String::from("Operator"),
-            Self::Metrics => String::from("Metrics"),
-            Self::Backup => String::from("Backup"),
-        }
+impl std::fmt::Display for UserRole {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(
+            f,
+            "{}",
+            match self {
+                Self::Administrator => "Administrator",
+                Self::Operator => "Operator",
+                Self::Metrics => "Metrics",
+                Self::Backup => "Backup",
+            }
+        )
     }
 }
 
