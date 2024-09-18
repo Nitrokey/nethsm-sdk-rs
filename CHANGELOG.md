@@ -2,12 +2,21 @@
 
 ## Unreleased
 
+-
+
+[All Changes](https://github.com/Nitrokey/nethsm-sdk-rs/compare/v1.1.1...HEAD)
+
+## [v1.1.1](https://github.com/Nitrokey/nethsm-sdk-rs/releases/tag/v1.1.1) (2024-09-18)
+
 ### Features
 
 - Implement `Display` for enums (@wiktor-k, [#33](https://github.com/Nitrokey/nethsm-sdk-rs/pull/33))
+
+### Bugfixes
+
 - Return correct error variants for API errors ([#30](https://github.com/Nitrokey/nethsm-sdk-rs/issues/30))
 
-[All Changes](https://github.com/Nitrokey/nethsm-sdk-rs/compare/v1.1.0...HEAD)
+[All Changes](https://github.com/Nitrokey/nethsm-sdk-rs/compare/v1.1.0...v1.1.1)
 
 ## [v1.1.0](https://github.com/Nitrokey/nethsm-sdk-rs/releases/tag/v1.1.0) (2024-07-17)
 

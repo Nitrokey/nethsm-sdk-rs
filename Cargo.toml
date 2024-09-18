@@ -1,6 +1,6 @@
 [package]
 name = "nethsm-sdk-rs"
-version = "1.1.0"
+version = "1.1.1"
 authors = ["Nitrokey <info@nitrokey.com>"]
 description = "Rust SDK to communicate with Nitrokey NetHSM"
 documentation = "https://docs.nitrokey.com/nethsm/"
