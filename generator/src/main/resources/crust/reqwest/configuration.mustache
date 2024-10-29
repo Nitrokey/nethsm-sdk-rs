@@ -30,7 +30,10 @@ impl Default for Configuration {
         Configuration {
             base_path: "{{{basePath}}}".to_owned(),
             user_agent: {{#httpUserAgent}}Some("{{{.}}}".to_owned()){{/httpUserAgent}}{{^httpUserAgent}}Some("OpenAPI-Generator/{{{version}}}/rust".to_owned()){{/httpUserAgent}},
-            client: ureq::agent(),
+            client: ureq::config::Config::builder()
+                .http_status_as_error(false)
+                .build()
+                .new_agent(),
             basic_auth: None,
             oauth_access_token: None,
             bearer_access_token: None,

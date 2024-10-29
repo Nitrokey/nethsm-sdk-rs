@@ -38,7 +38,10 @@ impl Default for Configuration {
         Configuration {
             base_path: "https://nethsmdemo.nitrokey.com/api/v1".to_owned(),
             user_agent: Some("OpenAPI-Generator/v1/rust".to_owned()),
-            client: ureq::agent(),
+            client: ureq::config::Config::builder()
+                .http_status_as_error(false)
+                .build()
+                .new_agent(),
             basic_auth: None,
             oauth_access_token: None,
             bearer_access_token: None,

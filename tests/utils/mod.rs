@@ -31,15 +31,16 @@ pub async fn with_container<F: FnOnce(Configuration) -> T, T>(f: F) -> T {
         .await
         .unwrap();
 
-    let tls_config = Arc::new(
-        ClientConfig::builder()
-            .dangerous()
-            .with_custom_certificate_verifier(Arc::new(Verifier::default()))
-            .with_no_client_auth(),
-    );
     let config = Configuration {
         base_path: container.api().await,
-        client: ureq::builder().tls_config(tls_config).build(),
+        client: ureq::Agent::config_builder()
+            .tls_config(
+                ureq::tls::TlsConfig::builder()
+                    .disable_verification(true)
+                    .build(),
+            )
+            .build()
+            .new_agent(),
         ..Default::default()
     };
 
