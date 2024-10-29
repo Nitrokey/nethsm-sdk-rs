@@ -2027,6 +2027,10 @@ pub fn config_backup_passphrase_put(
     );
     let mut local_var_req_builder =
         create_request!(local_var_client, PUT, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
         local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
@@ -2065,6 +2069,10 @@ pub fn config_logging_get(
     let local_var_uri_str = format!("{}/config/logging", local_var_configuration.base_path);
     let mut local_var_req_builder =
         create_request!(local_var_client, GET, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
         local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
@@ -2105,6 +2113,10 @@ pub fn config_logging_put(
     let local_var_uri_str = format!("{}/config/logging", local_var_configuration.base_path);
     let mut local_var_req_builder =
         create_request!(local_var_client, PUT, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
         local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
@@ -2143,6 +2155,10 @@ pub fn config_network_get(
     let local_var_uri_str = format!("{}/config/network", local_var_configuration.base_path);
     let mut local_var_req_builder =
         create_request!(local_var_client, GET, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
         local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
@@ -2183,6 +2199,10 @@ pub fn config_network_put(
     let local_var_uri_str = format!("{}/config/network", local_var_configuration.base_path);
     let mut local_var_req_builder =
         create_request!(local_var_client, PUT, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
         local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
@@ -2221,6 +2241,10 @@ pub fn config_time_get(
     let local_var_uri_str = format!("{}/config/time", local_var_configuration.base_path);
     let mut local_var_req_builder =
         create_request!(local_var_client, GET, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
         local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
@@ -2261,6 +2285,10 @@ pub fn config_time_put(
     let local_var_uri_str = format!("{}/config/time", local_var_configuration.base_path);
     let mut local_var_req_builder =
         create_request!(local_var_client, PUT, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
         local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
@@ -2299,6 +2327,10 @@ pub fn config_tls_cert_pem_get(
     let local_var_uri_str = format!("{}/config/tls/cert.pem", local_var_configuration.base_path);
     let mut local_var_req_builder =
         create_request!(local_var_client, GET, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
         local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
@@ -2339,6 +2371,10 @@ pub fn config_tls_cert_pem_put(
     let local_var_uri_str = format!("{}/config/tls/cert.pem", local_var_configuration.base_path);
     let mut local_var_req_builder =
         create_request!(local_var_client, PUT, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
         local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
@@ -2378,6 +2414,10 @@ pub fn config_tls_csr_pem_post(
     let local_var_uri_str = format!("{}/config/tls/csr.pem", local_var_configuration.base_path);
     let mut local_var_req_builder =
         create_request!(local_var_client, POST, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
         local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
@@ -2419,6 +2459,10 @@ pub fn config_tls_generate_post(
     let local_var_uri_str = format!("{}/config/tls/generate", local_var_configuration.base_path);
     let mut local_var_req_builder =
         create_request!(local_var_client, POST, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
         local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
@@ -2460,6 +2504,10 @@ pub fn config_tls_public_pem_get(
     );
     let mut local_var_req_builder =
         create_request!(local_var_client, GET, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
         local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
@@ -2503,6 +2551,10 @@ pub fn config_unattended_boot_get(
     );
     let mut local_var_req_builder =
         create_request!(local_var_client, GET, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
         local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
@@ -2546,6 +2598,10 @@ pub fn config_unattended_boot_put(
     );
     let mut local_var_req_builder =
         create_request!(local_var_client, PUT, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
         local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
@@ -2588,6 +2644,10 @@ pub fn config_unlock_passphrase_put(
     );
     let mut local_var_req_builder =
         create_request!(local_var_client, PUT, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
         local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
@@ -2626,6 +2686,10 @@ pub fn health_alive_get(
     let local_var_uri_str = format!("{}/health/alive", local_var_configuration.base_path);
     let mut local_var_req_builder =
         create_request!(local_var_client, GET, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
         local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
@@ -2658,6 +2722,10 @@ pub fn health_ready_get(
     let local_var_uri_str = format!("{}/health/ready", local_var_configuration.base_path);
     let mut local_var_req_builder =
         create_request!(local_var_client, GET, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
         local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
@@ -2690,6 +2758,10 @@ pub fn health_state_get(
     let local_var_uri_str = format!("{}/health/state", local_var_configuration.base_path);
     let mut local_var_req_builder =
         create_request!(local_var_client, GET, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
         local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
@@ -2724,6 +2796,10 @@ pub fn info_get(
     let local_var_uri_str = format!("{}/info", local_var_configuration.base_path);
     let mut local_var_req_builder =
         create_request!(local_var_client, GET, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
         local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
@@ -2759,6 +2835,10 @@ pub fn keys_generate_post(
     let local_var_uri_str = format!("{}/keys/generate", local_var_configuration.base_path);
     let mut local_var_req_builder =
         create_request!(local_var_client, POST, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
         local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
@@ -2800,6 +2880,10 @@ pub fn keys_get(
     let local_var_uri_str = format!("{}/keys", local_var_configuration.base_path);
     let mut local_var_req_builder =
         create_request!(local_var_client, GET, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
 
     if let Some(local_var_str) = filter {
         local_var_req_builder =
@@ -2848,6 +2932,10 @@ pub fn keys_key_id_cert_delete(
     );
     let mut local_var_req_builder =
         create_request!(local_var_client, DELETE, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
         local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
@@ -2890,6 +2978,10 @@ pub fn keys_key_id_cert_get(
     );
     let mut local_var_req_builder =
         create_request!(local_var_client, GET, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
         local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
@@ -2935,6 +3027,10 @@ pub fn keys_key_id_cert_put(
     );
     let mut local_var_req_builder =
         create_request!(local_var_client, PUT, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
         local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
@@ -2980,6 +3076,10 @@ pub fn keys_key_id_csr_pem_post(
     );
     let mut local_var_req_builder =
         create_request!(local_var_client, POST, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
         local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
@@ -3026,6 +3126,10 @@ pub fn keys_key_id_decrypt_post(
     );
     let mut local_var_req_builder =
         create_request!(local_var_client, POST, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
         local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
@@ -3071,6 +3175,10 @@ pub fn keys_key_id_delete(
     );
     let mut local_var_req_builder =
         create_request!(local_var_client, DELETE, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
         local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
@@ -3114,6 +3222,10 @@ pub fn keys_key_id_encrypt_post(
     );
     let mut local_var_req_builder =
         create_request!(local_var_client, POST, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
         local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
@@ -3159,6 +3271,10 @@ pub fn keys_key_id_get(
     );
     let mut local_var_req_builder =
         create_request!(local_var_client, GET, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
         local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
@@ -3203,6 +3319,10 @@ pub fn keys_key_id_public_pem_get(
     );
     let mut local_var_req_builder =
         create_request!(local_var_client, GET, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
         local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
@@ -3248,6 +3368,10 @@ pub fn keys_key_id_put(
     );
     let mut local_var_req_builder =
         create_request!(local_var_client, PUT, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
         local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
@@ -3299,6 +3423,10 @@ pub fn keys_key_id_restrictions_tags_tag_delete(
     );
     let mut local_var_req_builder =
         create_request!(local_var_client, DELETE, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
         local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
@@ -3343,6 +3471,10 @@ pub fn keys_key_id_restrictions_tags_tag_put(
     );
     let mut local_var_req_builder =
         create_request!(local_var_client, PUT, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
         local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
@@ -3386,6 +3518,10 @@ pub fn keys_key_id_sign_post(
     );
     let mut local_var_req_builder =
         create_request!(local_var_client, POST, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
         local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
@@ -3427,6 +3563,10 @@ pub fn keys_post(
     let local_var_uri_str = format!("{}/keys", local_var_configuration.base_path);
     let mut local_var_req_builder =
         create_request!(local_var_client, POST, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
         local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
@@ -3473,6 +3613,10 @@ pub fn lock_post(
     let local_var_uri_str = format!("{}/lock", local_var_configuration.base_path);
     let mut local_var_req_builder =
         create_request!(local_var_client, POST, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
         local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
@@ -3510,6 +3654,10 @@ pub fn metrics_get(
     let local_var_uri_str = format!("{}/metrics", local_var_configuration.base_path);
     let mut local_var_req_builder =
         create_request!(local_var_client, GET, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
         local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
@@ -3549,6 +3697,10 @@ pub fn namespaces_get(
     let local_var_uri_str = format!("{}/namespaces", local_var_configuration.base_path);
     let mut local_var_req_builder =
         create_request!(local_var_client, GET, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
         local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
@@ -3593,6 +3745,10 @@ pub fn namespaces_namespace_id_delete(
     );
     let mut local_var_req_builder =
         create_request!(local_var_client, DELETE, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
         local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
@@ -3635,6 +3791,10 @@ pub fn namespaces_namespace_id_put(
     );
     let mut local_var_req_builder =
         create_request!(local_var_client, PUT, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
         local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
@@ -3673,6 +3833,10 @@ pub fn provision_post(
     let local_var_uri_str = format!("{}/provision", local_var_configuration.base_path);
     let mut local_var_req_builder =
         create_request!(local_var_client, POST, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
         local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
@@ -3707,6 +3871,10 @@ pub fn random_post(
     let local_var_uri_str = format!("{}/random", local_var_configuration.base_path);
     let mut local_var_req_builder =
         create_request!(local_var_client, POST, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
         local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
@@ -3747,6 +3915,10 @@ pub fn system_backup_post(
     let local_var_uri_str = format!("{}/system/backup", local_var_configuration.base_path);
     let mut local_var_req_builder =
         create_request!(local_var_client, POST, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
         local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
@@ -3786,6 +3958,10 @@ pub fn system_cancel_update_post(
     let local_var_uri_str = format!("{}/system/cancel-update", local_var_configuration.base_path);
     let mut local_var_req_builder =
         create_request!(local_var_client, POST, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
         local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
@@ -3823,6 +3999,10 @@ pub fn system_commit_update_post(
     let local_var_uri_str = format!("{}/system/commit-update", local_var_configuration.base_path);
     let mut local_var_req_builder =
         create_request!(local_var_client, POST, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
         local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
@@ -3860,6 +4040,10 @@ pub fn system_factory_reset_post(
     let local_var_uri_str = format!("{}/system/factory-reset", local_var_configuration.base_path);
     let mut local_var_req_builder =
         create_request!(local_var_client, POST, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
         local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
@@ -3897,6 +4081,10 @@ pub fn system_info_get(
     let local_var_uri_str = format!("{}/system/info", local_var_configuration.base_path);
     let mut local_var_req_builder =
         create_request!(local_var_client, GET, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
         local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
@@ -3936,6 +4124,10 @@ pub fn system_reboot_post(
     let local_var_uri_str = format!("{}/system/reboot", local_var_configuration.base_path);
     let mut local_var_req_builder =
         create_request!(local_var_client, POST, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
         local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
@@ -3975,6 +4167,10 @@ pub fn system_restore_post(
     let local_var_uri_str = format!("{}/system/restore", local_var_configuration.base_path);
     let mut local_var_req_builder =
         create_request!(local_var_client, POST, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
         local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
@@ -4041,6 +4237,10 @@ pub fn system_shutdown_post(
     let local_var_uri_str = format!("{}/system/shutdown", local_var_configuration.base_path);
     let mut local_var_req_builder =
         create_request!(local_var_client, POST, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
         local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
@@ -4079,6 +4279,10 @@ pub fn system_update_post(
     let local_var_uri_str = format!("{}/system/update", local_var_configuration.base_path);
     let mut local_var_req_builder =
         create_request!(local_var_client, POST, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
         local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
@@ -4121,6 +4325,10 @@ pub fn unlock_post(
     let local_var_uri_str = format!("{}/unlock", local_var_configuration.base_path);
     let mut local_var_req_builder =
         create_request!(local_var_client, POST, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
         local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
@@ -4154,6 +4362,10 @@ pub fn users_get(
     let local_var_uri_str = format!("{}/users", local_var_configuration.base_path);
     let mut local_var_req_builder =
         create_request!(local_var_client, GET, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
         local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
@@ -4194,6 +4406,10 @@ pub fn users_post(
     let local_var_uri_str = format!("{}/users", local_var_configuration.base_path);
     let mut local_var_req_builder =
         create_request!(local_var_client, POST, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
         local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
@@ -4239,6 +4455,10 @@ pub fn users_user_id_delete(
     );
     let mut local_var_req_builder =
         create_request!(local_var_client, DELETE, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
         local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
@@ -4281,6 +4501,10 @@ pub fn users_user_id_get(
     );
     let mut local_var_req_builder =
         create_request!(local_var_client, GET, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
         local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
@@ -4326,6 +4550,10 @@ pub fn users_user_id_passphrase_post(
     );
     let mut local_var_req_builder =
         create_request!(local_var_client, POST, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
         local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
@@ -4370,6 +4598,10 @@ pub fn users_user_id_post(
     );
     let mut local_var_req_builder =
         create_request!(local_var_client, POST, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
         local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
@@ -4416,6 +4648,10 @@ pub fn users_user_id_put(
     );
     let mut local_var_req_builder =
         create_request!(local_var_client, PUT, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
         local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
@@ -4459,6 +4695,10 @@ pub fn users_user_id_tags_get(
     );
     let mut local_var_req_builder =
         create_request!(local_var_client, GET, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
         local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
@@ -4505,6 +4745,10 @@ pub fn users_user_id_tags_tag_delete(
     );
     let mut local_var_req_builder =
         create_request!(local_var_client, DELETE, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
         local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
@@ -4549,6 +4793,10 @@ pub fn users_user_id_tags_tag_put(
     );
     let mut local_var_req_builder =
         create_request!(local_var_client, PUT, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
         local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
