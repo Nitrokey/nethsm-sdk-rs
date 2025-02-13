@@ -152,7 +152,6 @@ impl {{{operationIdCamelCase}}}Error {
 {{#notes}}
 /// {{{.}}}
 {{/notes}}
-
 {{#vendorExtensions.x-consumeMultipleMediaTypes}}
 pub fn {{{operationId}}}(configuration: &configuration::Configuration, {{#allParams}} {{#isBodyParam}} body : {{{operationIdCamelCase}}}Body{{/isBodyParam}} 
 {{^isBodyParam}} {{{paramName}}}:  {{^required}}Option<{{/required}}{{#required}}{{#isNullable}}Option<{{/isNullable}}{{/required}}{{#isString}}{{#isArray}}Vec<{{/isArray}}{{^isUuid}}&str{{/isUuid}}{{#isArray}}>{{/isArray}}{{/isString}}{{#isUuid}}{{#isArray}}Vec<{{/isArray}}&str{{#isArray}}>{{/isArray}}{{/isUuid}}{{^isString}}{{^isUuid}}{{^isPrimitiveType}}{{/isPrimitiveType}}{{{dataType}}}{{/isUuid}}{{/isString}}{{^required}}>{{/required}}{{#required}}{{#isNullable}}>{{/isNullable}}{{/required}}{{/isBodyParam}}{{^-last}}, {{/-last}}{{/allParams}}
