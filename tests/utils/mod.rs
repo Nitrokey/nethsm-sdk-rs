@@ -3,19 +3,11 @@
 //   Author: David Runge <dvzrv@archlinux.org>
 //   License: Apache-2.0 OR MIT
 
-use std::fmt::Debug;
-
 use nethsm_sdk_rs::apis::configuration::Configuration;
 use rustainers::{
     runner::{RunOption, Runner},
     ExposedPort, ImageName, RunnableContainer, RunnableContainerBuilder, ToRunnableContainer,
     WaitStrategy,
-};
-use rustls::{
-    client::danger::{HandshakeSignatureValid, ServerCertVerified, ServerCertVerifier},
-    crypto::{self, WebPkiSupportedAlgorithms},
-    pki_types::{CertificateDer, ServerName, UnixTime},
-    DigitallySignedStruct, SignatureScheme,
 };
 use ureq::tls::TlsConfig;
 
