@@ -201,7 +201,7 @@ async fn test_restore() {
 }
 
 fn list_keys(config: &Configuration) -> BTreeSet<String> {
-    default_api::keys_get(&config, None)
+    default_api::keys_get(config, None)
         .unwrap()
         .entity
         .into_iter()
@@ -210,7 +210,7 @@ fn list_keys(config: &Configuration) -> BTreeSet<String> {
 }
 
 fn list_namespaces(config: &Configuration) -> BTreeSet<String> {
-    default_api::namespaces_get(&config)
+    default_api::namespaces_get(config)
         .unwrap()
         .entity
         .into_iter()

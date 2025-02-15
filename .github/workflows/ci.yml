@@ -2,6 +2,9 @@ name: CI
 
 on: [push, pull_request]
 
+env:
+  RUSTFLAGS: --deny warnings
+
 jobs:
   check:
     name: Check library
@@ -42,3 +45,17 @@ jobs:
         components: "rustfmt"
     - name: Run rustfmt
       run: cargo fmt -- --check
+
+  clippy:
+    name: Run clippy
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - uses: actions-rs/toolchain@v1
+      with:
+        profile: minimal
+        toolchain: stable
+        override: true
+        components: "clippy"
+    - name: Run clippy
+      run: cargo clippy --all-features --all-targets

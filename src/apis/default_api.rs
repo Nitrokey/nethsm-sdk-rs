@@ -2012,7 +2012,6 @@ impl UsersUserIdTagsTagPutError {
 }
 
 /// Update the backup passphrase. If the backup passphrase is not set yet, use \"\" as currentPassphrase.  *WARNING:* Like the unlock passphrase, this configuration can't be reset by an admin user without knowing the current value, so if the backup passphrase is lost, neither can it be reset to a new value nor can the created backups be restored.
-
 pub fn config_backup_passphrase_put(
     configuration: &configuration::Configuration,
     backup_passphrase_config: crate::models::BackupPassphraseConfig,
@@ -2056,7 +2055,6 @@ pub fn config_backup_passphrase_put(
 }
 
 /// Get logging configuration. Protocol is always syslog over UDP. Configurable are IP adress and port, log level.
-
 pub fn config_logging_get(
     configuration: &configuration::Configuration,
 ) -> Result<ResponseContent<crate::models::LoggingConfig>, Error<ConfigLoggingGetError>> {
@@ -2097,7 +2095,6 @@ pub fn config_logging_get(
 }
 
 /// Configure log level and destination.
-
 pub fn config_logging_put(
     configuration: &configuration::Configuration,
     logging_config: crate::models::LoggingConfig,
@@ -2138,7 +2135,6 @@ pub fn config_logging_put(
 }
 
 /// Get network configuration. IP address, netmask, router.
-
 pub fn config_network_get(
     configuration: &configuration::Configuration,
 ) -> Result<ResponseContent<crate::models::NetworkConfig>, Error<ConfigNetworkGetError>> {
@@ -2179,7 +2175,6 @@ pub fn config_network_get(
 }
 
 /// Configure network.
-
 pub fn config_network_put(
     configuration: &configuration::Configuration,
     network_config: crate::models::NetworkConfig,
@@ -2220,7 +2215,6 @@ pub fn config_network_put(
 }
 
 /// Get system time.
-
 pub fn config_time_get(
     configuration: &configuration::Configuration,
 ) -> Result<ResponseContent<crate::models::TimeConfig>, Error<ConfigTimeGetError>> {
@@ -2261,7 +2255,6 @@ pub fn config_time_get(
 }
 
 /// Configure system time.
-
 pub fn config_time_put(
     configuration: &configuration::Configuration,
     time_config: crate::models::TimeConfig,
@@ -2302,7 +2295,6 @@ pub fn config_time_put(
 }
 
 /// Get certificate for NetHSMs https API.
-
 pub fn config_tls_cert_pem_get(
     configuration: &configuration::Configuration,
 ) -> Result<ResponseContent<String>, Error<ConfigTlsCertPemGetError>> {
@@ -2343,7 +2335,6 @@ pub fn config_tls_cert_pem_get(
 }
 
 /// Set certificate for NetHSMs https API e.g. to replace self-signed intital certificate.
-
 pub fn config_tls_cert_pem_put(
     configuration: &configuration::Configuration,
     body: &str,
@@ -2384,7 +2375,6 @@ pub fn config_tls_cert_pem_put(
 }
 
 /// Get NetHSM certificate signing request e.g. to replace self-signed intital certificate.
-
 pub fn config_tls_csr_pem_post(
     configuration: &configuration::Configuration,
     distinguished_name: crate::models::DistinguishedName,
@@ -2427,7 +2417,6 @@ pub fn config_tls_csr_pem_post(
 }
 
 /// Generate a new pair of public and private key for NetHSM's https API.
-
 pub fn config_tls_generate_post(
     configuration: &configuration::Configuration,
     tls_key_generate_request_data: crate::models::TlsKeyGenerateRequestData,
@@ -2468,7 +2457,6 @@ pub fn config_tls_generate_post(
 }
 
 /// Get public key for NetHSMs https API.
-
 pub fn config_tls_public_pem_get(
     configuration: &configuration::Configuration,
 ) -> Result<ResponseContent<String>, Error<ConfigTlsPublicPemGetError>> {
@@ -2512,7 +2500,6 @@ pub fn config_tls_public_pem_get(
 }
 
 /// Read unattended boot configuration: is it on or off?
-
 pub fn config_unattended_boot_get(
     configuration: &configuration::Configuration,
 ) -> Result<ResponseContent<crate::models::UnattendedBootConfig>, Error<ConfigUnattendedBootGetError>>
@@ -2557,7 +2544,6 @@ pub fn config_unattended_boot_get(
 }
 
 /// Configure unattended boot: switch it on or off (flip the switch).
-
 pub fn config_unattended_boot_put(
     configuration: &configuration::Configuration,
     unattended_boot_config: crate::models::UnattendedBootConfig,
@@ -2601,7 +2587,6 @@ pub fn config_unattended_boot_put(
 }
 
 /// Update the unlock passphrase.  *WARNING:* The unlock passphrase can't be reset by an admin user without knowing the current value, so if the unlock passphrase is lost, neither can it be reset to a new value nor can the NetHSM be unlocked.
-
 pub fn config_unlock_passphrase_put(
     configuration: &configuration::Configuration,
     unlock_passphrase_config: crate::models::UnlockPassphraseConfig,
@@ -2645,7 +2630,6 @@ pub fn config_unlock_passphrase_put(
 }
 
 /// Retrieve whether NetHSM is fully started but not ready to take traffic. This corresponds to the state *Locked* or *Unprovisioned*.
-
 pub fn health_alive_get(
     configuration: &configuration::Configuration,
 ) -> Result<ResponseContent<()>, Error<HealthAliveGetError>> {
@@ -2679,7 +2663,6 @@ pub fn health_alive_get(
 }
 
 /// Retrieve whether NetHSM is in state *Operational* and thus ready to take traffic.
-
 pub fn health_ready_get(
     configuration: &configuration::Configuration,
 ) -> Result<ResponseContent<()>, Error<HealthReadyGetError>> {
@@ -2713,7 +2696,6 @@ pub fn health_ready_get(
 }
 
 /// Retrieve the state of NetHSM.
-
 pub fn health_state_get(
     configuration: &configuration::Configuration,
 ) -> Result<ResponseContent<crate::models::HealthStateData>, Error<HealthStateGetError>> {
@@ -2749,7 +2731,6 @@ pub fn health_state_get(
 }
 
 /// Information about the vendor and product.
-
 pub fn info_get(
     configuration: &configuration::Configuration,
 ) -> Result<ResponseContent<crate::models::InfoData>, Error<InfoGetError>> {
@@ -2785,7 +2766,6 @@ pub fn info_get(
 }
 
 /// Generate a pair of public and private key and store it in NetHSM. KeyID is optional as a parameter and will be generated by NetHSM if not present. The key is stored in the caller's namespace.
-
 pub fn keys_generate_post(
     configuration: &configuration::Configuration,
     key_generate_request_data: crate::models::KeyGenerateRequestData,
@@ -2828,7 +2808,6 @@ pub fn keys_generate_post(
 }
 
 /// Get a list of the identifiers of all keys that are currently stored in NetHSM. If the caller is in a namespace, only keys in that namespace are returned. Separate requests need to be made to request the individual key data.
-
 pub fn keys_get(
     configuration: &configuration::Configuration,
     filter: Option<&str>,
@@ -2874,7 +2853,6 @@ pub fn keys_get(
 }
 
 /// Delete the certificate.
-
 pub fn keys_key_id_cert_delete(
     configuration: &configuration::Configuration,
     key_id: &str,
@@ -2918,7 +2896,6 @@ pub fn keys_key_id_cert_delete(
 }
 
 /// Retrieve a stored certificate in the exact format it was stored.
-
 pub fn keys_key_id_cert_get(
     configuration: &configuration::Configuration,
     key_id: &str,
@@ -2964,7 +2941,6 @@ pub fn keys_key_id_cert_get(
 }
 
 /// Store a certificate. Maximum size 1MB. The Content-Type must be application/octet-stream.
-
 pub fn keys_key_id_cert_put(
     configuration: &configuration::Configuration,
     key_id: &str,
@@ -3011,7 +2987,6 @@ pub fn keys_key_id_cert_put(
 }
 
 /// Retrieve a certificate signing request in PEM format.
-
 pub fn keys_key_id_csr_pem_post(
     configuration: &configuration::Configuration,
     key_id: &str,
@@ -3059,7 +3034,6 @@ pub fn keys_key_id_csr_pem_post(
 }
 
 /// Decrypt an encrypted message with the secret key.
-
 pub fn keys_key_id_decrypt_post(
     configuration: &configuration::Configuration,
     key_id: &str,
@@ -3107,7 +3081,6 @@ pub fn keys_key_id_decrypt_post(
 }
 
 /// Delete a pair of public and private key.
-
 pub fn keys_key_id_delete(
     configuration: &configuration::Configuration,
     key_id: &str,
@@ -3151,7 +3124,6 @@ pub fn keys_key_id_delete(
 }
 
 /// Encrypt a message with the secret key.
-
 pub fn keys_key_id_encrypt_post(
     configuration: &configuration::Configuration,
     key_id: &str,
@@ -3199,7 +3171,6 @@ pub fn keys_key_id_encrypt_post(
 }
 
 /// Retrieve the public key.
-
 pub fn keys_key_id_get(
     configuration: &configuration::Configuration,
     key_id: &str,
@@ -3245,7 +3216,6 @@ pub fn keys_key_id_get(
 }
 
 /// Retrieve public key in PEM format.
-
 pub fn keys_key_id_public_pem_get(
     configuration: &configuration::Configuration,
     key_id: &str,
@@ -3291,7 +3261,6 @@ pub fn keys_key_id_public_pem_get(
 }
 
 /// Import a private key into NetHSM and store it under the *KeyID* path. The public key will be automatically derived. The parameters of the key can be passed as a PEM file or a JSON object. The key is stored in the caller's namespace.
-
 pub fn keys_key_id_put(
     configuration: &configuration::Configuration,
     key_id: &str,
@@ -3343,7 +3312,6 @@ pub fn keys_key_id_put(
 }
 
 /// Delete a tag from the authorized set
-
 pub fn keys_key_id_restrictions_tags_tag_delete(
     configuration: &configuration::Configuration,
     tag: &str,
@@ -3389,7 +3357,6 @@ pub fn keys_key_id_restrictions_tags_tag_delete(
 }
 
 /// Add a tag to the authorized set
-
 pub fn keys_key_id_restrictions_tags_tag_put(
     configuration: &configuration::Configuration,
     tag: &str,
@@ -3435,7 +3402,6 @@ pub fn keys_key_id_restrictions_tags_tag_put(
 }
 
 /// Sign a message with the secret key.
-
 pub fn keys_key_id_sign_post(
     configuration: &configuration::Configuration,
     key_id: &str,
@@ -3483,7 +3449,6 @@ pub fn keys_key_id_sign_post(
 }
 
 /// Import a private key into NetHSM and let NetHSM generate a KeyID. The public key will be automatically derived. The parameters of the key can be passed as a PEM file or a JSON object. The key is stored in the caller's namespace.
-
 pub fn keys_post(
     configuration: &configuration::Configuration,
     body: KeysPostBody,
@@ -3532,7 +3497,6 @@ pub fn keys_post(
 }
 
 /// Brings an *Operational* NetHSM into *Locked* state.
-
 pub fn lock_post(
     configuration: &configuration::Configuration,
 ) -> Result<ResponseContent<()>, Error<LockPostError>> {
@@ -3571,7 +3535,6 @@ pub fn lock_post(
 }
 
 /// Get metrics. Precondition: NetHSM is *Operational* and a **R-Metrics** can be authenticated.
-
 pub fn metrics_get(
     configuration: &configuration::Configuration,
 ) -> Result<ResponseContent<serde_json::Value>, Error<MetricsGetError>> {
@@ -3612,7 +3575,6 @@ pub fn metrics_get(
 }
 
 /// Get a list of all created namespaces. Note that users may be assigned namespaces not present in this list, as long as the namespace has not been created.
-
 pub fn namespaces_get(
     configuration: &configuration::Configuration,
 ) -> Result<ResponseContent<Vec<crate::models::NamespaceItem>>, Error<NamespacesGetError>> {
@@ -3653,7 +3615,6 @@ pub fn namespaces_get(
 }
 
 /// Delete a namespace. **WARNING: all keys from that namespace are deleted.**
-
 pub fn namespaces_namespace_id_delete(
     configuration: &configuration::Configuration,
     namespace_id: &str,
@@ -3697,7 +3658,6 @@ pub fn namespaces_namespace_id_delete(
 }
 
 /// Create a namespace on keyfender. All users in that namespace can now be used, and all user management power is delegated to admins in that namespace.
-
 pub fn namespaces_namespace_id_put(
     configuration: &configuration::Configuration,
     namespace_id: &str,
@@ -3741,7 +3701,6 @@ pub fn namespaces_namespace_id_put(
 }
 
 /// Initial provisioning, only available in *Unprovisioned* state.  *WARNING:* The unlock passphrase can't be reset by an admin user without knowing the current value, so if the unlock passphrase is lost, neither can it be reset to a new value nor can the NetHSM be unlocked.
-
 pub fn provision_post(
     configuration: &configuration::Configuration,
     provision_request_data: crate::models::ProvisionRequestData,
@@ -3777,7 +3736,6 @@ pub fn provision_post(
 }
 
 /// Retrieve cryptographically strong random bytes from NetHSM. Precondition: NetHSM is *Operational* and a **R-Operator** can be authenticated.
-
 pub fn random_post(
     configuration: &configuration::Configuration,
     random_request_data: crate::models::RandomRequestData,
@@ -3820,7 +3778,6 @@ pub fn random_post(
 }
 
 /// Back up the key store to a backup file.
-
 pub fn system_backup_post(
     configuration: &configuration::Configuration,
 ) -> Result<ResponseContent<std::vec::Vec<u8>>, Error<SystemBackupPostError>> {
@@ -3861,7 +3818,6 @@ pub fn system_backup_post(
 }
 
 /// Cancel update of NetHSM software.
-
 pub fn system_cancel_update_post(
     configuration: &configuration::Configuration,
 ) -> Result<ResponseContent<()>, Error<SystemCancelUpdatePostError>> {
@@ -3900,7 +3856,6 @@ pub fn system_cancel_update_post(
 }
 
 /// Commit update of NetHSM software.
-
 pub fn system_commit_update_post(
     configuration: &configuration::Configuration,
 ) -> Result<ResponseContent<()>, Error<SystemCommitUpdatePostError>> {
@@ -3939,7 +3894,6 @@ pub fn system_commit_update_post(
 }
 
 /// Reset NetHSM to factory settings.
-
 pub fn system_factory_reset_post(
     configuration: &configuration::Configuration,
 ) -> Result<ResponseContent<()>, Error<SystemFactoryResetPostError>> {
@@ -3978,7 +3932,6 @@ pub fn system_factory_reset_post(
 }
 
 /// Get detailed system information, including firmware, system, and hardware version.
-
 pub fn system_info_get(
     configuration: &configuration::Configuration,
 ) -> Result<ResponseContent<crate::models::SystemInfo>, Error<SystemInfoGetError>> {
@@ -4019,7 +3972,6 @@ pub fn system_info_get(
 }
 
 /// Reboot NetHSM.
-
 pub fn system_reboot_post(
     configuration: &configuration::Configuration,
 ) -> Result<ResponseContent<()>, Error<SystemRebootPostError>> {
@@ -4058,7 +4010,6 @@ pub fn system_reboot_post(
 }
 
 /// Restore the key store and user store from a backup file. If NetHSM is *Unprovisioned*, then the configuration is restored.
-
 pub fn system_restore_post(
     configuration: &configuration::Configuration,
     arguments: Option<crate::models::RestoreRequestArguments>,
@@ -4127,7 +4078,6 @@ pub fn system_restore_post(
 }
 
 /// Shut down NetHSM.
-
 pub fn system_shutdown_post(
     configuration: &configuration::Configuration,
 ) -> Result<ResponseContent<()>, Error<SystemShutdownPostError>> {
@@ -4166,7 +4116,6 @@ pub fn system_shutdown_post(
 }
 
 /// Update NetHSM software.
-
 pub fn system_update_post(
     configuration: &configuration::Configuration,
     body: std::vec::Vec<u8>,
@@ -4210,7 +4159,6 @@ pub fn system_update_post(
 }
 
 /// Brings a *Locked* NetHSM into *Operational* state.
-
 pub fn unlock_post(
     configuration: &configuration::Configuration,
     unlock_request_data: crate::models::UnlockRequestData,
@@ -4246,7 +4194,6 @@ pub fn unlock_post(
 }
 
 /// Get a list of all user ids that have accounts on NetHSM. If the caller is in a namespace, return only users in that namespace.
-
 pub fn users_get(
     configuration: &configuration::Configuration,
 ) -> Result<ResponseContent<Vec<crate::models::UserItem>>, Error<UsersGetError>> {
@@ -4287,7 +4234,6 @@ pub fn users_get(
 }
 
 /// Create a new user on NetHSM, inheriting the caller's namespace. The user-ID is generated by NetHSM.
-
 pub fn users_post(
     configuration: &configuration::Configuration,
     user_post_data: crate::models::UserPostData,
@@ -4330,7 +4276,6 @@ pub fn users_post(
 }
 
 /// Delete a user from keyfender.
-
 pub fn users_user_id_delete(
     configuration: &configuration::Configuration,
     user_id: &str,
@@ -4374,7 +4319,6 @@ pub fn users_user_id_delete(
 }
 
 /// Get user info: name and role.
-
 pub fn users_user_id_get(
     configuration: &configuration::Configuration,
     user_id: &str,
@@ -4420,7 +4364,6 @@ pub fn users_user_id_get(
 }
 
 /// Update the passphrase.
-
 pub fn users_user_id_passphrase_post(
     configuration: &configuration::Configuration,
     user_id: &str,
@@ -4466,7 +4409,6 @@ pub fn users_user_id_passphrase_post(
 }
 
 /// Create a new user on NetHSM, in the namespace specified as a prefix in the path with the format 'namespace~'. For example, a POST request on \"https://nethsm.local/v1/users/namespace1~\" will generate a user-ID and create that user in \"namespace1\". The namespace prefix *must* be present: for creating users without a namespace, use a POST on \"/v1/users\".
-
 pub fn users_user_id_post(
     configuration: &configuration::Configuration,
     user_id: &str,
@@ -4514,7 +4456,6 @@ pub fn users_user_id_post(
 }
 
 /// Create a user on keyfender. The new user must either be in the same namespace as the caller, or be in a namespace not created yet if the caller has no namespace.
-
 pub fn users_user_id_put(
     configuration: &configuration::Configuration,
     user_id: &str,
@@ -4560,7 +4501,6 @@ pub fn users_user_id_put(
 }
 
 /// Get the list of tags set to an Operator user.
-
 pub fn users_user_id_tags_get(
     configuration: &configuration::Configuration,
     user_id: &str,
@@ -4606,7 +4546,6 @@ pub fn users_user_id_tags_get(
 }
 
 /// Delete a tag from the Operator user
-
 pub fn users_user_id_tags_tag_delete(
     configuration: &configuration::Configuration,
     user_id: &str,
@@ -4652,7 +4591,6 @@ pub fn users_user_id_tags_tag_delete(
 }
 
 /// Add a tag to the Operator user.
-
 pub fn users_user_id_tags_tag_put(
     configuration: &configuration::Configuration,
     user_id: &str,
