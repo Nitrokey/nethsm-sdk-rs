@@ -2,7 +2,9 @@
 
 ## Unreleased
 
--
+- Update to  ureq 3.0.0 ([#35][])
+
+[#35]: https://github.com/Nitrokey/nethsm-sdk-rs/pull/35
 
 [All Changes](https://github.com/Nitrokey/nethsm-sdk-rs/compare/v1.1.1...HEAD)
 
