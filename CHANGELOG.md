@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## [v2.0.0](https://github.com/Nitrokey/nethsm-sdk-rs/releases/tag/v2.0.0) (2025-02-17)
+
 - Update to  ureq 3.0.0 ([#35][])
 
 [#35]: https://github.com/Nitrokey/nethsm-sdk-rs/pull/35
