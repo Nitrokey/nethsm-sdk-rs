@@ -2024,26 +2024,28 @@ pub fn config_backup_passphrase_put(
         "{}/config/backup-passphrase",
         local_var_configuration.base_path
     );
-    let mut local_var_req_builder = local_var_client.request("PUT", local_var_uri_str.as_str());
+    let mut local_var_req_builder =
+        create_request!(local_var_client, PUT, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
-        local_var_req_builder = local_var_req_builder.set("user-agent", local_var_user_agent);
+        local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
     }
     if let Some(ref local_var_auth_conf) = local_var_configuration.basic_auth {
         let value = super::basic_auth(local_var_auth_conf);
 
-        local_var_req_builder = local_var_req_builder.set("authorization", &value);
+        local_var_req_builder = local_var_req_builder.header("authorization", &value);
     };
 
-    local_var_req_builder = local_var_req_builder.set("content-type", "application/json");
+    local_var_req_builder = local_var_req_builder.header("content-type", "application/json");
     let local_var_result = local_var_req_builder.send_json(backup_passphrase_config);
 
-    let local_var_resp = local_var_result.or_else(|err| match err {
-        ureq::Error::Status(_status, resp) => Ok(resp),
-        _ => Err(err),
-    })?;
+    let local_var_resp = local_var_result?;
 
-    let local_var_status = local_var_resp.status();
+    let local_var_status = local_var_resp.status().as_u16();
     if local_var_status < 400 {
         ResponseContent::unit(local_var_resp)
     } else {
@@ -2063,27 +2065,29 @@ pub fn config_logging_get(
     let local_var_client = &local_var_configuration.client;
 
     let local_var_uri_str = format!("{}/config/logging", local_var_configuration.base_path);
-    let mut local_var_req_builder = local_var_client.request("GET", local_var_uri_str.as_str());
+    let mut local_var_req_builder =
+        create_request!(local_var_client, GET, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
-        local_var_req_builder = local_var_req_builder.set("user-agent", local_var_user_agent);
+        local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
     }
     if let Some(ref local_var_auth_conf) = local_var_configuration.basic_auth {
         let value = super::basic_auth(local_var_auth_conf);
 
-        local_var_req_builder = local_var_req_builder.set("authorization", &value);
+        local_var_req_builder = local_var_req_builder.header("authorization", &value);
     };
     let accept_str = "application/json";
-    local_var_req_builder = local_var_req_builder.set("accept", accept_str);
+    local_var_req_builder = local_var_req_builder.header("accept", accept_str);
 
-    let local_var_result = local_var_req_builder.call();
+    let local_var_result = local_var_req_builder.send_empty();
 
-    let local_var_resp = local_var_result.or_else(|err| match err {
-        ureq::Error::Status(_status, resp) => Ok(resp),
-        _ => Err(err),
-    })?;
+    let local_var_resp = local_var_result?;
 
-    let local_var_status = local_var_resp.status();
+    let local_var_status = local_var_resp.status().as_u16();
     if local_var_status < 400 {
         ResponseContent::deserialized(local_var_resp)
     } else {
@@ -2104,26 +2108,28 @@ pub fn config_logging_put(
     let local_var_client = &local_var_configuration.client;
 
     let local_var_uri_str = format!("{}/config/logging", local_var_configuration.base_path);
-    let mut local_var_req_builder = local_var_client.request("PUT", local_var_uri_str.as_str());
+    let mut local_var_req_builder =
+        create_request!(local_var_client, PUT, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
-        local_var_req_builder = local_var_req_builder.set("user-agent", local_var_user_agent);
+        local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
     }
     if let Some(ref local_var_auth_conf) = local_var_configuration.basic_auth {
         let value = super::basic_auth(local_var_auth_conf);
 
-        local_var_req_builder = local_var_req_builder.set("authorization", &value);
+        local_var_req_builder = local_var_req_builder.header("authorization", &value);
     };
 
-    local_var_req_builder = local_var_req_builder.set("content-type", "application/json");
+    local_var_req_builder = local_var_req_builder.header("content-type", "application/json");
     let local_var_result = local_var_req_builder.send_json(logging_config);
 
-    let local_var_resp = local_var_result.or_else(|err| match err {
-        ureq::Error::Status(_status, resp) => Ok(resp),
-        _ => Err(err),
-    })?;
+    let local_var_resp = local_var_result?;
 
-    let local_var_status = local_var_resp.status();
+    let local_var_status = local_var_resp.status().as_u16();
     if local_var_status < 400 {
         ResponseContent::unit(local_var_resp)
     } else {
@@ -2143,27 +2149,29 @@ pub fn config_network_get(
     let local_var_client = &local_var_configuration.client;
 
     let local_var_uri_str = format!("{}/config/network", local_var_configuration.base_path);
-    let mut local_var_req_builder = local_var_client.request("GET", local_var_uri_str.as_str());
+    let mut local_var_req_builder =
+        create_request!(local_var_client, GET, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
-        local_var_req_builder = local_var_req_builder.set("user-agent", local_var_user_agent);
+        local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
     }
     if let Some(ref local_var_auth_conf) = local_var_configuration.basic_auth {
         let value = super::basic_auth(local_var_auth_conf);
 
-        local_var_req_builder = local_var_req_builder.set("authorization", &value);
+        local_var_req_builder = local_var_req_builder.header("authorization", &value);
     };
     let accept_str = "application/json";
-    local_var_req_builder = local_var_req_builder.set("accept", accept_str);
+    local_var_req_builder = local_var_req_builder.header("accept", accept_str);
 
-    let local_var_result = local_var_req_builder.call();
+    let local_var_result = local_var_req_builder.send_empty();
 
-    let local_var_resp = local_var_result.or_else(|err| match err {
-        ureq::Error::Status(_status, resp) => Ok(resp),
-        _ => Err(err),
-    })?;
+    let local_var_resp = local_var_result?;
 
-    let local_var_status = local_var_resp.status();
+    let local_var_status = local_var_resp.status().as_u16();
     if local_var_status < 400 {
         ResponseContent::deserialized(local_var_resp)
     } else {
@@ -2184,26 +2192,28 @@ pub fn config_network_put(
     let local_var_client = &local_var_configuration.client;
 
     let local_var_uri_str = format!("{}/config/network", local_var_configuration.base_path);
-    let mut local_var_req_builder = local_var_client.request("PUT", local_var_uri_str.as_str());
+    let mut local_var_req_builder =
+        create_request!(local_var_client, PUT, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
-        local_var_req_builder = local_var_req_builder.set("user-agent", local_var_user_agent);
+        local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
     }
     if let Some(ref local_var_auth_conf) = local_var_configuration.basic_auth {
         let value = super::basic_auth(local_var_auth_conf);
 
-        local_var_req_builder = local_var_req_builder.set("authorization", &value);
+        local_var_req_builder = local_var_req_builder.header("authorization", &value);
     };
 
-    local_var_req_builder = local_var_req_builder.set("content-type", "application/json");
+    local_var_req_builder = local_var_req_builder.header("content-type", "application/json");
     let local_var_result = local_var_req_builder.send_json(network_config);
 
-    let local_var_resp = local_var_result.or_else(|err| match err {
-        ureq::Error::Status(_status, resp) => Ok(resp),
-        _ => Err(err),
-    })?;
+    let local_var_resp = local_var_result?;
 
-    let local_var_status = local_var_resp.status();
+    let local_var_status = local_var_resp.status().as_u16();
     if local_var_status < 400 {
         ResponseContent::unit(local_var_resp)
     } else {
@@ -2223,27 +2233,29 @@ pub fn config_time_get(
     let local_var_client = &local_var_configuration.client;
 
     let local_var_uri_str = format!("{}/config/time", local_var_configuration.base_path);
-    let mut local_var_req_builder = local_var_client.request("GET", local_var_uri_str.as_str());
+    let mut local_var_req_builder =
+        create_request!(local_var_client, GET, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
-        local_var_req_builder = local_var_req_builder.set("user-agent", local_var_user_agent);
+        local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
     }
     if let Some(ref local_var_auth_conf) = local_var_configuration.basic_auth {
         let value = super::basic_auth(local_var_auth_conf);
 
-        local_var_req_builder = local_var_req_builder.set("authorization", &value);
+        local_var_req_builder = local_var_req_builder.header("authorization", &value);
     };
     let accept_str = "application/json";
-    local_var_req_builder = local_var_req_builder.set("accept", accept_str);
+    local_var_req_builder = local_var_req_builder.header("accept", accept_str);
 
-    let local_var_result = local_var_req_builder.call();
+    let local_var_result = local_var_req_builder.send_empty();
 
-    let local_var_resp = local_var_result.or_else(|err| match err {
-        ureq::Error::Status(_status, resp) => Ok(resp),
-        _ => Err(err),
-    })?;
+    let local_var_resp = local_var_result?;
 
-    let local_var_status = local_var_resp.status();
+    let local_var_status = local_var_resp.status().as_u16();
     if local_var_status < 400 {
         ResponseContent::deserialized(local_var_resp)
     } else {
@@ -2264,26 +2276,28 @@ pub fn config_time_put(
     let local_var_client = &local_var_configuration.client;
 
     let local_var_uri_str = format!("{}/config/time", local_var_configuration.base_path);
-    let mut local_var_req_builder = local_var_client.request("PUT", local_var_uri_str.as_str());
+    let mut local_var_req_builder =
+        create_request!(local_var_client, PUT, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
-        local_var_req_builder = local_var_req_builder.set("user-agent", local_var_user_agent);
+        local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
     }
     if let Some(ref local_var_auth_conf) = local_var_configuration.basic_auth {
         let value = super::basic_auth(local_var_auth_conf);
 
-        local_var_req_builder = local_var_req_builder.set("authorization", &value);
+        local_var_req_builder = local_var_req_builder.header("authorization", &value);
     };
 
-    local_var_req_builder = local_var_req_builder.set("content-type", "application/json");
+    local_var_req_builder = local_var_req_builder.header("content-type", "application/json");
     let local_var_result = local_var_req_builder.send_json(time_config);
 
-    let local_var_resp = local_var_result.or_else(|err| match err {
-        ureq::Error::Status(_status, resp) => Ok(resp),
-        _ => Err(err),
-    })?;
+    let local_var_resp = local_var_result?;
 
-    let local_var_status = local_var_resp.status();
+    let local_var_status = local_var_resp.status().as_u16();
     if local_var_status < 400 {
         ResponseContent::unit(local_var_resp)
     } else {
@@ -2303,27 +2317,29 @@ pub fn config_tls_cert_pem_get(
     let local_var_client = &local_var_configuration.client;
 
     let local_var_uri_str = format!("{}/config/tls/cert.pem", local_var_configuration.base_path);
-    let mut local_var_req_builder = local_var_client.request("GET", local_var_uri_str.as_str());
+    let mut local_var_req_builder =
+        create_request!(local_var_client, GET, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
-        local_var_req_builder = local_var_req_builder.set("user-agent", local_var_user_agent);
+        local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
     }
     if let Some(ref local_var_auth_conf) = local_var_configuration.basic_auth {
         let value = super::basic_auth(local_var_auth_conf);
 
-        local_var_req_builder = local_var_req_builder.set("authorization", &value);
+        local_var_req_builder = local_var_req_builder.header("authorization", &value);
     };
     let accept_str = "application/x-pem-file";
-    local_var_req_builder = local_var_req_builder.set("accept", accept_str);
+    local_var_req_builder = local_var_req_builder.header("accept", accept_str);
 
-    let local_var_result = local_var_req_builder.call();
+    let local_var_result = local_var_req_builder.send_empty();
 
-    let local_var_resp = local_var_result.or_else(|err| match err {
-        ureq::Error::Status(_status, resp) => Ok(resp),
-        _ => Err(err),
-    })?;
+    let local_var_resp = local_var_result?;
 
-    let local_var_status = local_var_resp.status();
+    let local_var_status = local_var_resp.status().as_u16();
     if local_var_status < 400 {
         ResponseContent::string(local_var_resp)
     } else {
@@ -2344,26 +2360,28 @@ pub fn config_tls_cert_pem_put(
     let local_var_client = &local_var_configuration.client;
 
     let local_var_uri_str = format!("{}/config/tls/cert.pem", local_var_configuration.base_path);
-    let mut local_var_req_builder = local_var_client.request("PUT", local_var_uri_str.as_str());
+    let mut local_var_req_builder =
+        create_request!(local_var_client, PUT, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
-        local_var_req_builder = local_var_req_builder.set("user-agent", local_var_user_agent);
+        local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
     }
     if let Some(ref local_var_auth_conf) = local_var_configuration.basic_auth {
         let value = super::basic_auth(local_var_auth_conf);
 
-        local_var_req_builder = local_var_req_builder.set("authorization", &value);
+        local_var_req_builder = local_var_req_builder.header("authorization", &value);
     };
 
-    local_var_req_builder = local_var_req_builder.set("content-type", "application/x-pem-file");
-    let local_var_result = local_var_req_builder.send_string(body);
+    local_var_req_builder = local_var_req_builder.header("content-type", "application/x-pem-file");
+    let local_var_result = local_var_req_builder.send(body);
 
-    let local_var_resp = local_var_result.or_else(|err| match err {
-        ureq::Error::Status(_status, resp) => Ok(resp),
-        _ => Err(err),
-    })?;
+    let local_var_resp = local_var_result?;
 
-    let local_var_status = local_var_resp.status();
+    let local_var_status = local_var_resp.status().as_u16();
     if local_var_status < 400 {
         ResponseContent::unit(local_var_resp)
     } else {
@@ -2384,28 +2402,30 @@ pub fn config_tls_csr_pem_post(
     let local_var_client = &local_var_configuration.client;
 
     let local_var_uri_str = format!("{}/config/tls/csr.pem", local_var_configuration.base_path);
-    let mut local_var_req_builder = local_var_client.request("POST", local_var_uri_str.as_str());
+    let mut local_var_req_builder =
+        create_request!(local_var_client, POST, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
-        local_var_req_builder = local_var_req_builder.set("user-agent", local_var_user_agent);
+        local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
     }
     if let Some(ref local_var_auth_conf) = local_var_configuration.basic_auth {
         let value = super::basic_auth(local_var_auth_conf);
 
-        local_var_req_builder = local_var_req_builder.set("authorization", &value);
+        local_var_req_builder = local_var_req_builder.header("authorization", &value);
     };
     let accept_str = "application/x-pem-file";
-    local_var_req_builder = local_var_req_builder.set("accept", accept_str);
+    local_var_req_builder = local_var_req_builder.header("accept", accept_str);
 
-    local_var_req_builder = local_var_req_builder.set("content-type", "application/json");
+    local_var_req_builder = local_var_req_builder.header("content-type", "application/json");
     let local_var_result = local_var_req_builder.send_json(distinguished_name);
 
-    let local_var_resp = local_var_result.or_else(|err| match err {
-        ureq::Error::Status(_status, resp) => Ok(resp),
-        _ => Err(err),
-    })?;
+    let local_var_resp = local_var_result?;
 
-    let local_var_status = local_var_resp.status();
+    let local_var_status = local_var_resp.status().as_u16();
     if local_var_status < 400 {
         ResponseContent::string(local_var_resp)
     } else {
@@ -2426,26 +2446,28 @@ pub fn config_tls_generate_post(
     let local_var_client = &local_var_configuration.client;
 
     let local_var_uri_str = format!("{}/config/tls/generate", local_var_configuration.base_path);
-    let mut local_var_req_builder = local_var_client.request("POST", local_var_uri_str.as_str());
+    let mut local_var_req_builder =
+        create_request!(local_var_client, POST, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
-        local_var_req_builder = local_var_req_builder.set("user-agent", local_var_user_agent);
+        local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
     }
     if let Some(ref local_var_auth_conf) = local_var_configuration.basic_auth {
         let value = super::basic_auth(local_var_auth_conf);
 
-        local_var_req_builder = local_var_req_builder.set("authorization", &value);
+        local_var_req_builder = local_var_req_builder.header("authorization", &value);
     };
 
-    local_var_req_builder = local_var_req_builder.set("content-type", "application/json");
+    local_var_req_builder = local_var_req_builder.header("content-type", "application/json");
     let local_var_result = local_var_req_builder.send_json(tls_key_generate_request_data);
 
-    let local_var_resp = local_var_result.or_else(|err| match err {
-        ureq::Error::Status(_status, resp) => Ok(resp),
-        _ => Err(err),
-    })?;
+    let local_var_resp = local_var_result?;
 
-    let local_var_status = local_var_resp.status();
+    let local_var_status = local_var_resp.status().as_u16();
     if local_var_status < 400 {
         ResponseContent::unit(local_var_resp)
     } else {
@@ -2468,27 +2490,29 @@ pub fn config_tls_public_pem_get(
         "{}/config/tls/public.pem",
         local_var_configuration.base_path
     );
-    let mut local_var_req_builder = local_var_client.request("GET", local_var_uri_str.as_str());
+    let mut local_var_req_builder =
+        create_request!(local_var_client, GET, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
-        local_var_req_builder = local_var_req_builder.set("user-agent", local_var_user_agent);
+        local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
     }
     if let Some(ref local_var_auth_conf) = local_var_configuration.basic_auth {
         let value = super::basic_auth(local_var_auth_conf);
 
-        local_var_req_builder = local_var_req_builder.set("authorization", &value);
+        local_var_req_builder = local_var_req_builder.header("authorization", &value);
     };
     let accept_str = "application/x-pem-file";
-    local_var_req_builder = local_var_req_builder.set("accept", accept_str);
+    local_var_req_builder = local_var_req_builder.header("accept", accept_str);
 
-    let local_var_result = local_var_req_builder.call();
+    let local_var_result = local_var_req_builder.send_empty();
 
-    let local_var_resp = local_var_result.or_else(|err| match err {
-        ureq::Error::Status(_status, resp) => Ok(resp),
-        _ => Err(err),
-    })?;
+    let local_var_resp = local_var_result?;
 
-    let local_var_status = local_var_resp.status();
+    let local_var_status = local_var_resp.status().as_u16();
     if local_var_status < 400 {
         ResponseContent::string(local_var_resp)
     } else {
@@ -2512,27 +2536,29 @@ pub fn config_unattended_boot_get(
         "{}/config/unattended-boot",
         local_var_configuration.base_path
     );
-    let mut local_var_req_builder = local_var_client.request("GET", local_var_uri_str.as_str());
+    let mut local_var_req_builder =
+        create_request!(local_var_client, GET, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
-        local_var_req_builder = local_var_req_builder.set("user-agent", local_var_user_agent);
+        local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
     }
     if let Some(ref local_var_auth_conf) = local_var_configuration.basic_auth {
         let value = super::basic_auth(local_var_auth_conf);
 
-        local_var_req_builder = local_var_req_builder.set("authorization", &value);
+        local_var_req_builder = local_var_req_builder.header("authorization", &value);
     };
     let accept_str = "application/json";
-    local_var_req_builder = local_var_req_builder.set("accept", accept_str);
+    local_var_req_builder = local_var_req_builder.header("accept", accept_str);
 
-    let local_var_result = local_var_req_builder.call();
+    let local_var_result = local_var_req_builder.send_empty();
 
-    let local_var_resp = local_var_result.or_else(|err| match err {
-        ureq::Error::Status(_status, resp) => Ok(resp),
-        _ => Err(err),
-    })?;
+    let local_var_resp = local_var_result?;
 
-    let local_var_status = local_var_resp.status();
+    let local_var_status = local_var_resp.status().as_u16();
     if local_var_status < 400 {
         ResponseContent::deserialized(local_var_resp)
     } else {
@@ -2556,26 +2582,28 @@ pub fn config_unattended_boot_put(
         "{}/config/unattended-boot",
         local_var_configuration.base_path
     );
-    let mut local_var_req_builder = local_var_client.request("PUT", local_var_uri_str.as_str());
+    let mut local_var_req_builder =
+        create_request!(local_var_client, PUT, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
-        local_var_req_builder = local_var_req_builder.set("user-agent", local_var_user_agent);
+        local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
     }
     if let Some(ref local_var_auth_conf) = local_var_configuration.basic_auth {
         let value = super::basic_auth(local_var_auth_conf);
 
-        local_var_req_builder = local_var_req_builder.set("authorization", &value);
+        local_var_req_builder = local_var_req_builder.header("authorization", &value);
     };
 
-    local_var_req_builder = local_var_req_builder.set("content-type", "application/json");
+    local_var_req_builder = local_var_req_builder.header("content-type", "application/json");
     let local_var_result = local_var_req_builder.send_json(unattended_boot_config);
 
-    let local_var_resp = local_var_result.or_else(|err| match err {
-        ureq::Error::Status(_status, resp) => Ok(resp),
-        _ => Err(err),
-    })?;
+    let local_var_resp = local_var_result?;
 
-    let local_var_status = local_var_resp.status();
+    let local_var_status = local_var_resp.status().as_u16();
     if local_var_status < 400 {
         ResponseContent::unit(local_var_resp)
     } else {
@@ -2599,26 +2627,28 @@ pub fn config_unlock_passphrase_put(
         "{}/config/unlock-passphrase",
         local_var_configuration.base_path
     );
-    let mut local_var_req_builder = local_var_client.request("PUT", local_var_uri_str.as_str());
+    let mut local_var_req_builder =
+        create_request!(local_var_client, PUT, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
-        local_var_req_builder = local_var_req_builder.set("user-agent", local_var_user_agent);
+        local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
     }
     if let Some(ref local_var_auth_conf) = local_var_configuration.basic_auth {
         let value = super::basic_auth(local_var_auth_conf);
 
-        local_var_req_builder = local_var_req_builder.set("authorization", &value);
+        local_var_req_builder = local_var_req_builder.header("authorization", &value);
     };
 
-    local_var_req_builder = local_var_req_builder.set("content-type", "application/json");
+    local_var_req_builder = local_var_req_builder.header("content-type", "application/json");
     let local_var_result = local_var_req_builder.send_json(unlock_passphrase_config);
 
-    let local_var_resp = local_var_result.or_else(|err| match err {
-        ureq::Error::Status(_status, resp) => Ok(resp),
-        _ => Err(err),
-    })?;
+    let local_var_resp = local_var_result?;
 
-    let local_var_status = local_var_resp.status();
+    let local_var_status = local_var_resp.status().as_u16();
     if local_var_status < 400 {
         ResponseContent::unit(local_var_resp)
     } else {
@@ -2638,20 +2668,22 @@ pub fn health_alive_get(
     let local_var_client = &local_var_configuration.client;
 
     let local_var_uri_str = format!("{}/health/alive", local_var_configuration.base_path);
-    let mut local_var_req_builder = local_var_client.request("GET", local_var_uri_str.as_str());
+    let mut local_var_req_builder =
+        create_request!(local_var_client, GET, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
-        local_var_req_builder = local_var_req_builder.set("user-agent", local_var_user_agent);
+        local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
     }
 
-    let local_var_result = local_var_req_builder.call();
+    let local_var_result = local_var_req_builder.send_empty();
 
-    let local_var_resp = local_var_result.or_else(|err| match err {
-        ureq::Error::Status(_status, resp) => Ok(resp),
-        _ => Err(err),
-    })?;
+    let local_var_resp = local_var_result?;
 
-    let local_var_status = local_var_resp.status();
+    let local_var_status = local_var_resp.status().as_u16();
     if local_var_status < 400 {
         ResponseContent::unit(local_var_resp)
     } else {
@@ -2671,20 +2703,22 @@ pub fn health_ready_get(
     let local_var_client = &local_var_configuration.client;
 
     let local_var_uri_str = format!("{}/health/ready", local_var_configuration.base_path);
-    let mut local_var_req_builder = local_var_client.request("GET", local_var_uri_str.as_str());
+    let mut local_var_req_builder =
+        create_request!(local_var_client, GET, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
-        local_var_req_builder = local_var_req_builder.set("user-agent", local_var_user_agent);
+        local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
     }
 
-    let local_var_result = local_var_req_builder.call();
+    let local_var_result = local_var_req_builder.send_empty();
 
-    let local_var_resp = local_var_result.or_else(|err| match err {
-        ureq::Error::Status(_status, resp) => Ok(resp),
-        _ => Err(err),
-    })?;
+    let local_var_resp = local_var_result?;
 
-    let local_var_status = local_var_resp.status();
+    let local_var_status = local_var_resp.status().as_u16();
     if local_var_status < 400 {
         ResponseContent::unit(local_var_resp)
     } else {
@@ -2704,22 +2738,24 @@ pub fn health_state_get(
     let local_var_client = &local_var_configuration.client;
 
     let local_var_uri_str = format!("{}/health/state", local_var_configuration.base_path);
-    let mut local_var_req_builder = local_var_client.request("GET", local_var_uri_str.as_str());
+    let mut local_var_req_builder =
+        create_request!(local_var_client, GET, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
-        local_var_req_builder = local_var_req_builder.set("user-agent", local_var_user_agent);
+        local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
     }
     let accept_str = "application/json";
-    local_var_req_builder = local_var_req_builder.set("accept", accept_str);
+    local_var_req_builder = local_var_req_builder.header("accept", accept_str);
 
-    let local_var_result = local_var_req_builder.call();
+    let local_var_result = local_var_req_builder.send_empty();
 
-    let local_var_resp = local_var_result.or_else(|err| match err {
-        ureq::Error::Status(_status, resp) => Ok(resp),
-        _ => Err(err),
-    })?;
+    let local_var_resp = local_var_result?;
 
-    let local_var_status = local_var_resp.status();
+    let local_var_status = local_var_resp.status().as_u16();
     if local_var_status < 400 {
         ResponseContent::deserialized(local_var_resp)
     } else {
@@ -2739,22 +2775,24 @@ pub fn info_get(
     let local_var_client = &local_var_configuration.client;
 
     let local_var_uri_str = format!("{}/info", local_var_configuration.base_path);
-    let mut local_var_req_builder = local_var_client.request("GET", local_var_uri_str.as_str());
+    let mut local_var_req_builder =
+        create_request!(local_var_client, GET, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
-        local_var_req_builder = local_var_req_builder.set("user-agent", local_var_user_agent);
+        local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
     }
     let accept_str = "application/json";
-    local_var_req_builder = local_var_req_builder.set("accept", accept_str);
+    local_var_req_builder = local_var_req_builder.header("accept", accept_str);
 
-    let local_var_result = local_var_req_builder.call();
+    let local_var_result = local_var_req_builder.send_empty();
 
-    let local_var_resp = local_var_result.or_else(|err| match err {
-        ureq::Error::Status(_status, resp) => Ok(resp),
-        _ => Err(err),
-    })?;
+    let local_var_resp = local_var_result?;
 
-    let local_var_status = local_var_resp.status();
+    let local_var_status = local_var_resp.status().as_u16();
     if local_var_status < 400 {
         ResponseContent::deserialized(local_var_resp)
     } else {
@@ -2775,28 +2813,30 @@ pub fn keys_generate_post(
     let local_var_client = &local_var_configuration.client;
 
     let local_var_uri_str = format!("{}/keys/generate", local_var_configuration.base_path);
-    let mut local_var_req_builder = local_var_client.request("POST", local_var_uri_str.as_str());
+    let mut local_var_req_builder =
+        create_request!(local_var_client, POST, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
-        local_var_req_builder = local_var_req_builder.set("user-agent", local_var_user_agent);
+        local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
     }
     if let Some(ref local_var_auth_conf) = local_var_configuration.basic_auth {
         let value = super::basic_auth(local_var_auth_conf);
 
-        local_var_req_builder = local_var_req_builder.set("authorization", &value);
+        local_var_req_builder = local_var_req_builder.header("authorization", &value);
     };
     let accept_str = "application/json";
-    local_var_req_builder = local_var_req_builder.set("accept", accept_str);
+    local_var_req_builder = local_var_req_builder.header("accept", accept_str);
 
-    local_var_req_builder = local_var_req_builder.set("content-type", "application/json");
+    local_var_req_builder = local_var_req_builder.header("content-type", "application/json");
     let local_var_result = local_var_req_builder.send_json(key_generate_request_data);
 
-    let local_var_resp = local_var_result.or_else(|err| match err {
-        ureq::Error::Status(_status, resp) => Ok(resp),
-        _ => Err(err),
-    })?;
+    let local_var_resp = local_var_result?;
 
-    let local_var_status = local_var_resp.status();
+    let local_var_status = local_var_resp.status().as_u16();
     if local_var_status < 400 {
         ResponseContent::deserialized(local_var_resp)
     } else {
@@ -2817,31 +2857,33 @@ pub fn keys_get(
     let local_var_client = &local_var_configuration.client;
 
     let local_var_uri_str = format!("{}/keys", local_var_configuration.base_path);
-    let mut local_var_req_builder = local_var_client.request("GET", local_var_uri_str.as_str());
+    let mut local_var_req_builder =
+        create_request!(local_var_client, GET, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
 
     if let Some(local_var_str) = filter {
         local_var_req_builder =
             local_var_req_builder.query_pairs([("filter", local_var_str.to_string().as_str())]);
     }
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
-        local_var_req_builder = local_var_req_builder.set("user-agent", local_var_user_agent);
+        local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
     }
     if let Some(ref local_var_auth_conf) = local_var_configuration.basic_auth {
         let value = super::basic_auth(local_var_auth_conf);
 
-        local_var_req_builder = local_var_req_builder.set("authorization", &value);
+        local_var_req_builder = local_var_req_builder.header("authorization", &value);
     };
     let accept_str = "application/json";
-    local_var_req_builder = local_var_req_builder.set("accept", accept_str);
+    local_var_req_builder = local_var_req_builder.header("accept", accept_str);
 
-    let local_var_result = local_var_req_builder.call();
+    let local_var_result = local_var_req_builder.send_empty();
 
-    let local_var_resp = local_var_result.or_else(|err| match err {
-        ureq::Error::Status(_status, resp) => Ok(resp),
-        _ => Err(err),
-    })?;
+    let local_var_resp = local_var_result?;
 
-    let local_var_status = local_var_resp.status();
+    let local_var_status = local_var_resp.status().as_u16();
     if local_var_status < 400 {
         ResponseContent::deserialized(local_var_resp)
     } else {
@@ -2866,25 +2908,27 @@ pub fn keys_key_id_cert_delete(
         local_var_configuration.base_path,
         KeyID = crate::apis::urlencode(key_id)
     );
-    let mut local_var_req_builder = local_var_client.request("DELETE", local_var_uri_str.as_str());
+    let mut local_var_req_builder =
+        create_request!(local_var_client, DELETE, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
-        local_var_req_builder = local_var_req_builder.set("user-agent", local_var_user_agent);
+        local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
     }
     if let Some(ref local_var_auth_conf) = local_var_configuration.basic_auth {
         let value = super::basic_auth(local_var_auth_conf);
 
-        local_var_req_builder = local_var_req_builder.set("authorization", &value);
+        local_var_req_builder = local_var_req_builder.header("authorization", &value);
     };
 
-    let local_var_result = local_var_req_builder.call();
+    let local_var_result = local_var_req_builder.send_empty();
 
-    let local_var_resp = local_var_result.or_else(|err| match err {
-        ureq::Error::Status(_status, resp) => Ok(resp),
-        _ => Err(err),
-    })?;
+    let local_var_resp = local_var_result?;
 
-    let local_var_status = local_var_resp.status();
+    let local_var_status = local_var_resp.status().as_u16();
     if local_var_status < 400 {
         ResponseContent::unit(local_var_resp)
     } else {
@@ -2909,27 +2953,29 @@ pub fn keys_key_id_cert_get(
         local_var_configuration.base_path,
         KeyID = crate::apis::urlencode(key_id)
     );
-    let mut local_var_req_builder = local_var_client.request("GET", local_var_uri_str.as_str());
+    let mut local_var_req_builder =
+        create_request!(local_var_client, GET, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
-        local_var_req_builder = local_var_req_builder.set("user-agent", local_var_user_agent);
+        local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
     }
     if let Some(ref local_var_auth_conf) = local_var_configuration.basic_auth {
         let value = super::basic_auth(local_var_auth_conf);
 
-        local_var_req_builder = local_var_req_builder.set("authorization", &value);
+        local_var_req_builder = local_var_req_builder.header("authorization", &value);
     };
     let accept_str = "application/octet-stream";
-    local_var_req_builder = local_var_req_builder.set("accept", accept_str);
+    local_var_req_builder = local_var_req_builder.header("accept", accept_str);
 
-    let local_var_result = local_var_req_builder.call();
+    let local_var_result = local_var_req_builder.send_empty();
 
-    let local_var_resp = local_var_result.or_else(|err| match err {
-        ureq::Error::Status(_status, resp) => Ok(resp),
-        _ => Err(err),
-    })?;
+    let local_var_resp = local_var_result?;
 
-    let local_var_status = local_var_resp.status();
+    let local_var_status = local_var_resp.status().as_u16();
     if local_var_status < 400 {
         ResponseContent::bytes(local_var_resp)
     } else {
@@ -2955,27 +3001,29 @@ pub fn keys_key_id_cert_put(
         local_var_configuration.base_path,
         KeyID = crate::apis::urlencode(key_id)
     );
-    let mut local_var_req_builder = local_var_client.request("PUT", local_var_uri_str.as_str());
+    let mut local_var_req_builder =
+        create_request!(local_var_client, PUT, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
-        local_var_req_builder = local_var_req_builder.set("user-agent", local_var_user_agent);
+        local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
     }
     if let Some(ref local_var_auth_conf) = local_var_configuration.basic_auth {
         let value = super::basic_auth(local_var_auth_conf);
 
-        local_var_req_builder = local_var_req_builder.set("authorization", &value);
+        local_var_req_builder = local_var_req_builder.header("authorization", &value);
     };
 
-    local_var_req_builder = local_var_req_builder.set("content-type", "application/octet-stream");
-    let body = std::io::Cursor::new(body);
+    local_var_req_builder =
+        local_var_req_builder.header("content-type", "application/octet-stream");
     let local_var_result = local_var_req_builder.send(body);
 
-    let local_var_resp = local_var_result.or_else(|err| match err {
-        ureq::Error::Status(_status, resp) => Ok(resp),
-        _ => Err(err),
-    })?;
+    let local_var_resp = local_var_result?;
 
-    let local_var_status = local_var_resp.status();
+    let local_var_status = local_var_resp.status().as_u16();
     if local_var_status < 400 {
         ResponseContent::unit(local_var_resp)
     } else {
@@ -3001,28 +3049,30 @@ pub fn keys_key_id_csr_pem_post(
         local_var_configuration.base_path,
         KeyID = crate::apis::urlencode(key_id)
     );
-    let mut local_var_req_builder = local_var_client.request("POST", local_var_uri_str.as_str());
+    let mut local_var_req_builder =
+        create_request!(local_var_client, POST, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
-        local_var_req_builder = local_var_req_builder.set("user-agent", local_var_user_agent);
+        local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
     }
     if let Some(ref local_var_auth_conf) = local_var_configuration.basic_auth {
         let value = super::basic_auth(local_var_auth_conf);
 
-        local_var_req_builder = local_var_req_builder.set("authorization", &value);
+        local_var_req_builder = local_var_req_builder.header("authorization", &value);
     };
     let accept_str = "application/x-pem-file";
-    local_var_req_builder = local_var_req_builder.set("accept", accept_str);
+    local_var_req_builder = local_var_req_builder.header("accept", accept_str);
 
-    local_var_req_builder = local_var_req_builder.set("content-type", "application/json");
+    local_var_req_builder = local_var_req_builder.header("content-type", "application/json");
     let local_var_result = local_var_req_builder.send_json(distinguished_name);
 
-    let local_var_resp = local_var_result.or_else(|err| match err {
-        ureq::Error::Status(_status, resp) => Ok(resp),
-        _ => Err(err),
-    })?;
+    let local_var_resp = local_var_result?;
 
-    let local_var_status = local_var_resp.status();
+    let local_var_status = local_var_resp.status().as_u16();
     if local_var_status < 400 {
         ResponseContent::string(local_var_resp)
     } else {
@@ -3048,28 +3098,30 @@ pub fn keys_key_id_decrypt_post(
         local_var_configuration.base_path,
         KeyID = crate::apis::urlencode(key_id)
     );
-    let mut local_var_req_builder = local_var_client.request("POST", local_var_uri_str.as_str());
+    let mut local_var_req_builder =
+        create_request!(local_var_client, POST, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
-        local_var_req_builder = local_var_req_builder.set("user-agent", local_var_user_agent);
+        local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
     }
     if let Some(ref local_var_auth_conf) = local_var_configuration.basic_auth {
         let value = super::basic_auth(local_var_auth_conf);
 
-        local_var_req_builder = local_var_req_builder.set("authorization", &value);
+        local_var_req_builder = local_var_req_builder.header("authorization", &value);
     };
     let accept_str = "application/json";
-    local_var_req_builder = local_var_req_builder.set("accept", accept_str);
+    local_var_req_builder = local_var_req_builder.header("accept", accept_str);
 
-    local_var_req_builder = local_var_req_builder.set("content-type", "application/json");
+    local_var_req_builder = local_var_req_builder.header("content-type", "application/json");
     let local_var_result = local_var_req_builder.send_json(decrypt_request_data);
 
-    let local_var_resp = local_var_result.or_else(|err| match err {
-        ureq::Error::Status(_status, resp) => Ok(resp),
-        _ => Err(err),
-    })?;
+    let local_var_resp = local_var_result?;
 
-    let local_var_status = local_var_resp.status();
+    let local_var_status = local_var_resp.status().as_u16();
     if local_var_status < 400 {
         ResponseContent::deserialized(local_var_resp)
     } else {
@@ -3094,25 +3146,27 @@ pub fn keys_key_id_delete(
         local_var_configuration.base_path,
         KeyID = crate::apis::urlencode(key_id)
     );
-    let mut local_var_req_builder = local_var_client.request("DELETE", local_var_uri_str.as_str());
+    let mut local_var_req_builder =
+        create_request!(local_var_client, DELETE, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
-        local_var_req_builder = local_var_req_builder.set("user-agent", local_var_user_agent);
+        local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
     }
     if let Some(ref local_var_auth_conf) = local_var_configuration.basic_auth {
         let value = super::basic_auth(local_var_auth_conf);
 
-        local_var_req_builder = local_var_req_builder.set("authorization", &value);
+        local_var_req_builder = local_var_req_builder.header("authorization", &value);
     };
 
-    let local_var_result = local_var_req_builder.call();
+    let local_var_result = local_var_req_builder.send_empty();
 
-    let local_var_resp = local_var_result.or_else(|err| match err {
-        ureq::Error::Status(_status, resp) => Ok(resp),
-        _ => Err(err),
-    })?;
+    let local_var_resp = local_var_result?;
 
-    let local_var_status = local_var_resp.status();
+    let local_var_status = local_var_resp.status().as_u16();
     if local_var_status < 400 {
         ResponseContent::unit(local_var_resp)
     } else {
@@ -3138,28 +3192,30 @@ pub fn keys_key_id_encrypt_post(
         local_var_configuration.base_path,
         KeyID = crate::apis::urlencode(key_id)
     );
-    let mut local_var_req_builder = local_var_client.request("POST", local_var_uri_str.as_str());
+    let mut local_var_req_builder =
+        create_request!(local_var_client, POST, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
-        local_var_req_builder = local_var_req_builder.set("user-agent", local_var_user_agent);
+        local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
     }
     if let Some(ref local_var_auth_conf) = local_var_configuration.basic_auth {
         let value = super::basic_auth(local_var_auth_conf);
 
-        local_var_req_builder = local_var_req_builder.set("authorization", &value);
+        local_var_req_builder = local_var_req_builder.header("authorization", &value);
     };
     let accept_str = "application/json";
-    local_var_req_builder = local_var_req_builder.set("accept", accept_str);
+    local_var_req_builder = local_var_req_builder.header("accept", accept_str);
 
-    local_var_req_builder = local_var_req_builder.set("content-type", "application/json");
+    local_var_req_builder = local_var_req_builder.header("content-type", "application/json");
     let local_var_result = local_var_req_builder.send_json(encrypt_request_data);
 
-    let local_var_resp = local_var_result.or_else(|err| match err {
-        ureq::Error::Status(_status, resp) => Ok(resp),
-        _ => Err(err),
-    })?;
+    let local_var_resp = local_var_result?;
 
-    let local_var_status = local_var_resp.status();
+    let local_var_status = local_var_resp.status().as_u16();
     if local_var_status < 400 {
         ResponseContent::deserialized(local_var_resp)
     } else {
@@ -3184,27 +3240,29 @@ pub fn keys_key_id_get(
         local_var_configuration.base_path,
         KeyID = crate::apis::urlencode(key_id)
     );
-    let mut local_var_req_builder = local_var_client.request("GET", local_var_uri_str.as_str());
+    let mut local_var_req_builder =
+        create_request!(local_var_client, GET, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
-        local_var_req_builder = local_var_req_builder.set("user-agent", local_var_user_agent);
+        local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
     }
     if let Some(ref local_var_auth_conf) = local_var_configuration.basic_auth {
         let value = super::basic_auth(local_var_auth_conf);
 
-        local_var_req_builder = local_var_req_builder.set("authorization", &value);
+        local_var_req_builder = local_var_req_builder.header("authorization", &value);
     };
     let accept_str = "application/json";
-    local_var_req_builder = local_var_req_builder.set("accept", accept_str);
+    local_var_req_builder = local_var_req_builder.header("accept", accept_str);
 
-    let local_var_result = local_var_req_builder.call();
+    let local_var_result = local_var_req_builder.send_empty();
 
-    let local_var_resp = local_var_result.or_else(|err| match err {
-        ureq::Error::Status(_status, resp) => Ok(resp),
-        _ => Err(err),
-    })?;
+    let local_var_resp = local_var_result?;
 
-    let local_var_status = local_var_resp.status();
+    let local_var_status = local_var_resp.status().as_u16();
     if local_var_status < 400 {
         ResponseContent::deserialized(local_var_resp)
     } else {
@@ -3229,27 +3287,29 @@ pub fn keys_key_id_public_pem_get(
         local_var_configuration.base_path,
         KeyID = crate::apis::urlencode(key_id)
     );
-    let mut local_var_req_builder = local_var_client.request("GET", local_var_uri_str.as_str());
+    let mut local_var_req_builder =
+        create_request!(local_var_client, GET, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
-        local_var_req_builder = local_var_req_builder.set("user-agent", local_var_user_agent);
+        local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
     }
     if let Some(ref local_var_auth_conf) = local_var_configuration.basic_auth {
         let value = super::basic_auth(local_var_auth_conf);
 
-        local_var_req_builder = local_var_req_builder.set("authorization", &value);
+        local_var_req_builder = local_var_req_builder.header("authorization", &value);
     };
     let accept_str = "application/x-pem-file";
-    local_var_req_builder = local_var_req_builder.set("accept", accept_str);
+    local_var_req_builder = local_var_req_builder.header("accept", accept_str);
 
-    let local_var_result = local_var_req_builder.call();
+    let local_var_result = local_var_req_builder.send_empty();
 
-    let local_var_resp = local_var_result.or_else(|err| match err {
-        ureq::Error::Status(_status, resp) => Ok(resp),
-        _ => Err(err),
-    })?;
+    let local_var_resp = local_var_result?;
 
-    let local_var_status = local_var_resp.status();
+    let local_var_status = local_var_resp.status().as_u16();
     if local_var_status < 400 {
         ResponseContent::string(local_var_resp)
     } else {
@@ -3275,32 +3335,34 @@ pub fn keys_key_id_put(
         local_var_configuration.base_path,
         KeyID = crate::apis::urlencode(key_id)
     );
-    let mut local_var_req_builder = local_var_client.request("PUT", local_var_uri_str.as_str());
+    let mut local_var_req_builder =
+        create_request!(local_var_client, PUT, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
-        local_var_req_builder = local_var_req_builder.set("user-agent", local_var_user_agent);
+        local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
     }
     if let Some(ref local_var_auth_conf) = local_var_configuration.basic_auth {
         let value = super::basic_auth(local_var_auth_conf);
 
-        local_var_req_builder = local_var_req_builder.set("authorization", &value);
+        local_var_req_builder = local_var_req_builder.header("authorization", &value);
     };
 
     let body_json = body.is_json();
-    local_var_req_builder = local_var_req_builder.set("content-type", body.content_type());
+    local_var_req_builder = local_var_req_builder.header("content-type", body.content_type());
 
     let local_var_result = if body_json {
         local_var_req_builder.send_json(body)
     } else {
-        local_var_req_builder.send_string(body.get_string().as_str())
+        local_var_req_builder.send(body.get_string().as_str())
     };
 
-    let local_var_resp = local_var_result.or_else(|err| match err {
-        ureq::Error::Status(_status, resp) => Ok(resp),
-        _ => Err(err),
-    })?;
+    let local_var_resp = local_var_result?;
 
-    let local_var_status = local_var_resp.status();
+    let local_var_status = local_var_resp.status().as_u16();
     if local_var_status < 400 {
         ResponseContent::unit(local_var_resp)
     } else {
@@ -3327,25 +3389,27 @@ pub fn keys_key_id_restrictions_tags_tag_delete(
         Tag = crate::apis::urlencode(tag),
         KeyID = crate::apis::urlencode(key_id)
     );
-    let mut local_var_req_builder = local_var_client.request("DELETE", local_var_uri_str.as_str());
+    let mut local_var_req_builder =
+        create_request!(local_var_client, DELETE, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
-        local_var_req_builder = local_var_req_builder.set("user-agent", local_var_user_agent);
+        local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
     }
     if let Some(ref local_var_auth_conf) = local_var_configuration.basic_auth {
         let value = super::basic_auth(local_var_auth_conf);
 
-        local_var_req_builder = local_var_req_builder.set("authorization", &value);
+        local_var_req_builder = local_var_req_builder.header("authorization", &value);
     };
 
-    let local_var_result = local_var_req_builder.call();
+    let local_var_result = local_var_req_builder.send_empty();
 
-    let local_var_resp = local_var_result.or_else(|err| match err {
-        ureq::Error::Status(_status, resp) => Ok(resp),
-        _ => Err(err),
-    })?;
+    let local_var_resp = local_var_result?;
 
-    let local_var_status = local_var_resp.status();
+    let local_var_status = local_var_resp.status().as_u16();
     if local_var_status < 400 {
         ResponseContent::unit(local_var_resp)
     } else {
@@ -3372,25 +3436,27 @@ pub fn keys_key_id_restrictions_tags_tag_put(
         Tag = crate::apis::urlencode(tag),
         KeyID = crate::apis::urlencode(key_id)
     );
-    let mut local_var_req_builder = local_var_client.request("PUT", local_var_uri_str.as_str());
+    let mut local_var_req_builder =
+        create_request!(local_var_client, PUT, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
-        local_var_req_builder = local_var_req_builder.set("user-agent", local_var_user_agent);
+        local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
     }
     if let Some(ref local_var_auth_conf) = local_var_configuration.basic_auth {
         let value = super::basic_auth(local_var_auth_conf);
 
-        local_var_req_builder = local_var_req_builder.set("authorization", &value);
+        local_var_req_builder = local_var_req_builder.header("authorization", &value);
     };
 
-    let local_var_result = local_var_req_builder.call();
+    let local_var_result = local_var_req_builder.send_empty();
 
-    let local_var_resp = local_var_result.or_else(|err| match err {
-        ureq::Error::Status(_status, resp) => Ok(resp),
-        _ => Err(err),
-    })?;
+    let local_var_resp = local_var_result?;
 
-    let local_var_status = local_var_resp.status();
+    let local_var_status = local_var_resp.status().as_u16();
     if local_var_status < 400 {
         ResponseContent::unit(local_var_resp)
     } else {
@@ -3416,28 +3482,30 @@ pub fn keys_key_id_sign_post(
         local_var_configuration.base_path,
         KeyID = crate::apis::urlencode(key_id)
     );
-    let mut local_var_req_builder = local_var_client.request("POST", local_var_uri_str.as_str());
+    let mut local_var_req_builder =
+        create_request!(local_var_client, POST, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
-        local_var_req_builder = local_var_req_builder.set("user-agent", local_var_user_agent);
+        local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
     }
     if let Some(ref local_var_auth_conf) = local_var_configuration.basic_auth {
         let value = super::basic_auth(local_var_auth_conf);
 
-        local_var_req_builder = local_var_req_builder.set("authorization", &value);
+        local_var_req_builder = local_var_req_builder.header("authorization", &value);
     };
     let accept_str = "application/json";
-    local_var_req_builder = local_var_req_builder.set("accept", accept_str);
+    local_var_req_builder = local_var_req_builder.header("accept", accept_str);
 
-    local_var_req_builder = local_var_req_builder.set("content-type", "application/json");
+    local_var_req_builder = local_var_req_builder.header("content-type", "application/json");
     let local_var_result = local_var_req_builder.send_json(sign_request_data);
 
-    let local_var_resp = local_var_result.or_else(|err| match err {
-        ureq::Error::Status(_status, resp) => Ok(resp),
-        _ => Err(err),
-    })?;
+    let local_var_resp = local_var_result?;
 
-    let local_var_status = local_var_resp.status();
+    let local_var_status = local_var_resp.status().as_u16();
     if local_var_status < 400 {
         ResponseContent::deserialized(local_var_resp)
     } else {
@@ -3458,34 +3526,36 @@ pub fn keys_post(
     let local_var_client = &local_var_configuration.client;
 
     let local_var_uri_str = format!("{}/keys", local_var_configuration.base_path);
-    let mut local_var_req_builder = local_var_client.request("POST", local_var_uri_str.as_str());
+    let mut local_var_req_builder =
+        create_request!(local_var_client, POST, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
-        local_var_req_builder = local_var_req_builder.set("user-agent", local_var_user_agent);
+        local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
     }
     if let Some(ref local_var_auth_conf) = local_var_configuration.basic_auth {
         let value = super::basic_auth(local_var_auth_conf);
 
-        local_var_req_builder = local_var_req_builder.set("authorization", &value);
+        local_var_req_builder = local_var_req_builder.header("authorization", &value);
     };
     let accept_str = "application/json";
-    local_var_req_builder = local_var_req_builder.set("accept", accept_str);
+    local_var_req_builder = local_var_req_builder.header("accept", accept_str);
 
     let body_json = body.is_json();
-    local_var_req_builder = local_var_req_builder.set("content-type", body.content_type());
+    local_var_req_builder = local_var_req_builder.header("content-type", body.content_type());
 
     let local_var_result = if body_json {
         local_var_req_builder.send_json(body)
     } else {
-        local_var_req_builder.send_string(body.get_string().as_str())
+        local_var_req_builder.send(body.get_string().as_str())
     };
 
-    let local_var_resp = local_var_result.or_else(|err| match err {
-        ureq::Error::Status(_status, resp) => Ok(resp),
-        _ => Err(err),
-    })?;
+    let local_var_resp = local_var_result?;
 
-    let local_var_status = local_var_resp.status();
+    let local_var_status = local_var_resp.status().as_u16();
     if local_var_status < 400 {
         ResponseContent::deserialized(local_var_resp)
     } else {
@@ -3505,25 +3575,27 @@ pub fn lock_post(
     let local_var_client = &local_var_configuration.client;
 
     let local_var_uri_str = format!("{}/lock", local_var_configuration.base_path);
-    let mut local_var_req_builder = local_var_client.request("POST", local_var_uri_str.as_str());
+    let mut local_var_req_builder =
+        create_request!(local_var_client, POST, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
-        local_var_req_builder = local_var_req_builder.set("user-agent", local_var_user_agent);
+        local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
     }
     if let Some(ref local_var_auth_conf) = local_var_configuration.basic_auth {
         let value = super::basic_auth(local_var_auth_conf);
 
-        local_var_req_builder = local_var_req_builder.set("authorization", &value);
+        local_var_req_builder = local_var_req_builder.header("authorization", &value);
     };
 
-    let local_var_result = local_var_req_builder.call();
+    let local_var_result = local_var_req_builder.send_empty();
 
-    let local_var_resp = local_var_result.or_else(|err| match err {
-        ureq::Error::Status(_status, resp) => Ok(resp),
-        _ => Err(err),
-    })?;
+    let local_var_resp = local_var_result?;
 
-    let local_var_status = local_var_resp.status();
+    let local_var_status = local_var_resp.status().as_u16();
     if local_var_status < 400 {
         ResponseContent::unit(local_var_resp)
     } else {
@@ -3543,27 +3615,29 @@ pub fn metrics_get(
     let local_var_client = &local_var_configuration.client;
 
     let local_var_uri_str = format!("{}/metrics", local_var_configuration.base_path);
-    let mut local_var_req_builder = local_var_client.request("GET", local_var_uri_str.as_str());
+    let mut local_var_req_builder =
+        create_request!(local_var_client, GET, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
-        local_var_req_builder = local_var_req_builder.set("user-agent", local_var_user_agent);
+        local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
     }
     if let Some(ref local_var_auth_conf) = local_var_configuration.basic_auth {
         let value = super::basic_auth(local_var_auth_conf);
 
-        local_var_req_builder = local_var_req_builder.set("authorization", &value);
+        local_var_req_builder = local_var_req_builder.header("authorization", &value);
     };
     let accept_str = "application/json";
-    local_var_req_builder = local_var_req_builder.set("accept", accept_str);
+    local_var_req_builder = local_var_req_builder.header("accept", accept_str);
 
-    let local_var_result = local_var_req_builder.call();
+    let local_var_result = local_var_req_builder.send_empty();
 
-    let local_var_resp = local_var_result.or_else(|err| match err {
-        ureq::Error::Status(_status, resp) => Ok(resp),
-        _ => Err(err),
-    })?;
+    let local_var_resp = local_var_result?;
 
-    let local_var_status = local_var_resp.status();
+    let local_var_status = local_var_resp.status().as_u16();
     if local_var_status < 400 {
         ResponseContent::deserialized(local_var_resp)
     } else {
@@ -3583,27 +3657,29 @@ pub fn namespaces_get(
     let local_var_client = &local_var_configuration.client;
 
     let local_var_uri_str = format!("{}/namespaces", local_var_configuration.base_path);
-    let mut local_var_req_builder = local_var_client.request("GET", local_var_uri_str.as_str());
+    let mut local_var_req_builder =
+        create_request!(local_var_client, GET, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
-        local_var_req_builder = local_var_req_builder.set("user-agent", local_var_user_agent);
+        local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
     }
     if let Some(ref local_var_auth_conf) = local_var_configuration.basic_auth {
         let value = super::basic_auth(local_var_auth_conf);
 
-        local_var_req_builder = local_var_req_builder.set("authorization", &value);
+        local_var_req_builder = local_var_req_builder.header("authorization", &value);
     };
     let accept_str = "application/json";
-    local_var_req_builder = local_var_req_builder.set("accept", accept_str);
+    local_var_req_builder = local_var_req_builder.header("accept", accept_str);
 
-    let local_var_result = local_var_req_builder.call();
+    let local_var_result = local_var_req_builder.send_empty();
 
-    let local_var_resp = local_var_result.or_else(|err| match err {
-        ureq::Error::Status(_status, resp) => Ok(resp),
-        _ => Err(err),
-    })?;
+    let local_var_resp = local_var_result?;
 
-    let local_var_status = local_var_resp.status();
+    let local_var_status = local_var_resp.status().as_u16();
     if local_var_status < 400 {
         ResponseContent::deserialized(local_var_resp)
     } else {
@@ -3628,25 +3704,27 @@ pub fn namespaces_namespace_id_delete(
         local_var_configuration.base_path,
         NamespaceID = crate::apis::urlencode(namespace_id)
     );
-    let mut local_var_req_builder = local_var_client.request("DELETE", local_var_uri_str.as_str());
+    let mut local_var_req_builder =
+        create_request!(local_var_client, DELETE, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
-        local_var_req_builder = local_var_req_builder.set("user-agent", local_var_user_agent);
+        local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
     }
     if let Some(ref local_var_auth_conf) = local_var_configuration.basic_auth {
         let value = super::basic_auth(local_var_auth_conf);
 
-        local_var_req_builder = local_var_req_builder.set("authorization", &value);
+        local_var_req_builder = local_var_req_builder.header("authorization", &value);
     };
 
-    let local_var_result = local_var_req_builder.call();
+    let local_var_result = local_var_req_builder.send_empty();
 
-    let local_var_resp = local_var_result.or_else(|err| match err {
-        ureq::Error::Status(_status, resp) => Ok(resp),
-        _ => Err(err),
-    })?;
+    let local_var_resp = local_var_result?;
 
-    let local_var_status = local_var_resp.status();
+    let local_var_status = local_var_resp.status().as_u16();
     if local_var_status < 400 {
         ResponseContent::unit(local_var_resp)
     } else {
@@ -3671,25 +3749,27 @@ pub fn namespaces_namespace_id_put(
         local_var_configuration.base_path,
         NamespaceID = crate::apis::urlencode(namespace_id)
     );
-    let mut local_var_req_builder = local_var_client.request("PUT", local_var_uri_str.as_str());
+    let mut local_var_req_builder =
+        create_request!(local_var_client, PUT, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
-        local_var_req_builder = local_var_req_builder.set("user-agent", local_var_user_agent);
+        local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
     }
     if let Some(ref local_var_auth_conf) = local_var_configuration.basic_auth {
         let value = super::basic_auth(local_var_auth_conf);
 
-        local_var_req_builder = local_var_req_builder.set("authorization", &value);
+        local_var_req_builder = local_var_req_builder.header("authorization", &value);
     };
 
-    let local_var_result = local_var_req_builder.call();
+    let local_var_result = local_var_req_builder.send_empty();
 
-    let local_var_resp = local_var_result.or_else(|err| match err {
-        ureq::Error::Status(_status, resp) => Ok(resp),
-        _ => Err(err),
-    })?;
+    let local_var_resp = local_var_result?;
 
-    let local_var_status = local_var_resp.status();
+    let local_var_status = local_var_resp.status().as_u16();
     if local_var_status < 400 {
         ResponseContent::unit(local_var_resp)
     } else {
@@ -3710,21 +3790,23 @@ pub fn provision_post(
     let local_var_client = &local_var_configuration.client;
 
     let local_var_uri_str = format!("{}/provision", local_var_configuration.base_path);
-    let mut local_var_req_builder = local_var_client.request("POST", local_var_uri_str.as_str());
+    let mut local_var_req_builder =
+        create_request!(local_var_client, POST, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
-        local_var_req_builder = local_var_req_builder.set("user-agent", local_var_user_agent);
+        local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
     }
 
-    local_var_req_builder = local_var_req_builder.set("content-type", "application/json");
+    local_var_req_builder = local_var_req_builder.header("content-type", "application/json");
     let local_var_result = local_var_req_builder.send_json(provision_request_data);
 
-    let local_var_resp = local_var_result.or_else(|err| match err {
-        ureq::Error::Status(_status, resp) => Ok(resp),
-        _ => Err(err),
-    })?;
+    let local_var_resp = local_var_result?;
 
-    let local_var_status = local_var_resp.status();
+    let local_var_status = local_var_resp.status().as_u16();
     if local_var_status < 400 {
         ResponseContent::unit(local_var_resp)
     } else {
@@ -3745,28 +3827,30 @@ pub fn random_post(
     let local_var_client = &local_var_configuration.client;
 
     let local_var_uri_str = format!("{}/random", local_var_configuration.base_path);
-    let mut local_var_req_builder = local_var_client.request("POST", local_var_uri_str.as_str());
+    let mut local_var_req_builder =
+        create_request!(local_var_client, POST, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
-        local_var_req_builder = local_var_req_builder.set("user-agent", local_var_user_agent);
+        local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
     }
     if let Some(ref local_var_auth_conf) = local_var_configuration.basic_auth {
         let value = super::basic_auth(local_var_auth_conf);
 
-        local_var_req_builder = local_var_req_builder.set("authorization", &value);
+        local_var_req_builder = local_var_req_builder.header("authorization", &value);
     };
     let accept_str = "application/json";
-    local_var_req_builder = local_var_req_builder.set("accept", accept_str);
+    local_var_req_builder = local_var_req_builder.header("accept", accept_str);
 
-    local_var_req_builder = local_var_req_builder.set("content-type", "application/json");
+    local_var_req_builder = local_var_req_builder.header("content-type", "application/json");
     let local_var_result = local_var_req_builder.send_json(random_request_data);
 
-    let local_var_resp = local_var_result.or_else(|err| match err {
-        ureq::Error::Status(_status, resp) => Ok(resp),
-        _ => Err(err),
-    })?;
+    let local_var_resp = local_var_result?;
 
-    let local_var_status = local_var_resp.status();
+    let local_var_status = local_var_resp.status().as_u16();
     if local_var_status < 400 {
         ResponseContent::deserialized(local_var_resp)
     } else {
@@ -3786,27 +3870,29 @@ pub fn system_backup_post(
     let local_var_client = &local_var_configuration.client;
 
     let local_var_uri_str = format!("{}/system/backup", local_var_configuration.base_path);
-    let mut local_var_req_builder = local_var_client.request("POST", local_var_uri_str.as_str());
+    let mut local_var_req_builder =
+        create_request!(local_var_client, POST, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
-        local_var_req_builder = local_var_req_builder.set("user-agent", local_var_user_agent);
+        local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
     }
     if let Some(ref local_var_auth_conf) = local_var_configuration.basic_auth {
         let value = super::basic_auth(local_var_auth_conf);
 
-        local_var_req_builder = local_var_req_builder.set("authorization", &value);
+        local_var_req_builder = local_var_req_builder.header("authorization", &value);
     };
     let accept_str = "application/octet-stream";
-    local_var_req_builder = local_var_req_builder.set("accept", accept_str);
+    local_var_req_builder = local_var_req_builder.header("accept", accept_str);
 
-    let local_var_result = local_var_req_builder.call();
+    let local_var_result = local_var_req_builder.send_empty();
 
-    let local_var_resp = local_var_result.or_else(|err| match err {
-        ureq::Error::Status(_status, resp) => Ok(resp),
-        _ => Err(err),
-    })?;
+    let local_var_resp = local_var_result?;
 
-    let local_var_status = local_var_resp.status();
+    let local_var_status = local_var_resp.status().as_u16();
     if local_var_status < 400 {
         ResponseContent::bytes(local_var_resp)
     } else {
@@ -3826,25 +3912,27 @@ pub fn system_cancel_update_post(
     let local_var_client = &local_var_configuration.client;
 
     let local_var_uri_str = format!("{}/system/cancel-update", local_var_configuration.base_path);
-    let mut local_var_req_builder = local_var_client.request("POST", local_var_uri_str.as_str());
+    let mut local_var_req_builder =
+        create_request!(local_var_client, POST, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
-        local_var_req_builder = local_var_req_builder.set("user-agent", local_var_user_agent);
+        local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
     }
     if let Some(ref local_var_auth_conf) = local_var_configuration.basic_auth {
         let value = super::basic_auth(local_var_auth_conf);
 
-        local_var_req_builder = local_var_req_builder.set("authorization", &value);
+        local_var_req_builder = local_var_req_builder.header("authorization", &value);
     };
 
-    let local_var_result = local_var_req_builder.call();
+    let local_var_result = local_var_req_builder.send_empty();
 
-    let local_var_resp = local_var_result.or_else(|err| match err {
-        ureq::Error::Status(_status, resp) => Ok(resp),
-        _ => Err(err),
-    })?;
+    let local_var_resp = local_var_result?;
 
-    let local_var_status = local_var_resp.status();
+    let local_var_status = local_var_resp.status().as_u16();
     if local_var_status < 400 {
         ResponseContent::unit(local_var_resp)
     } else {
@@ -3864,25 +3952,27 @@ pub fn system_commit_update_post(
     let local_var_client = &local_var_configuration.client;
 
     let local_var_uri_str = format!("{}/system/commit-update", local_var_configuration.base_path);
-    let mut local_var_req_builder = local_var_client.request("POST", local_var_uri_str.as_str());
+    let mut local_var_req_builder =
+        create_request!(local_var_client, POST, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
-        local_var_req_builder = local_var_req_builder.set("user-agent", local_var_user_agent);
+        local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
     }
     if let Some(ref local_var_auth_conf) = local_var_configuration.basic_auth {
         let value = super::basic_auth(local_var_auth_conf);
 
-        local_var_req_builder = local_var_req_builder.set("authorization", &value);
+        local_var_req_builder = local_var_req_builder.header("authorization", &value);
     };
 
-    let local_var_result = local_var_req_builder.call();
+    let local_var_result = local_var_req_builder.send_empty();
 
-    let local_var_resp = local_var_result.or_else(|err| match err {
-        ureq::Error::Status(_status, resp) => Ok(resp),
-        _ => Err(err),
-    })?;
+    let local_var_resp = local_var_result?;
 
-    let local_var_status = local_var_resp.status();
+    let local_var_status = local_var_resp.status().as_u16();
     if local_var_status < 400 {
         ResponseContent::unit(local_var_resp)
     } else {
@@ -3902,25 +3992,27 @@ pub fn system_factory_reset_post(
     let local_var_client = &local_var_configuration.client;
 
     let local_var_uri_str = format!("{}/system/factory-reset", local_var_configuration.base_path);
-    let mut local_var_req_builder = local_var_client.request("POST", local_var_uri_str.as_str());
+    let mut local_var_req_builder =
+        create_request!(local_var_client, POST, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
-        local_var_req_builder = local_var_req_builder.set("user-agent", local_var_user_agent);
+        local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
     }
     if let Some(ref local_var_auth_conf) = local_var_configuration.basic_auth {
         let value = super::basic_auth(local_var_auth_conf);
 
-        local_var_req_builder = local_var_req_builder.set("authorization", &value);
+        local_var_req_builder = local_var_req_builder.header("authorization", &value);
     };
 
-    let local_var_result = local_var_req_builder.call();
+    let local_var_result = local_var_req_builder.send_empty();
 
-    let local_var_resp = local_var_result.or_else(|err| match err {
-        ureq::Error::Status(_status, resp) => Ok(resp),
-        _ => Err(err),
-    })?;
+    let local_var_resp = local_var_result?;
 
-    let local_var_status = local_var_resp.status();
+    let local_var_status = local_var_resp.status().as_u16();
     if local_var_status < 400 {
         ResponseContent::unit(local_var_resp)
     } else {
@@ -3940,27 +4032,29 @@ pub fn system_info_get(
     let local_var_client = &local_var_configuration.client;
 
     let local_var_uri_str = format!("{}/system/info", local_var_configuration.base_path);
-    let mut local_var_req_builder = local_var_client.request("GET", local_var_uri_str.as_str());
+    let mut local_var_req_builder =
+        create_request!(local_var_client, GET, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
-        local_var_req_builder = local_var_req_builder.set("user-agent", local_var_user_agent);
+        local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
     }
     if let Some(ref local_var_auth_conf) = local_var_configuration.basic_auth {
         let value = super::basic_auth(local_var_auth_conf);
 
-        local_var_req_builder = local_var_req_builder.set("authorization", &value);
+        local_var_req_builder = local_var_req_builder.header("authorization", &value);
     };
     let accept_str = "application/json";
-    local_var_req_builder = local_var_req_builder.set("accept", accept_str);
+    local_var_req_builder = local_var_req_builder.header("accept", accept_str);
 
-    let local_var_result = local_var_req_builder.call();
+    let local_var_result = local_var_req_builder.send_empty();
 
-    let local_var_resp = local_var_result.or_else(|err| match err {
-        ureq::Error::Status(_status, resp) => Ok(resp),
-        _ => Err(err),
-    })?;
+    let local_var_resp = local_var_result?;
 
-    let local_var_status = local_var_resp.status();
+    let local_var_status = local_var_resp.status().as_u16();
     if local_var_status < 400 {
         ResponseContent::deserialized(local_var_resp)
     } else {
@@ -3980,25 +4074,27 @@ pub fn system_reboot_post(
     let local_var_client = &local_var_configuration.client;
 
     let local_var_uri_str = format!("{}/system/reboot", local_var_configuration.base_path);
-    let mut local_var_req_builder = local_var_client.request("POST", local_var_uri_str.as_str());
+    let mut local_var_req_builder =
+        create_request!(local_var_client, POST, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
-        local_var_req_builder = local_var_req_builder.set("user-agent", local_var_user_agent);
+        local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
     }
     if let Some(ref local_var_auth_conf) = local_var_configuration.basic_auth {
         let value = super::basic_auth(local_var_auth_conf);
 
-        local_var_req_builder = local_var_req_builder.set("authorization", &value);
+        local_var_req_builder = local_var_req_builder.header("authorization", &value);
     };
 
-    let local_var_result = local_var_req_builder.call();
+    let local_var_result = local_var_req_builder.send_empty();
 
-    let local_var_resp = local_var_result.or_else(|err| match err {
-        ureq::Error::Status(_status, resp) => Ok(resp),
-        _ => Err(err),
-    })?;
+    let local_var_resp = local_var_result?;
 
-    let local_var_status = local_var_resp.status();
+    let local_var_status = local_var_resp.status().as_u16();
     if local_var_status < 400 {
         ResponseContent::unit(local_var_resp)
     } else {
@@ -4020,15 +4116,20 @@ pub fn system_restore_post(
     let local_var_client = &local_var_configuration.client;
 
     let local_var_uri_str = format!("{}/system/restore", local_var_configuration.base_path);
-    let mut local_var_req_builder = local_var_client.request("POST", local_var_uri_str.as_str());
+    let mut local_var_req_builder =
+        create_request!(local_var_client, POST, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
-        local_var_req_builder = local_var_req_builder.set("user-agent", local_var_user_agent);
+        local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
     }
     if let Some(ref local_var_auth_conf) = local_var_configuration.basic_auth {
         let value = super::basic_auth(local_var_auth_conf);
 
-        local_var_req_builder = local_var_req_builder.set("authorization", &value);
+        local_var_req_builder = local_var_req_builder.header("authorization", &value);
     };
 
     let mut local_var_multipart = ::multipart::client::lazy::Multipart::new();
@@ -4051,22 +4152,20 @@ pub fn system_restore_post(
         );
     }
 
-    let local_var_multipart = local_var_multipart.prepare()?;
-    local_var_req_builder = local_var_req_builder.set(
+    let mut local_var_multipart = local_var_multipart.prepare()?;
+    local_var_req_builder = local_var_req_builder.header(
         "content-type",
         &format!(
             "multipart/form-data; boundary={}",
             local_var_multipart.boundary()
         ),
     );
-    let local_var_result = local_var_req_builder.send(local_var_multipart);
+    let local_var_result =
+        local_var_req_builder.send(ureq::SendBody::from_reader(&mut local_var_multipart));
 
-    let local_var_resp = local_var_result.or_else(|err| match err {
-        ureq::Error::Status(_status, resp) => Ok(resp),
-        _ => Err(err),
-    })?;
+    let local_var_resp = local_var_result?;
 
-    let local_var_status = local_var_resp.status();
+    let local_var_status = local_var_resp.status().as_u16();
     if local_var_status < 400 {
         ResponseContent::unit(local_var_resp)
     } else {
@@ -4086,25 +4185,27 @@ pub fn system_shutdown_post(
     let local_var_client = &local_var_configuration.client;
 
     let local_var_uri_str = format!("{}/system/shutdown", local_var_configuration.base_path);
-    let mut local_var_req_builder = local_var_client.request("POST", local_var_uri_str.as_str());
+    let mut local_var_req_builder =
+        create_request!(local_var_client, POST, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
-        local_var_req_builder = local_var_req_builder.set("user-agent", local_var_user_agent);
+        local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
     }
     if let Some(ref local_var_auth_conf) = local_var_configuration.basic_auth {
         let value = super::basic_auth(local_var_auth_conf);
 
-        local_var_req_builder = local_var_req_builder.set("authorization", &value);
+        local_var_req_builder = local_var_req_builder.header("authorization", &value);
     };
 
-    let local_var_result = local_var_req_builder.call();
+    let local_var_result = local_var_req_builder.send_empty();
 
-    let local_var_resp = local_var_result.or_else(|err| match err {
-        ureq::Error::Status(_status, resp) => Ok(resp),
-        _ => Err(err),
-    })?;
+    let local_var_resp = local_var_result?;
 
-    let local_var_status = local_var_resp.status();
+    let local_var_status = local_var_resp.status().as_u16();
     if local_var_status < 400 {
         ResponseContent::unit(local_var_resp)
     } else {
@@ -4125,29 +4226,31 @@ pub fn system_update_post(
     let local_var_client = &local_var_configuration.client;
 
     let local_var_uri_str = format!("{}/system/update", local_var_configuration.base_path);
-    let mut local_var_req_builder = local_var_client.request("POST", local_var_uri_str.as_str());
+    let mut local_var_req_builder =
+        create_request!(local_var_client, POST, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
-        local_var_req_builder = local_var_req_builder.set("user-agent", local_var_user_agent);
+        local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
     }
     if let Some(ref local_var_auth_conf) = local_var_configuration.basic_auth {
         let value = super::basic_auth(local_var_auth_conf);
 
-        local_var_req_builder = local_var_req_builder.set("authorization", &value);
+        local_var_req_builder = local_var_req_builder.header("authorization", &value);
     };
     let accept_str = "application/json";
-    local_var_req_builder = local_var_req_builder.set("accept", accept_str);
+    local_var_req_builder = local_var_req_builder.header("accept", accept_str);
 
-    local_var_req_builder = local_var_req_builder.set("content-type", "application/octet-stream");
-    let body = std::io::Cursor::new(body);
+    local_var_req_builder =
+        local_var_req_builder.header("content-type", "application/octet-stream");
     let local_var_result = local_var_req_builder.send(body);
 
-    let local_var_resp = local_var_result.or_else(|err| match err {
-        ureq::Error::Status(_status, resp) => Ok(resp),
-        _ => Err(err),
-    })?;
+    let local_var_resp = local_var_result?;
 
-    let local_var_status = local_var_resp.status();
+    let local_var_status = local_var_resp.status().as_u16();
     if local_var_status < 400 {
         ResponseContent::deserialized(local_var_resp)
     } else {
@@ -4168,21 +4271,23 @@ pub fn unlock_post(
     let local_var_client = &local_var_configuration.client;
 
     let local_var_uri_str = format!("{}/unlock", local_var_configuration.base_path);
-    let mut local_var_req_builder = local_var_client.request("POST", local_var_uri_str.as_str());
+    let mut local_var_req_builder =
+        create_request!(local_var_client, POST, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
-        local_var_req_builder = local_var_req_builder.set("user-agent", local_var_user_agent);
+        local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
     }
 
-    local_var_req_builder = local_var_req_builder.set("content-type", "application/json");
+    local_var_req_builder = local_var_req_builder.header("content-type", "application/json");
     let local_var_result = local_var_req_builder.send_json(unlock_request_data);
 
-    let local_var_resp = local_var_result.or_else(|err| match err {
-        ureq::Error::Status(_status, resp) => Ok(resp),
-        _ => Err(err),
-    })?;
+    let local_var_resp = local_var_result?;
 
-    let local_var_status = local_var_resp.status();
+    let local_var_status = local_var_resp.status().as_u16();
     if local_var_status < 400 {
         ResponseContent::unit(local_var_resp)
     } else {
@@ -4202,27 +4307,29 @@ pub fn users_get(
     let local_var_client = &local_var_configuration.client;
 
     let local_var_uri_str = format!("{}/users", local_var_configuration.base_path);
-    let mut local_var_req_builder = local_var_client.request("GET", local_var_uri_str.as_str());
+    let mut local_var_req_builder =
+        create_request!(local_var_client, GET, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
-        local_var_req_builder = local_var_req_builder.set("user-agent", local_var_user_agent);
+        local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
     }
     if let Some(ref local_var_auth_conf) = local_var_configuration.basic_auth {
         let value = super::basic_auth(local_var_auth_conf);
 
-        local_var_req_builder = local_var_req_builder.set("authorization", &value);
+        local_var_req_builder = local_var_req_builder.header("authorization", &value);
     };
     let accept_str = "application/json";
-    local_var_req_builder = local_var_req_builder.set("accept", accept_str);
+    local_var_req_builder = local_var_req_builder.header("accept", accept_str);
 
-    let local_var_result = local_var_req_builder.call();
+    let local_var_result = local_var_req_builder.send_empty();
 
-    let local_var_resp = local_var_result.or_else(|err| match err {
-        ureq::Error::Status(_status, resp) => Ok(resp),
-        _ => Err(err),
-    })?;
+    let local_var_resp = local_var_result?;
 
-    let local_var_status = local_var_resp.status();
+    let local_var_status = local_var_resp.status().as_u16();
     if local_var_status < 400 {
         ResponseContent::deserialized(local_var_resp)
     } else {
@@ -4243,28 +4350,30 @@ pub fn users_post(
     let local_var_client = &local_var_configuration.client;
 
     let local_var_uri_str = format!("{}/users", local_var_configuration.base_path);
-    let mut local_var_req_builder = local_var_client.request("POST", local_var_uri_str.as_str());
+    let mut local_var_req_builder =
+        create_request!(local_var_client, POST, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
-        local_var_req_builder = local_var_req_builder.set("user-agent", local_var_user_agent);
+        local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
     }
     if let Some(ref local_var_auth_conf) = local_var_configuration.basic_auth {
         let value = super::basic_auth(local_var_auth_conf);
 
-        local_var_req_builder = local_var_req_builder.set("authorization", &value);
+        local_var_req_builder = local_var_req_builder.header("authorization", &value);
     };
     let accept_str = "application/json";
-    local_var_req_builder = local_var_req_builder.set("accept", accept_str);
+    local_var_req_builder = local_var_req_builder.header("accept", accept_str);
 
-    local_var_req_builder = local_var_req_builder.set("content-type", "application/json");
+    local_var_req_builder = local_var_req_builder.header("content-type", "application/json");
     let local_var_result = local_var_req_builder.send_json(user_post_data);
 
-    let local_var_resp = local_var_result.or_else(|err| match err {
-        ureq::Error::Status(_status, resp) => Ok(resp),
-        _ => Err(err),
-    })?;
+    let local_var_resp = local_var_result?;
 
-    let local_var_status = local_var_resp.status();
+    let local_var_status = local_var_resp.status().as_u16();
     if local_var_status < 400 {
         ResponseContent::deserialized(local_var_resp)
     } else {
@@ -4289,25 +4398,27 @@ pub fn users_user_id_delete(
         local_var_configuration.base_path,
         UserID = crate::apis::urlencode(user_id)
     );
-    let mut local_var_req_builder = local_var_client.request("DELETE", local_var_uri_str.as_str());
+    let mut local_var_req_builder =
+        create_request!(local_var_client, DELETE, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
-        local_var_req_builder = local_var_req_builder.set("user-agent", local_var_user_agent);
+        local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
     }
     if let Some(ref local_var_auth_conf) = local_var_configuration.basic_auth {
         let value = super::basic_auth(local_var_auth_conf);
 
-        local_var_req_builder = local_var_req_builder.set("authorization", &value);
+        local_var_req_builder = local_var_req_builder.header("authorization", &value);
     };
 
-    let local_var_result = local_var_req_builder.call();
+    let local_var_result = local_var_req_builder.send_empty();
 
-    let local_var_resp = local_var_result.or_else(|err| match err {
-        ureq::Error::Status(_status, resp) => Ok(resp),
-        _ => Err(err),
-    })?;
+    let local_var_resp = local_var_result?;
 
-    let local_var_status = local_var_resp.status();
+    let local_var_status = local_var_resp.status().as_u16();
     if local_var_status < 400 {
         ResponseContent::unit(local_var_resp)
     } else {
@@ -4332,27 +4443,29 @@ pub fn users_user_id_get(
         local_var_configuration.base_path,
         UserID = crate::apis::urlencode(user_id)
     );
-    let mut local_var_req_builder = local_var_client.request("GET", local_var_uri_str.as_str());
+    let mut local_var_req_builder =
+        create_request!(local_var_client, GET, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
-        local_var_req_builder = local_var_req_builder.set("user-agent", local_var_user_agent);
+        local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
     }
     if let Some(ref local_var_auth_conf) = local_var_configuration.basic_auth {
         let value = super::basic_auth(local_var_auth_conf);
 
-        local_var_req_builder = local_var_req_builder.set("authorization", &value);
+        local_var_req_builder = local_var_req_builder.header("authorization", &value);
     };
     let accept_str = "application/json";
-    local_var_req_builder = local_var_req_builder.set("accept", accept_str);
+    local_var_req_builder = local_var_req_builder.header("accept", accept_str);
 
-    let local_var_result = local_var_req_builder.call();
+    let local_var_result = local_var_req_builder.send_empty();
 
-    let local_var_resp = local_var_result.or_else(|err| match err {
-        ureq::Error::Status(_status, resp) => Ok(resp),
-        _ => Err(err),
-    })?;
+    let local_var_resp = local_var_result?;
 
-    let local_var_status = local_var_resp.status();
+    let local_var_status = local_var_resp.status().as_u16();
     if local_var_status < 400 {
         ResponseContent::deserialized(local_var_resp)
     } else {
@@ -4378,26 +4491,28 @@ pub fn users_user_id_passphrase_post(
         local_var_configuration.base_path,
         UserID = crate::apis::urlencode(user_id)
     );
-    let mut local_var_req_builder = local_var_client.request("POST", local_var_uri_str.as_str());
+    let mut local_var_req_builder =
+        create_request!(local_var_client, POST, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
-        local_var_req_builder = local_var_req_builder.set("user-agent", local_var_user_agent);
+        local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
     }
     if let Some(ref local_var_auth_conf) = local_var_configuration.basic_auth {
         let value = super::basic_auth(local_var_auth_conf);
 
-        local_var_req_builder = local_var_req_builder.set("authorization", &value);
+        local_var_req_builder = local_var_req_builder.header("authorization", &value);
     };
 
-    local_var_req_builder = local_var_req_builder.set("content-type", "application/json");
+    local_var_req_builder = local_var_req_builder.header("content-type", "application/json");
     let local_var_result = local_var_req_builder.send_json(user_passphrase_post_data);
 
-    let local_var_resp = local_var_result.or_else(|err| match err {
-        ureq::Error::Status(_status, resp) => Ok(resp),
-        _ => Err(err),
-    })?;
+    let local_var_resp = local_var_result?;
 
-    let local_var_status = local_var_resp.status();
+    let local_var_status = local_var_resp.status().as_u16();
     if local_var_status < 400 {
         ResponseContent::unit(local_var_resp)
     } else {
@@ -4423,28 +4538,30 @@ pub fn users_user_id_post(
         local_var_configuration.base_path,
         UserID = crate::apis::urlencode(user_id)
     );
-    let mut local_var_req_builder = local_var_client.request("POST", local_var_uri_str.as_str());
+    let mut local_var_req_builder =
+        create_request!(local_var_client, POST, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
-        local_var_req_builder = local_var_req_builder.set("user-agent", local_var_user_agent);
+        local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
     }
     if let Some(ref local_var_auth_conf) = local_var_configuration.basic_auth {
         let value = super::basic_auth(local_var_auth_conf);
 
-        local_var_req_builder = local_var_req_builder.set("authorization", &value);
+        local_var_req_builder = local_var_req_builder.header("authorization", &value);
     };
     let accept_str = "application/json";
-    local_var_req_builder = local_var_req_builder.set("accept", accept_str);
+    local_var_req_builder = local_var_req_builder.header("accept", accept_str);
 
-    local_var_req_builder = local_var_req_builder.set("content-type", "application/json");
+    local_var_req_builder = local_var_req_builder.header("content-type", "application/json");
     let local_var_result = local_var_req_builder.send_json(user_post_data);
 
-    let local_var_resp = local_var_result.or_else(|err| match err {
-        ureq::Error::Status(_status, resp) => Ok(resp),
-        _ => Err(err),
-    })?;
+    let local_var_resp = local_var_result?;
 
-    let local_var_status = local_var_resp.status();
+    let local_var_status = local_var_resp.status().as_u16();
     if local_var_status < 400 {
         ResponseContent::deserialized(local_var_resp)
     } else {
@@ -4470,26 +4587,28 @@ pub fn users_user_id_put(
         local_var_configuration.base_path,
         UserID = crate::apis::urlencode(user_id)
     );
-    let mut local_var_req_builder = local_var_client.request("PUT", local_var_uri_str.as_str());
+    let mut local_var_req_builder =
+        create_request!(local_var_client, PUT, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
-        local_var_req_builder = local_var_req_builder.set("user-agent", local_var_user_agent);
+        local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
     }
     if let Some(ref local_var_auth_conf) = local_var_configuration.basic_auth {
         let value = super::basic_auth(local_var_auth_conf);
 
-        local_var_req_builder = local_var_req_builder.set("authorization", &value);
+        local_var_req_builder = local_var_req_builder.header("authorization", &value);
     };
 
-    local_var_req_builder = local_var_req_builder.set("content-type", "application/json");
+    local_var_req_builder = local_var_req_builder.header("content-type", "application/json");
     let local_var_result = local_var_req_builder.send_json(user_post_data);
 
-    let local_var_resp = local_var_result.or_else(|err| match err {
-        ureq::Error::Status(_status, resp) => Ok(resp),
-        _ => Err(err),
-    })?;
+    let local_var_resp = local_var_result?;
 
-    let local_var_status = local_var_resp.status();
+    let local_var_status = local_var_resp.status().as_u16();
     if local_var_status < 400 {
         ResponseContent::unit(local_var_resp)
     } else {
@@ -4514,27 +4633,29 @@ pub fn users_user_id_tags_get(
         local_var_configuration.base_path,
         UserID = crate::apis::urlencode(user_id)
     );
-    let mut local_var_req_builder = local_var_client.request("GET", local_var_uri_str.as_str());
+    let mut local_var_req_builder =
+        create_request!(local_var_client, GET, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
-        local_var_req_builder = local_var_req_builder.set("user-agent", local_var_user_agent);
+        local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
     }
     if let Some(ref local_var_auth_conf) = local_var_configuration.basic_auth {
         let value = super::basic_auth(local_var_auth_conf);
 
-        local_var_req_builder = local_var_req_builder.set("authorization", &value);
+        local_var_req_builder = local_var_req_builder.header("authorization", &value);
     };
     let accept_str = "application/json";
-    local_var_req_builder = local_var_req_builder.set("accept", accept_str);
+    local_var_req_builder = local_var_req_builder.header("accept", accept_str);
 
-    let local_var_result = local_var_req_builder.call();
+    let local_var_result = local_var_req_builder.send_empty();
 
-    let local_var_resp = local_var_result.or_else(|err| match err {
-        ureq::Error::Status(_status, resp) => Ok(resp),
-        _ => Err(err),
-    })?;
+    let local_var_resp = local_var_result?;
 
-    let local_var_status = local_var_resp.status();
+    let local_var_status = local_var_resp.status().as_u16();
     if local_var_status < 400 {
         ResponseContent::deserialized(local_var_resp)
     } else {
@@ -4561,25 +4682,27 @@ pub fn users_user_id_tags_tag_delete(
         UserID = crate::apis::urlencode(user_id),
         Tag = crate::apis::urlencode(tag)
     );
-    let mut local_var_req_builder = local_var_client.request("DELETE", local_var_uri_str.as_str());
+    let mut local_var_req_builder =
+        create_request!(local_var_client, DELETE, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
-        local_var_req_builder = local_var_req_builder.set("user-agent", local_var_user_agent);
+        local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
     }
     if let Some(ref local_var_auth_conf) = local_var_configuration.basic_auth {
         let value = super::basic_auth(local_var_auth_conf);
 
-        local_var_req_builder = local_var_req_builder.set("authorization", &value);
+        local_var_req_builder = local_var_req_builder.header("authorization", &value);
     };
 
-    let local_var_result = local_var_req_builder.call();
+    let local_var_result = local_var_req_builder.send_empty();
 
-    let local_var_resp = local_var_result.or_else(|err| match err {
-        ureq::Error::Status(_status, resp) => Ok(resp),
-        _ => Err(err),
-    })?;
+    let local_var_resp = local_var_result?;
 
-    let local_var_status = local_var_resp.status();
+    let local_var_status = local_var_resp.status().as_u16();
     if local_var_status < 400 {
         ResponseContent::unit(local_var_resp)
     } else {
@@ -4606,25 +4729,27 @@ pub fn users_user_id_tags_tag_put(
         UserID = crate::apis::urlencode(user_id),
         Tag = crate::apis::urlencode(tag)
     );
-    let mut local_var_req_builder = local_var_client.request("PUT", local_var_uri_str.as_str());
+    let mut local_var_req_builder =
+        create_request!(local_var_client, PUT, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
-        local_var_req_builder = local_var_req_builder.set("user-agent", local_var_user_agent);
+        local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
     }
     if let Some(ref local_var_auth_conf) = local_var_configuration.basic_auth {
         let value = super::basic_auth(local_var_auth_conf);
 
-        local_var_req_builder = local_var_req_builder.set("authorization", &value);
+        local_var_req_builder = local_var_req_builder.header("authorization", &value);
     };
 
-    let local_var_result = local_var_req_builder.call();
+    let local_var_result = local_var_req_builder.send_empty();
 
-    let local_var_resp = local_var_result.or_else(|err| match err {
-        ureq::Error::Status(_status, resp) => Ok(resp),
-        _ => Err(err),
-    })?;
+    let local_var_resp = local_var_result?;
 
-    let local_var_status = local_var_resp.status();
+    let local_var_status = local_var_resp.status().as_u16();
     if local_var_status < 400 {
         ResponseContent::unit(local_var_resp)
     } else {

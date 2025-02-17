@@ -3,23 +3,13 @@
 //   Author: David Runge <dvzrv@archlinux.org>
 //   License: Apache-2.0 OR MIT
 
-use std::sync::Arc;
-
 use nethsm_sdk_rs::apis::configuration::Configuration;
 use rustainers::{
     runner::{RunOption, Runner},
     ExposedPort, ImageName, RunnableContainer, RunnableContainerBuilder, ToRunnableContainer,
     WaitStrategy,
 };
-use rustls::{
-    client::{
-        danger::{HandshakeSignatureValid, ServerCertVerified, ServerCertVerifier},
-        ClientConfig,
-    },
-    crypto::{self, WebPkiSupportedAlgorithms},
-    pki_types::{CertificateDer, ServerName, UnixTime},
-    DigitallySignedStruct, SignatureScheme,
-};
+use ureq::tls::TlsConfig;
 
 pub async fn with_container<F: FnOnce(Configuration) -> T, T>(f: F) -> T {
     let _ = env_logger::builder().is_test(true).try_init();
@@ -31,15 +21,13 @@ pub async fn with_container<F: FnOnce(Configuration) -> T, T>(f: F) -> T {
         .await
         .unwrap();
 
-    let tls_config = Arc::new(
-        ClientConfig::builder()
-            .dangerous()
-            .with_custom_certificate_verifier(Arc::new(Verifier::default()))
-            .with_no_client_auth(),
-    );
     let config = Configuration {
         base_path: container.api().await,
-        client: ureq::builder().tls_config(tls_config).build(),
+        client: ureq::Agent::new_with_config(
+            ureq::Agent::config_builder()
+                .tls_config(TlsConfig::builder().disable_verification(true).build())
+                .build(),
+        ),
         ..Default::default()
     };
 
@@ -76,49 +64,5 @@ impl ToRunnableContainer for Image {
             ))
             .with_port_mappings([self.port.clone()])
             .build()
-    }
-}
-
-#[derive(Debug)]
-struct Verifier(WebPkiSupportedAlgorithms);
-
-impl Default for Verifier {
-    fn default() -> Self {
-        Self(crypto::ring::default_provider().signature_verification_algorithms)
-    }
-}
-
-impl ServerCertVerifier for Verifier {
-    fn verify_server_cert(
-        &self,
-        _end_entity: &CertificateDer<'_>,
-        _intermediates: &[CertificateDer<'_>],
-        _server_name: &ServerName<'_>,
-        _ocsp_response: &[u8],
-        _now: UnixTime,
-    ) -> Result<ServerCertVerified, rustls::Error> {
-        Ok(ServerCertVerified::assertion())
-    }
-
-    fn verify_tls12_signature(
-        &self,
-        message: &[u8],
-        cert: &CertificateDer<'_>,
-        dss: &DigitallySignedStruct,
-    ) -> Result<HandshakeSignatureValid, rustls::Error> {
-        crypto::verify_tls12_signature(message, cert, dss, &self.0)
-    }
-
-    fn verify_tls13_signature(
-        &self,
-        message: &[u8],
-        cert: &CertificateDer<'_>,
-        dss: &DigitallySignedStruct,
-    ) -> Result<HandshakeSignatureValid, rustls::Error> {
-        crypto::verify_tls13_signature(message, cert, dss, &self.0)
-    }
-
-    fn supported_verify_schemes(&self) -> Vec<SignatureScheme> {
-        self.0.supported_schemes()
     }
 }

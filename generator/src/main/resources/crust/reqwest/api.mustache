@@ -165,7 +165,8 @@ pub fn {{{operationId}}}(configuration: &configuration::Configuration, {{#allPar
     let local_var_client = &local_var_configuration.client;
 
     let local_var_uri_str = format!("{}{{{path}}}", local_var_configuration.base_path{{#pathParams}}, {{{baseName}}}={{#isString}}crate::apis::urlencode({{/isString}}{{{paramName}}}{{^required}}.unwrap(){{/required}}{{#required}}{{#isNullable}}.unwrap(){{/isNullable}}{{/required}}{{#isArray}}.join(",").as_ref(){{/isArray}}{{#isString}}){{/isString}}{{/pathParams}});
-    let mut local_var_req_builder = local_var_client.request("{{{httpMethod}}}", local_var_uri_str.as_str());
+    let mut local_var_req_builder = create_request!(local_var_client, {{httpMethod}}, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder.config().http_status_as_error(false).build();
 
     {{#queryParams}}
     {{#required}}
@@ -239,24 +240,24 @@ pub fn {{{operationId}}}(configuration: &configuration::Configuration, {{#allPar
     {{#hasAuthMethods}}
     {{/hasAuthMethods}}
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
-        local_var_req_builder = local_var_req_builder.set("user-agent", local_var_user_agent);
+        local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
     }
     {{#hasHeaderParams}}
     {{#headerParams}}
     {{#required}}
     {{^isNullable}}
-    local_var_req_builder = local_var_req_builder.set("{{{baseName}}}", {{{paramName}}}{{#isArray}}.join(","){{/isArray}});
+    local_var_req_builder = local_var_req_builder.header("{{{baseName}}}", {{{paramName}}}{{#isArray}}.join(","){{/isArray}});
     {{/isNullable}}
     {{#isNullable}}
     match {{{paramName}}} {
-        Some(local_var_param_value) => { local_var_req_builder = local_var_req_builder.set("{{{baseName}}}", local_var_param_value{{#isArray}}.join(","){{/isArray}}); },
-        None => { local_var_req_builder = local_var_req_builder.set("{{{baseName}}}", ""); },
+        Some(local_var_param_value) => { local_var_req_builder = local_var_req_builder.header("{{{baseName}}}", local_var_param_value{{#isArray}}.join(","){{/isArray}}); },
+        None => { local_var_req_builder = local_var_req_builder.header("{{{baseName}}}", ""); },
     }
     {{/isNullable}}
     {{/required}}
     {{^required}}
     if let Some(local_var_param_value) = {{{paramName}}} {
-        local_var_req_builder = local_var_req_builder.set("{{{baseName}}}", local_var_param_value{{#isArray}}.join(","){{/isArray}}.to_string().as_str());
+        local_var_req_builder = local_var_req_builder.header("{{{baseName}}}", local_var_param_value{{#isArray}}.join(","){{/isArray}}.to_string().as_str());
     }
     {{/required}}
     {{/headerParams}}
@@ -271,7 +272,7 @@ pub fn {{{operationId}}}(configuration: &configuration::Configuration, {{#allPar
             Some(ref local_var_prefix) => format!("{} {}", local_var_prefix, local_var_key),
             None => local_var_key,
         };
-        local_var_req_builder = local_var_req_builder.set("{{{keyParamName}}}", &local_var_value);
+        local_var_req_builder = local_var_req_builder.header("{{{keyParamName}}}", &local_var_value);
     };
     {{/isKeyInHeader}}
     {{/isApiKey}}
@@ -280,18 +281,18 @@ pub fn {{{operationId}}}(configuration: &configuration::Configuration, {{#allPar
     if let Some(ref local_var_auth_conf) = local_var_configuration.basic_auth {
         let value = super::basic_auth(local_var_auth_conf);
 
-        local_var_req_builder = local_var_req_builder.set("authorization", &value);
+        local_var_req_builder = local_var_req_builder.header("authorization", &value);
     };
     {{/isBasicBasic}}
     {{#isBasicBearer}}
     if let Some(ref local_var_token) = local_var_configuration.bearer_access_token {
-        local_var_req_builder = local_var_req_builder.set("authorization",format!("Bearer {}",local_var_token));
+        local_var_req_builder = local_var_req_builder.header("authorization",format!("Bearer {}",local_var_token));
     };
     {{/isBasicBearer}}
     {{/isBasic}}
     {{#isOAuth}}
     if let Some(ref local_var_token) = local_var_configuration.oauth_access_token {
-        local_var_req_builder = local_var_req_builder.set("authorization",format!("Bearer {}",local_var_token));
+        local_var_req_builder = local_var_req_builder.header("authorization",format!("Bearer {}",local_var_token));
     };
     {{/isOAuth}}
     {{/authMethods}}
@@ -306,7 +307,7 @@ pub fn {{{operationId}}}(configuration: &configuration::Configuration, {{#allPar
     let accept_str = "{{{mediaType}}}";
     {{/produces}}
     {{/vendorExtensions.x-produceMultipleMediaTypes}}
-    local_var_req_builder = local_var_req_builder.set("accept", accept_str);
+    local_var_req_builder = local_var_req_builder.header("accept", accept_str);
     {{/hasProduces}}
 
     {{#isMultipart}}
@@ -340,28 +341,28 @@ pub fn {{{operationId}}}(configuration: &configuration::Configuration, {{#allPar
     {{/formParams}}
     {{/hasFormParams}}
 
-    let local_var_multipart = local_var_multipart.prepare()?;
-    local_var_req_builder = local_var_req_builder.set(
+    let mut local_var_multipart = local_var_multipart.prepare()?;
+    local_var_req_builder = local_var_req_builder.header(
         "content-type",
         &format!("multipart/form-data; boundary={}", local_var_multipart.boundary()),
     );
-    let local_var_result = local_var_req_builder.send(local_var_multipart);
+    let local_var_result = local_var_req_builder.send(ureq::SendBody::from_reader(&mut local_var_multipart));
     {{/isMultipart}}
     {{^isMultipart}}
     {{#vendorExtensions.x-consumeMultipleMediaTypes}}
     {{#hasBodyParam}}{{#bodyParams}}
     let body_json = body.is_json();
-    local_var_req_builder = local_var_req_builder.set("content-type", body.content_type());
+    local_var_req_builder = local_var_req_builder.header("content-type", body.content_type());
     {{/bodyParams}}{{/hasBodyParam}} 
     let local_var_result = if body_json {
         local_var_req_builder.send_json(body)
     } else {
-        local_var_req_builder.send_string(body.get_string().as_str())
+        local_var_req_builder.send(body.get_string().as_str())
     };
     {{/vendorExtensions.x-consumeMultipleMediaTypes}}
     {{^vendorExtensions.x-consumeMultipleMediaTypes}}
     {{#consumes}}
-    local_var_req_builder = local_var_req_builder.set("content-type", "{{{mediaType}}}");
+    local_var_req_builder = local_var_req_builder.header("content-type", "{{{mediaType}}}");
     {{#mediaIsJson}}
     let local_var_result = local_var_req_builder.send_json(
     {{/mediaIsJson}}
@@ -369,11 +370,10 @@ pub fn {{{operationId}}}(configuration: &configuration::Configuration, {{#allPar
     {{#hasBodyParam}}
     {{#bodyParams}}
     {{#isFile}}
-    let {{{paramName}}} = std::io::Cursor::new({{{paramName}}});
     let local_var_result = local_var_req_builder.send(
     {{/isFile}}
     {{^isFile}}
-    let local_var_result = local_var_req_builder.send_string(
+    let local_var_result = local_var_req_builder.send(
     {{/isFile}}
     {{/bodyParams}}
     {{/hasBodyParam}}
@@ -389,16 +389,13 @@ pub fn {{{operationId}}}(configuration: &configuration::Configuration, {{#allPar
     {{#hasBodyParam}});{{/hasBodyParam}}
     {{/vendorExtensions.x-consumeMultipleMediaTypes}}
     {{^hasBodyParam}}
-    let local_var_result = local_var_req_builder.call();
+    let local_var_result = local_var_req_builder.send_empty();
     {{/hasBodyParam}}
     {{/isMultipart}}
 
-    let local_var_resp = local_var_result.or_else(|err| match err {
-        ureq::Error::Status(_status, resp) => Ok(resp),
-        _ => Err(err),
-    })?;
+    let local_var_resp = local_var_result?;
 
-    let local_var_status = local_var_resp.status();
+    let local_var_status = local_var_resp.status().as_u16();
     if local_var_status < 400 {
         {{#returnType}}
         {{#vendorExtensions.x-produceMultipleMediaTypes}}

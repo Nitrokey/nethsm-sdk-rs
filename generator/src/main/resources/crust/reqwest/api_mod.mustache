@@ -5,19 +5,25 @@ use std::collections::HashMap;
 use base64::{engine::general_purpose, Engine};
 use serde::de::DeserializeOwned;
 
-fn get_header_map(response: &ureq::Response) -> HashMap<String, String> {
+macro_rules! create_request {
+    ($agent:expr, GET, $uri:expr) => { $agent.get($uri).force_send_body() }
+    ($agent:expr, POST, $uri:expr) => { $agent.post($uri) }
+    ($agent:expr, PUT, $uri:expr) => { $agent.put($uri) }
+    ($agent:expr, DELETE, $uri:expr) => { $agent.delete($uri).force_send_body() }
+}
+
+fn get_header_map<B>(response: &http::Response<B>) -> HashMap<String, String> {
     let mut headers = HashMap::new();
 
-    let names = response.headers_names();
-    for name in names {
-        if let Some(value) = response.header(&name){
-            headers.insert(name, value.to_string());
+    let names = response.headers();
+    for (name, value) in names {
+        if let Ok(value) = value.to_str() {
+            headers.insert(name.as_str().into(), value.into());
         }
     }
 
     headers
 }
-
 
 #[derive(Debug, Clone)]
 pub struct ResponseContent<T> {
@@ -28,39 +34,43 @@ pub struct ResponseContent<T> {
 }
 
 impl<T> ResponseContent<T> {
-    fn new<F, E>(response: ureq::Response, f: F) -> Result<Self, Error<E>>
+    fn new<F, E>(response: http::Response<ureq::Body>, f: F) -> Result<Self, Error<E>>
     where
         F: FnOnce(&[u8]) -> Result<T, Error<E>>,
     {
-        let status = response.status();
+        use std::io::Read;
+        let status = response.status().as_u16();
         let headers = get_header_map(&response);
         let mut content = Vec::new();
-        response.into_reader().read_to_end(&mut content)?;
+        response
+            .into_body()
+            .into_reader()
+            .read_to_end(&mut content)?;
         let entity = f(&content)?;
         Ok(Self { status, content, entity, headers })
     }
 }
 
 impl ResponseContent<()> {
-    fn unit<E>(response: ureq::Response) -> Result<Self, Error<E>> {
+    fn unit<E>(response: http::Response<ureq::Body>) -> Result<Self, Error<E>> {
         Self::new(response, |_| Ok(()))
     }
 }
 
 impl ResponseContent<Vec<u8>> {
-    fn bytes<E>(response: ureq::Response) -> Result<Self, Error<E>> {
+    fn bytes<E>(response: http::Response<ureq::Body>) -> Result<Self, Error<E>> {
         Self::new(response, |content| Ok(content.into()))
     }
 }
 
 impl ResponseContent<String> {
-    fn string<E>(response: ureq::Response) -> Result<Self, Error<E>> {
+    fn string<E>(response: http::Response<ureq::Body>) -> Result<Self, Error<E>> {
         Self::new(response, |content| String::from_utf8(content.into()).map_err(From::from))
     }
 }
 
 impl<T: DeserializeOwned> ResponseContent<T> {
-    fn deserialized<E>(response: ureq::Response) -> Result<Self, Error<E>> {
+    fn deserialized<E>(response: http::Response<ureq::Body>) -> Result<Self, Error<E>> {
         Self::new(response, |content| serde_json::from_slice(content).map_err(From::from))
     }
 }
