@@ -963,6 +963,40 @@ impl KeysKeyIdGetError {
     }
 }
 
+/// struct for typed errors of method [`keys_key_id_move_post`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum KeysKeyIdMovePostError {
+    Status400(),
+    Status401(),
+    Status403(),
+    Status404(),
+    Status409(),
+    Status412(),
+    UnknownValue(serde_json::Value),
+}
+
+impl KeysKeyIdMovePostError {
+    fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
+        // to do: support payloads once added to API spec
+        match status {
+            400 => Ok(Self::Status400()),
+            401 => Ok(Self::Status401()),
+            403 => Ok(Self::Status403()),
+            404 => Ok(Self::Status404()),
+            409 => Ok(Self::Status409()),
+            412 => Ok(Self::Status412()),
+            _ => {
+                if data.is_empty() {
+                    Ok(Self::UnknownValue(serde_json::Value::Null))
+                } else {
+                    serde_json::from_slice(data).map(Self::UnknownValue)
+                }
+            }
+        }
+    }
+}
+
 /// struct for typed errors of method [`keys_key_id_public_pem_get`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -3266,6 +3300,55 @@ pub fn keys_key_id_get(
     } else {
         ResponseContent::new(local_var_resp, |data| {
             KeysKeyIdGetError::new(local_var_status, data).map_err(From::from)
+        })
+        .and_then(|content| Err(Error::ResponseError(content)))
+    }
+}
+
+/// Move a key by changing its identifier. The key content remains unchanged, but it will be accessible under the new identifier. The old identifier becomes invalid after successful move.
+pub fn keys_key_id_move_post(
+    configuration: &configuration::Configuration,
+    key_id: &str,
+    move_key_request: crate::models::MoveKeyRequest,
+) -> Result<ResponseContent<crate::models::CreateResourceId>, Error<KeysKeyIdMovePostError>> {
+    let local_var_configuration = configuration;
+
+    let local_var_client = &local_var_configuration.client;
+
+    let local_var_uri_str = format!(
+        "{}/keys/{KeyID}/move",
+        local_var_configuration.base_path,
+        KeyID = crate::apis::urlencode(key_id)
+    );
+    let mut local_var_req_builder =
+        create_request!(local_var_client, POST, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
+
+    if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
+        local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
+    }
+    if let Some(ref local_var_auth_conf) = local_var_configuration.basic_auth {
+        let value = super::basic_auth(local_var_auth_conf);
+
+        local_var_req_builder = local_var_req_builder.header("authorization", &value);
+    };
+    let accept_str = "application/json";
+    local_var_req_builder = local_var_req_builder.header("accept", accept_str);
+
+    local_var_req_builder = local_var_req_builder.header("content-type", "application/json");
+    let local_var_result = local_var_req_builder.send_json(move_key_request);
+
+    let local_var_resp = local_var_result?;
+
+    let local_var_status = local_var_resp.status().as_u16();
+    if local_var_status < 400 {
+        ResponseContent::deserialized(local_var_resp)
+    } else {
+        ResponseContent::new(local_var_resp, |data| {
+            KeysKeyIdMovePostError::new(local_var_status, data).map_err(From::from)
         })
         .and_then(|content| Err(Error::ResponseError(content)))
     }

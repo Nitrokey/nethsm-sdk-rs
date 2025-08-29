@@ -33,6 +33,7 @@ Method | HTTP request | Description
 [**keys_key_id_delete**](DefaultApi.md#keys_key_id_delete) | **DELETE** /keys/{KeyID} | 
 [**keys_key_id_encrypt_post**](DefaultApi.md#keys_key_id_encrypt_post) | **POST** /keys/{KeyID}/encrypt | 
 [**keys_key_id_get**](DefaultApi.md#keys_key_id_get) | **GET** /keys/{KeyID} | 
+[**keys_key_id_move_post**](DefaultApi.md#keys_key_id_move_post) | **POST** /keys/{KeyID}/move | 
 [**keys_key_id_public_pem_get**](DefaultApi.md#keys_key_id_public_pem_get) | **GET** /keys/{KeyID}/public.pem | 
 [**keys_key_id_put**](DefaultApi.md#keys_key_id_put) | **PUT** /keys/{KeyID} | 
 [**keys_key_id_restrictions_tags_tag_delete**](DefaultApi.md#keys_key_id_restrictions_tags_tag_delete) | **DELETE** /keys/{KeyID}/restrictions/tags/{Tag} | 
@@ -908,6 +909,37 @@ Name | Type | Description  | Required | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
+## keys_key_id_move_post
+
+> crate::models::CreateResourceId keys_key_id_move_post(key_id, move_key_request)
+
+
+Move a key by changing its identifier. The key content remains unchanged, but it will be accessible under the new identifier. The old identifier becomes invalid after successful move. 
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**key_id** | **String** |  | [required] |
+**move_key_request** | [**MoveKeyRequest**](MoveKeyRequest.md) |  | [required] |
+
+### Return type
+
+[**crate::models::CreateResourceId**](CreateResourceId.md)
+
+### Authorization
+
+[basic](../README.md#basic)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)

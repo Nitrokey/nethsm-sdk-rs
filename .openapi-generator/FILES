@@ -20,6 +20,7 @@ docs/KeyRestrictions.md
 docs/KeyType.md
 docs/LogLevel.md
 docs/LoggingConfig.md
+docs/MoveKeyRequest.md
 docs/NamespaceItem.md
 docs/NetworkConfig.md
 docs/Pcr.md
@@ -74,6 +75,7 @@ src/models/key_type.rs
 src/models/log_level.rs
 src/models/logging_config.rs
 src/models/mod.rs
+src/models/move_key_request.rs
 src/models/namespace_item.rs
 src/models/network_config.rs
 src/models/pcr.rs
