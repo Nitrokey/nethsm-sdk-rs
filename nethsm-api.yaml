@@ -409,7 +409,7 @@ paths:
                   value:
                     mechanisms:
                       - ECDSA_Signature
-                    type: EC_P224
+                    type: EC_P256
                     operations: 242
                     restrictions:
                       tags:
@@ -489,7 +489,7 @@ paths:
           For request body with content type `application/json`:
           * *RSA* includes `primeP`, `primeQ`, and `publicExponent` properties.
             The remaining properties `privateExponent`, `modulus`, ..) are computed.
-          * *EC_P224*, *EC_P256*, *EC_P384*, *EC_P521* uses the `data` property.
+          * *EC_P256*, *EC_P384*, *EC_P521* uses the `data` property.
             Keys are the raw (big endian) scalar.
           * *Curve25519* uses the `data` property.
             Keys are the raw (little endian) key.
@@ -514,7 +514,7 @@ paths:
               ecdsa:
                 summary: P* Keys
                 value:
-                  type: EC_P224
+                  type: EC_P256
                   mechanisms:
                     - ECDSA_Signature
                   private:
@@ -580,7 +580,7 @@ paths:
         in: path
         required: true
         schema:
-          type: string
+          $ref: "#/components/schemas/ID"
   /keys/{KeyID}/public.pem:
     get:
       responses:
@@ -621,7 +621,7 @@ paths:
         in: path
         required: true
         schema:
-          type: string
+          $ref: "#/components/schemas/ID"
   /keys/{KeyID}/csr.pem:
     post:
       responses:
@@ -666,7 +666,7 @@ paths:
         in: path
         required: true
         schema:
-          type: string
+          $ref: "#/components/schemas/ID"
   /keys/{KeyID}/decrypt:
     post:
       responses:
@@ -723,7 +723,7 @@ paths:
         in: path
         required: true
         schema:
-          type: string
+          $ref: "#/components/schemas/ID"
   /keys/{KeyID}/encrypt:
     post:
       responses:
@@ -767,7 +767,7 @@ paths:
         in: path
         required: true
         schema:
-          type: string
+          $ref: "#/components/schemas/ID"
   /keys/{KeyID}/sign:
     post:
       responses:
@@ -781,6 +781,8 @@ paths:
               r appened with s, in total 64 bytes (each 32 bytes).
             * Mode `ECDSA` returns the ASN.1 DER encoded signature
               (a SEQUENCE of INTEGER r INTEGER s).
+            * Mode `BIP340` returns the BIP-340 encoded signature:
+              r appened with s, in total 64 bytes (each 32 bytes).
           content:
             application/json:
               schema:
@@ -809,12 +811,14 @@ paths:
           For request body with content type `application/json`:
           * Mode `PKCS1` expects the already hashed data.
           * Mode `PSS_*` expects the already hashed data.
-          * Mode `EdDSA` expects the raw message
+          * Mode `EdDSA` expects any message
             (ED25519 applies the SHA512 hash internally,
             also to derive the nonce).
           * Mode `ECDSA` expects the hashed data
-            (using SHA224 for P224, SHA256 for P256,
+            (using SHA256 for P256,
             SHA384 for P384 and SHA512 for P521).
+          * Mode `BIP340` expects any message
+            (BIP-340 applies the tagged SHA256 hash internally).
         content:
           application/json:
             schema:
@@ -835,7 +839,7 @@ paths:
         in: path
         required: true
         schema:
-          type: string
+          $ref: "#/components/schemas/ID"
   /keys/{KeyID}/cert:
     get:
       responses:
@@ -936,7 +940,55 @@ paths:
         in: path
         required: true
         schema:
-          type: string
+          $ref: "#/components/schemas/ID"
+        x-test-value: myKey1
+  /keys/{KeyID}/move:
+    post:
+      responses:
+        "200":
+          description: Key was successfully moved.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CreateResourceId"
+        "400":
+          description: Bad request (invalid JSON or empty newId).
+        "401":
+          description: Authentication required but none provided.
+        "403":
+          description: Access denied (Administrator role required).
+        "404":
+          description: Key for KeyID not found in namespace.
+        "409":
+          description: A key with the new ID already exists.
+        "412":
+          description: Precondition failed (NetHSM was not *Operational*).
+      description: |
+        Move a key by changing its identifier. The key content remains unchanged,
+        but it will be accessible under the new identifier. The old identifier
+        becomes invalid after successful move.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/MoveKeyRequest"
+      security:
+        - basic: []
+      x-annotation-role:
+        - Administrator
+      x-annotation-state:
+        - Operational
+      x-annotation-caller-namespace:
+        - Root
+        - Namespaced
+      x-test-value-KeyID: myKey1
+    parameters:
+      - name: KeyID
+        in: path
+        required: true
+        schema:
+          $ref: "#/components/schemas/ID"
         x-test-value: myKey1
   /keys/{KeyID}/restrictions/tags/{Tag}:
     put:
@@ -1005,7 +1057,7 @@ paths:
         in: path
         required: true
         schema:
-          type: string
+          $ref: "#/components/schemas/ID"
   /namespaces:
     get:
       responses:
@@ -1094,7 +1146,7 @@ paths:
         in: path
         required: true
         schema:
-          type: string
+          $ref: "#/components/schemas/ID"
   /users:
     get:
       responses:
@@ -1320,7 +1372,7 @@ paths:
         in: path
         required: true
         schema:
-          type: string
+          $ref: "#/components/schemas/UserID"
   /users/{UserID}/passphrase:
     post:
       responses:
@@ -1363,7 +1415,7 @@ paths:
         in: path
         required: true
         schema:
-          type: string
+          $ref: "#/components/schemas/UserID"
   /users/{UserID}/tags:
     get:
       responses:
@@ -1405,7 +1457,7 @@ paths:
         in: path
         required: true
         schema:
-          type: string
+          $ref: "#/components/schemas/UserID"
   /users/{UserID}/tags/{Tag}:
     put:
       responses:
@@ -1472,7 +1524,7 @@ paths:
         in: path
         required: true
         schema:
-          type: string
+          $ref: "#/components/schemas/UserID"
       - name: Tag
         in: path
         required: true
@@ -1971,20 +2023,27 @@ paths:
         "204":
           description: About to shut down NetHSM.
         "401":
-          description: Authentication required but none provided.
+          description: Authentication required but none provided (only in Operational state).
         "403":
-          description: Access denied (e.g. user is in namespace)
+          description: Access denied (e.g. user is in namespace, only in Operational state)
         "406":
           description: Content type in Accept header not supported.
-        "412":
-          description: Precondition failed (NetHSM was not *Operational*).
-      description: Shut down NetHSM.
+      description: |
+        Shut down NetHSM.
+
+        Authentication behavior varies by NetHSM state:
+        - **Operational**: Requires Administrator authentication
+        - **Locked** or **Unprovisioned**: No authentication required
       security:
-        - basic: []
+        - basic: [] # when Operational
+        - {} # when Unprovisioned or Locked
       x-annotation-role:
         - Administrator
+        - Public
       x-annotation-state:
         - Operational
+        - Unprovisioned
+        - Locked
       x-annotation-caller-namespace:
         - Root
   /system/factory-reset:
@@ -2145,8 +2204,8 @@ paths:
             schema:
               $ref: "#/components/schemas/RestoreRequest"
       security:
-        - {}         # for complete restore
-        - basic: []  # for partial restore
+        - {} # for complete restore
+        - basic: [] # for partial restore
       x-annotation-role:
         - Public
       x-annotation-state:
@@ -2181,7 +2240,12 @@ components:
       minLength: 10
       type: string
     ID:
-      pattern: ^[a-zA-Z0-9]+$
+      pattern: ^[a-zA-Z0-9][a-zA-Z0-9_.-]*$
+      minLength: 1
+      maxLength: 128
+      type: string
+    UserID:
+      pattern: ^([a-zA-Z0-9][a-zA-Z0-9_.-]*~)?[a-zA-Z0-9][a-zA-Z0-9_.-]*$
       minLength: 1
       maxLength: 128
       type: string
@@ -2226,20 +2290,25 @@ components:
       enum:
         - RSA
         - Curve25519
-        - EC_P224
         - EC_P256
         - EC_P384
         - EC_P521
+        - EC_P256K1
+        - BrainpoolP256
+        - BrainpoolP384
+        - BrainpoolP512
         - Generic
       type: string
     TlsKeyType:
       enum:
         - RSA
         - Curve25519
-        - EC_P224
         - EC_P256
         - EC_P384
         - EC_P521
+        - BrainpoolP256
+        - BrainpoolP384
+        - BrainpoolP512
       type: string
     KeyMechanism:
       enum:
@@ -2260,6 +2329,7 @@ components:
         - RSA_Signature_PSS_SHA512
         - EdDSA_Signature
         - ECDSA_Signature
+        - BIP340_Signature
         - AES_Encryption_CBC
         - AES_Decryption_CBC
       type: string
@@ -2290,6 +2360,7 @@ components:
         - PSS_SHA512
         - EdDSA
         - ECDSA
+        - BIP340
       type: string
     KeyList:
       example:
@@ -2324,7 +2395,7 @@ components:
       type: object
       properties:
         user:
-          $ref: "#/components/schemas/ID"
+          $ref: "#/components/schemas/UserID"
       required:
         - user
     NamespaceList:
@@ -2772,6 +2843,15 @@ components:
       required:
         - newPassphrase
         - currentPassphrase
+    MoveKeyRequest:
+      example:
+        newId: ab0d5df406ddad1075ab
+      type: object
+      properties:
+        newId:
+          $ref: "#/components/schemas/ID"
+      required:
+        - newId
     RestoreRequest:
       type: object
       properties:
@@ -2801,7 +2881,7 @@ components:
         softwareVersion: "1.7"
         softwareBuild: f3f6292
         firmwareVersion: 1.0-devel
-        hardwareVersion: prodrive-hermes-1.0
+        hardwareVersion: prodrive-hermes-1
         deviceId: 5UMIP364R2
         akPub:
           P256: MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEup7z8QYvkzkBuLryG1SgVQjlPhSFW3PzYn1l3uLNd+pSBxX0OBpslcbnmPFr5wSs/iP46+H8MFlEAYUkYv6uuQ==
@@ -2887,21 +2967,21 @@ components:
     PemCSR:
       example: |
         -----BEGIN CERTIFICATE REQUEST-----
-        MIICpzCCAY8CAQAwYjFgMAkGA1UEBhMCREUwDQYDVQQHDAZCZXJsaW4wDwYDVQQK
-        DAhOaXRyb2tleTATBgNVBAMMDG5ldGhzbS5sb2NhbDAeBgkqhkiG9w0BCQEWEWlu
-        Zm9Abml0cm9rZXkuY29tMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA
-        x7ghfro+VEepYmy2V7HPn5PSRdmGzxewcpmzxTtrZ10BygbEqhPsAr4fWI9pG7iR
-        Xzeza7DMjrQptzKsfSy6dBFmSEZer+hJxuOdhBG/FX6pjwRrZpbOQxyr+aTlE3jm
-        2XP12Cqx0wsYGIoJlWHbGb90IAx9zpdYQgHoJZ4x5ims5vo7h3puPEyVycJH5fMB
-        B9h+2Bxc4BxaPKMm15JR1B7ToB3g16SJY2B1t/aqNmqSBZC4HP1fCuSbBm83OgqR
-        hdk1P6r/vqOVKrxVupDqKkdcf/dRBiQalJ9tQbVbs9OOYfQ6n25GvJTvGtqOEugg
-        it32tV16JXCZjnYePAvtNwIDAQABoAAwDQYJKoZIhvcNAQELBQADggEBABVz67ib
-        ngef9acHkwTYHHQk3MHxQRSLOxUKoDjk1URMgJ2hgL5HR91yQ3gBPxVuEGWdEQXJ
-        C4sM9S3OoM5yFJFj56Y8MaASHFo58V5N1FaFqf3BbVKNzM4Jgrtghw1teJU45xZR
-        0+sjA0YjVJwGnNXfBJdQVNXgWJcXy4bmPSaF7khxDnoP7dmxMcpQ2HKL8X9E/kef
-        KOhz+HtlCWoqwD77aR3wKrYWdn+fwMeTRGNpJLPdKl7vyleb8pjtWUYnNTIP4Zh+
-        BLX93udZxl8sVpJBnLcIWplwJB16hxk5ZODjWUOrhkwZ0MbiPFbKkihc8GMLLEyp
-        dHRjrbgAUrx5DuY=
+        MIICrzCCAZcCAQAwajEVMBMGA1UEAwwMbmV0aHNtLmxvY2FsMQswCQYDVQQGEwJE
+        RTEPMA0GA1UEBwwGQmVybGluMREwDwYDVQQKDAhOaXRyb2tleTEgMB4GCSqGSIb3
+        DQEJARYRaW5mb0BuaXRyb2tleS5jb20wggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAw
+        ggEKAoIBAQDHuCF+uj5UR6libLZXsc+fk9JF2YbPF7BymbPFO2tnXQHKBsSqE+wC
+        vh9Yj2kbuJFfN7NrsMyOtCm3Mqx9LLp0EWZIRl6v6EnG452EEb8VfqmPBGtmls5D
+        HKv5pOUTeObZc/XYKrHTCxgYigmVYdsZv3QgDH3Ol1hCAeglnjHmKazm+juHem48
+        TJXJwkfl8wEH2H7YHFzgHFo8oybXklHUHtOgHeDXpIljYHW39qo2apIFkLgc/V8K
+        5JsGbzc6CpGF2TU/qv++o5UqvFW6kOoqR1x/91EGJBqUn21BtVuz045h9Dqfbka8
+        lO8a2o4S6CCK3fa1XXolcJmOdh48C+03AgMBAAGgADANBgkqhkiG9w0BAQsFAAOC
+        AQEAl+w1YsevmF6vqmvU8gnPe9tf/CLSwx3/vH8G81cS7CTL97rrQq/LLVDnFChe
+        NHKyiNzoziyyO/bkK79bWiKdtwqvLjgWva3yj9I12ZJqNz029m9fDW4m5Ad+GXtd
+        KaT06RZTyKAOOrqZOjqws9XED6VwIXNwEduQLZiyO/w/jTfyfv4R0JufNjGZCU20
+        bktFyswpkWngz5US5AAxse9Dq+Iih/6QRtjy0guFGJUP6Wae16fbC8+kwiWWdYM6
+        3we910+2Kb3kfmYrIUrGUHuwyLhVlM3Xox0fJ7OylUDr/+qbvdav3B56ii8+zcy3
+        hqHy6w5safHH/pH7QGRiMZmKHQ==
         -----END CERTIFICATE REQUEST-----
       type: string
     PemCert:

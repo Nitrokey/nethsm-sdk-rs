@@ -33,6 +33,7 @@ Method | HTTP request | Description
 [**keys_key_id_delete**](DefaultApi.md#keys_key_id_delete) | **DELETE** /keys/{KeyID} | 
 [**keys_key_id_encrypt_post**](DefaultApi.md#keys_key_id_encrypt_post) | **POST** /keys/{KeyID}/encrypt | 
 [**keys_key_id_get**](DefaultApi.md#keys_key_id_get) | **GET** /keys/{KeyID} | 
+[**keys_key_id_move_post**](DefaultApi.md#keys_key_id_move_post) | **POST** /keys/{KeyID}/move | 
 [**keys_key_id_public_pem_get**](DefaultApi.md#keys_key_id_public_pem_get) | **GET** /keys/{KeyID}/public.pem | 
 [**keys_key_id_put**](DefaultApi.md#keys_key_id_put) | **PUT** /keys/{KeyID} | 
 [**keys_key_id_restrictions_tags_tag_delete**](DefaultApi.md#keys_key_id_restrictions_tags_tag_delete) | **DELETE** /keys/{KeyID}/restrictions/tags/{Tag} | 
@@ -913,6 +914,37 @@ Name | Type | Description  | Required | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 
+## keys_key_id_move_post
+
+> crate::models::CreateResourceId keys_key_id_move_post(key_id, move_key_request)
+
+
+Move a key by changing its identifier. The key content remains unchanged, but it will be accessible under the new identifier. The old identifier becomes invalid after successful move. 
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**key_id** | **String** |  | [required] |
+**move_key_request** | [**MoveKeyRequest**](MoveKeyRequest.md) |  | [required] |
+
+### Return type
+
+[**crate::models::CreateResourceId**](CreateResourceId.md)
+
+### Authorization
+
+[basic](../README.md#basic)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
 ## keys_key_id_public_pem_get
 
 > String keys_key_id_public_pem_get(key_id)
@@ -956,7 +988,7 @@ Import a private key into NetHSM and store it under the *KeyID* path. The public
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **key_id** | **String** |  | [required] |
-**private_key** | [**PrivateKey**](PrivateKey.md) | For request body with content type `application/json`: * *RSA* includes `primeP`, `primeQ`, and `publicExponent` properties.   The remaining properties `privateExponent`, `modulus`, ..) are computed. * *EC_P224*, *EC_P256*, *EC_P384*, *EC_P521* uses the `data` property.   Keys are the raw (big endian) scalar. * *Curve25519* uses the `data` property.   Keys are the raw (little endian) key.  | [required] |
+**private_key** | [**PrivateKey**](PrivateKey.md) | For request body with content type `application/json`: * *RSA* includes `primeP`, `primeQ`, and `publicExponent` properties.   The remaining properties `privateExponent`, `modulus`, ..) are computed. * *EC_P256*, *EC_P384*, *EC_P521* uses the `data` property.   Keys are the raw (big endian) scalar. * *Curve25519* uses the `data` property.   Keys are the raw (little endian) key.  | [required] |
 
 ### Return type
 
@@ -1049,7 +1081,7 @@ Sign a message with the secret key.
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **key_id** | **String** |  | [required] |
-**sign_request_data** | [**SignRequestData**](SignRequestData.md) | For request body with content type `application/json`: * Mode `PKCS1` expects the already hashed data. * Mode `PSS_*` expects the already hashed data. * Mode `EdDSA` expects the raw message   (ED25519 applies the SHA512 hash internally,   also to derive the nonce). * Mode `ECDSA` expects the hashed data   (using SHA224 for P224, SHA256 for P256,   SHA384 for P384 and SHA512 for P521).  | [required] |
+**sign_request_data** | [**SignRequestData**](SignRequestData.md) | For request body with content type `application/json`: * Mode `PKCS1` expects the already hashed data. * Mode `PSS_*` expects the already hashed data. * Mode `EdDSA` expects any message   (ED25519 applies the SHA512 hash internally,   also to derive the nonce). * Mode `ECDSA` expects the hashed data   (using SHA256 for P256,   SHA384 for P384 and SHA512 for P521). * Mode `BIP340` expects any message   (BIP-340 applies the tagged SHA256 hash internally).  | [required] |
 
 ### Return type
 
@@ -1496,7 +1528,7 @@ Name | Type | Description  | Required | Notes
 > system_shutdown_post()
 
 
-Shut down NetHSM.
+Shut down NetHSM.  Authentication behavior varies by NetHSM state: - **Operational**: Requires Administrator authentication - **Locked** or **Unprovisioned**: No authentication required 
 
 ### Parameters
 

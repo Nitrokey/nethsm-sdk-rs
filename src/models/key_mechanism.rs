@@ -44,6 +44,8 @@ pub enum KeyMechanism {
     EdDsaSignature,
     #[serde(rename = "ECDSA_Signature")]
     EcdsaSignature,
+    #[serde(rename = "BIP340_Signature")]
+    Bip340Signature,
     #[serde(rename = "AES_Encryption_CBC")]
     AesEncryptionCbc,
     #[serde(rename = "AES_Decryption_CBC")]
@@ -73,6 +75,7 @@ impl std::fmt::Display for KeyMechanism {
                 Self::RsaSignaturePssSha512 => "RSA_Signature_PSS_SHA512",
                 Self::EdDsaSignature => "EdDSA_Signature",
                 Self::EcdsaSignature => "ECDSA_Signature",
+                Self::Bip340Signature => "BIP340_Signature",
                 Self::AesEncryptionCbc => "AES_Encryption_CBC",
                 Self::AesDecryptionCbc => "AES_Decryption_CBC",
             }

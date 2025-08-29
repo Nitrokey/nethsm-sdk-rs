@@ -14,14 +14,18 @@ pub enum TlsKeyType {
     Rsa,
     #[serde(rename = "Curve25519")]
     Curve25519,
-    #[serde(rename = "EC_P224")]
-    EcP224,
     #[serde(rename = "EC_P256")]
     EcP256,
     #[serde(rename = "EC_P384")]
     EcP384,
     #[serde(rename = "EC_P521")]
     EcP521,
+    #[serde(rename = "BrainpoolP256")]
+    BrainpoolP256,
+    #[serde(rename = "BrainpoolP384")]
+    BrainpoolP384,
+    #[serde(rename = "BrainpoolP512")]
+    BrainpoolP512,
 }
 
 impl std::fmt::Display for TlsKeyType {
@@ -32,10 +36,12 @@ impl std::fmt::Display for TlsKeyType {
             match self {
                 Self::Rsa => "RSA",
                 Self::Curve25519 => "Curve25519",
-                Self::EcP224 => "EC_P224",
                 Self::EcP256 => "EC_P256",
                 Self::EcP384 => "EC_P384",
                 Self::EcP521 => "EC_P521",
+                Self::BrainpoolP256 => "BrainpoolP256",
+                Self::BrainpoolP384 => "BrainpoolP384",
+                Self::BrainpoolP512 => "BrainpoolP512",
             }
         )
     }
