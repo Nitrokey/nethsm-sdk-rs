@@ -956,7 +956,7 @@ Import a private key into NetHSM and store it under the *KeyID* path. The public
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **key_id** | **String** |  | [required] |
-**private_key** | [**PrivateKey**](PrivateKey.md) | For request body with content type `application/json`: * *RSA* includes `primeP`, `primeQ`, and `publicExponent` properties.   The remaining properties `privateExponent`, `modulus`, ..) are computed. * *EC_P224*, *EC_P256*, *EC_P384*, *EC_P521* uses the `data` property.   Keys are the raw (big endian) scalar. * *Curve25519* uses the `data` property.   Keys are the raw (little endian) key.  | [required] |
+**private_key** | [**PrivateKey**](PrivateKey.md) | For request body with content type `application/json`: * *RSA* includes `primeP`, `primeQ`, and `publicExponent` properties.   The remaining properties `privateExponent`, `modulus`, ..) are computed. * *EC_P256*, *EC_P384*, *EC_P521* uses the `data` property.   Keys are the raw (big endian) scalar. * *Curve25519* uses the `data` property.   Keys are the raw (little endian) key.  | [required] |
 
 ### Return type
 
@@ -1049,7 +1049,7 @@ Sign a message with the secret key.
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **key_id** | **String** |  | [required] |
-**sign_request_data** | [**SignRequestData**](SignRequestData.md) | For request body with content type `application/json`: * Mode `PKCS1` expects the already hashed data. * Mode `PSS_*` expects the already hashed data. * Mode `EdDSA` expects the raw message   (ED25519 applies the SHA512 hash internally,   also to derive the nonce). * Mode `ECDSA` expects the hashed data   (using SHA224 for P224, SHA256 for P256,   SHA384 for P384 and SHA512 for P521).  | [required] |
+**sign_request_data** | [**SignRequestData**](SignRequestData.md) | For request body with content type `application/json`: * Mode `PKCS1` expects the already hashed data. * Mode `PSS_*` expects the already hashed data. * Mode `EdDSA` expects any message   (ED25519 applies the SHA512 hash internally,   also to derive the nonce). * Mode `ECDSA` expects the hashed data   (using SHA256 for P256,   SHA384 for P384 and SHA512 for P521). * Mode `BIP340` expects any message   (BIP-340 applies the tagged SHA256 hash internally).  | [required] |
 
 ### Return type
 
@@ -1496,7 +1496,7 @@ Name | Type | Description  | Required | Notes
 > system_shutdown_post()
 
 
-Shut down NetHSM.
+Shut down NetHSM.  Authentication behavior varies by NetHSM state: - **Operational**: Requires Administrator authentication - **Locked** or **Unprovisioned**: No authentication required 
 
 ### Parameters
 

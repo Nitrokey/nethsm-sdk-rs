@@ -2,6 +2,18 @@
 
 ## Unreleased
 
+### Breaking Changes
+
+- `models`: Remove `KeyType::EcP224` and `TlsKeyType::EcP224` enum variants
+
+### Features
+
+- `models`: Add new enum variants:
+  - `KeyMechanism`: `Bip340Signature`
+  - `KeyType`: `EcP256K1`, `BrainpoolP256`, `BrainpoolP384`, `BrainpoolP512`
+  - `SignMode`: `Bip340`
+  - `TlsKeyType`: `BrainpoolP256`, `BrainpoolP384`, `BrainpoolP512`
+
 ## [v2.0.0](https://github.com/Nitrokey/nethsm-sdk-rs/releases/tag/v2.0.0) (2025-02-17)
 
 - Update to  ureq 3.0.0 ([#35][])

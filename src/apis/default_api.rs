@@ -1594,7 +1594,6 @@ pub enum SystemShutdownPostError {
     Status401(),
     Status403(),
     Status406(),
-    Status412(),
     UnknownValue(serde_json::Value),
 }
 
@@ -1605,7 +1604,6 @@ impl SystemShutdownPostError {
             401 => Ok(Self::Status401()),
             403 => Ok(Self::Status403()),
             406 => Ok(Self::Status406()),
-            412 => Ok(Self::Status412()),
             _ => {
                 if data.is_empty() {
                     Ok(Self::UnknownValue(serde_json::Value::Null))
@@ -4176,7 +4174,7 @@ pub fn system_restore_post(
     }
 }
 
-/// Shut down NetHSM.
+/// Shut down NetHSM.  Authentication behavior varies by NetHSM state: - **Operational**: Requires Administrator authentication - **Locked** or **Unprovisioned**: No authentication required
 pub fn system_shutdown_post(
     configuration: &configuration::Configuration,
 ) -> Result<ResponseContent<()>, Error<SystemShutdownPostError>> {

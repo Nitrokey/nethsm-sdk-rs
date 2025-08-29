@@ -28,6 +28,8 @@ pub enum SignMode {
     EdDsa,
     #[serde(rename = "ECDSA")]
     Ecdsa,
+    #[serde(rename = "BIP340")]
+    Bip340,
 }
 
 impl std::fmt::Display for SignMode {
@@ -45,6 +47,7 @@ impl std::fmt::Display for SignMode {
                 Self::PssSha512 => "PSS_SHA512",
                 Self::EdDsa => "EdDSA",
                 Self::Ecdsa => "ECDSA",
+                Self::Bip340 => "BIP340",
             }
         )
     }
