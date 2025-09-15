@@ -2,11 +2,17 @@
 
 ## Unreleased
 
+-
+
+[All Changes](https://github.com/Nitrokey/nethsm-sdk-rs/compare/v3.0.0-rc.2...HEAD)
+
+## [v3.0.0-rc.2](https://github.com/Nitrokey/nethsm-sdk-rs/releases/tag/v3.0.0-rc.2) (2025-09-15)
+
 ### Features
 
 - `apis::default_api`: Add `keys_key_id_move_post` function
 
-[All Changes](https://github.com/Nitrokey/nethsm-sdk-rs/compare/v3.0.0-rc.1...HEAD)
+[All Changes](https://github.com/Nitrokey/nethsm-sdk-rs/compare/v3.0.0-rc.1...v3.0.0-rc.2)
 
 ## [v3.0.0-rc.1](https://github.com/Nitrokey/nethsm-sdk-rs/releases/tag/v3.0.0-rc.1) (2025-09-01)
 
