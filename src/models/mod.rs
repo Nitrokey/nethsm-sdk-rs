@@ -40,6 +40,8 @@ pub mod log_level;
 pub use self::log_level::LogLevel;
 pub mod logging_config;
 pub use self::logging_config::LoggingConfig;
+pub mod move_key_request;
+pub use self::move_key_request::MoveKeyRequest;
 pub mod namespace_item;
 pub use self::namespace_item::NamespaceItem;
 pub mod network_config;

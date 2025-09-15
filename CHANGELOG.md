@@ -2,7 +2,9 @@
 
 ## Unreleased
 
--
+### Features
+
+- `apis::default_api`: Add `keys_key_id_move_post` function
 
 [All Changes](https://github.com/Nitrokey/nethsm-sdk-rs/compare/v3.0.0-rc.1...HEAD)
 
