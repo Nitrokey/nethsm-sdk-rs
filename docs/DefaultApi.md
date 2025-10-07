@@ -39,6 +39,7 @@ Method | HTTP request | Description
 [**keys_key_id_restrictions_tags_tag_delete**](DefaultApi.md#keys_key_id_restrictions_tags_tag_delete) | **DELETE** /keys/{KeyID}/restrictions/tags/{Tag} | 
 [**keys_key_id_restrictions_tags_tag_put**](DefaultApi.md#keys_key_id_restrictions_tags_tag_put) | **PUT** /keys/{KeyID}/restrictions/tags/{Tag} | 
 [**keys_key_id_sign_post**](DefaultApi.md#keys_key_id_sign_post) | **POST** /keys/{KeyID}/sign | 
+[**keys_key_prefix_get**](DefaultApi.md#keys_key_prefix_get) | **GET** /keys/{KeyPrefix}* | 
 [**keys_post**](DefaultApi.md#keys_post) | **POST** /keys | 
 [**lock_post**](DefaultApi.md#lock_post) | **POST** /lock | 
 [**metrics_get**](DefaultApi.md#metrics_get) | **GET** /metrics | 
@@ -645,7 +646,7 @@ Name | Type | Description  | Required | Notes
 > Vec<crate::models::KeyItem> keys_get(filter)
 
 
-Get a list of the identifiers of all keys that are currently stored in NetHSM. If the caller is in a namespace, only keys in that namespace are returned. Separate requests need to be made to request the individual key data. 
+Get a list of the identifiers of all keys that are currently stored in NetHSM. If the caller is in a namespace, only keys in that namespace are returned. Separate requests need to be made to request the individual key data. To fetch only a subset of keys, consider using `/keys/pfx*`. 
 
 ### Parameters
 
@@ -889,7 +890,7 @@ Name | Type | Description  | Required | Notes
 > crate::models::PublicKey keys_key_id_get(key_id)
 
 
-Retrieve the public key.
+Retrieve a single public key. 
 
 ### Parameters
 
@@ -1094,6 +1095,37 @@ Name | Type | Description  | Required | Notes
 ### HTTP request headers
 
 - **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
+## keys_key_prefix_get
+
+> Vec<crate::models::KeyItem> keys_key_prefix_get(key_prefix, filter)
+
+
+Get a list of the identifiers of all keys that have a KeyID that starts with KeyPrefix. If the caller is in a namespace, only keys in that namespace are returned. Separate requests need to be made to request the individual key data. 
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**key_prefix** | **String** |  | [required] |
+**filter** | Option<**String**> | Only return keys that are can be used by the requester, according to restrictions. |  |
+
+### Return type
+
+[**Vec<crate::models::KeyItem>**](KeyItem.md)
+
+### Authorization
+
+[basic](../README.md#basic)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)

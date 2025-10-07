@@ -2,7 +2,13 @@
 
 ## Unreleased
 
--
+### Breaking Changes
+
+- `models`: Add `subject_alt_names` field to `DistinguishedName`
+
+### Features
+
+- `apis::default_api`: Add `keys_key_prefix_get` function
 
 [All Changes](https://github.com/Nitrokey/nethsm-sdk-rs/compare/v3.0.0-rc.2...HEAD)
 

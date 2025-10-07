@@ -11,6 +11,7 @@ Name | Type | Description | Notes
 **organizational_unit_name** | Option<**String**> |  | [optional]
 **common_name** | **String** |  | 
 **email_address** | Option<**String**> |  | [optional]
+**subject_alt_names** | Option<**Vec<String>**> |  | [optional]
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

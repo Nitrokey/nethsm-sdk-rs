@@ -1165,6 +1165,36 @@ impl KeysKeyIdSignPostError {
     }
 }
 
+/// struct for typed errors of method [`keys_key_prefix_get`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum KeysKeyPrefixGetError {
+    Status401(),
+    Status403(),
+    Status406(),
+    Status412(),
+    UnknownValue(serde_json::Value),
+}
+
+impl KeysKeyPrefixGetError {
+    fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
+        // to do: support payloads once added to API spec
+        match status {
+            401 => Ok(Self::Status401()),
+            403 => Ok(Self::Status403()),
+            406 => Ok(Self::Status406()),
+            412 => Ok(Self::Status412()),
+            _ => {
+                if data.is_empty() {
+                    Ok(Self::UnknownValue(serde_json::Value::Null))
+                } else {
+                    serde_json::from_slice(data).map(Self::UnknownValue)
+                }
+            }
+        }
+    }
+}
+
 /// struct for typed errors of method [`keys_post`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -2879,7 +2909,7 @@ pub fn keys_generate_post(
     }
 }
 
-/// Get a list of the identifiers of all keys that are currently stored in NetHSM. If the caller is in a namespace, only keys in that namespace are returned. Separate requests need to be made to request the individual key data.
+/// Get a list of the identifiers of all keys that are currently stored in NetHSM. If the caller is in a namespace, only keys in that namespace are returned. Separate requests need to be made to request the individual key data. To fetch only a subset of keys, consider using `/keys/pfx*`.
 pub fn keys_get(
     configuration: &configuration::Configuration,
     filter: Option<&str>,
@@ -3258,7 +3288,7 @@ pub fn keys_key_id_encrypt_post(
     }
 }
 
-/// Retrieve the public key.
+/// Retrieve a single public key.
 pub fn keys_key_id_get(
     configuration: &configuration::Configuration,
     key_id: &str,
@@ -3592,6 +3622,58 @@ pub fn keys_key_id_sign_post(
     } else {
         ResponseContent::new(local_var_resp, |data| {
             KeysKeyIdSignPostError::new(local_var_status, data).map_err(From::from)
+        })
+        .and_then(|content| Err(Error::ResponseError(content)))
+    }
+}
+
+/// Get a list of the identifiers of all keys that have a KeyID that starts with KeyPrefix. If the caller is in a namespace, only keys in that namespace are returned. Separate requests need to be made to request the individual key data.
+pub fn keys_key_prefix_get(
+    configuration: &configuration::Configuration,
+    key_prefix: &str,
+    filter: Option<&str>,
+) -> Result<ResponseContent<Vec<crate::models::KeyItem>>, Error<KeysKeyPrefixGetError>> {
+    let local_var_configuration = configuration;
+
+    let local_var_client = &local_var_configuration.client;
+
+    let local_var_uri_str = format!(
+        "{}/keys/{KeyPrefix}*",
+        local_var_configuration.base_path,
+        KeyPrefix = crate::apis::urlencode(key_prefix)
+    );
+    let mut local_var_req_builder =
+        create_request!(local_var_client, GET, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
+
+    if let Some(local_var_str) = filter {
+        local_var_req_builder =
+            local_var_req_builder.query_pairs([("filter", local_var_str.to_string().as_str())]);
+    }
+    if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
+        local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
+    }
+    if let Some(ref local_var_auth_conf) = local_var_configuration.basic_auth {
+        let value = super::basic_auth(local_var_auth_conf);
+
+        local_var_req_builder = local_var_req_builder.header("authorization", &value);
+    };
+    let accept_str = "application/json";
+    local_var_req_builder = local_var_req_builder.header("accept", accept_str);
+
+    let local_var_result = local_var_req_builder.send_empty();
+
+    let local_var_resp = local_var_result?;
+
+    let local_var_status = local_var_resp.status().as_u16();
+    if local_var_status < 400 {
+        ResponseContent::deserialized(local_var_resp)
+    } else {
+        ResponseContent::new(local_var_resp, |data| {
+            KeysKeyPrefixGetError::new(local_var_status, data).map_err(From::from)
         })
         .and_then(|content| Err(Error::ResponseError(content)))
     }

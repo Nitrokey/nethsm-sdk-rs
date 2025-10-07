@@ -261,6 +261,7 @@ paths:
         Get a list of the identifiers of all keys that are currently stored in NetHSM.
         If the caller is in a namespace, only keys in that namespace are returned.
         Separate requests need to be made to request the individual key data.
+        To fetch only a subset of keys, consider using `/keys/pfx*`.
       parameters:
         - name: filter
           in: query
@@ -374,6 +375,51 @@ paths:
       x-annotation-caller-namespace:
         - Root
         - Namespaced
+  /keys/{KeyPrefix}*:
+    get:
+      responses:
+        "200":
+          description: Successful request for the list of keys.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/KeyList"
+        "401":
+          description: Authentication required but none provided.
+        "403":
+          description: Access denied.
+        "406":
+          description: Content type in Accept header not supported.
+        "412":
+          description: Precondition failed (NetHSM was not *Operational*).
+      description: |
+        Get a list of the identifiers of all keys that have a KeyID that starts
+        with KeyPrefix.
+        If the caller is in a namespace, only keys in that namespace are returned.
+        Separate requests need to be made to request the individual key data.
+      parameters:
+        - name: filter
+          in: query
+          description: Only return keys that are can be used by the requester, according to restrictions.
+          schema:
+            type: string
+      security:
+        - basic: []
+      x-annotation-role:
+        - Administrator
+        - Operator
+      x-annotation-state:
+        - Operational
+      x-annotation-caller-namespace:
+        - Root
+        - Namespaced
+      x-test-value-KeyPrefix: myK
+    parameters:
+      - name: KeyPrefix
+        in: path
+        required: true
+        schema:
+          $ref: "#/components/schemas/ID"
   /keys/{KeyID}:
     get:
       responses:
@@ -385,6 +431,7 @@ paths:
               encoded affine coordinates x and y).
             * Curve25519 keys are 32 byte, and follow the RFC8032 5.1.2 encoding \
               (little endian, x over y).
+
           content:
             application/json:
               schema:
@@ -451,7 +498,8 @@ paths:
           description: Content type in Accept header not supported.
         "412":
           description: Precondition failed (NetHSM was not *Operational*).
-      description: Retrieve the public key.
+      description: |
+        Retrieve a single public key.
       security:
         - basic: []
       x-annotation-role:
@@ -774,8 +822,8 @@ paths:
         "200":
           description: |
             For response body with content type `application/json`:
-            * Mode `PKCS1` returns the PKCS1 padded signature
-              (no signatureAlgorithm OID prepended, since the used hash is not known).
+            * Mode `PKCS1` returns the PKCS1 signature of the padded hash value
+              prepended with the according DigestInfo header.
             * Mode `PSS_*` returns the EMSA-PSS encoded signature.
             * Mode `EdDSA` returns the RFC 8032 (5.1.6) encoding:
               r appened with s, in total 64 bytes (each 32 bytes).
@@ -790,8 +838,9 @@ paths:
         "400":
           description: |
             Bad Request, e.g. invalid signing mode.
-            * Mode `PKCS1` returns failure if input is bigger than key size
-            * Mode `PSS_*` returns failure if the input is not the hash length,
+            * Mode `PKCS1` returns failure if the input has not a known hash
+              length or the private key is smaller than hash length.
+            * Mode `PSS_*` returns failure if the input has not the hash length,
               or the private key is smaller than hash length.
             * Mode `ECDSA` returns failure if the input exceeds the group size in bits.
               The hash algorithm is not part of the encoding.
@@ -2522,6 +2571,10 @@ components:
         data:
           $ref: "#/components/schemas/Base64"
     DistinguishedName:
+      description: |
+        Data used for creation of CSRs.
+        If subjectAltNames is omitted, it is set to the same value as
+        commonName. If it is set to an empty list, no SAN Extension is added.
       example:
         countryName: DE
         stateOrProvinceName: ""
@@ -2530,6 +2583,7 @@ components:
         organizationalUnitName: ""
         commonName: nethsm.local
         emailAddress: info@nitrokey.com
+        subjectAltNames: ["example.com", "www.example.com"]
       type: object
       properties:
         countryName:
@@ -2546,6 +2600,10 @@ components:
           type: string
         emailAddress:
           type: string
+        subjectAltNames:
+          type: array
+          items:
+            type: string
       required:
         - commonName
     InfoData:
@@ -2716,7 +2774,7 @@ components:
     SignRequestData:
       example:
         mode: PKCS1
-        message: nhrfotu32409ru0rgert45z54z099u23r03498uhtr==
+        message: 6JudPZqn7OtoL4alZE15Rw0CFIfND+RMmIjzdobLZMM=
       type: object
       properties:
         mode:
@@ -2728,7 +2786,7 @@ components:
         - message
     SignData:
       example:
-        signature: n4geMX1g8zcfipfcmn+XjM1ccWZULemAa0cuYoh1aXG9UhbE6f54NMp4NjboLf63SQyieJYjjV8q+/o1rFlkZCtKtHAheds+g90zdjOMmXFlXyBTKMhGOSHuleGz0c99x7Alg19KN9wB3Jj2niwweBOR/F4Qv0mdBUv+oO8uPl6vM1fS4tX/VJoCZkDnZzL8duKRNFT0SNQZ+ryLiqQMG53fEPhTplK/wK0Cco8JAYCMh9cxSzpBoCEO+9woxoBGehAjHuLxs6ed6q08W67leuibxZ8c6Q6upmwDlca/gSw0y4w1VIxxts2PORZdNsTWcr3lojcNgWXJcfAqF9/n4A==
+        signature: AFJpIZPl7UW1AVqD0BVvWnbn3sFVLmO+wEfoK6eEfkNIrD9D3urCpk8gzkdj4qEmhfxFA2LQ8QoAUOGAouaJ4WSIs7hiksqHntxVkrOgIcmVOE/DZAb7rW3rSnYOd5l31VyE6es0pjZhlI39isMDJ7iXfZ/Eln4mrxdC4opBguiO4AzR2xbkAczrT3YV22AaDcbAaKSLHm0XUnnK8ooAlWy34bmEBo0hQflOLuTagnL7TYKqz9oi6wjTwoT3CO1b0vnWu3pftCLZWzwMoqf0ZVJq6e3usFBL0yqPS6sjin3Gh85/duEv+wJhmGZrkpMpGCuvrFgQfG9pY4TR7YEMYA==
       type: object
       properties:
         signature:
@@ -2967,7 +3025,7 @@ components:
     PemCSR:
       example: |
         -----BEGIN CERTIFICATE REQUEST-----
-        MIICrzCCAZcCAQAwajEVMBMGA1UEAwwMbmV0aHNtLmxvY2FsMQswCQYDVQQGEwJE
+        MIIC6TCCAdECAQAwajEVMBMGA1UEAwwMbmV0aHNtLmxvY2FsMQswCQYDVQQGEwJE
         RTEPMA0GA1UEBwwGQmVybGluMREwDwYDVQQKDAhOaXRyb2tleTEgMB4GCSqGSIb3
         DQEJARYRaW5mb0BuaXRyb2tleS5jb20wggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAw
         ggEKAoIBAQDHuCF+uj5UR6libLZXsc+fk9JF2YbPF7BymbPFO2tnXQHKBsSqE+wC
@@ -2975,13 +3033,14 @@ components:
         HKv5pOUTeObZc/XYKrHTCxgYigmVYdsZv3QgDH3Ol1hCAeglnjHmKazm+juHem48
         TJXJwkfl8wEH2H7YHFzgHFo8oybXklHUHtOgHeDXpIljYHW39qo2apIFkLgc/V8K
         5JsGbzc6CpGF2TU/qv++o5UqvFW6kOoqR1x/91EGJBqUn21BtVuz045h9Dqfbka8
-        lO8a2o4S6CCK3fa1XXolcJmOdh48C+03AgMBAAGgADANBgkqhkiG9w0BAQsFAAOC
-        AQEAl+w1YsevmF6vqmvU8gnPe9tf/CLSwx3/vH8G81cS7CTL97rrQq/LLVDnFChe
-        NHKyiNzoziyyO/bkK79bWiKdtwqvLjgWva3yj9I12ZJqNz029m9fDW4m5Ad+GXtd
-        KaT06RZTyKAOOrqZOjqws9XED6VwIXNwEduQLZiyO/w/jTfyfv4R0JufNjGZCU20
-        bktFyswpkWngz5US5AAxse9Dq+Iih/6QRtjy0guFGJUP6Wae16fbC8+kwiWWdYM6
-        3we910+2Kb3kfmYrIUrGUHuwyLhVlM3Xox0fJ7OylUDr/+qbvdav3B56ii8+zcy3
-        hqHy6w5safHH/pH7QGRiMZmKHQ==
+        lO8a2o4S6CCK3fa1XXolcJmOdh48C+03AgMBAAGgOjA4BgkqhkiG9w0BCQ4xKzAp
+        MCcGA1UdEQQgMB6CC2V4YW1wbGUuY29tgg93d3cuZXhhbXBsZS5jb20wDQYJKoZI
+        hvcNAQELBQADggEBABD92ZM2fDcq8hNl/SrHIXyFdZIV+uGWVultZ22isLRuJbuh
+        jb+onDXT9F5mKa4JAoAWvBPnQZpO1d/tf2bPhg9F46Fd/1zd79dvStRrUTjmxdN3
+        6M2ExIRekBRyx5o5h5yjve6tmG1vWOqgcczJwQFG5GawiaBNVenXjJROBx1ad9ou
+        W1cCAvKISOD9OTHsw/Amksu3HyPUW+/celAF4GOzlT2F41rNMoiW0rCTiiJfBotE
+        FvTLWty55EECqoWbAOupRKutt/fu2zewTHINYAR+8NEZDOm8RxLoq4zqc+p1y5ax
+        n9jM28FJC+nYGFwrOmfMV5P/CMxjpp/6pttAvVY=
         -----END CERTIFICATE REQUEST-----
       type: string
     PemCert:
