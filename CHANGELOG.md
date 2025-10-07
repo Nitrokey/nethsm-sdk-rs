@@ -2,6 +2,12 @@
 
 ## Unreleased
 
+-
+
+[All Changes](https://github.com/Nitrokey/nethsm-sdk-rs/compare/v3.0.0-rc.3...HEAD)
+
+## [v3.0.0-rc.3](https://github.com/Nitrokey/nethsm-sdk-rs/releases/tag/v3.0.0-rc.3) (2025-10-07)
+
 ### Breaking Changes
 
 - `models`: Add `subject_alt_names` field to `DistinguishedName`
@@ -10,7 +16,7 @@
 
 - `apis::default_api`: Add `keys_key_prefix_get` function
 
-[All Changes](https://github.com/Nitrokey/nethsm-sdk-rs/compare/v3.0.0-rc.2...HEAD)
+[All Changes](https://github.com/Nitrokey/nethsm-sdk-rs/compare/v3.0.0-rc.2...v3.0.0-rc.3)
 
 ## [v3.0.0-rc.2](https://github.com/Nitrokey/nethsm-sdk-rs/releases/tag/v3.0.0-rc.2) (2025-09-15)
 
