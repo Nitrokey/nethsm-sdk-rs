@@ -2,13 +2,19 @@
 
 ## Unreleased
 
+-
+
+[All Changes](https://github.com/Nitrokey/nethsm-sdk-rs/compare/v3.0.0-rc.4...HEAD)
+
+## [v3.0.0-rc.4](https://github.com/Nitrokey/nethsm-sdk-rs/releases/tag/v3.0.0-rc.4) (2025-10-08)
+
 ### Breaking Changes
 
 - `models`:
   - Mark all models als non-exhaustive
   - Only implement `Default` if all fields are optional
 
-[All Changes](https://github.com/Nitrokey/nethsm-sdk-rs/compare/v3.0.0-rc.3...HEAD)
+[All Changes](https://github.com/Nitrokey/nethsm-sdk-rs/compare/v3.0.0-rc.3...v3.0.0-rc.4)
 
 ## [v3.0.0-rc.3](https://github.com/Nitrokey/nethsm-sdk-rs/releases/tag/v3.0.0-rc.3) (2025-10-07)
 
