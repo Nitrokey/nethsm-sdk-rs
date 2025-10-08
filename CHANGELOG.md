@@ -4,7 +4,9 @@
 
 ### Breaking Changes
 
-- `models`: Mark all models als non-exhaustive
+- `models`:
+  - Mark all models als non-exhaustive
+  - Only implement `Default` if all fields are optional
 
 [All Changes](https://github.com/Nitrokey/nethsm-sdk-rs/compare/v3.0.0-rc.3...HEAD)
 

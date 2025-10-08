@@ -10,7 +10,7 @@
 
 /// DistinguishedName : Data used for creation of CSRs. If subjectAltNames is omitted, it is set to the same value as commonName. If it is set to an empty list, no SAN Extension is added.
 
-#[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 #[non_exhaustive]
 pub struct DistinguishedName {
     #[serde(rename = "countryName", skip_serializing_if = "Option::is_none")]
