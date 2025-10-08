@@ -9,6 +9,7 @@
  */
 
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
+#[non_exhaustive]
 pub struct ProvisionRequestData {
     #[serde(rename = "unlockPassphrase")]
     pub unlock_passphrase: String,

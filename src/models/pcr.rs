@@ -9,6 +9,7 @@
  */
 
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
+#[non_exhaustive]
 pub struct Pcr {
     #[serde(rename = "0", skip_serializing_if = "Option::is_none")]
     pub param_0: Option<String>,

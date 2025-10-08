@@ -9,6 +9,7 @@
  */
 
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
+#[non_exhaustive]
 pub struct KeyItem {
     #[serde(rename = "id")]
     pub id: String,

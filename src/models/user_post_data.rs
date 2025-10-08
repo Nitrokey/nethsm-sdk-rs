@@ -9,6 +9,7 @@
  */
 
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
+#[non_exhaustive]
 pub struct UserPostData {
     #[serde(rename = "realName")]
     pub real_name: String,

@@ -9,6 +9,7 @@
  */
 
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
+#[non_exhaustive]
 pub struct SystemUpdateData {
     #[serde(rename = "releaseNotes")]
     pub release_notes: String,

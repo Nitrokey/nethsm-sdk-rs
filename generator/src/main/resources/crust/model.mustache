@@ -11,6 +11,7 @@
 /// {{{.}}}
 {{/description}}
 #[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[non_exhaustive]
 pub enum {{{classname}}} {
 {{#allowableValues}}
 {{#enumVars}}
@@ -44,6 +45,7 @@ impl Default for {{{classname}}} {
 {{#discriminator}}
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 #[serde(tag = "{{{vendorExtensions.x-tag-name}}}")]
+#[non_exhaustive]
 pub enum {{{classname}}} {
 {{#vendorExtensions}}
     {{#x-mapped-models}}
@@ -67,6 +69,7 @@ pub enum {{{classname}}} {
 {{^isEnum}}
 {{^discriminator}}
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
+#[non_exhaustive]
 pub struct {{{classname}}} {
 {{#vars}}
     {{#description}}
@@ -99,6 +102,7 @@ impl {{{classname}}} {
 /// {{{.}}}
 {{/description}}
 #[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[non_exhaustive]
 pub enum {{{enumName}}} {
 {{#allowableValues}}
 {{#enumVars}}

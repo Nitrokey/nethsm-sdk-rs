@@ -9,6 +9,7 @@
  */
 
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
+#[non_exhaustive]
 pub struct SystemInfo {
     #[serde(rename = "softwareVersion")]
     pub software_version: String,

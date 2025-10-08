@@ -9,6 +9,7 @@
  */
 
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
+#[non_exhaustive]
 pub struct PrivateKeyPemArguments {
     #[serde(rename = "mechanisms", skip_serializing_if = "Option::is_none")]
     pub mechanisms: Option<Vec<crate::models::KeyMechanism>>,

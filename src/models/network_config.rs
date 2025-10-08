@@ -9,6 +9,7 @@
  */
 
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
+#[non_exhaustive]
 pub struct NetworkConfig {
     #[serde(rename = "ipAddress")]
     pub ip_address: String,

@@ -9,6 +9,7 @@
  */
 
 #[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[non_exhaustive]
 pub enum SignMode {
     #[serde(rename = "PKCS1")]
     Pkcs1,

@@ -11,6 +11,7 @@
 /// KeyPublicData : The public key data is either a *modulus* and a *publicExponent* or a *data* field. The *data* field is used for EC keys. This field is null for Generic keys.
 
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
+#[non_exhaustive]
 pub struct KeyPublicData {
     #[serde(rename = "modulus", skip_serializing_if = "Option::is_none")]
     pub modulus: Option<String>,

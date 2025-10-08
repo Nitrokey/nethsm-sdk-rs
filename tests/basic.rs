@@ -53,20 +53,20 @@ async fn test_namespaces() {
     let unlock_passphrase = "unlockunlock";
 
     utils::with_container(|mut config| {
-        let request = ProvisionRequestData {
-            unlock_passphrase: unlock_passphrase.to_owned(),
-            admin_passphrase: admin_passphrase.to_owned(),
-            system_time: Utc::now().to_rfc3339(),
-        };
+        let request = ProvisionRequestData::new(
+            unlock_passphrase.to_owned(),
+            admin_passphrase.to_owned(),
+            Utc::now().to_rfc3339(),
+        );
         default_api::provision_post(&config, request).unwrap();
 
         config.basic_auth = Some(("admin".to_owned(), Some(admin_passphrase.to_owned())));
 
-        let request = UserPostData {
-            real_name: "N-Admin".to_owned(),
-            role: UserRole::Administrator,
-            passphrase: n_admin_passphrase.to_owned(),
-        };
+        let request = UserPostData::new(
+            "N-Admin".to_owned(),
+            UserRole::Administrator,
+            n_admin_passphrase.to_owned(),
+        );
         let user_id = default_api::users_user_id_post(&config, "mynamespace~", request)
             .unwrap()
             .entity
@@ -84,12 +84,9 @@ async fn test_namespaces() {
 
         config.basic_auth = Some((user_id, Some(n_admin_passphrase.to_owned())));
 
-        let request = KeyGenerateRequestData {
-            r#type: KeyType::Rsa,
-            length: Some(2048),
-            mechanisms: vec![KeyMechanism::RsaDecryptionRaw],
-            ..Default::default()
-        };
+        let mut request =
+            KeyGenerateRequestData::new(vec![KeyMechanism::RsaDecryptionRaw], KeyType::Rsa);
+        request.length = Some(2048);
         let key_id = default_api::keys_generate_post(&config, request)
             .unwrap()
             .entity
@@ -116,21 +113,18 @@ async fn test_restore() {
     let unlock_passphrase = "unlockunlock";
 
     let (generated_keys, backup) = utils::with_container(|mut config| {
-        let request = ProvisionRequestData {
-            unlock_passphrase: unlock_passphrase.to_owned(),
-            admin_passphrase: admin_passphrase.to_owned(),
-            system_time: Utc::now().to_rfc3339(),
-        };
+        let request = ProvisionRequestData::new(
+            unlock_passphrase.to_owned(),
+            admin_passphrase.to_owned(),
+            Utc::now().to_rfc3339(),
+        );
         default_api::provision_post(&config, request).unwrap();
 
         config.basic_auth = Some(("admin".to_owned(), Some(admin_passphrase.to_owned())));
 
-        let request = KeyGenerateRequestData {
-            r#type: KeyType::Rsa,
-            length: Some(2048),
-            mechanisms: vec![KeyMechanism::RsaDecryptionRaw],
-            ..Default::default()
-        };
+        let mut request =
+            KeyGenerateRequestData::new(vec![KeyMechanism::RsaDecryptionRaw], KeyType::Rsa);
+        request.length = Some(2048);
         let key_id = default_api::keys_generate_post(&config, request)
             .unwrap()
             .entity
@@ -139,17 +133,14 @@ async fn test_restore() {
 
         assert_eq!(list_keys(&config), keys);
 
-        let request = BackupPassphraseConfig {
-            new_passphrase: backup_passphrase.to_owned(),
-            current_passphrase: String::new(),
-        };
+        let request = BackupPassphraseConfig::new(backup_passphrase.to_owned(), String::new());
         default_api::config_backup_passphrase_put(&config, request).unwrap();
 
-        let request = UserPostData {
-            real_name: "Backup User".to_owned(),
-            role: UserRole::Backup,
-            passphrase: backup_passphrase.to_owned(),
-        };
+        let request = UserPostData::new(
+            "Backup User".to_owned(),
+            UserRole::Backup,
+            backup_passphrase.to_owned(),
+        );
         default_api::users_user_id_put(&config, "backup", request).unwrap();
 
         config.basic_auth = Some(("backup".to_owned(), Some(backup_passphrase.to_owned())));
@@ -161,10 +152,9 @@ async fn test_restore() {
         default_api::keys_key_id_delete(&config, &key_id).unwrap();
         assert_eq!(list_keys(&config), BTreeSet::default());
 
-        let request = RestoreRequestArguments {
-            backup_passphrase: Some(backup_passphrase.to_owned()),
-            system_time: Some(Utc::now().to_rfc3339()),
-        };
+        let mut request = RestoreRequestArguments::new();
+        request.backup_passphrase = Some(backup_passphrase.to_owned());
+        request.system_time = Some(Utc::now().to_rfc3339());
         default_api::system_restore_post(&config, Some(request), Some(backup.clone())).unwrap();
 
         assert_eq!(list_keys(&config), keys);
@@ -177,18 +167,15 @@ async fn test_restore() {
         let state = default_api::health_state_get(&config).unwrap().entity.state;
         assert_eq!(state, SystemState::Unprovisioned);
 
-        let request = RestoreRequestArguments {
-            backup_passphrase: Some(backup_passphrase.to_owned()),
-            system_time: Some(Utc::now().to_rfc3339()),
-        };
+        let mut request = RestoreRequestArguments::new();
+        request.backup_passphrase = Some(backup_passphrase.to_owned());
+        request.system_time = Some(Utc::now().to_rfc3339());
         default_api::system_restore_post(&config, Some(request), Some(backup)).unwrap();
 
         let state = default_api::health_state_get(&config).unwrap().entity.state;
         assert_eq!(state, SystemState::Locked);
 
-        let request = UnlockRequestData {
-            passphrase: unlock_passphrase.to_owned(),
-        };
+        let request = UnlockRequestData::new(unlock_passphrase.to_owned());
         default_api::unlock_post(&config, request).unwrap();
 
         config.basic_auth = Some(("admin".to_owned(), Some(admin_passphrase.to_owned())));

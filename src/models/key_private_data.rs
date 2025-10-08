@@ -9,6 +9,7 @@
  */
 
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
+#[non_exhaustive]
 pub struct KeyPrivateData {
     #[serde(rename = "primeP", skip_serializing_if = "Option::is_none")]
     pub prime_p: Option<String>,

@@ -9,6 +9,7 @@
  */
 
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
+#[non_exhaustive]
 pub struct RestoreRequestArguments {
     #[serde(rename = "backupPassphrase", skip_serializing_if = "Option::is_none")]
     pub backup_passphrase: Option<String>,

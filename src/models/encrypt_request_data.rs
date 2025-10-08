@@ -9,6 +9,7 @@
  */
 
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
+#[non_exhaustive]
 pub struct EncryptRequestData {
     #[serde(rename = "mode")]
     pub mode: crate::models::EncryptMode,

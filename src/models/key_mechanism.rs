@@ -9,6 +9,7 @@
  */
 
 #[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[non_exhaustive]
 pub enum KeyMechanism {
     #[serde(rename = "RSA_Decryption_RAW")]
     RsaDecryptionRaw,

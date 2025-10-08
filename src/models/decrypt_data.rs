@@ -9,6 +9,7 @@
  */
 
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
+#[non_exhaustive]
 pub struct DecryptData {
     #[serde(rename = "decrypted")]
     pub decrypted: String,

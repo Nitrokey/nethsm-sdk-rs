@@ -9,6 +9,7 @@
  */
 
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
+#[non_exhaustive]
 pub struct AkPub {
     #[serde(rename = "P256", skip_serializing_if = "Option::is_none")]
     pub p256: Option<String>,
