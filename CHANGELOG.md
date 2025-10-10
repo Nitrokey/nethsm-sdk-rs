@@ -2,7 +2,9 @@
 
 ## Unreleased
 
--
+### Breaking Changes
+
+- `models`: Remove all submodules. The models are directly available from the `models` module.
 
 [All Changes](https://github.com/Nitrokey/nethsm-sdk-rs/compare/v3.0.0-rc.4...HEAD)
 
