@@ -4,61 +4,33 @@
 
 -
 
-[All Changes](https://github.com/Nitrokey/nethsm-sdk-rs/compare/v3.0.0-rc.5...HEAD)
+[All Changes](https://github.com/Nitrokey/nethsm-sdk-rs/compare/v3.0.0...HEAD)
 
-## [v3.0.0-rc.5](https://github.com/Nitrokey/nethsm-sdk-rs/releases/tag/v3.0.0-rc.5) (2025-10-10)
+## [v3.0.0](https://github.com/Nitrokey/nethsm-sdk-rs/releases/tag/v3.0.0) (2025-10-15)
 
-### Breaking Changes
-
-- `models`: Remove all submodules. The models are directly available from the `models` module.
-
-[All Changes](https://github.com/Nitrokey/nethsm-sdk-rs/compare/v3.0.0-rc.4...v3.0.0-rc.5)
-
-## [v3.0.0-rc.4](https://github.com/Nitrokey/nethsm-sdk-rs/releases/tag/v3.0.0-rc.4) (2025-10-08)
+This release adds support for the new features provided by [NetHSM v3.0](https://github.com/Nitrokey/nethsm/releases/tag/v3.0).
 
 ### Breaking Changes
 
 - `models`:
+  - Remove `KeyType::EcP224` and `TlsKeyType::EcP224` enum variants
+  - Add `subject_alt_names` field to `DistinguishedName` (requires NetHSM v3.0)
   - Mark all models als non-exhaustive
   - Only implement `Default` if all fields are optional
-
-[All Changes](https://github.com/Nitrokey/nethsm-sdk-rs/compare/v3.0.0-rc.3...v3.0.0-rc.4)
-
-## [v3.0.0-rc.3](https://github.com/Nitrokey/nethsm-sdk-rs/releases/tag/v3.0.0-rc.3) (2025-10-07)
-
-### Breaking Changes
-
-- `models`: Add `subject_alt_names` field to `DistinguishedName`
+  - Remove all submodules. The models are directly available from the `models` module.
 
 ### Features
 
-- `apis::default_api`: Add `keys_key_prefix_get` function
-
-[All Changes](https://github.com/Nitrokey/nethsm-sdk-rs/compare/v3.0.0-rc.2...v3.0.0-rc.3)
-
-## [v3.0.0-rc.2](https://github.com/Nitrokey/nethsm-sdk-rs/releases/tag/v3.0.0-rc.2) (2025-09-15)
-
-### Features
-
-- `apis::default_api`: Add `keys_key_id_move_post` function
-
-[All Changes](https://github.com/Nitrokey/nethsm-sdk-rs/compare/v3.0.0-rc.1...v3.0.0-rc.2)
-
-## [v3.0.0-rc.1](https://github.com/Nitrokey/nethsm-sdk-rs/releases/tag/v3.0.0-rc.1) (2025-09-01)
-
-### Breaking Changes
-
-- `models`: Remove `KeyType::EcP224` and `TlsKeyType::EcP224` enum variants
-
-### Features
-
-- `models`: Add new enum variants:
+- `models`: Add new enum variants (requires NetHSM v3.0):
   - `KeyMechanism`: `Bip340Signature`
   - `KeyType`: `EcP256K1`, `BrainpoolP256`, `BrainpoolP384`, `BrainpoolP512`
   - `SignMode`: `Bip340`
   - `TlsKeyType`: `BrainpoolP256`, `BrainpoolP384`, `BrainpoolP512`
+- `apis::default_api`:
+  - Add `keys_key_id_move_post` function (requires NetHSM v3.0)
+  - Add `keys_key_prefix_get` function (requires NetHSM v3.0)
 
-[All Changes](https://github.com/Nitrokey/nethsm-sdk-rs/compare/v2.0.0...v3.0.0-rc.1)
+[All Changes](https://github.com/Nitrokey/nethsm-sdk-rs/compare/v2.0.0...v3.0.0)
 
 ## [v2.0.0](https://github.com/Nitrokey/nethsm-sdk-rs/releases/tag/v2.0.0) (2025-02-17)
 
