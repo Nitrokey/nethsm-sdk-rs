@@ -10,7 +10,7 @@ jobs:
     name: Check library
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@master
+    - uses: actions/checkout@v6
     - uses: actions-rs/toolchain@v1
       with:
         profile: minimal
@@ -23,7 +23,7 @@ jobs:
     name: Run tests
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@master
+    - uses: actions/checkout@v6
     - uses: actions-rs/toolchain@v1
       with:
         profile: minimal
@@ -36,7 +36,7 @@ jobs:
     name: Run rustfmt
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@master
+    - uses: actions/checkout@v6
     - uses: actions-rs/toolchain@v1
       with:
         profile: minimal
@@ -50,7 +50,7 @@ jobs:
     name: Run clippy
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@master
+    - uses: actions/checkout@v6
     - uses: actions-rs/toolchain@v1
       with:
         profile: minimal
