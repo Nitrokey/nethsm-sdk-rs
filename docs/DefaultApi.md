@@ -4,6 +4,11 @@ All URIs are relative to *https://nethsmdemo.nitrokey.com/api/v1*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**cluster_join_post**](DefaultApi.md#cluster_join_post) | **POST** /cluster/join | 
+[**cluster_members_get**](DefaultApi.md#cluster_members_get) | **GET** /cluster/members | 
+[**cluster_members_member_id_delete**](DefaultApi.md#cluster_members_member_id_delete) | **DELETE** /cluster/members/{MemberID} | 
+[**cluster_members_member_id_put**](DefaultApi.md#cluster_members_member_id_put) | **PUT** /cluster/members/{MemberID} | 
+[**cluster_members_post**](DefaultApi.md#cluster_members_post) | **POST** /cluster/members | 
 [**config_backup_passphrase_put**](DefaultApi.md#config_backup_passphrase_put) | **PUT** /config/backup-passphrase | 
 [**config_logging_get**](DefaultApi.md#config_logging_get) | **GET** /config/logging | 
 [**config_logging_put**](DefaultApi.md#config_logging_put) | **PUT** /config/logging | 
@@ -13,6 +18,8 @@ Method | HTTP request | Description
 [**config_time_put**](DefaultApi.md#config_time_put) | **PUT** /config/time | 
 [**config_tls_cert_pem_get**](DefaultApi.md#config_tls_cert_pem_get) | **GET** /config/tls/cert.pem | 
 [**config_tls_cert_pem_put**](DefaultApi.md#config_tls_cert_pem_put) | **PUT** /config/tls/cert.pem | 
+[**config_tls_cluster_ca_pem_get**](DefaultApi.md#config_tls_cluster_ca_pem_get) | **GET** /config/tls/cluster-ca.pem | 
+[**config_tls_cluster_ca_pem_put**](DefaultApi.md#config_tls_cluster_ca_pem_put) | **PUT** /config/tls/cluster-ca.pem | 
 [**config_tls_csr_pem_post**](DefaultApi.md#config_tls_csr_pem_post) | **POST** /config/tls/csr.pem | 
 [**config_tls_generate_post**](DefaultApi.md#config_tls_generate_post) | **POST** /config/tls/generate | 
 [**config_tls_public_pem_get**](DefaultApi.md#config_tls_public_pem_get) | **GET** /config/tls/public.pem | 
@@ -71,6 +78,154 @@ Method | HTTP request | Description
 
 
 
+## cluster_join_post
+
+> cluster_join_post(cluster_join_req)
+
+
+Attempt to join an existing NetHSM cluster i.e. **wipe all user data** and use the cluster data instead. This does **not** merge data on this node to cluster data. 'POST /cluster/members' *MUST* have been called on an existing member of the cluster beforehand. The data returned by that call must be passed here along with the backup passphrase *of the node that registered the new member*. On success, the node will end up in a *Locked* stated, unlockable with the unlock passphrase *of the node that registered the new member*. All device-specific configuration will be preserved from before the join. On immediate failure (e.g. if the cluster is not reachable), the NetHSM will attempt to reverse the join. **WARNING**. Existing data will be definitely wiped after a first successful connection to the cluster. Be sure to backup anything important.
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**cluster_join_req** | [**ClusterJoinReq**](ClusterJoinReq.md) |  | [required] |
+
+### Return type
+
+ (empty response body)
+
+### Authorization
+
+[basic](../README.md#basic)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
+## cluster_members_get
+
+> Vec<crate::models::ClusterMember> cluster_members_get()
+
+
+List members of the cluster this node belongs to. 
+
+### Parameters
+
+This endpoint does not need any parameter.
+
+### Return type
+
+[**Vec<crate::models::ClusterMember>**](ClusterMember.md)
+
+### Authorization
+
+[basic](../README.md#basic)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
+## cluster_members_member_id_delete
+
+> cluster_members_member_id_delete(member_id)
+
+
+Irreversibly remove a member from the cluster. The member in question (even if it is ourself) will become inoperable and should be immediately factory reset. It cannot be added back to the cluster without going through a fresh join process.  *WARNING*: this MUST be called before resetting or otherwise isolating a member from the cluster. Not doing this may lead the cluster to lose quorum and cease to operate. Make sure to backup before this operation.  If a member has failed and the cluster is still operable (it still has quorum), this method MUST be called to remove voting power to the failed node (if there is no hope that the member becomes available again). 
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**member_id** | **String** |  | [required] |
+
+### Return type
+
+ (empty response body)
+
+### Authorization
+
+[basic](../README.md#basic)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
+## cluster_members_member_id_put
+
+> cluster_members_member_id_put(member_id, cluster_add_req)
+
+
+Update the peer URLs of a cluster member (i.e. how others can reach it).  *WARNING*: misconfiguring this may lead to the member not being reachable anymore. If this makes the cluster lose quorum, the cluster will cease to operate, in which case the NetHSM is lost and must be factory reset. Make sure to backup before this operation. 
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**member_id** | **String** |  | [required] |
+**cluster_add_req** | [**ClusterAddReq**](ClusterAddReq.md) |  | [required] |
+
+### Return type
+
+ (empty response body)
+
+### Authorization
+
+[basic](../README.md#basic)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
+## cluster_members_post
+
+> crate::models::ClusterMemberAddResponse cluster_members_post(cluster_add_req)
+
+
+Declare a new member to the cluster. The response of this call must be passed to a call to '/cluster/join' on the new member to finalize the join, along with the backup passphrase. A backup key must be configured prior to this call.  *WARNING*: adding a member will change the quorum needed for the cluster to operate. If the quorum is not met anymore (e.g. when adding a second node) to a one-node cluster, the cluster (and hence the HSM) will cease to operate until that new member actually joins. If it doesn't, the NetHSM is lost and must be factory reset. Make sure to backup before this operation. 
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**cluster_add_req** | [**ClusterAddReq**](ClusterAddReq.md) |  | [required] |
+
+### Return type
+
+[**crate::models::ClusterMemberAddResponse**](ClusterMemberAddResponse.md)
+
+### Authorization
+
+[basic](../README.md#basic)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
 ## config_backup_passphrase_put
 
 > config_backup_passphrase_put(backup_passphrase_config)
@@ -96,7 +251,7 @@ Name | Type | Description  | Required | Notes
 ### HTTP request headers
 
 - **Content-Type**: application/json
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -106,7 +261,7 @@ Name | Type | Description  | Required | Notes
 > crate::models::LoggingConfig config_logging_get()
 
 
-Get logging configuration. Protocol is always syslog over UDP. Configurable are IP adress and port, log level. 
+Get logging configuration. Protocol is always syslog over UDP. Configurable are IP (v4 or v6) adress and port, log level. 
 
 ### Parameters
 
@@ -153,17 +308,17 @@ Name | Type | Description  | Required | Notes
 ### HTTP request headers
 
 - **Content-Type**: application/json
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 
 ## config_network_get
 
-> crate::models::NetworkConfig config_network_get()
+> crate::models::NetworkConfigOutput config_network_get()
 
 
-Get network configuration. IP address, netmask, router.
+Get network configuration. IP address, netmask, router. If IPv6 is configured (not by default), returns its CIDR and gateway. 
 
 ### Parameters
 
@@ -171,7 +326,7 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-[**crate::models::NetworkConfig**](NetworkConfig.md)
+[**crate::models::NetworkConfigOutput**](NetworkConfigOutput.md)
 
 ### Authorization
 
@@ -187,17 +342,17 @@ This endpoint does not need any parameter.
 
 ## config_network_put
 
-> config_network_put(network_config)
+> config_network_put(network_config_input)
 
 
-Configure network.
+Configure IPv4 network. Optionally, an 'ipv6' field can be passed to configure IPv6 network as well (passing 'null' will disable IPv6). 
 
 ### Parameters
 
 
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
-**network_config** | [**NetworkConfig**](NetworkConfig.md) |  | [required] |
+**network_config_input** | [**NetworkConfigInput**](NetworkConfigInput.md) |  | [required] |
 
 ### Return type
 
@@ -210,7 +365,7 @@ Name | Type | Description  | Required | Notes
 ### HTTP request headers
 
 - **Content-Type**: application/json
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -267,7 +422,7 @@ Name | Type | Description  | Required | Notes
 ### HTTP request headers
 
 - **Content-Type**: application/json
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -324,7 +479,64 @@ Name | Type | Description  | Required | Notes
 ### HTTP request headers
 
 - **Content-Type**: application/x-pem-file
-- **Accept**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
+## config_tls_cluster_ca_pem_get
+
+> String config_tls_cluster_ca_pem_get()
+
+
+Get currently set CA for cluster peer traffic (i.e. how cluster members communicate).
+
+### Parameters
+
+This endpoint does not need any parameter.
+
+### Return type
+
+**String**
+
+### Authorization
+
+[basic](../README.md#basic)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/x-pem-file
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
+## config_tls_cluster_ca_pem_put
+
+> config_tls_cluster_ca_pem_put(body)
+
+
+Set cluster certificate authority used for etcd peer traffic (i.e. how cluster members communicate). It is not set by default. When set, it cannot be unset (but it can be updated).  The NetHSM cert must be signed by this CA for this operation to succeed, it will be aborted otherwise. *Note that this is checked for this node but not for all members!* If you need to change the CA, ensure all nodes of the cluster have their cert signed by both the new and the old CA, then change the CA. Afterwards, you can update the individual certs to be signed only by the new CA.  When changed, the underlying etcd server is restarted with the new CA. 
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**body** | **String** |  | [required] |
+
+### Return type
+
+ (empty response body)
+
+### Authorization
+
+[basic](../README.md#basic)
+
+### HTTP request headers
+
+- **Content-Type**: application/x-pem-file
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -384,7 +596,7 @@ Name | Type | Description  | Required | Notes
 ### HTTP request headers
 
 - **Content-Type**: application/json
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -468,7 +680,7 @@ Name | Type | Description  | Required | Notes
 ### HTTP request headers
 
 - **Content-Type**: application/json
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -498,7 +710,7 @@ Name | Type | Description  | Required | Notes
 ### HTTP request headers
 
 - **Content-Type**: application/json
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -653,7 +865,7 @@ Get a list of the identifiers of all keys that are currently stored in NetHSM. I
 
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
-**filter** | Option<**String**> | Only return keys that are can be used by the requester, according to restrictions. |  |
+**filter** | Option<**String**> | Only return keys that can be used by the requester, according to restrictions, if this parameter is set to any value. |  |
 
 ### Return type
 
@@ -726,7 +938,7 @@ Name | Type | Description  | Required | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: application/octet-stream
+- **Accept**: application/octet-stream, application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -788,7 +1000,7 @@ Name | Type | Description  | Required | Notes
 ### HTTP request headers
 
 - **Content-Type**: application/json
-- **Accept**: application/x-pem-file
+- **Accept**: application/x-pem-file, application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -971,7 +1183,7 @@ Name | Type | Description  | Required | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: application/x-pem-file
+- **Accept**: application/x-pem-file, application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1002,7 +1214,7 @@ Name | Type | Description  | Required | Notes
 ### HTTP request headers
 
 - **Content-Type**: application/json, multipart/form-data
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1064,7 +1276,7 @@ Name | Type | Description  | Required | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1267,7 +1479,7 @@ Name | Type | Description  | Required | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1297,7 +1509,7 @@ Name | Type | Description  | Required | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1327,7 +1539,7 @@ No authorization required
 ### HTTP request headers
 
 - **Content-Type**: application/json
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1550,7 +1762,7 @@ Name | Type | Description  | Required | Notes
 ### HTTP request headers
 
 - **Content-Type**: multipart/form-data
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1637,7 +1849,7 @@ No authorization required
 ### HTTP request headers
 
 - **Content-Type**: application/json
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1724,7 +1936,7 @@ Name | Type | Description  | Required | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1785,7 +1997,7 @@ Name | Type | Description  | Required | Notes
 ### HTTP request headers
 
 - **Content-Type**: application/json
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1847,7 +2059,7 @@ Name | Type | Description  | Required | Notes
 ### HTTP request headers
 
 - **Content-Type**: application/json
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1939,7 +2151,7 @@ Name | Type | Description  | Required | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

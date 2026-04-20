@@ -117,11 +117,10 @@ pub enum {{{operationIdCamelCase}}}Error {
 
 impl {{{operationIdCamelCase}}}Error {
     fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
-        // to do: support payloads once added to API spec
         match status {
             {{#responses}}
             {{#is4xx}}
-            {{code}} => Ok(Self::Status{{code}}()),
+            {{code}} => Ok(Self::Status{{code}}({{#dataType}}serde_json::from_slice(data)?{{/dataType}})),
             {{/is4xx}}
             {{#is5xx}}
             {{code}} => Ok(Self::Status{{code}}()),
@@ -303,9 +302,7 @@ pub fn {{{operationId}}}(configuration: &configuration::Configuration, {{#allPar
     let is_json = accept.is_json();
     {{/vendorExtensions.x-produceMultipleMediaTypes}}
     {{^vendorExtensions.x-produceMultipleMediaTypes}}
-    {{#produces}}
-    let accept_str = "{{{mediaType}}}";
-    {{/produces}}
+    let accept_str = "{{vendorExtensions.x-contentType}}";
     {{/vendorExtensions.x-produceMultipleMediaTypes}}
     local_var_req_builder = local_var_req_builder.header("accept", accept_str);
     {{/hasProduces}}
@@ -406,19 +403,21 @@ pub fn {{{operationId}}}(configuration: &configuration::Configuration, {{#allPar
         }
         {{/vendorExtensions.x-produceMultipleMediaTypes}}
         {{^vendorExtensions.x-produceMultipleMediaTypes}}
-        {{#produces}}
-        {{#mediaIsJson}}
-        ResponseContent::deserialized(local_var_resp)
-        {{/mediaIsJson}}
-        {{^mediaIsJson}}
-        {{#isResponseFile}}
+        {{#responses}}
+        {{#is2xx}}
+        {{#isFile}}
         ResponseContent::bytes(local_var_resp)
-        {{/isResponseFile}}
-        {{^isResponseFile}}
+        {{/isFile}}
+        {{^isFile}}
+        {{#isString}}
         ResponseContent::string(local_var_resp)
-        {{/isResponseFile}}
-        {{/mediaIsJson}}
-        {{/produces}}
+        {{/isString}}
+        {{^isString}}
+        ResponseContent::deserialized(local_var_resp)
+        {{/isString}}
+        {{/isFile}}
+        {{/is2xx}}
+        {{/responses}}
         {{/vendorExtensions.x-produceMultipleMediaTypes}}
         {{/returnType}}
         {{^returnType}}

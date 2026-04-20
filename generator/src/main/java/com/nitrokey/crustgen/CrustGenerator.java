@@ -34,14 +34,17 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.TreeSet;
 
 import org.openapitools.codegen.CliOption;
 import org.openapitools.codegen.CodegenConfig;
 import org.openapitools.codegen.CodegenConstants;
 import org.openapitools.codegen.CodegenDiscriminator;
+import org.openapitools.codegen.CodegenMediaType;
 import org.openapitools.codegen.CodegenModel;
 import org.openapitools.codegen.CodegenOperation;
 import org.openapitools.codegen.CodegenProperty;
+import org.openapitools.codegen.CodegenResponse;
 import org.openapitools.codegen.CodegenType;
 import org.openapitools.codegen.SupportingFile;
 import org.openapitools.codegen.languages.AbstractRustCodegen;
@@ -290,6 +293,26 @@ public class CrustGenerator extends AbstractRustCodegen implements CodegenConfig
       Map<String, List<CodegenOperation>> operations) {
     super.addOperationToGroup(tag, resourcePath, operation, co, operations);
     processProducesConsumes(co);
+
+    TreeSet<String> successContentTypes = new TreeSet();
+    TreeSet<String> allContentTypes = new TreeSet();
+    for (CodegenResponse response : co.responses) {
+      Map<String, CodegenMediaType> content = response.getContent();
+      if (content != null) {
+        allContentTypes.addAll(content.keySet());
+        if (response.is2xx) {
+          successContentTypes.addAll(content.keySet());
+        }
+      }
+    }
+
+    if (successContentTypes.size() == 1) {
+      co.vendorExtensions.put("x-contentType", successContentTypes.first());
+    } else if (allContentTypes.size() == 1) {
+      co.vendorExtensions.put("x-contentType", allContentTypes.first());
+    } else {
+      co.vendorExtensions.put("x-contentType", "unreachable");
+    }
   }
 
   private void processProducesConsumes(CodegenOperation op) {
@@ -309,13 +332,20 @@ public class CrustGenerator extends AbstractRustCodegen implements CodegenConfig
 
       LOGGER.info("op.produces: {}", op.produces.size());
 
-      if (op.produces.size() > 1) {
-        op.vendorExtensions.put(PRODUCE_MULTIPLE_MEDIA_TYPE, "true");
-      }
-
       for (Map<String, String> m : op.produces) {
         processMediaType(op, m);
       }
+
+    }
+
+    int n = 0;
+    for (CodegenResponse response : op.responses) {
+      if (response.is2xx) {
+        n += 1;
+      }
+    }
+    if (n > 1) {
+      op.vendorExtensions.put(PRODUCE_MULTIPLE_MEDIA_TYPE, "true");
     }
   }
 

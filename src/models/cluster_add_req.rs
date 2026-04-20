@@ -10,21 +10,13 @@
 
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 #[non_exhaustive]
-pub struct NetworkConfig {
-    #[serde(rename = "ipAddress")]
-    pub ip_address: String,
-    #[serde(rename = "netmask")]
-    pub netmask: String,
-    #[serde(rename = "gateway")]
-    pub gateway: String,
+pub struct ClusterAddReq {
+    #[serde(rename = "urls")]
+    pub urls: Vec<String>,
 }
 
-impl NetworkConfig {
-    pub fn new(ip_address: String, netmask: String, gateway: String) -> NetworkConfig {
-        NetworkConfig {
-            ip_address,
-            netmask,
-            gateway,
-        }
+impl ClusterAddReq {
+    pub fn new(urls: Vec<String>) -> ClusterAddReq {
+        ClusterAddReq { urls }
     }
 }

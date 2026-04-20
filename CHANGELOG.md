@@ -2,7 +2,16 @@
 
 ## Unreleased
 
--
+### Breaking Changes
+
+- `models`: Split `NetworkConfig` into `NetworkConfigInput` and `NetworkConfigOutput`
+- Add response data for error responses
+
+### Features
+
+- Add support for clustering (requires NetHSM v4.0):
+  - `apis::default_api`: Add `cluster_join_post`, `cluster_members_get`, `cluster_members_member_id_delete`, `cluster_members_member_id_put`, `cluster_members_post`, `config_tls_cluster_ca_pem_get`, `config_tls_cluster_ca_pem_put` functions
+- Add support for IPv6 network config (requires NetHSM v4.0)
 
 [All Changes](https://github.com/Nitrokey/nethsm-sdk-rs/compare/v3.0.0...HEAD)
 

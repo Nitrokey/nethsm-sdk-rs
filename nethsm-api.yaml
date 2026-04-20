@@ -131,6 +131,10 @@ paths:
           description: Provisioning was successful, NetHSM is *Operational* now.
         "400":
           description: Malformed request data (e.g. malformed time, weak passphrase).
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
         "406":
           description: Content type in Accept header not supported.
         "412":
@@ -161,6 +165,10 @@ paths:
           description: Unlock was successful, NetHSM is *Operational* now.
         "400":
           description: Bad request (invalid passphrase).
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
         "403":
           description: Unlock failed (access denied).
         "406":
@@ -214,6 +222,10 @@ paths:
                 $ref: "#/components/schemas/RandomData"
         "400":
           description: Bad request (invalid length).
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
         "401":
           description: Authentication required but none provided.
         "403":
@@ -265,7 +277,7 @@ paths:
       parameters:
         - name: filter
           in: query
-          description: Only return keys that are can be used by the requester, according to restrictions.
+          description: Only return keys that can be used by the requester, according to restrictions, if this parameter is set to any value.
           schema:
             type: string
       security:
@@ -296,6 +308,10 @@ paths:
             e.g. "https://nethsm.local/v1/keys/I8mhHYJ1T3uk2lXrwXehVaw9KZzg7K".
         "400":
           description: Bad request (specified properties are invalid).
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
         "401":
           description: Authentication required but none provided.
         "403":
@@ -348,6 +364,10 @@ paths:
                 $ref: "#/components/schemas/CreateResourceId"
         "400":
           description: Bad request (specified properties are invalid).
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
         "401":
           description: Authentication required but none provided.
         "403":
@@ -488,6 +508,10 @@ paths:
                         - berlin
         "400":
           description: Invalid character in the KeyID.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
         "401":
           description: Authentication required but none provided.
         "403":
@@ -517,6 +541,10 @@ paths:
           description: Successful import of a private key.
         "400":
           description: Bad request (specified properties are invalid).
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
         "401":
           description: Authentication required but none provided.
         "403":
@@ -642,6 +670,10 @@ paths:
                 $ref: "#/components/schemas/PemPublicKey"
         "400":
           description: Invalid character in the KeyID.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
         "401":
           description: Authentication required but none provided.
         "403":
@@ -681,6 +713,10 @@ paths:
                 $ref: "#/components/schemas/PemCSR"
         "400":
           description: Bad request (specified properties are invalid).
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
         "401":
           description: Authentication required but none provided.
         "403":
@@ -734,6 +770,10 @@ paths:
             * Mode `RAW` returns failure if input is bigger than key size.
             * Mode `PKCS1` returns failure if input is bigger than key size.
             * Mode `OAEP_*` returns failure is input is bigger than key size.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
         "401":
           description: Authentication required but none provided.
         "403":
@@ -783,6 +823,10 @@ paths:
                 $ref: "#/components/schemas/EncryptData"
         "400":
           description: Bad Request, e.g. invalid mechanism.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
         "401":
           description: Authentication required but none provided.
         "403":
@@ -822,8 +866,10 @@ paths:
         "200":
           description: |
             For response body with content type `application/json`:
-            * Mode `PKCS1` returns the PKCS1 signature of the padded hash value
-              prepended with the according DigestInfo header.
+            * Mode `PKCS1` returns the PKCS1 padded signature
+              NOTE: in order to create EMSA-PKCS1-v1_5 compliant signatures the
+              to be signed hash must be prepended with the according DigestInfo
+              header. See RFC 3447, section 9.2, note 1.
             * Mode `PSS_*` returns the EMSA-PSS encoded signature.
             * Mode `EdDSA` returns the RFC 8032 (5.1.6) encoding:
               r appened with s, in total 64 bytes (each 32 bytes).
@@ -838,12 +884,15 @@ paths:
         "400":
           description: |
             Bad Request, e.g. invalid signing mode.
-            * Mode `PKCS1` returns failure if the input has not a known hash
-              length or the private key is smaller than hash length.
-            * Mode `PSS_*` returns failure if the input has not the hash length,
+            * Mode `PKCS1` returns failure if input is bigger than key size
+            * Mode `PSS_*` returns failure if the input is not the hash length,
               or the private key is smaller than hash length.
             * Mode `ECDSA` returns failure if the input exceeds the group size in bits.
               The hash algorithm is not part of the encoding.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
         "401":
           description: Authentication required but none provided.
         "403":
@@ -901,6 +950,10 @@ paths:
                 type: string
         "400":
           description: Invalid character in the KeyID.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
         "401":
           description: Authentication required but none provided.
         "403":
@@ -1002,6 +1055,10 @@ paths:
                 $ref: "#/components/schemas/CreateResourceId"
         "400":
           description: Bad request (invalid JSON or empty newId).
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
         "401":
           description: Authentication required but none provided.
         "403":
@@ -1048,6 +1105,10 @@ paths:
           description: Tag is already present for this key.
         "400":
           description: Bad request, tag format is invalid.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
         "401":
           description: Authentication required but none provided.
         "403":
@@ -1107,6 +1168,227 @@ paths:
         required: true
         schema:
           $ref: "#/components/schemas/ID"
+  /cluster/join:
+    post:
+      responses:
+        "204":
+          description: Join successful.
+        "400":
+          description: Bad request (specified properties are invalid).
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          description: Authentication required but none provided.
+        "403":
+          description: Access denied.
+        "406":
+          description: Content type in Accept header not supported.
+        "412":
+          description: |
+            Precondition failed. NetHSM was not *Operational* or no cluster CA
+            was set before.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+      description:
+        Attempt to join an existing NetHSM cluster i.e. **wipe all user data** and
+        use the cluster data instead. This does **not** merge data on this node to cluster data.
+
+        'POST /cluster/members' *MUST* have been called on an existing member of the cluster
+        beforehand. The data returned by that call must be passed here along with the backup
+        passphrase *of the node that registered the new member*.
+
+        On success, the node will end up in a *Locked* stated, unlockable with the unlock passphrase
+        *of the node that registered the new member*. All device-specific configuration will be preserved
+        from before the join.
+
+        On immediate failure (e.g. if the cluster is not reachable), the NetHSM will attempt to
+        reverse the join. **WARNING**. Existing data will be definitely wiped after a first successful
+        connection to the cluster. Be sure to backup anything important.
+      security:
+        - basic: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ClusterJoinReq"
+        required: true
+      x-annotation-role:
+        - Administrator
+      x-annotation-state:
+        - Operational
+      x-annotation-caller-namespace:
+        - Root
+  /cluster/members:
+    get:
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ClusterMemberList"
+        "401":
+          description: Authentication required but none provided.
+        "403":
+          description: Access denied.
+        "406":
+          description: Content type in Accept header not supported.
+        "412":
+          description: Precondition failed (NetHSM was not *Operational*).
+      description: |
+        List members of the cluster this node belongs to.
+      security:
+        - basic: []
+      x-annotation-role:
+        - Administrator
+      x-annotation-state:
+        - Operational
+      x-annotation-caller-namespace:
+        - Root
+    post:
+      responses:
+        "201":
+          description: |
+            New member successfully declared to the cluster.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ClusterMemberAddResponse"
+        "400":
+          description: Bad request (specified properties are invalid).
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          description: Authentication required but none provided.
+        "403":
+          description: Access denied.
+        "406":
+          description: Content type in Accept header not supported.
+        "412":
+          description: |
+            Precondition failed. NetHSM was not *Operational* or a backup key
+            has not been configured before.
+      description: |
+        Declare a new member to the cluster. The response of this call must
+        be passed to a call to '/cluster/join' on the new member to finalize the join,
+        along with the backup passphrase.
+        A backup key must be configured prior to this call.
+
+        *WARNING*: adding a member will change the quorum needed for the cluster
+        to operate. If the quorum is not met anymore (e.g. when adding a second node)
+        to a one-node cluster, the cluster (and hence the HSM) will cease to operate until
+        that new member actually joins. If it doesn't, the NetHSM is lost and must be factory reset.
+        Make sure to backup before this operation.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ClusterAddReq"
+        required: true
+      security:
+        - basic: []
+      x-annotation-role:
+        - Administrator
+      x-annotation-state:
+        - Operational
+      x-annotation-caller-namespace:
+        - Root
+  /cluster/members/{MemberID}:
+    parameters:
+      - name: MemberID
+        in: path
+        required: true
+        schema:
+          $ref: "#/components/schemas/ID"
+    put:
+      responses:
+        "204":
+          description: Member successfully updated.
+        "400":
+          description: |
+            Bad request (specified properties are invalid).
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          description: Authentication required but none provided.
+        "403":
+          description: Access denied.
+        "404":
+          description: Cluster member not found.
+        "406":
+          description: Content type in Accept header not supported.
+        "412":
+          description: Precondition failed (NetHSM was not *Operational*).
+      description: |
+        Update the peer URLs of a cluster member (i.e. how others can reach it).
+
+        *WARNING*: misconfiguring this may lead to the member not being reachable anymore. If this makes the cluster
+        lose quorum, the cluster will cease to operate, in which case the NetHSM is lost and must be factory reset.
+        Make sure to backup before this operation.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ClusterAddReq"
+        required: true
+      security:
+        - basic: []
+      x-annotation-role:
+        - Administrator
+      x-annotation-state:
+        - Operational
+      x-annotation-caller-namespace:
+        - Root
+      x-test-value-MemberID: 8e9e05c52164694d
+    delete:
+      responses:
+        "204":
+          description: Member successfully removed from cluster.
+        "400":
+          description: Bad request.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          description: Authentication required but none provided.
+        "403":
+          description: Access denied.
+        "404":
+          description: Cluster member not found.
+        "412":
+          description: Precondition failed (NetHSM was not *Operational*).
+      description: |
+        Irreversibly remove a member from the cluster. The member in question
+        (even if it is ourself) will become inoperable and should be immediately
+        factory reset. It cannot be added back to the cluster without going
+        through a fresh join process.
+
+        *WARNING*: this MUST be called before resetting or otherwise isolating a
+        member from the cluster. Not doing this may lead the cluster to lose
+        quorum and cease to operate. Make sure to backup before this
+        operation.
+
+        If a member has failed and the cluster is still operable (it still has
+        quorum), this method MUST be called to remove voting power to the failed
+        node (if there is no hope that the member becomes available again).
+      security:
+        - basic: []
+      x-annotation-role:
+        - Administrator
+      x-annotation-state:
+        - Operational
+      x-annotation-caller-namespace:
+        - Root
+      x-test-value-MemberID: 8e9e05c52164694d
   /namespaces:
     get:
       responses:
@@ -1144,6 +1426,10 @@ paths:
           description: |
             Bad request (specified properties are invalid, e.g. invalid namespace name
             or namespace already exists).
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
         "401":
           description: Authentication required but none provided.
         "403":
@@ -1172,6 +1458,10 @@ paths:
           description: Successful deletion of namespace.
         "400":
           description: Bad request.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
         "401":
           description: Authentication required but none provided.
         "403":
@@ -1243,6 +1533,10 @@ paths:
                 $ref: "#/components/schemas/CreateResourceId"
         "400":
           description: Bad request (specified properties are invalid, e.g. weak passphrase).
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
         "401":
           description: Authentication required but none provided.
         "403":
@@ -1281,6 +1575,10 @@ paths:
 
         "400":
           description: Invalid character in the UserID.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
         "401":
           description: Authentication required but none provided.
         "403":
@@ -1312,6 +1610,10 @@ paths:
           description: Successful creation of user.
         "400":
           description: Bad request (specified properties are invalid, e.g. weak passphrase).
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
         "401":
           description: Authentication required but none provided.
         "403":
@@ -1359,6 +1661,10 @@ paths:
                 $ref: "#/components/schemas/CreateResourceId"
         "400":
           description: Bad request (specified properties are invalid, e.g. weak passphrase).
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
         "401":
           description: Authentication required but none provided.
         "403":
@@ -1393,6 +1699,10 @@ paths:
           description: Successful deletion of user.
         "400":
           description: Bad request (cannot delete yourself)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
         "401":
           description: Authentication required but none provided.
         "403":
@@ -1429,6 +1739,10 @@ paths:
           description: Successful change of passphrase.
         "400":
           description: Bad request - weak passphrase.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
         "401":
           description: Authentication required but none provided.
         "403":
@@ -1476,6 +1790,10 @@ paths:
                 $ref: "#/components/schemas/TagList"
         "400":
           description: Invalid character in the UserID.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
         "401":
           description: Authentication required but none provided.
         "403":
@@ -1516,6 +1834,10 @@ paths:
           description: Tag is already present for this UserID.
         "400":
           description: Bad request, tag format is invalid or user is not an operator.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
         "401":
           description: Authentication required but none provided.
         "403":
@@ -1586,6 +1908,10 @@ paths:
           description: Successful change of passphrase.
         "400":
           description: Bad request - weak passphrase.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
         "401":
           description: Authentication required but none provided.
         "403":
@@ -1646,6 +1972,10 @@ paths:
           description: Successful change of unattended boot mode.
         "400":
           description: Bad request - invalid status setting.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
         "401":
           description: Authentication required but none provided.
         "403":
@@ -1729,6 +2059,10 @@ paths:
           description: Successfully set certificate.
         "400":
           description: Certificate malformed.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
         "401":
           description: Authentication required but none provided.
         "403":
@@ -1736,7 +2070,9 @@ paths:
         "406":
           description: Content type in Accept header not supported.
         "412":
-          description: Precondition failed (NetHSM was not *Operational*).
+          description: |
+            Either NetHSM was not *Operational*, or "cluster-ca.pem" is set and the
+            provided certicicate is not signed by that CA.
       description: Set certificate for NetHSMs https API e.g. to replace self-signed intital certificate.
       requestBody:
         content:
@@ -1789,6 +2125,10 @@ paths:
           description: Successful creation of new public and private key pair for NetHSM's https API.
         "400":
           description: Bad request (specified properties are invalid).
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
         "401":
           description: Authentication required but none provided.
         "403":
@@ -1812,6 +2152,82 @@ paths:
         - Operational
       x-annotation-caller-namespace:
         - Root
+  /config/tls/cluster-ca.pem:
+    get:
+      responses:
+        "200":
+          description: Successful retrieval of previously set CA.
+          content:
+            application/x-pem-file:
+              schema:
+                $ref: "#/components/schemas/PemCert"
+        "401":
+          description: Authentication required but none provided.
+        "403":
+          description: Access denied (e.g. user is in namespace)
+        "404":
+          description: Cluster CA has never been set before.
+        "406":
+          description: Content type in Accept header not supported.
+        "412":
+          description: Precondition failed (NetHSM was not *Operational*).
+        "415":
+          description: Content type in Accept header not supported or not present.
+      description: Get currently set CA for cluster peer traffic (i.e. how cluster members communicate).
+      security:
+        - basic: []
+      x-annotation-role:
+        - Administrator
+      x-annotation-state:
+        - Operational
+      x-annotation-caller-namespace:
+        - Root
+    put:
+      responses:
+        "201":
+          description: Successfully set cluster CA.
+        "400":
+          description: |
+            Certificate malformed.
+            Check that it has the proper extensions for a CA (basicConstraint, keyUsage).
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          description: Authentication required but none provided.
+        "403":
+          description: Access denied.
+        "406":
+          description: Content type in Accept header not supported.
+        "412":
+          description: |
+            Either the NetHSM was not *Operational*, or the installed TLS certificate
+            is not signed by the given CA. Install a certificate signed by this CA first.
+      description: |
+        Set cluster certificate authority used for etcd peer traffic (i.e. how cluster members communicate).
+        It is not set by default. When set, it cannot be unset (but it can be updated).
+
+        The NetHSM cert must be signed by this CA for this operation to succeed, it will be aborted otherwise.
+        *Note that this is checked for this node but not for all members!*
+        If you need to change the CA, ensure all nodes of the cluster have their cert signed by both the new and the old CA,
+        then change the CA. Afterwards, you can update the individual certs to be signed only by the new CA.
+
+        When changed, the underlying etcd server is restarted with the new CA.
+      requestBody:
+        content:
+          application/x-pem-file:
+            schema:
+              $ref: "#/components/schemas/PemCert"
+        required: true
+      security:
+        - basic: []
+      x-annotation-role:
+        - Administrator
+      x-annotation-state:
+        - Operational
+      x-annotation-caller-namespace:
+        - Root
   /config/network:
     get:
       responses:
@@ -1820,7 +2236,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/NetworkConfig"
+                $ref: "#/components/schemas/NetworkConfigOutput"
         "401":
           description: Authentication required but none provided.
         "403":
@@ -1829,7 +2245,9 @@ paths:
           description: Content type in Accept header not supported.
         "412":
           description: Precondition failed (NetHSM was not *Operational*).
-      description: Get network configuration. IP address, netmask, router.
+      description: |
+        Get network configuration. IP address, netmask, router.
+        If IPv6 is configured (not by default), returns its CIDR and gateway.
       security:
         - basic: []
       x-annotation-role:
@@ -1844,6 +2262,10 @@ paths:
           description: Succesful update of network configuration.
         "400":
           description: Bad request - invalid input format.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
         "401":
           description: Authentication required but none provided.
         "403":
@@ -1852,12 +2274,14 @@ paths:
           description: Content type in Accept header not supported.
         "412":
           description: Precondition failed (NetHSM was not *Operational*).
-      description: Configure network.
+      description: |
+        Configure IPv4 network. Optionally, an 'ipv6' field can be passed
+        to configure IPv6 network as well (passing 'null' will disable IPv6).
       requestBody:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/NetworkConfig"
+              $ref: "#/components/schemas/NetworkConfigInput"
         required: true
       security:
         - basic: []
@@ -1887,7 +2311,7 @@ paths:
       description: |
         Get logging configuration.
         Protocol is always syslog over UDP.
-        Configurable are IP adress and port, log level.
+        Configurable are IP (v4 or v6) adress and port, log level.
       security:
         - basic: []
       x-annotation-role:
@@ -1902,6 +2326,10 @@ paths:
           description: Succesful update of logging configuration.
         "400":
           description: Bad request - invalid input format.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
         "401":
           description: Authentication required but none provided.
         "403":
@@ -1932,6 +2360,10 @@ paths:
           description: Successful change of passphrase.
         "400":
           description: Bad request - weak passphrase.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
         "401":
           description: Authentication required but none provided.
         "403":
@@ -1994,6 +2426,10 @@ paths:
           description: Succesful update of system time.
         "400":
           description: Bad request - invalid input format.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
         "401":
           description: Authentication required but none provided.
         "403":
@@ -2128,6 +2564,10 @@ paths:
                 $ref: "#/components/schemas/SystemUpdateData"
         "400":
           description: Update malformed.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
         "401":
           description: Authentication required but none provided.
         "403":
@@ -2238,6 +2678,10 @@ paths:
           description: Successful restore from backup data.
         "400":
           description: Bad request - restore did not apply.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
         "406":
           description: Content type in Accept header not supported.
         "412":
@@ -2447,6 +2891,91 @@ components:
           $ref: "#/components/schemas/UserID"
       required:
         - user
+    ClusterAddReq:
+      example:
+          urls:
+            - https://192.168.1.2:2380
+      type: object
+      properties:
+        urls:
+          $ref: "#/components/schemas/PeerURLs"
+      required:
+        - urls
+    ClusterInitialMember:
+      type: object
+      properties:
+        name:
+          type: string
+        urls:
+          $ref: "#/components/schemas/PeerURLs"
+      required:
+        - name
+        - urls
+    ClusterJoinReq:
+      type: object
+      properties:
+        members:
+          type: array
+          items:
+            $ref: "#/components/schemas/ClusterInitialMember"
+        joinerKit:
+          type: string
+        backupPassphrase:
+          type: string
+      required:
+        - members
+        - joinerKit
+        - backupPassphrase
+    ClusterMemberAddResponse:
+      type: object
+      properties:
+        members:
+          type: array
+          items:
+            $ref: "#/components/schemas/ClusterInitialMember"
+        joinerKit:
+          type: string
+      required:
+        - members
+        - joinerKit
+    ClusterMemberList:
+      example:
+        - id: 8e9e05c52164694d
+          name: default
+          urls:
+            - https://192.168.1.1:2380
+      type: array
+      items:
+        $ref: "#/components/schemas/ClusterMember"
+    ClusterMember:
+      example:
+        id: 8e9e05c52164694d
+        name: default
+        urls:
+          - https://192.168.1.1:2380
+      type: object
+      properties:
+        id:
+          $ref: "#/components/schemas/ID"
+        name:
+          type: string
+        urls:
+          $ref: "#/components/schemas/PeerURLs"
+      required:
+        - id
+        - name
+        - urls
+    PeerURL:
+      pattern: ^https://.+
+      minLength: 1
+      maxLength: 1024
+      type: string
+    PeerURLs:
+      example:
+        - https://192.168.1.1:2380
+      type: array
+      items:
+        $ref: "#/components/schemas/PeerURL"
     NamespaceList:
       example:
         - id: namespace1
@@ -2575,6 +3104,8 @@ components:
         Data used for creation of CSRs.
         If subjectAltNames is omitted, it is set to the same value as
         commonName. If it is set to an empty list, no SAN Extension is added.
+        All SANs are considered DNS names, unless they start with "IP:" to signal
+        IP names.
       example:
         countryName: DE
         stateOrProvinceName: ""
@@ -2583,7 +3114,7 @@ components:
         organizationalUnitName: ""
         commonName: nethsm.local
         emailAddress: info@nitrokey.com
-        subjectAltNames: ["example.com", "www.example.com"]
+        subjectAltNames: ["example.com", "www.example.com", "IP:192.168.1.1"]
       type: object
       properties:
         countryName:
@@ -2774,7 +3305,7 @@ components:
     SignRequestData:
       example:
         mode: PKCS1
-        message: 6JudPZqn7OtoL4alZE15Rw0CFIfND+RMmIjzdobLZMM=
+        message: nhrfotu32409ru0rgert45z54z099u23r03498uhtr==
       type: object
       properties:
         mode:
@@ -2786,7 +3317,7 @@ components:
         - message
     SignData:
       example:
-        signature: AFJpIZPl7UW1AVqD0BVvWnbn3sFVLmO+wEfoK6eEfkNIrD9D3urCpk8gzkdj4qEmhfxFA2LQ8QoAUOGAouaJ4WSIs7hiksqHntxVkrOgIcmVOE/DZAb7rW3rSnYOd5l31VyE6es0pjZhlI39isMDJ7iXfZ/Eln4mrxdC4opBguiO4AzR2xbkAczrT3YV22AaDcbAaKSLHm0XUnnK8ooAlWy34bmEBo0hQflOLuTagnL7TYKqz9oi6wjTwoT3CO1b0vnWu3pftCLZWzwMoqf0ZVJq6e3usFBL0yqPS6sjin3Gh85/duEv+wJhmGZrkpMpGCuvrFgQfG9pY4TR7YEMYA==
+        signature: n4geMX1g8zcfipfcmn+XjM1ccWZULemAa0cuYoh1aXG9UhbE6f54NMp4NjboLf63SQyieJYjjV8q+/o1rFlkZCtKtHAheds+g90zdjOMmXFlXyBTKMhGOSHuleGz0c99x7Alg19KN9wB3Jj2niwweBOR/F4Qv0mdBUv+oO8uPl6vM1fS4tX/VJoCZkDnZzL8duKRNFT0SNQZ+ryLiqQMG53fEPhTplK/wK0Cco8JAYCMh9cxSzpBoCEO+9woxoBGehAjHuLxs6ed6q08W67leuibxZ8c6Q6upmwDlca/gSw0y4w1VIxxts2PORZdNsTWcr3lojcNgWXJcfAqF9/n4A==
       type: object
       properties:
         signature:
@@ -2854,7 +3385,7 @@ components:
           $ref: "#/components/schemas/Switch"
       required:
         - status
-    NetworkConfig:
+    NetworkConfigInput:
       example:
         ipAddress: 192.168.1.1
         netmask: 255.255.255.0
@@ -2867,10 +3398,46 @@ components:
           type: string
         gateway:
           type: string
+        ipv6:
+          $ref: "#/components/schemas/Ipv6Config"
+      required:
+        - ipAddress
+        - netmask
+    NetworkConfigOutput:
+      example:
+        ipAddress: 192.168.1.1
+        netmask: 255.255.255.0
+        gateway: 0.0.0.0
+      type: object
+      properties:
+        ipAddress:
+          type: string
+        netmask:
+          type: string
+        gateway:
+          type: string
+        ipv6:
+          $ref: "#/components/schemas/Ipv6Config"
       required:
         - ipAddress
         - netmask
         - gateway
+    Ipv6Config:
+      example:
+        cidr: de:ad:be:ef::42/8
+        gateway: de:ad:be:ef::1
+      type: object
+      properties:
+        cidr:
+          type: string
+        gateway:
+          $ref: "#/components/schemas/Ipv6Gateway"
+      required:
+        - cidr
+        - gateway
+    Ipv6Gateway:
+      type: string
+      nullable: true
     LoggingConfig:
       example:
         ipAddress: 0.0.0.0
@@ -3025,7 +3592,7 @@ components:
     PemCSR:
       example: |
         -----BEGIN CERTIFICATE REQUEST-----
-        MIIC6TCCAdECAQAwajEVMBMGA1UEAwwMbmV0aHNtLmxvY2FsMQswCQYDVQQGEwJE
+        MIIC7zCCAdcCAQAwajEVMBMGA1UEAwwMbmV0aHNtLmxvY2FsMQswCQYDVQQGEwJE
         RTEPMA0GA1UEBwwGQmVybGluMREwDwYDVQQKDAhOaXRyb2tleTEgMB4GCSqGSIb3
         DQEJARYRaW5mb0BuaXRyb2tleS5jb20wggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAw
         ggEKAoIBAQDHuCF+uj5UR6libLZXsc+fk9JF2YbPF7BymbPFO2tnXQHKBsSqE+wC
@@ -3033,14 +3600,14 @@ components:
         HKv5pOUTeObZc/XYKrHTCxgYigmVYdsZv3QgDH3Ol1hCAeglnjHmKazm+juHem48
         TJXJwkfl8wEH2H7YHFzgHFo8oybXklHUHtOgHeDXpIljYHW39qo2apIFkLgc/V8K
         5JsGbzc6CpGF2TU/qv++o5UqvFW6kOoqR1x/91EGJBqUn21BtVuz045h9Dqfbka8
-        lO8a2o4S6CCK3fa1XXolcJmOdh48C+03AgMBAAGgOjA4BgkqhkiG9w0BCQ4xKzAp
-        MCcGA1UdEQQgMB6CC2V4YW1wbGUuY29tgg93d3cuZXhhbXBsZS5jb20wDQYJKoZI
-        hvcNAQELBQADggEBABD92ZM2fDcq8hNl/SrHIXyFdZIV+uGWVultZ22isLRuJbuh
-        jb+onDXT9F5mKa4JAoAWvBPnQZpO1d/tf2bPhg9F46Fd/1zd79dvStRrUTjmxdN3
-        6M2ExIRekBRyx5o5h5yjve6tmG1vWOqgcczJwQFG5GawiaBNVenXjJROBx1ad9ou
-        W1cCAvKISOD9OTHsw/Amksu3HyPUW+/celAF4GOzlT2F41rNMoiW0rCTiiJfBotE
-        FvTLWty55EECqoWbAOupRKutt/fu2zewTHINYAR+8NEZDOm8RxLoq4zqc+p1y5ax
-        n9jM28FJC+nYGFwrOmfMV5P/CMxjpp/6pttAvVY=
+        lO8a2o4S6CCK3fa1XXolcJmOdh48C+03AgMBAAGgQDA+BgkqhkiG9w0BCQ4xMTAv
+        MC0GA1UdEQQmMCSCC2V4YW1wbGUuY29tgg93d3cuZXhhbXBsZS5jb22HBMCoAQEw
+        DQYJKoZIhvcNAQELBQADggEBABWDe7Na8w0zeVgKHEQi8CPnIm/32j/RSj5W3oWA
+        tyWvuKNkhx80kvueGlsRO6HELj7aUG9gXz/2Q5WZBfitdFcx3H8i1cbPZEa8Uonk
+        XNsRnOV8lqnGiBRYvkWzNVNgd03kz/f43qpe5mzBVUNSEWSB15vY5NmXBPsxpA/4
+        KJgiPmVd7/X2vvfbzF/YVkI07fJakH8TJlEwpSzpGuWqrEPLtYG5nWlfz3XBjEZj
+        Fr0JBLINKW4qiryTaro3wVV38Ew1ZojBh9UZ2SiH/W3bKO9AZwacjwy/mqlzIv5Q
+        RNB95c627sR1F7zbVewmbM9LG44P3ARdHeEejOTl8WFFnV0=
         -----END CERTIFICATE REQUEST-----
       type: string
     PemCert:
@@ -3074,6 +3641,13 @@ components:
         35mqzHn+FjWq0eAtpzhO5Q==
         -----END CERTIFICATE-----
       type: string
+    ErrorResponse:
+      example:
+        message: that didn't work
+      type: object
+      properties:
+        message:
+          type: string
   responses: {}
   parameters: {}
   examples: {}

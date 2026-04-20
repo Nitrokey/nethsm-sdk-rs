@@ -67,11 +67,166 @@ impl KeysPostBody {
     }
 }
 
+/// struct for typed errors of method [`cluster_join_post`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum ClusterJoinPostError {
+    Status400(crate::models::ErrorResponse),
+    Status401(),
+    Status403(),
+    Status406(),
+    Status412(crate::models::ErrorResponse),
+    UnknownValue(serde_json::Value),
+}
+
+impl ClusterJoinPostError {
+    fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
+        match status {
+            400 => Ok(Self::Status400(serde_json::from_slice(data)?)),
+            401 => Ok(Self::Status401()),
+            403 => Ok(Self::Status403()),
+            406 => Ok(Self::Status406()),
+            412 => Ok(Self::Status412(serde_json::from_slice(data)?)),
+            _ => {
+                if data.is_empty() {
+                    Ok(Self::UnknownValue(serde_json::Value::Null))
+                } else {
+                    serde_json::from_slice(data).map(Self::UnknownValue)
+                }
+            }
+        }
+    }
+}
+
+/// struct for typed errors of method [`cluster_members_get`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum ClusterMembersGetError {
+    Status401(),
+    Status403(),
+    Status406(),
+    Status412(),
+    UnknownValue(serde_json::Value),
+}
+
+impl ClusterMembersGetError {
+    fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
+        match status {
+            401 => Ok(Self::Status401()),
+            403 => Ok(Self::Status403()),
+            406 => Ok(Self::Status406()),
+            412 => Ok(Self::Status412()),
+            _ => {
+                if data.is_empty() {
+                    Ok(Self::UnknownValue(serde_json::Value::Null))
+                } else {
+                    serde_json::from_slice(data).map(Self::UnknownValue)
+                }
+            }
+        }
+    }
+}
+
+/// struct for typed errors of method [`cluster_members_member_id_delete`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum ClusterMembersMemberIdDeleteError {
+    Status400(crate::models::ErrorResponse),
+    Status401(),
+    Status403(),
+    Status404(),
+    Status412(),
+    UnknownValue(serde_json::Value),
+}
+
+impl ClusterMembersMemberIdDeleteError {
+    fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
+        match status {
+            400 => Ok(Self::Status400(serde_json::from_slice(data)?)),
+            401 => Ok(Self::Status401()),
+            403 => Ok(Self::Status403()),
+            404 => Ok(Self::Status404()),
+            412 => Ok(Self::Status412()),
+            _ => {
+                if data.is_empty() {
+                    Ok(Self::UnknownValue(serde_json::Value::Null))
+                } else {
+                    serde_json::from_slice(data).map(Self::UnknownValue)
+                }
+            }
+        }
+    }
+}
+
+/// struct for typed errors of method [`cluster_members_member_id_put`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum ClusterMembersMemberIdPutError {
+    Status400(crate::models::ErrorResponse),
+    Status401(),
+    Status403(),
+    Status404(),
+    Status406(),
+    Status412(),
+    UnknownValue(serde_json::Value),
+}
+
+impl ClusterMembersMemberIdPutError {
+    fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
+        match status {
+            400 => Ok(Self::Status400(serde_json::from_slice(data)?)),
+            401 => Ok(Self::Status401()),
+            403 => Ok(Self::Status403()),
+            404 => Ok(Self::Status404()),
+            406 => Ok(Self::Status406()),
+            412 => Ok(Self::Status412()),
+            _ => {
+                if data.is_empty() {
+                    Ok(Self::UnknownValue(serde_json::Value::Null))
+                } else {
+                    serde_json::from_slice(data).map(Self::UnknownValue)
+                }
+            }
+        }
+    }
+}
+
+/// struct for typed errors of method [`cluster_members_post`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum ClusterMembersPostError {
+    Status400(crate::models::ErrorResponse),
+    Status401(),
+    Status403(),
+    Status406(),
+    Status412(),
+    UnknownValue(serde_json::Value),
+}
+
+impl ClusterMembersPostError {
+    fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
+        match status {
+            400 => Ok(Self::Status400(serde_json::from_slice(data)?)),
+            401 => Ok(Self::Status401()),
+            403 => Ok(Self::Status403()),
+            406 => Ok(Self::Status406()),
+            412 => Ok(Self::Status412()),
+            _ => {
+                if data.is_empty() {
+                    Ok(Self::UnknownValue(serde_json::Value::Null))
+                } else {
+                    serde_json::from_slice(data).map(Self::UnknownValue)
+                }
+            }
+        }
+    }
+}
+
 /// struct for typed errors of method [`config_backup_passphrase_put`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ConfigBackupPassphrasePutError {
-    Status400(),
+    Status400(crate::models::ErrorResponse),
     Status401(),
     Status403(),
     Status406(),
@@ -81,9 +236,8 @@ pub enum ConfigBackupPassphrasePutError {
 
 impl ConfigBackupPassphrasePutError {
     fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
-        // to do: support payloads once added to API spec
         match status {
-            400 => Ok(Self::Status400()),
+            400 => Ok(Self::Status400(serde_json::from_slice(data)?)),
             401 => Ok(Self::Status401()),
             403 => Ok(Self::Status403()),
             406 => Ok(Self::Status406()),
@@ -112,7 +266,6 @@ pub enum ConfigLoggingGetError {
 
 impl ConfigLoggingGetError {
     fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
-        // to do: support payloads once added to API spec
         match status {
             401 => Ok(Self::Status401()),
             403 => Ok(Self::Status403()),
@@ -133,7 +286,7 @@ impl ConfigLoggingGetError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ConfigLoggingPutError {
-    Status400(),
+    Status400(crate::models::ErrorResponse),
     Status401(),
     Status403(),
     Status406(),
@@ -143,9 +296,8 @@ pub enum ConfigLoggingPutError {
 
 impl ConfigLoggingPutError {
     fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
-        // to do: support payloads once added to API spec
         match status {
-            400 => Ok(Self::Status400()),
+            400 => Ok(Self::Status400(serde_json::from_slice(data)?)),
             401 => Ok(Self::Status401()),
             403 => Ok(Self::Status403()),
             406 => Ok(Self::Status406()),
@@ -174,7 +326,6 @@ pub enum ConfigNetworkGetError {
 
 impl ConfigNetworkGetError {
     fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
-        // to do: support payloads once added to API spec
         match status {
             401 => Ok(Self::Status401()),
             403 => Ok(Self::Status403()),
@@ -195,7 +346,7 @@ impl ConfigNetworkGetError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ConfigNetworkPutError {
-    Status400(),
+    Status400(crate::models::ErrorResponse),
     Status401(),
     Status403(),
     Status406(),
@@ -205,9 +356,8 @@ pub enum ConfigNetworkPutError {
 
 impl ConfigNetworkPutError {
     fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
-        // to do: support payloads once added to API spec
         match status {
-            400 => Ok(Self::Status400()),
+            400 => Ok(Self::Status400(serde_json::from_slice(data)?)),
             401 => Ok(Self::Status401()),
             403 => Ok(Self::Status403()),
             406 => Ok(Self::Status406()),
@@ -236,7 +386,6 @@ pub enum ConfigTimeGetError {
 
 impl ConfigTimeGetError {
     fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
-        // to do: support payloads once added to API spec
         match status {
             401 => Ok(Self::Status401()),
             403 => Ok(Self::Status403()),
@@ -257,7 +406,7 @@ impl ConfigTimeGetError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ConfigTimePutError {
-    Status400(),
+    Status400(crate::models::ErrorResponse),
     Status401(),
     Status403(),
     Status406(),
@@ -267,9 +416,8 @@ pub enum ConfigTimePutError {
 
 impl ConfigTimePutError {
     fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
-        // to do: support payloads once added to API spec
         match status {
-            400 => Ok(Self::Status400()),
+            400 => Ok(Self::Status400(serde_json::from_slice(data)?)),
             401 => Ok(Self::Status401()),
             403 => Ok(Self::Status403()),
             406 => Ok(Self::Status406()),
@@ -299,7 +447,6 @@ pub enum ConfigTlsCertPemGetError {
 
 impl ConfigTlsCertPemGetError {
     fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
-        // to do: support payloads once added to API spec
         match status {
             401 => Ok(Self::Status401()),
             403 => Ok(Self::Status403()),
@@ -321,7 +468,7 @@ impl ConfigTlsCertPemGetError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ConfigTlsCertPemPutError {
-    Status400(),
+    Status400(crate::models::ErrorResponse),
     Status401(),
     Status403(),
     Status406(),
@@ -331,9 +478,72 @@ pub enum ConfigTlsCertPemPutError {
 
 impl ConfigTlsCertPemPutError {
     fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
-        // to do: support payloads once added to API spec
         match status {
-            400 => Ok(Self::Status400()),
+            400 => Ok(Self::Status400(serde_json::from_slice(data)?)),
+            401 => Ok(Self::Status401()),
+            403 => Ok(Self::Status403()),
+            406 => Ok(Self::Status406()),
+            412 => Ok(Self::Status412()),
+            _ => {
+                if data.is_empty() {
+                    Ok(Self::UnknownValue(serde_json::Value::Null))
+                } else {
+                    serde_json::from_slice(data).map(Self::UnknownValue)
+                }
+            }
+        }
+    }
+}
+
+/// struct for typed errors of method [`config_tls_cluster_ca_pem_get`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum ConfigTlsClusterCaPemGetError {
+    Status401(),
+    Status403(),
+    Status404(),
+    Status406(),
+    Status412(),
+    Status415(),
+    UnknownValue(serde_json::Value),
+}
+
+impl ConfigTlsClusterCaPemGetError {
+    fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
+        match status {
+            401 => Ok(Self::Status401()),
+            403 => Ok(Self::Status403()),
+            404 => Ok(Self::Status404()),
+            406 => Ok(Self::Status406()),
+            412 => Ok(Self::Status412()),
+            415 => Ok(Self::Status415()),
+            _ => {
+                if data.is_empty() {
+                    Ok(Self::UnknownValue(serde_json::Value::Null))
+                } else {
+                    serde_json::from_slice(data).map(Self::UnknownValue)
+                }
+            }
+        }
+    }
+}
+
+/// struct for typed errors of method [`config_tls_cluster_ca_pem_put`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum ConfigTlsClusterCaPemPutError {
+    Status400(crate::models::ErrorResponse),
+    Status401(),
+    Status403(),
+    Status406(),
+    Status412(),
+    UnknownValue(serde_json::Value),
+}
+
+impl ConfigTlsClusterCaPemPutError {
+    fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
+        match status {
+            400 => Ok(Self::Status400(serde_json::from_slice(data)?)),
             401 => Ok(Self::Status401()),
             403 => Ok(Self::Status403()),
             406 => Ok(Self::Status406()),
@@ -362,7 +572,6 @@ pub enum ConfigTlsCsrPemPostError {
 
 impl ConfigTlsCsrPemPostError {
     fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
-        // to do: support payloads once added to API spec
         match status {
             401 => Ok(Self::Status401()),
             403 => Ok(Self::Status403()),
@@ -383,7 +592,7 @@ impl ConfigTlsCsrPemPostError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ConfigTlsGeneratePostError {
-    Status400(),
+    Status400(crate::models::ErrorResponse),
     Status401(),
     Status403(),
     Status406(),
@@ -393,9 +602,8 @@ pub enum ConfigTlsGeneratePostError {
 
 impl ConfigTlsGeneratePostError {
     fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
-        // to do: support payloads once added to API spec
         match status {
-            400 => Ok(Self::Status400()),
+            400 => Ok(Self::Status400(serde_json::from_slice(data)?)),
             401 => Ok(Self::Status401()),
             403 => Ok(Self::Status403()),
             406 => Ok(Self::Status406()),
@@ -424,7 +632,6 @@ pub enum ConfigTlsPublicPemGetError {
 
 impl ConfigTlsPublicPemGetError {
     fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
-        // to do: support payloads once added to API spec
         match status {
             401 => Ok(Self::Status401()),
             403 => Ok(Self::Status403()),
@@ -454,7 +661,6 @@ pub enum ConfigUnattendedBootGetError {
 
 impl ConfigUnattendedBootGetError {
     fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
-        // to do: support payloads once added to API spec
         match status {
             401 => Ok(Self::Status401()),
             403 => Ok(Self::Status403()),
@@ -475,7 +681,7 @@ impl ConfigUnattendedBootGetError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ConfigUnattendedBootPutError {
-    Status400(),
+    Status400(crate::models::ErrorResponse),
     Status401(),
     Status403(),
     Status406(),
@@ -485,9 +691,8 @@ pub enum ConfigUnattendedBootPutError {
 
 impl ConfigUnattendedBootPutError {
     fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
-        // to do: support payloads once added to API spec
         match status {
-            400 => Ok(Self::Status400()),
+            400 => Ok(Self::Status400(serde_json::from_slice(data)?)),
             401 => Ok(Self::Status401()),
             403 => Ok(Self::Status403()),
             406 => Ok(Self::Status406()),
@@ -507,7 +712,7 @@ impl ConfigUnattendedBootPutError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ConfigUnlockPassphrasePutError {
-    Status400(),
+    Status400(crate::models::ErrorResponse),
     Status401(),
     Status403(),
     Status406(),
@@ -517,9 +722,8 @@ pub enum ConfigUnlockPassphrasePutError {
 
 impl ConfigUnlockPassphrasePutError {
     fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
-        // to do: support payloads once added to API spec
         match status {
-            400 => Ok(Self::Status400()),
+            400 => Ok(Self::Status400(serde_json::from_slice(data)?)),
             401 => Ok(Self::Status401()),
             403 => Ok(Self::Status403()),
             406 => Ok(Self::Status406()),
@@ -546,7 +750,6 @@ pub enum HealthAliveGetError {
 
 impl HealthAliveGetError {
     fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
-        // to do: support payloads once added to API spec
         match status {
             406 => Ok(Self::Status406()),
             412 => Ok(Self::Status412()),
@@ -572,7 +775,6 @@ pub enum HealthReadyGetError {
 
 impl HealthReadyGetError {
     fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
-        // to do: support payloads once added to API spec
         match status {
             406 => Ok(Self::Status406()),
             412 => Ok(Self::Status412()),
@@ -597,7 +799,6 @@ pub enum HealthStateGetError {
 
 impl HealthStateGetError {
     fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
-        // to do: support payloads once added to API spec
         match status {
             406 => Ok(Self::Status406()),
             _ => {
@@ -621,7 +822,6 @@ pub enum InfoGetError {
 
 impl InfoGetError {
     fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
-        // to do: support payloads once added to API spec
         match status {
             406 => Ok(Self::Status406()),
             _ => {
@@ -639,7 +839,7 @@ impl InfoGetError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum KeysGeneratePostError {
-    Status400(),
+    Status400(crate::models::ErrorResponse),
     Status401(),
     Status403(),
     Status406(),
@@ -649,9 +849,8 @@ pub enum KeysGeneratePostError {
 
 impl KeysGeneratePostError {
     fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
-        // to do: support payloads once added to API spec
         match status {
-            400 => Ok(Self::Status400()),
+            400 => Ok(Self::Status400(serde_json::from_slice(data)?)),
             401 => Ok(Self::Status401()),
             403 => Ok(Self::Status403()),
             406 => Ok(Self::Status406()),
@@ -680,7 +879,6 @@ pub enum KeysGetError {
 
 impl KeysGetError {
     fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
-        // to do: support payloads once added to API spec
         match status {
             401 => Ok(Self::Status401()),
             403 => Ok(Self::Status403()),
@@ -711,7 +909,6 @@ pub enum KeysKeyIdCertDeleteError {
 
 impl KeysKeyIdCertDeleteError {
     fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
-        // to do: support payloads once added to API spec
         match status {
             401 => Ok(Self::Status401()),
             403 => Ok(Self::Status403()),
@@ -733,7 +930,7 @@ impl KeysKeyIdCertDeleteError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum KeysKeyIdCertGetError {
-    Status400(),
+    Status400(crate::models::ErrorResponse),
     Status401(),
     Status403(),
     Status404(),
@@ -744,9 +941,8 @@ pub enum KeysKeyIdCertGetError {
 
 impl KeysKeyIdCertGetError {
     fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
-        // to do: support payloads once added to API spec
         match status {
-            400 => Ok(Self::Status400()),
+            400 => Ok(Self::Status400(serde_json::from_slice(data)?)),
             401 => Ok(Self::Status401()),
             403 => Ok(Self::Status403()),
             404 => Ok(Self::Status404()),
@@ -777,7 +973,6 @@ pub enum KeysKeyIdCertPutError {
 
 impl KeysKeyIdCertPutError {
     fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
-        // to do: support payloads once added to API spec
         match status {
             401 => Ok(Self::Status401()),
             403 => Ok(Self::Status403()),
@@ -799,7 +994,7 @@ impl KeysKeyIdCertPutError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum KeysKeyIdCsrPemPostError {
-    Status400(),
+    Status400(crate::models::ErrorResponse),
     Status401(),
     Status403(),
     Status404(),
@@ -810,9 +1005,8 @@ pub enum KeysKeyIdCsrPemPostError {
 
 impl KeysKeyIdCsrPemPostError {
     fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
-        // to do: support payloads once added to API spec
         match status {
-            400 => Ok(Self::Status400()),
+            400 => Ok(Self::Status400(serde_json::from_slice(data)?)),
             401 => Ok(Self::Status401()),
             403 => Ok(Self::Status403()),
             404 => Ok(Self::Status404()),
@@ -833,7 +1027,7 @@ impl KeysKeyIdCsrPemPostError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum KeysKeyIdDecryptPostError {
-    Status400(),
+    Status400(crate::models::ErrorResponse),
     Status401(),
     Status403(),
     Status404(),
@@ -844,9 +1038,8 @@ pub enum KeysKeyIdDecryptPostError {
 
 impl KeysKeyIdDecryptPostError {
     fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
-        // to do: support payloads once added to API spec
         match status {
-            400 => Ok(Self::Status400()),
+            400 => Ok(Self::Status400(serde_json::from_slice(data)?)),
             401 => Ok(Self::Status401()),
             403 => Ok(Self::Status403()),
             404 => Ok(Self::Status404()),
@@ -877,7 +1070,6 @@ pub enum KeysKeyIdDeleteError {
 
 impl KeysKeyIdDeleteError {
     fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
-        // to do: support payloads once added to API spec
         match status {
             401 => Ok(Self::Status401()),
             403 => Ok(Self::Status403()),
@@ -899,7 +1091,7 @@ impl KeysKeyIdDeleteError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum KeysKeyIdEncryptPostError {
-    Status400(),
+    Status400(crate::models::ErrorResponse),
     Status401(),
     Status403(),
     Status404(),
@@ -910,9 +1102,8 @@ pub enum KeysKeyIdEncryptPostError {
 
 impl KeysKeyIdEncryptPostError {
     fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
-        // to do: support payloads once added to API spec
         match status {
-            400 => Ok(Self::Status400()),
+            400 => Ok(Self::Status400(serde_json::from_slice(data)?)),
             401 => Ok(Self::Status401()),
             403 => Ok(Self::Status403()),
             404 => Ok(Self::Status404()),
@@ -933,7 +1124,7 @@ impl KeysKeyIdEncryptPostError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum KeysKeyIdGetError {
-    Status400(),
+    Status400(crate::models::ErrorResponse),
     Status401(),
     Status403(),
     Status404(),
@@ -944,9 +1135,8 @@ pub enum KeysKeyIdGetError {
 
 impl KeysKeyIdGetError {
     fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
-        // to do: support payloads once added to API spec
         match status {
-            400 => Ok(Self::Status400()),
+            400 => Ok(Self::Status400(serde_json::from_slice(data)?)),
             401 => Ok(Self::Status401()),
             403 => Ok(Self::Status403()),
             404 => Ok(Self::Status404()),
@@ -967,7 +1157,7 @@ impl KeysKeyIdGetError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum KeysKeyIdMovePostError {
-    Status400(),
+    Status400(crate::models::ErrorResponse),
     Status401(),
     Status403(),
     Status404(),
@@ -978,9 +1168,8 @@ pub enum KeysKeyIdMovePostError {
 
 impl KeysKeyIdMovePostError {
     fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
-        // to do: support payloads once added to API spec
         match status {
-            400 => Ok(Self::Status400()),
+            400 => Ok(Self::Status400(serde_json::from_slice(data)?)),
             401 => Ok(Self::Status401()),
             403 => Ok(Self::Status403()),
             404 => Ok(Self::Status404()),
@@ -1001,7 +1190,7 @@ impl KeysKeyIdMovePostError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum KeysKeyIdPublicPemGetError {
-    Status400(),
+    Status400(crate::models::ErrorResponse),
     Status401(),
     Status403(),
     Status404(),
@@ -1012,9 +1201,8 @@ pub enum KeysKeyIdPublicPemGetError {
 
 impl KeysKeyIdPublicPemGetError {
     fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
-        // to do: support payloads once added to API spec
         match status {
-            400 => Ok(Self::Status400()),
+            400 => Ok(Self::Status400(serde_json::from_slice(data)?)),
             401 => Ok(Self::Status401()),
             403 => Ok(Self::Status403()),
             404 => Ok(Self::Status404()),
@@ -1035,7 +1223,7 @@ impl KeysKeyIdPublicPemGetError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum KeysKeyIdPutError {
-    Status400(),
+    Status400(crate::models::ErrorResponse),
     Status401(),
     Status403(),
     Status406(),
@@ -1046,9 +1234,8 @@ pub enum KeysKeyIdPutError {
 
 impl KeysKeyIdPutError {
     fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
-        // to do: support payloads once added to API spec
         match status {
-            400 => Ok(Self::Status400()),
+            400 => Ok(Self::Status400(serde_json::from_slice(data)?)),
             401 => Ok(Self::Status401()),
             403 => Ok(Self::Status403()),
             406 => Ok(Self::Status406()),
@@ -1079,7 +1266,6 @@ pub enum KeysKeyIdRestrictionsTagsTagDeleteError {
 
 impl KeysKeyIdRestrictionsTagsTagDeleteError {
     fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
-        // to do: support payloads once added to API spec
         match status {
             401 => Ok(Self::Status401()),
             403 => Ok(Self::Status403()),
@@ -1101,7 +1287,7 @@ impl KeysKeyIdRestrictionsTagsTagDeleteError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum KeysKeyIdRestrictionsTagsTagPutError {
-    Status400(),
+    Status400(crate::models::ErrorResponse),
     Status401(),
     Status403(),
     Status404(),
@@ -1112,9 +1298,8 @@ pub enum KeysKeyIdRestrictionsTagsTagPutError {
 
 impl KeysKeyIdRestrictionsTagsTagPutError {
     fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
-        // to do: support payloads once added to API spec
         match status {
-            400 => Ok(Self::Status400()),
+            400 => Ok(Self::Status400(serde_json::from_slice(data)?)),
             401 => Ok(Self::Status401()),
             403 => Ok(Self::Status403()),
             404 => Ok(Self::Status404()),
@@ -1135,7 +1320,7 @@ impl KeysKeyIdRestrictionsTagsTagPutError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum KeysKeyIdSignPostError {
-    Status400(),
+    Status400(crate::models::ErrorResponse),
     Status401(),
     Status403(),
     Status404(),
@@ -1146,9 +1331,8 @@ pub enum KeysKeyIdSignPostError {
 
 impl KeysKeyIdSignPostError {
     fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
-        // to do: support payloads once added to API spec
         match status {
-            400 => Ok(Self::Status400()),
+            400 => Ok(Self::Status400(serde_json::from_slice(data)?)),
             401 => Ok(Self::Status401()),
             403 => Ok(Self::Status403()),
             404 => Ok(Self::Status404()),
@@ -1178,7 +1362,6 @@ pub enum KeysKeyPrefixGetError {
 
 impl KeysKeyPrefixGetError {
     fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
-        // to do: support payloads once added to API spec
         match status {
             401 => Ok(Self::Status401()),
             403 => Ok(Self::Status403()),
@@ -1199,7 +1382,7 @@ impl KeysKeyPrefixGetError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum KeysPostError {
-    Status400(),
+    Status400(crate::models::ErrorResponse),
     Status401(),
     Status403(),
     Status406(),
@@ -1209,9 +1392,8 @@ pub enum KeysPostError {
 
 impl KeysPostError {
     fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
-        // to do: support payloads once added to API spec
         match status {
-            400 => Ok(Self::Status400()),
+            400 => Ok(Self::Status400(serde_json::from_slice(data)?)),
             401 => Ok(Self::Status401()),
             403 => Ok(Self::Status403()),
             406 => Ok(Self::Status406()),
@@ -1240,7 +1422,6 @@ pub enum LockPostError {
 
 impl LockPostError {
     fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
-        // to do: support payloads once added to API spec
         match status {
             401 => Ok(Self::Status401()),
             403 => Ok(Self::Status403()),
@@ -1270,7 +1451,6 @@ pub enum MetricsGetError {
 
 impl MetricsGetError {
     fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
-        // to do: support payloads once added to API spec
         match status {
             401 => Ok(Self::Status401()),
             403 => Ok(Self::Status403()),
@@ -1300,7 +1480,6 @@ pub enum NamespacesGetError {
 
 impl NamespacesGetError {
     fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
-        // to do: support payloads once added to API spec
         match status {
             401 => Ok(Self::Status401()),
             403 => Ok(Self::Status403()),
@@ -1321,7 +1500,7 @@ impl NamespacesGetError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum NamespacesNamespaceIdDeleteError {
-    Status400(),
+    Status400(crate::models::ErrorResponse),
     Status401(),
     Status403(),
     Status404(),
@@ -1331,9 +1510,8 @@ pub enum NamespacesNamespaceIdDeleteError {
 
 impl NamespacesNamespaceIdDeleteError {
     fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
-        // to do: support payloads once added to API spec
         match status {
-            400 => Ok(Self::Status400()),
+            400 => Ok(Self::Status400(serde_json::from_slice(data)?)),
             401 => Ok(Self::Status401()),
             403 => Ok(Self::Status403()),
             404 => Ok(Self::Status404()),
@@ -1353,7 +1531,7 @@ impl NamespacesNamespaceIdDeleteError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum NamespacesNamespaceIdPutError {
-    Status400(),
+    Status400(crate::models::ErrorResponse),
     Status401(),
     Status403(),
     Status406(),
@@ -1364,9 +1542,8 @@ pub enum NamespacesNamespaceIdPutError {
 
 impl NamespacesNamespaceIdPutError {
     fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
-        // to do: support payloads once added to API spec
         match status {
-            400 => Ok(Self::Status400()),
+            400 => Ok(Self::Status400(serde_json::from_slice(data)?)),
             401 => Ok(Self::Status401()),
             403 => Ok(Self::Status403()),
             406 => Ok(Self::Status406()),
@@ -1387,7 +1564,7 @@ impl NamespacesNamespaceIdPutError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ProvisionPostError {
-    Status400(),
+    Status400(crate::models::ErrorResponse),
     Status406(),
     Status412(),
     UnknownValue(serde_json::Value),
@@ -1395,9 +1572,8 @@ pub enum ProvisionPostError {
 
 impl ProvisionPostError {
     fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
-        // to do: support payloads once added to API spec
         match status {
-            400 => Ok(Self::Status400()),
+            400 => Ok(Self::Status400(serde_json::from_slice(data)?)),
             406 => Ok(Self::Status406()),
             412 => Ok(Self::Status412()),
             _ => {
@@ -1415,7 +1591,7 @@ impl ProvisionPostError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum RandomPostError {
-    Status400(),
+    Status400(crate::models::ErrorResponse),
     Status401(),
     Status403(),
     Status406(),
@@ -1425,9 +1601,8 @@ pub enum RandomPostError {
 
 impl RandomPostError {
     fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
-        // to do: support payloads once added to API spec
         match status {
-            400 => Ok(Self::Status400()),
+            400 => Ok(Self::Status400(serde_json::from_slice(data)?)),
             401 => Ok(Self::Status401()),
             403 => Ok(Self::Status403()),
             406 => Ok(Self::Status406()),
@@ -1456,7 +1631,6 @@ pub enum SystemBackupPostError {
 
 impl SystemBackupPostError {
     fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
-        // to do: support payloads once added to API spec
         match status {
             401 => Ok(Self::Status401()),
             403 => Ok(Self::Status403()),
@@ -1486,7 +1660,6 @@ pub enum SystemCancelUpdatePostError {
 
 impl SystemCancelUpdatePostError {
     fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
-        // to do: support payloads once added to API spec
         match status {
             401 => Ok(Self::Status401()),
             403 => Ok(Self::Status403()),
@@ -1516,7 +1689,6 @@ pub enum SystemCommitUpdatePostError {
 
 impl SystemCommitUpdatePostError {
     fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
-        // to do: support payloads once added to API spec
         match status {
             401 => Ok(Self::Status401()),
             403 => Ok(Self::Status403()),
@@ -1546,7 +1718,6 @@ pub enum SystemFactoryResetPostError {
 
 impl SystemFactoryResetPostError {
     fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
-        // to do: support payloads once added to API spec
         match status {
             401 => Ok(Self::Status401()),
             403 => Ok(Self::Status403()),
@@ -1576,7 +1747,6 @@ pub enum SystemInfoGetError {
 
 impl SystemInfoGetError {
     fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
-        // to do: support payloads once added to API spec
         match status {
             401 => Ok(Self::Status401()),
             403 => Ok(Self::Status403()),
@@ -1606,7 +1776,6 @@ pub enum SystemRebootPostError {
 
 impl SystemRebootPostError {
     fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
-        // to do: support payloads once added to API spec
         match status {
             401 => Ok(Self::Status401()),
             403 => Ok(Self::Status403()),
@@ -1627,7 +1796,7 @@ impl SystemRebootPostError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum SystemRestorePostError {
-    Status400(),
+    Status400(crate::models::ErrorResponse),
     Status406(),
     Status412(),
     UnknownValue(serde_json::Value),
@@ -1635,9 +1804,8 @@ pub enum SystemRestorePostError {
 
 impl SystemRestorePostError {
     fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
-        // to do: support payloads once added to API spec
         match status {
-            400 => Ok(Self::Status400()),
+            400 => Ok(Self::Status400(serde_json::from_slice(data)?)),
             406 => Ok(Self::Status406()),
             412 => Ok(Self::Status412()),
             _ => {
@@ -1663,7 +1831,6 @@ pub enum SystemShutdownPostError {
 
 impl SystemShutdownPostError {
     fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
-        // to do: support payloads once added to API spec
         match status {
             401 => Ok(Self::Status401()),
             403 => Ok(Self::Status403()),
@@ -1683,7 +1850,7 @@ impl SystemShutdownPostError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum SystemUpdatePostError {
-    Status400(),
+    Status400(crate::models::ErrorResponse),
     Status401(),
     Status403(),
     Status406(),
@@ -1694,9 +1861,8 @@ pub enum SystemUpdatePostError {
 
 impl SystemUpdatePostError {
     fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
-        // to do: support payloads once added to API spec
         match status {
-            400 => Ok(Self::Status400()),
+            400 => Ok(Self::Status400(serde_json::from_slice(data)?)),
             401 => Ok(Self::Status401()),
             403 => Ok(Self::Status403()),
             406 => Ok(Self::Status406()),
@@ -1717,7 +1883,7 @@ impl SystemUpdatePostError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UnlockPostError {
-    Status400(),
+    Status400(crate::models::ErrorResponse),
     Status403(),
     Status406(),
     Status412(),
@@ -1726,9 +1892,8 @@ pub enum UnlockPostError {
 
 impl UnlockPostError {
     fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
-        // to do: support payloads once added to API spec
         match status {
-            400 => Ok(Self::Status400()),
+            400 => Ok(Self::Status400(serde_json::from_slice(data)?)),
             403 => Ok(Self::Status403()),
             406 => Ok(Self::Status406()),
             412 => Ok(Self::Status412()),
@@ -1756,7 +1921,6 @@ pub enum UsersGetError {
 
 impl UsersGetError {
     fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
-        // to do: support payloads once added to API spec
         match status {
             401 => Ok(Self::Status401()),
             403 => Ok(Self::Status403()),
@@ -1777,7 +1941,7 @@ impl UsersGetError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UsersPostError {
-    Status400(),
+    Status400(crate::models::ErrorResponse),
     Status401(),
     Status403(),
     Status406(),
@@ -1787,9 +1951,8 @@ pub enum UsersPostError {
 
 impl UsersPostError {
     fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
-        // to do: support payloads once added to API spec
         match status {
-            400 => Ok(Self::Status400()),
+            400 => Ok(Self::Status400(serde_json::from_slice(data)?)),
             401 => Ok(Self::Status401()),
             403 => Ok(Self::Status403()),
             406 => Ok(Self::Status406()),
@@ -1809,7 +1972,7 @@ impl UsersPostError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UsersUserIdDeleteError {
-    Status400(),
+    Status400(crate::models::ErrorResponse),
     Status401(),
     Status403(),
     Status404(),
@@ -1820,9 +1983,8 @@ pub enum UsersUserIdDeleteError {
 
 impl UsersUserIdDeleteError {
     fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
-        // to do: support payloads once added to API spec
         match status {
-            400 => Ok(Self::Status400()),
+            400 => Ok(Self::Status400(serde_json::from_slice(data)?)),
             401 => Ok(Self::Status401()),
             403 => Ok(Self::Status403()),
             404 => Ok(Self::Status404()),
@@ -1843,7 +2005,7 @@ impl UsersUserIdDeleteError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UsersUserIdGetError {
-    Status400(),
+    Status400(crate::models::ErrorResponse),
     Status401(),
     Status403(),
     Status404(),
@@ -1854,9 +2016,8 @@ pub enum UsersUserIdGetError {
 
 impl UsersUserIdGetError {
     fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
-        // to do: support payloads once added to API spec
         match status {
-            400 => Ok(Self::Status400()),
+            400 => Ok(Self::Status400(serde_json::from_slice(data)?)),
             401 => Ok(Self::Status401()),
             403 => Ok(Self::Status403()),
             404 => Ok(Self::Status404()),
@@ -1877,7 +2038,7 @@ impl UsersUserIdGetError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UsersUserIdPassphrasePostError {
-    Status400(),
+    Status400(crate::models::ErrorResponse),
     Status401(),
     Status403(),
     Status404(),
@@ -1888,9 +2049,8 @@ pub enum UsersUserIdPassphrasePostError {
 
 impl UsersUserIdPassphrasePostError {
     fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
-        // to do: support payloads once added to API spec
         match status {
-            400 => Ok(Self::Status400()),
+            400 => Ok(Self::Status400(serde_json::from_slice(data)?)),
             401 => Ok(Self::Status401()),
             403 => Ok(Self::Status403()),
             404 => Ok(Self::Status404()),
@@ -1911,7 +2071,7 @@ impl UsersUserIdPassphrasePostError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UsersUserIdPostError {
-    Status400(),
+    Status400(crate::models::ErrorResponse),
     Status401(),
     Status403(),
     Status406(),
@@ -1921,9 +2081,8 @@ pub enum UsersUserIdPostError {
 
 impl UsersUserIdPostError {
     fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
-        // to do: support payloads once added to API spec
         match status {
-            400 => Ok(Self::Status400()),
+            400 => Ok(Self::Status400(serde_json::from_slice(data)?)),
             401 => Ok(Self::Status401()),
             403 => Ok(Self::Status403()),
             406 => Ok(Self::Status406()),
@@ -1943,7 +2102,7 @@ impl UsersUserIdPostError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UsersUserIdPutError {
-    Status400(),
+    Status400(crate::models::ErrorResponse),
     Status401(),
     Status403(),
     Status406(),
@@ -1954,9 +2113,8 @@ pub enum UsersUserIdPutError {
 
 impl UsersUserIdPutError {
     fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
-        // to do: support payloads once added to API spec
         match status {
-            400 => Ok(Self::Status400()),
+            400 => Ok(Self::Status400(serde_json::from_slice(data)?)),
             401 => Ok(Self::Status401()),
             403 => Ok(Self::Status403()),
             406 => Ok(Self::Status406()),
@@ -1977,7 +2135,7 @@ impl UsersUserIdPutError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UsersUserIdTagsGetError {
-    Status400(),
+    Status400(crate::models::ErrorResponse),
     Status401(),
     Status403(),
     Status404(),
@@ -1988,9 +2146,8 @@ pub enum UsersUserIdTagsGetError {
 
 impl UsersUserIdTagsGetError {
     fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
-        // to do: support payloads once added to API spec
         match status {
-            400 => Ok(Self::Status400()),
+            400 => Ok(Self::Status400(serde_json::from_slice(data)?)),
             401 => Ok(Self::Status401()),
             403 => Ok(Self::Status403()),
             404 => Ok(Self::Status404()),
@@ -2021,7 +2178,6 @@ pub enum UsersUserIdTagsTagDeleteError {
 
 impl UsersUserIdTagsTagDeleteError {
     fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
-        // to do: support payloads once added to API spec
         match status {
             401 => Ok(Self::Status401()),
             403 => Ok(Self::Status403()),
@@ -2043,7 +2199,7 @@ impl UsersUserIdTagsTagDeleteError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UsersUserIdTagsTagPutError {
-    Status400(),
+    Status400(crate::models::ErrorResponse),
     Status401(),
     Status403(),
     Status404(),
@@ -2054,9 +2210,8 @@ pub enum UsersUserIdTagsTagPutError {
 
 impl UsersUserIdTagsTagPutError {
     fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
-        // to do: support payloads once added to API spec
         match status {
-            400 => Ok(Self::Status400()),
+            400 => Ok(Self::Status400(serde_json::from_slice(data)?)),
             401 => Ok(Self::Status401()),
             403 => Ok(Self::Status403()),
             404 => Ok(Self::Status404()),
@@ -2070,6 +2225,233 @@ impl UsersUserIdTagsTagPutError {
                 }
             }
         }
+    }
+}
+
+/// Attempt to join an existing NetHSM cluster i.e. **wipe all user data** and use the cluster data instead. This does **not** merge data on this node to cluster data. 'POST /cluster/members' *MUST* have been called on an existing member of the cluster beforehand. The data returned by that call must be passed here along with the backup passphrase *of the node that registered the new member*. On success, the node will end up in a *Locked* stated, unlockable with the unlock passphrase *of the node that registered the new member*. All device-specific configuration will be preserved from before the join. On immediate failure (e.g. if the cluster is not reachable), the NetHSM will attempt to reverse the join. **WARNING**. Existing data will be definitely wiped after a first successful connection to the cluster. Be sure to backup anything important.
+pub fn cluster_join_post(
+    configuration: &configuration::Configuration,
+    cluster_join_req: crate::models::ClusterJoinReq,
+) -> Result<ResponseContent<()>, Error<ClusterJoinPostError>> {
+    let local_var_configuration = configuration;
+
+    let local_var_client = &local_var_configuration.client;
+
+    let local_var_uri_str = format!("{}/cluster/join", local_var_configuration.base_path);
+    let mut local_var_req_builder =
+        create_request!(local_var_client, POST, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
+
+    if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
+        local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
+    }
+    if let Some(ref local_var_auth_conf) = local_var_configuration.basic_auth {
+        let value = super::basic_auth(local_var_auth_conf);
+
+        local_var_req_builder = local_var_req_builder.header("authorization", &value);
+    };
+    let accept_str = "application/json";
+    local_var_req_builder = local_var_req_builder.header("accept", accept_str);
+
+    local_var_req_builder = local_var_req_builder.header("content-type", "application/json");
+    let local_var_result = local_var_req_builder.send_json(cluster_join_req);
+
+    let local_var_resp = local_var_result?;
+
+    let local_var_status = local_var_resp.status().as_u16();
+    if local_var_status < 400 {
+        ResponseContent::unit(local_var_resp)
+    } else {
+        ResponseContent::new(local_var_resp, |data| {
+            ClusterJoinPostError::new(local_var_status, data).map_err(From::from)
+        })
+        .and_then(|content| Err(Error::ResponseError(content)))
+    }
+}
+
+/// List members of the cluster this node belongs to.
+pub fn cluster_members_get(
+    configuration: &configuration::Configuration,
+) -> Result<ResponseContent<Vec<crate::models::ClusterMember>>, Error<ClusterMembersGetError>> {
+    let local_var_configuration = configuration;
+
+    let local_var_client = &local_var_configuration.client;
+
+    let local_var_uri_str = format!("{}/cluster/members", local_var_configuration.base_path);
+    let mut local_var_req_builder =
+        create_request!(local_var_client, GET, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
+
+    if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
+        local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
+    }
+    if let Some(ref local_var_auth_conf) = local_var_configuration.basic_auth {
+        let value = super::basic_auth(local_var_auth_conf);
+
+        local_var_req_builder = local_var_req_builder.header("authorization", &value);
+    };
+    let accept_str = "application/json";
+    local_var_req_builder = local_var_req_builder.header("accept", accept_str);
+
+    let local_var_result = local_var_req_builder.send_empty();
+
+    let local_var_resp = local_var_result?;
+
+    let local_var_status = local_var_resp.status().as_u16();
+    if local_var_status < 400 {
+        ResponseContent::deserialized(local_var_resp)
+    } else {
+        ResponseContent::new(local_var_resp, |data| {
+            ClusterMembersGetError::new(local_var_status, data).map_err(From::from)
+        })
+        .and_then(|content| Err(Error::ResponseError(content)))
+    }
+}
+
+/// Irreversibly remove a member from the cluster. The member in question (even if it is ourself) will become inoperable and should be immediately factory reset. It cannot be added back to the cluster without going through a fresh join process.  *WARNING*: this MUST be called before resetting or otherwise isolating a member from the cluster. Not doing this may lead the cluster to lose quorum and cease to operate. Make sure to backup before this operation.  If a member has failed and the cluster is still operable (it still has quorum), this method MUST be called to remove voting power to the failed node (if there is no hope that the member becomes available again).
+pub fn cluster_members_member_id_delete(
+    configuration: &configuration::Configuration,
+    member_id: &str,
+) -> Result<ResponseContent<()>, Error<ClusterMembersMemberIdDeleteError>> {
+    let local_var_configuration = configuration;
+
+    let local_var_client = &local_var_configuration.client;
+
+    let local_var_uri_str = format!(
+        "{}/cluster/members/{MemberID}",
+        local_var_configuration.base_path,
+        MemberID = crate::apis::urlencode(member_id)
+    );
+    let mut local_var_req_builder =
+        create_request!(local_var_client, DELETE, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
+
+    if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
+        local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
+    }
+    if let Some(ref local_var_auth_conf) = local_var_configuration.basic_auth {
+        let value = super::basic_auth(local_var_auth_conf);
+
+        local_var_req_builder = local_var_req_builder.header("authorization", &value);
+    };
+    let accept_str = "application/json";
+    local_var_req_builder = local_var_req_builder.header("accept", accept_str);
+
+    let local_var_result = local_var_req_builder.send_empty();
+
+    let local_var_resp = local_var_result?;
+
+    let local_var_status = local_var_resp.status().as_u16();
+    if local_var_status < 400 {
+        ResponseContent::unit(local_var_resp)
+    } else {
+        ResponseContent::new(local_var_resp, |data| {
+            ClusterMembersMemberIdDeleteError::new(local_var_status, data).map_err(From::from)
+        })
+        .and_then(|content| Err(Error::ResponseError(content)))
+    }
+}
+
+/// Update the peer URLs of a cluster member (i.e. how others can reach it).  *WARNING*: misconfiguring this may lead to the member not being reachable anymore. If this makes the cluster lose quorum, the cluster will cease to operate, in which case the NetHSM is lost and must be factory reset. Make sure to backup before this operation.
+pub fn cluster_members_member_id_put(
+    configuration: &configuration::Configuration,
+    member_id: &str,
+    cluster_add_req: crate::models::ClusterAddReq,
+) -> Result<ResponseContent<()>, Error<ClusterMembersMemberIdPutError>> {
+    let local_var_configuration = configuration;
+
+    let local_var_client = &local_var_configuration.client;
+
+    let local_var_uri_str = format!(
+        "{}/cluster/members/{MemberID}",
+        local_var_configuration.base_path,
+        MemberID = crate::apis::urlencode(member_id)
+    );
+    let mut local_var_req_builder =
+        create_request!(local_var_client, PUT, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
+
+    if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
+        local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
+    }
+    if let Some(ref local_var_auth_conf) = local_var_configuration.basic_auth {
+        let value = super::basic_auth(local_var_auth_conf);
+
+        local_var_req_builder = local_var_req_builder.header("authorization", &value);
+    };
+    let accept_str = "application/json";
+    local_var_req_builder = local_var_req_builder.header("accept", accept_str);
+
+    local_var_req_builder = local_var_req_builder.header("content-type", "application/json");
+    let local_var_result = local_var_req_builder.send_json(cluster_add_req);
+
+    let local_var_resp = local_var_result?;
+
+    let local_var_status = local_var_resp.status().as_u16();
+    if local_var_status < 400 {
+        ResponseContent::unit(local_var_resp)
+    } else {
+        ResponseContent::new(local_var_resp, |data| {
+            ClusterMembersMemberIdPutError::new(local_var_status, data).map_err(From::from)
+        })
+        .and_then(|content| Err(Error::ResponseError(content)))
+    }
+}
+
+/// Declare a new member to the cluster. The response of this call must be passed to a call to '/cluster/join' on the new member to finalize the join, along with the backup passphrase. A backup key must be configured prior to this call.  *WARNING*: adding a member will change the quorum needed for the cluster to operate. If the quorum is not met anymore (e.g. when adding a second node) to a one-node cluster, the cluster (and hence the HSM) will cease to operate until that new member actually joins. If it doesn't, the NetHSM is lost and must be factory reset. Make sure to backup before this operation.
+pub fn cluster_members_post(
+    configuration: &configuration::Configuration,
+    cluster_add_req: crate::models::ClusterAddReq,
+) -> Result<ResponseContent<crate::models::ClusterMemberAddResponse>, Error<ClusterMembersPostError>>
+{
+    let local_var_configuration = configuration;
+
+    let local_var_client = &local_var_configuration.client;
+
+    let local_var_uri_str = format!("{}/cluster/members", local_var_configuration.base_path);
+    let mut local_var_req_builder =
+        create_request!(local_var_client, POST, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
+
+    if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
+        local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
+    }
+    if let Some(ref local_var_auth_conf) = local_var_configuration.basic_auth {
+        let value = super::basic_auth(local_var_auth_conf);
+
+        local_var_req_builder = local_var_req_builder.header("authorization", &value);
+    };
+    let accept_str = "application/json";
+    local_var_req_builder = local_var_req_builder.header("accept", accept_str);
+
+    local_var_req_builder = local_var_req_builder.header("content-type", "application/json");
+    let local_var_result = local_var_req_builder.send_json(cluster_add_req);
+
+    let local_var_resp = local_var_result?;
+
+    let local_var_status = local_var_resp.status().as_u16();
+    if local_var_status < 400 {
+        ResponseContent::deserialized(local_var_resp)
+    } else {
+        ResponseContent::new(local_var_resp, |data| {
+            ClusterMembersPostError::new(local_var_status, data).map_err(From::from)
+        })
+        .and_then(|content| Err(Error::ResponseError(content)))
     }
 }
 
@@ -2101,6 +2483,8 @@ pub fn config_backup_passphrase_put(
 
         local_var_req_builder = local_var_req_builder.header("authorization", &value);
     };
+    let accept_str = "application/json";
+    local_var_req_builder = local_var_req_builder.header("accept", accept_str);
 
     local_var_req_builder = local_var_req_builder.header("content-type", "application/json");
     let local_var_result = local_var_req_builder.send_json(backup_passphrase_config);
@@ -2118,7 +2502,7 @@ pub fn config_backup_passphrase_put(
     }
 }
 
-/// Get logging configuration. Protocol is always syslog over UDP. Configurable are IP adress and port, log level.
+/// Get logging configuration. Protocol is always syslog over UDP. Configurable are IP (v4 or v6) adress and port, log level.
 pub fn config_logging_get(
     configuration: &configuration::Configuration,
 ) -> Result<ResponseContent<crate::models::LoggingConfig>, Error<ConfigLoggingGetError>> {
@@ -2185,6 +2569,8 @@ pub fn config_logging_put(
 
         local_var_req_builder = local_var_req_builder.header("authorization", &value);
     };
+    let accept_str = "application/json";
+    local_var_req_builder = local_var_req_builder.header("accept", accept_str);
 
     local_var_req_builder = local_var_req_builder.header("content-type", "application/json");
     let local_var_result = local_var_req_builder.send_json(logging_config);
@@ -2202,10 +2588,10 @@ pub fn config_logging_put(
     }
 }
 
-/// Get network configuration. IP address, netmask, router.
+/// Get network configuration. IP address, netmask, router. If IPv6 is configured (not by default), returns its CIDR and gateway.
 pub fn config_network_get(
     configuration: &configuration::Configuration,
-) -> Result<ResponseContent<crate::models::NetworkConfig>, Error<ConfigNetworkGetError>> {
+) -> Result<ResponseContent<crate::models::NetworkConfigOutput>, Error<ConfigNetworkGetError>> {
     let local_var_configuration = configuration;
 
     let local_var_client = &local_var_configuration.client;
@@ -2244,10 +2630,10 @@ pub fn config_network_get(
     }
 }
 
-/// Configure network.
+/// Configure IPv4 network. Optionally, an 'ipv6' field can be passed to configure IPv6 network as well (passing 'null' will disable IPv6).
 pub fn config_network_put(
     configuration: &configuration::Configuration,
-    network_config: crate::models::NetworkConfig,
+    network_config_input: crate::models::NetworkConfigInput,
 ) -> Result<ResponseContent<()>, Error<ConfigNetworkPutError>> {
     let local_var_configuration = configuration;
 
@@ -2269,9 +2655,11 @@ pub fn config_network_put(
 
         local_var_req_builder = local_var_req_builder.header("authorization", &value);
     };
+    let accept_str = "application/json";
+    local_var_req_builder = local_var_req_builder.header("accept", accept_str);
 
     local_var_req_builder = local_var_req_builder.header("content-type", "application/json");
-    let local_var_result = local_var_req_builder.send_json(network_config);
+    let local_var_result = local_var_req_builder.send_json(network_config_input);
 
     let local_var_resp = local_var_result?;
 
@@ -2353,6 +2741,8 @@ pub fn config_time_put(
 
         local_var_req_builder = local_var_req_builder.header("authorization", &value);
     };
+    let accept_str = "application/json";
+    local_var_req_builder = local_var_req_builder.header("accept", accept_str);
 
     local_var_req_builder = local_var_req_builder.header("content-type", "application/json");
     let local_var_result = local_var_req_builder.send_json(time_config);
@@ -2437,6 +2827,8 @@ pub fn config_tls_cert_pem_put(
 
         local_var_req_builder = local_var_req_builder.header("authorization", &value);
     };
+    let accept_str = "application/json";
+    local_var_req_builder = local_var_req_builder.header("accept", accept_str);
 
     local_var_req_builder = local_var_req_builder.header("content-type", "application/x-pem-file");
     let local_var_result = local_var_req_builder.send(body);
@@ -2449,6 +2841,98 @@ pub fn config_tls_cert_pem_put(
     } else {
         ResponseContent::new(local_var_resp, |data| {
             ConfigTlsCertPemPutError::new(local_var_status, data).map_err(From::from)
+        })
+        .and_then(|content| Err(Error::ResponseError(content)))
+    }
+}
+
+/// Get currently set CA for cluster peer traffic (i.e. how cluster members communicate).
+pub fn config_tls_cluster_ca_pem_get(
+    configuration: &configuration::Configuration,
+) -> Result<ResponseContent<String>, Error<ConfigTlsClusterCaPemGetError>> {
+    let local_var_configuration = configuration;
+
+    let local_var_client = &local_var_configuration.client;
+
+    let local_var_uri_str = format!(
+        "{}/config/tls/cluster-ca.pem",
+        local_var_configuration.base_path
+    );
+    let mut local_var_req_builder =
+        create_request!(local_var_client, GET, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
+
+    if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
+        local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
+    }
+    if let Some(ref local_var_auth_conf) = local_var_configuration.basic_auth {
+        let value = super::basic_auth(local_var_auth_conf);
+
+        local_var_req_builder = local_var_req_builder.header("authorization", &value);
+    };
+    let accept_str = "application/x-pem-file";
+    local_var_req_builder = local_var_req_builder.header("accept", accept_str);
+
+    let local_var_result = local_var_req_builder.send_empty();
+
+    let local_var_resp = local_var_result?;
+
+    let local_var_status = local_var_resp.status().as_u16();
+    if local_var_status < 400 {
+        ResponseContent::string(local_var_resp)
+    } else {
+        ResponseContent::new(local_var_resp, |data| {
+            ConfigTlsClusterCaPemGetError::new(local_var_status, data).map_err(From::from)
+        })
+        .and_then(|content| Err(Error::ResponseError(content)))
+    }
+}
+
+/// Set cluster certificate authority used for etcd peer traffic (i.e. how cluster members communicate). It is not set by default. When set, it cannot be unset (but it can be updated).  The NetHSM cert must be signed by this CA for this operation to succeed, it will be aborted otherwise. *Note that this is checked for this node but not for all members!* If you need to change the CA, ensure all nodes of the cluster have their cert signed by both the new and the old CA, then change the CA. Afterwards, you can update the individual certs to be signed only by the new CA.  When changed, the underlying etcd server is restarted with the new CA.
+pub fn config_tls_cluster_ca_pem_put(
+    configuration: &configuration::Configuration,
+    body: &str,
+) -> Result<ResponseContent<()>, Error<ConfigTlsClusterCaPemPutError>> {
+    let local_var_configuration = configuration;
+
+    let local_var_client = &local_var_configuration.client;
+
+    let local_var_uri_str = format!(
+        "{}/config/tls/cluster-ca.pem",
+        local_var_configuration.base_path
+    );
+    let mut local_var_req_builder =
+        create_request!(local_var_client, PUT, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
+
+    if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
+        local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
+    }
+    if let Some(ref local_var_auth_conf) = local_var_configuration.basic_auth {
+        let value = super::basic_auth(local_var_auth_conf);
+
+        local_var_req_builder = local_var_req_builder.header("authorization", &value);
+    };
+    let accept_str = "application/json";
+    local_var_req_builder = local_var_req_builder.header("accept", accept_str);
+
+    local_var_req_builder = local_var_req_builder.header("content-type", "application/x-pem-file");
+    let local_var_result = local_var_req_builder.send(body);
+
+    let local_var_resp = local_var_result?;
+
+    let local_var_status = local_var_resp.status().as_u16();
+    if local_var_status < 400 {
+        ResponseContent::unit(local_var_resp)
+    } else {
+        ResponseContent::new(local_var_resp, |data| {
+            ConfigTlsClusterCaPemPutError::new(local_var_status, data).map_err(From::from)
         })
         .and_then(|content| Err(Error::ResponseError(content)))
     }
@@ -2523,6 +3007,8 @@ pub fn config_tls_generate_post(
 
         local_var_req_builder = local_var_req_builder.header("authorization", &value);
     };
+    let accept_str = "application/json";
+    local_var_req_builder = local_var_req_builder.header("accept", accept_str);
 
     local_var_req_builder = local_var_req_builder.header("content-type", "application/json");
     let local_var_result = local_var_req_builder.send_json(tls_key_generate_request_data);
@@ -2659,6 +3145,8 @@ pub fn config_unattended_boot_put(
 
         local_var_req_builder = local_var_req_builder.header("authorization", &value);
     };
+    let accept_str = "application/json";
+    local_var_req_builder = local_var_req_builder.header("accept", accept_str);
 
     local_var_req_builder = local_var_req_builder.header("content-type", "application/json");
     let local_var_result = local_var_req_builder.send_json(unattended_boot_config);
@@ -2704,6 +3192,8 @@ pub fn config_unlock_passphrase_put(
 
         local_var_req_builder = local_var_req_builder.header("authorization", &value);
     };
+    let accept_str = "application/json";
+    local_var_req_builder = local_var_req_builder.header("accept", accept_str);
 
     local_var_req_builder = local_var_req_builder.header("content-type", "application/json");
     let local_var_result = local_var_req_builder.send_json(unlock_passphrase_config);
@@ -3461,6 +3951,8 @@ pub fn keys_key_id_put(
 
         local_var_req_builder = local_var_req_builder.header("authorization", &value);
     };
+    let accept_str = "application/json";
+    local_var_req_builder = local_var_req_builder.header("accept", accept_str);
 
     let body_json = body.is_json();
     local_var_req_builder = local_var_req_builder.header("content-type", body.content_type());
@@ -3562,6 +4054,8 @@ pub fn keys_key_id_restrictions_tags_tag_put(
 
         local_var_req_builder = local_var_req_builder.header("authorization", &value);
     };
+    let accept_str = "application/json";
+    local_var_req_builder = local_var_req_builder.header("accept", accept_str);
 
     let local_var_result = local_var_req_builder.send_empty();
 
@@ -3882,6 +4376,8 @@ pub fn namespaces_namespace_id_delete(
 
         local_var_req_builder = local_var_req_builder.header("authorization", &value);
     };
+    let accept_str = "application/json";
+    local_var_req_builder = local_var_req_builder.header("accept", accept_str);
 
     let local_var_result = local_var_req_builder.send_empty();
 
@@ -3927,6 +4423,8 @@ pub fn namespaces_namespace_id_put(
 
         local_var_req_builder = local_var_req_builder.header("authorization", &value);
     };
+    let accept_str = "application/json";
+    local_var_req_builder = local_var_req_builder.header("accept", accept_str);
 
     let local_var_result = local_var_req_builder.send_empty();
 
@@ -3963,6 +4461,8 @@ pub fn provision_post(
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
         local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
     }
+    let accept_str = "application/json";
+    local_var_req_builder = local_var_req_builder.header("accept", accept_str);
 
     local_var_req_builder = local_var_req_builder.header("content-type", "application/json");
     let local_var_result = local_var_req_builder.send_json(provision_request_data);
@@ -4294,6 +4794,8 @@ pub fn system_restore_post(
 
         local_var_req_builder = local_var_req_builder.header("authorization", &value);
     };
+    let accept_str = "application/json";
+    local_var_req_builder = local_var_req_builder.header("accept", accept_str);
 
     let mut local_var_multipart = ::multipart::client::lazy::Multipart::new();
 
@@ -4444,6 +4946,8 @@ pub fn unlock_post(
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
         local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
     }
+    let accept_str = "application/json";
+    local_var_req_builder = local_var_req_builder.header("accept", accept_str);
 
     local_var_req_builder = local_var_req_builder.header("content-type", "application/json");
     let local_var_result = local_var_req_builder.send_json(unlock_request_data);
@@ -4576,6 +5080,8 @@ pub fn users_user_id_delete(
 
         local_var_req_builder = local_var_req_builder.header("authorization", &value);
     };
+    let accept_str = "application/json";
+    local_var_req_builder = local_var_req_builder.header("accept", accept_str);
 
     let local_var_result = local_var_req_builder.send_empty();
 
@@ -4669,6 +5175,8 @@ pub fn users_user_id_passphrase_post(
 
         local_var_req_builder = local_var_req_builder.header("authorization", &value);
     };
+    let accept_str = "application/json";
+    local_var_req_builder = local_var_req_builder.header("accept", accept_str);
 
     local_var_req_builder = local_var_req_builder.header("content-type", "application/json");
     let local_var_result = local_var_req_builder.send_json(user_passphrase_post_data);
@@ -4765,6 +5273,8 @@ pub fn users_user_id_put(
 
         local_var_req_builder = local_var_req_builder.header("authorization", &value);
     };
+    let accept_str = "application/json";
+    local_var_req_builder = local_var_req_builder.header("accept", accept_str);
 
     local_var_req_builder = local_var_req_builder.header("content-type", "application/json");
     let local_var_result = local_var_req_builder.send_json(user_post_data);
@@ -4907,6 +5417,8 @@ pub fn users_user_id_tags_tag_put(
 
         local_var_req_builder = local_var_req_builder.header("authorization", &value);
     };
+    let accept_str = "application/json";
+    local_var_req_builder = local_var_req_builder.header("accept", accept_str);
 
     let local_var_result = local_var_req_builder.send_empty();
 

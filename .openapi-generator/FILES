@@ -1,5 +1,10 @@
 docs/AkPub.md
 docs/BackupPassphraseConfig.md
+docs/ClusterAddReq.md
+docs/ClusterInitialMember.md
+docs/ClusterJoinReq.md
+docs/ClusterMember.md
+docs/ClusterMemberAddResponse.md
 docs/CreateResourceId.md
 docs/DecryptData.md
 docs/DecryptMode.md
@@ -9,8 +14,10 @@ docs/DistinguishedName.md
 docs/EncryptData.md
 docs/EncryptMode.md
 docs/EncryptRequestData.md
+docs/ErrorResponse.md
 docs/HealthStateData.md
 docs/InfoData.md
+docs/Ipv6Config.md
 docs/KeyGenerateRequestData.md
 docs/KeyItem.md
 docs/KeyMechanism.md
@@ -22,7 +29,8 @@ docs/LogLevel.md
 docs/LoggingConfig.md
 docs/MoveKeyRequest.md
 docs/NamespaceItem.md
-docs/NetworkConfig.md
+docs/NetworkConfigInput.md
+docs/NetworkConfigOutput.md
 docs/Pcr.md
 docs/PrivateKey.md
 docs/PrivateKeyPemArguments.md
@@ -55,6 +63,11 @@ src/apis/mod.rs
 src/lib.rs
 src/models/ak_pub.rs
 src/models/backup_passphrase_config.rs
+src/models/cluster_add_req.rs
+src/models/cluster_initial_member.rs
+src/models/cluster_join_req.rs
+src/models/cluster_member.rs
+src/models/cluster_member_add_response.rs
 src/models/create_resource_id.rs
 src/models/decrypt_data.rs
 src/models/decrypt_mode.rs
@@ -63,8 +76,10 @@ src/models/distinguished_name.rs
 src/models/encrypt_data.rs
 src/models/encrypt_mode.rs
 src/models/encrypt_request_data.rs
+src/models/error_response.rs
 src/models/health_state_data.rs
 src/models/info_data.rs
+src/models/ipv6_config.rs
 src/models/key_generate_request_data.rs
 src/models/key_item.rs
 src/models/key_mechanism.rs
@@ -77,7 +92,8 @@ src/models/logging_config.rs
 src/models/mod.rs
 src/models/move_key_request.rs
 src/models/namespace_item.rs
-src/models/network_config.rs
+src/models/network_config_input.rs
+src/models/network_config_output.rs
 src/models/pcr.rs
 src/models/private_key.rs
 src/models/private_key_pem_arguments.rs
