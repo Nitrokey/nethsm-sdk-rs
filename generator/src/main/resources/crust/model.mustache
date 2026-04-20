@@ -10,10 +10,11 @@
 {{#description}}
 /// {{{.}}}
 {{/description}}
-#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+#[derive(Clone, Copy, Debug, Default, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
 #[non_exhaustive]
 pub enum {{{classname}}} {
 {{#allowableValues}}
+#[default]
 {{#enumVars}}
     #[serde(rename = "{{{value}}}")]
     {{{name}}},
@@ -29,14 +30,6 @@ impl std::fmt::Display for {{{classname}}} {
             {{/enumVars}}
             {{/allowableValues}}
         })
-    }
-}
-
-impl Default for {{{classname}}} {
-    fn default() -> {{{classname}}} {
-        {{#allowableValues}}
-        Self::{{ enumVars.0.name }}
-        {{/allowableValues}}
     }
 }
 {{/isEnum}}
