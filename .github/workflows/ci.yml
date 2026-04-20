@@ -45,3 +45,12 @@ jobs:
         components: "clippy"
     - name: Run clippy
       run: cargo clippy --all-features --all-targets
+
+  check-msrv:
+    name: Check library (MSRV)
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v6
+    - uses: dtolnay/rust-toolchain@1.86
+    - name: Check library
+      run: cargo check --all-targets
