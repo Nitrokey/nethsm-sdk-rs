@@ -24,7 +24,7 @@ async fn test_health_state() {
 #[tokio::test]
 async fn test_error_with_body() {
     utils::with_container(|config| {
-        let err = default_api::keys_get(&config, None).err().unwrap();
+        let err = default_api::keys_get(&config, None, None).err().unwrap();
         match err {
             Error::ResponseError(content) => {
                 assert_eq!(content.status, 412);
@@ -188,7 +188,7 @@ async fn test_restore() {
 }
 
 fn list_keys(config: &Configuration) -> BTreeSet<String> {
-    default_api::keys_get(config, None)
+    default_api::keys_get(config, None, None)
         .unwrap()
         .entity
         .into_iter()
