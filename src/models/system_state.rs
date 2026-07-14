@@ -20,6 +20,8 @@ pub enum SystemState {
     Locked,
     #[serde(rename = "Operational")]
     Operational,
+    #[serde(rename = "Failed")]
+    Failed,
 }
 
 impl std::fmt::Display for SystemState {
@@ -31,6 +33,7 @@ impl std::fmt::Display for SystemState {
                 Self::Unprovisioned => "Unprovisioned",
                 Self::Locked => "Locked",
                 Self::Operational => "Operational",
+                Self::Failed => "Failed",
             }
         )
     }

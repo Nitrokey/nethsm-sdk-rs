@@ -1,11 +1,14 @@
-# ClusterMemberAddResponse
+# ClusterSnapshot
 
 ## Properties
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**members** | [**Vec<crate::models::ClusterMember>**](ClusterMember.md) |  | 
-**joiner_kit** | **String** |  | 
+**hash** | **i32** |  | 
+**revision** | **i32** |  | 
+**total_key** | **i32** |  | 
+**total_size** | **i32** |  | 
+**version** | Option<**String**> |  | [optional]
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

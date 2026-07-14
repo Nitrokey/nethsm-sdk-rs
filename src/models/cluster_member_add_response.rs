@@ -12,14 +12,14 @@
 #[non_exhaustive]
 pub struct ClusterMemberAddResponse {
     #[serde(rename = "members")]
-    pub members: Vec<crate::models::ClusterInitialMember>,
+    pub members: Vec<crate::models::ClusterMember>,
     #[serde(rename = "joinerKit")]
     pub joiner_kit: String,
 }
 
 impl ClusterMemberAddResponse {
     pub fn new(
-        members: Vec<crate::models::ClusterInitialMember>,
+        members: Vec<crate::models::ClusterMember>,
         joiner_kit: String,
     ) -> ClusterMemberAddResponse {
         ClusterMemberAddResponse {

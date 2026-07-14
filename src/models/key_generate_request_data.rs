@@ -21,6 +21,9 @@ pub struct KeyGenerateRequestData {
     pub id: Option<String>,
     #[serde(rename = "restrictions", skip_serializing_if = "Option::is_none")]
     pub restrictions: Option<Box<crate::models::KeyRestrictions>>,
+    /// A valid UTF-8 string. For interoperability with PKCS#11 its length shouldn't exceed 32 bytes.
+    #[serde(rename = "label", skip_serializing_if = "Option::is_none")]
+    pub label: Option<String>,
 }
 
 impl KeyGenerateRequestData {
@@ -34,6 +37,7 @@ impl KeyGenerateRequestData {
             length: None,
             id: None,
             restrictions: None,
+            label: None,
         }
     }
 }

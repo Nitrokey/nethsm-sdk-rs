@@ -10,24 +10,14 @@
 
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 #[non_exhaustive]
-pub struct ClusterMember {
-    #[serde(rename = "id")]
-    pub id: String,
-    #[serde(rename = "name")]
-    pub name: String,
-    #[serde(rename = "urls")]
-    pub urls: Vec<String>,
-    #[serde(rename = "learner")]
-    pub learner: bool,
+pub struct KeySetLabel {
+    /// A valid UTF-8 string. For interoperability with PKCS#11 its length shouldn't exceed 32 bytes.
+    #[serde(rename = "label")]
+    pub label: String,
 }
 
-impl ClusterMember {
-    pub fn new(id: String, name: String, urls: Vec<String>, learner: bool) -> ClusterMember {
-        ClusterMember {
-            id,
-            name,
-            urls,
-            learner,
-        }
+impl KeySetLabel {
+    pub fn new(label: String) -> KeySetLabel {
+        KeySetLabel { label }
     }
 }

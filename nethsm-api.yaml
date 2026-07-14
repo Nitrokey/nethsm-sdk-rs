@@ -31,6 +31,7 @@ paths:
         - Locked
         - Operational
         - Unprovisioned
+        - Failed
       x-annotation-role:
         - Public
       x-annotation-caller-namespace:
@@ -92,6 +93,36 @@ paths:
         - Locked
         - Operational
         - Unprovisioned
+        - Failed
+      x-annotation-caller-namespace:
+        - Root
+        - Namespaced
+  /health/diagnose:
+    get:
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HealthDiagnoseData"
+        "401":
+          description: Authentication required but none provided. Only when outside of the Failed state.
+        "403":
+          description: Access denied. Only when outside the Failed state.
+        "406":
+          description: Content type in Accept header not supported.
+      description: Retrieve NetHSM cluster diagnostics. This is always available, requiring authentication when operational, and no authentication otherwise (Locked, Failed, Unprovisioned).
+      security:
+        - basic: []
+      x-annotation-role:
+        - Administrator
+        - Public
+      x-annotation-state:
+        - Locked
+        - Operational
+        - Unprovisioned
+        - Failed
       x-annotation-caller-namespace:
         - Root
         - Namespaced
@@ -278,6 +309,11 @@ paths:
         - name: filter
           in: query
           description: Only return keys that can be used by the requester, according to restrictions, if this parameter is set to any value.
+          schema:
+            type: string
+        - name: label
+          in: query
+          description: Only return keys that have a matching label, if this parameter is set to any value.
           schema:
             type: string
       security:
@@ -641,6 +677,72 @@ paths:
         "412":
           description: Precondition failed (NetHSM was not *Operational*).
       description: Delete a pair of public and private key.
+      security:
+        - basic: []
+      x-annotation-role:
+        - Administrator
+      x-annotation-state:
+        - Operational
+      x-annotation-caller-namespace:
+        - Root
+        - Namespaced
+      x-test-value-KeyID: myKey1
+    parameters:
+      - name: KeyID
+        in: path
+        required: true
+        schema:
+          $ref: "#/components/schemas/ID"
+  /keys/{KeyID}/label:
+    put:
+      responses:
+        "204":
+          description: Key label successfully changed
+        "304":
+          description: Label is already present for this key with the same value.
+        "401":
+          description: Authentication required but none provided.
+        "403":
+          description: Access denied.
+        "406":
+          description: Content type in Accept header not supported.
+        "412":
+          description: Precondition failed (NetHSM was not *Operational*).
+      description: |
+        Set or change the label for {KeyID}. The label is provided as a UTF-8 JSON string,
+        and it cannot be longer than 32 bytes.
+        By default keys have the empty string as a label.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/KeySetLabel"
+        required: true
+      security:
+        - basic: []
+      x-annotation-role:
+        - Administrator
+      x-annotation-state:
+        - Operational
+      x-annotation-caller-namespace:
+        - Root
+        - Namespaced
+      x-test-value-KeyID: myKey1
+    delete:
+      responses:
+        "204":
+          description: Successful deletion of key label.
+        "401":
+          description: Authentication required but none provided.
+        "403":
+          description: Access denied.
+        "404":
+          description: Key for KeyID not found in namespace.
+        "412":
+          description: Precondition failed (NetHSM was not *Operational*).
+      description: |
+        Delete the key's label.
+        This operation is idempotent and succeeds if the key doesn't have a label already.
       security:
         - basic: []
       x-annotation-role:
@@ -1168,6 +1270,27 @@ paths:
         required: true
         schema:
           $ref: "#/components/schemas/ID"
+  /cluster/force-new:
+    post:
+      responses:
+        "204":
+          description: About to reboot NetHSM.
+        "401":
+          description: Authentication required but none provided (see description).
+        "412":
+          description: Precondition failed (NetHSM was not *Failed*).
+      description:
+        Rebuild etcd instance with the data on disk, switch to a single node cluster, and reboot.
+        **WARNING** this will restore data only up to the last snapshot, and will result in data loss for any unconfirmed writes, or writes that occured on other NetHSM nodes that are now unreachable.
+        This call is unauthenticated and available only in the Failed state. Before using this command it is recommended that you attempt to heal the cluster's network connectivity first and restore quorum.
+        To that end, use the /health/diagnose endpoint to understand to cause of the current failure.
+        As it is potentially destructive, this operation requires authentication even in *Failed* state, which differs from *Operational* authentication. The user *MUST* be `unlock` and the password *MUST* be the last known unlock passphrase. When upgrading to v5.0, this will only work after having unlocked the HSM at least once.
+      x-annotation-role:
+        - FailedUnlock
+      x-annotation-state:
+        - Failed
+      x-annotation-caller-namespace:
+        - Root
   /cluster/join:
     post:
       responses:
@@ -1185,6 +1308,8 @@ paths:
           description: Access denied.
         "406":
           description: Content type in Accept header not supported.
+        "409":
+          description: Cluster still has learners, cannot join more nodes.
         "412":
           description: |
             Precondition failed. NetHSM was not *Operational* or no cluster CA
@@ -1200,6 +1325,7 @@ paths:
         'POST /cluster/members' *MUST* have been called on an existing member of the cluster
         beforehand. The data returned by that call must be passed here along with the backup
         passphrase *of the node that registered the new member*.
+        The 'id' of the newly added node is also available in this reply.
 
         On success, the node will end up in a *Locked* stated, unlockable with the unlock passphrase
         *of the node that registered the new member*. All device-specific configuration will be preserved
@@ -1208,6 +1334,13 @@ paths:
         On immediate failure (e.g. if the cluster is not reachable), the NetHSM will attempt to
         reverse the join. **WARNING**. Existing data will be definitely wiped after a first successful
         connection to the cluster. Be sure to backup anything important.
+
+        The new node is added as a learner. Currently there is only 1 learner supported in a NetHSM cluster at a time, attempting to add another will return an HTTP 409 failure.
+        A learner node observes changes in the cluster, but is not part of the quorum yet.
+
+        *WARNING:*  The newly added node needs to be promoted by using the 'POST /cluster/members/{MemberID}/promote' API, where '{MemberID}' is returned by the 'POST /cluster/members' API above.
+        Note that currently this API waits for the promotion to complete before returning, so the promotion API
+        needs to be invoked concurrently with the join API.
       security:
         - basic: []
       requestBody:
@@ -1299,6 +1432,54 @@ paths:
         - Operational
       x-annotation-caller-namespace:
         - Root
+  /cluster/members/{MemberID}/promote:
+    parameters:
+      - name: MemberID
+        in: path
+        required: true
+        schema:
+          $ref: "#/components/schemas/ID"
+    post:
+      responses:
+        "204":
+          description: Member successfully promoted.
+        "400":
+          description: |
+            Bad request (specified properties are invalid).
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          description: Authentication required but none provided.
+        "403":
+          description: Access denied.
+        "404":
+          description: Cluster member not found.
+        "406":
+          description: Content type in Accept header not supported.
+        "412":
+          description: Precondition failed (NetHSM was not *Operational*, or the learner node didn't catch up yet).
+      description: |
+        Promote the given cluster member from learner to full member.
+        A new node is added as a learner, and it has to catch up with the changes in the NetHSM cluster before
+        it can be fully promoted. If the learner hasn't caught up yet, then it'll fail with HTTP code 412,
+        and promotion should be attempted again later (the time needed for the learner to catch up will depend on the size of its database and activity).
+        'GET /health/diagnose' can be used to diagnose issues with the learner.
+        If promotion is not possible or desirable anymore, then the learner can also be removed with 'DELETE /cluster/members/{MemberID}'
+
+        *WARNING*: ensure the new learner node has a stable connection. If this makes the cluster
+        lose quorum, the cluster will cease to operate, in which case 'POST /cluster/force-new' needs to be used to recover.
+      security:
+        - basic: []
+      x-annotation-role:
+        - Administrator
+      x-annotation-state:
+        - Operational
+      x-annotation-caller-namespace:
+        - Root
+      x-test-value-MemberID: 8e9e05c52164694d
+
   /cluster/members/{MemberID}:
     parameters:
       - name: MemberID
@@ -2394,6 +2575,68 @@ paths:
         - Operational
       x-annotation-caller-namespace:
         - Root
+  /config/ntp:
+    get:
+      responses:
+        "200":
+          description: Successful retrieval of NTP/NTS configuration.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/NtpConfig"
+        "401":
+          description: Authentication required but none provided.
+        "403":
+          description: Access denied (e.g. user is in namespace)
+        "406":
+          description: Content type in Accept header not supported.
+        "412":
+          description: Precondition failed (NetHSM was not *Operational*).
+      description: |
+        Get NTP/NTS configuration.
+        Returns the NTP server IP address and optional NTS server name used for
+        time synchronisation.
+      security:
+        - basic: []
+      x-annotation-role:
+        - Administrator
+      x-annotation-state:
+        - Operational
+      x-annotation-caller-namespace:
+        - Root
+    put:
+      responses:
+        "204":
+          description: Successful update of NTP/NTS configuration.
+        "400":
+          description: Bad request - invalid input format.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          description: Authentication required but none provided.
+        "403":
+          description: Access denied (e.g. user is in namespace)
+        "406":
+          description: Content type in Accept header not supported.
+        "412":
+          description: Precondition failed (NetHSM was not *Operational*).
+      description: Configure NTP server IP address and optional NTS server name.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/NtpConfig"
+        required: true
+      security:
+        - basic: []
+      x-annotation-role:
+        - Administrator
+      x-annotation-state:
+        - Operational
+      x-annotation-caller-namespace:
+        - Root
   /config/time:
     get:
       responses:
@@ -2492,7 +2735,7 @@ paths:
         "406":
           description: Content type in Accept header not supported.
         "412":
-          description: Precondition failed (NetHSM was not *Operational*).
+          description: Precondition failed (NetHSM was not *Operational* or *Failed*).
       description: Reboot NetHSM.
       security:
         - basic: []
@@ -2500,6 +2743,7 @@ paths:
         - Administrator
       x-annotation-state:
         - Operational
+        - Failed
       x-annotation-caller-namespace:
         - Root
   /system/shutdown:
@@ -2518,7 +2762,7 @@ paths:
 
         Authentication behavior varies by NetHSM state:
         - **Operational**: Requires Administrator authentication
-        - **Locked** or **Unprovisioned**: No authentication required
+        - **Locked**, **Unprovisioned** or **Failed**: No authentication required
       security:
         - basic: [] # when Operational
         - {} # when Unprovisioned or Locked
@@ -2529,6 +2773,7 @@ paths:
         - Operational
         - Unprovisioned
         - Locked
+        - Failed
       x-annotation-caller-namespace:
         - Root
   /system/factory-reset:
@@ -2543,7 +2788,7 @@ paths:
         "406":
           description: Content type in Accept header not supported.
         "412":
-          description: Precondition failed (NetHSM was not *Operational*).
+          description: Precondition failed (NetHSM was not *Operational* or *Failed*).
       description: Reset NetHSM to factory settings.
       security:
         - basic: []
@@ -2551,6 +2796,7 @@ paths:
         - Administrator
       x-annotation-state:
         - Operational
+        - Failed
       x-annotation-caller-namespace:
         - Root
   /system/update:
@@ -2755,6 +3001,7 @@ components:
         - Unprovisioned
         - Locked
         - Operational
+        - Failed
       type: string
     UserRole:
       enum:
@@ -2891,10 +3138,54 @@ components:
           $ref: "#/components/schemas/UserID"
       required:
         - user
+    ClusterLogItem:
+      description: |
+        A log message from etcd on the current node.
+        The level is warning or above.
+      example:
+        level: "error"
+        msg: "Mock: no etcd"
+      properties:
+        level:
+          type: string
+        msg:
+          type: string
+      type: object
+      required:
+        - level
+    ClusterLogList:
+      description: A list of recent log messages from etcd on the current node.
+      example:
+        - level: "error"
+          msg: "Mock: no etcd"
+      type: array
+      items:
+        $ref: "#/components/schemas/ClusterLogItem"
+    ClusterSnapshot:
+      description: |
+        Statistics about the local cluster database snapshot.
+        This is only present when etcd is not running.
+      type: object
+      properties:
+        hash:
+          type: integer
+        revision:
+          type: integer
+        totalKey:
+          type: integer
+        totalSize:
+          type: integer
+        version:
+          type: string
+      required:
+        - hash
+        - revision
+        - totalKey
+        - totalSize
     ClusterAddReq:
       example:
-          urls:
-            - https://192.168.1.2:2380
+        urls:
+          - https://192.168.1.2:2380
       type: object
       properties:
         urls:
@@ -2932,7 +3223,7 @@ components:
         members:
           type: array
           items:
-            $ref: "#/components/schemas/ClusterInitialMember"
+            $ref: "#/components/schemas/ClusterMember"
         joinerKit:
           type: string
       required:
@@ -2944,6 +3235,7 @@ components:
           name: default
           urls:
             - https://192.168.1.1:2380
+          learner: false
       type: array
       items:
         $ref: "#/components/schemas/ClusterMember"
@@ -2953,6 +3245,7 @@ components:
         name: default
         urls:
           - https://192.168.1.1:2380
+        learner: false
       type: object
       properties:
         id:
@@ -2961,10 +3254,50 @@ components:
           type: string
         urls:
           $ref: "#/components/schemas/PeerURLs"
+        learner:
+          type: boolean
       required:
         - id
         - name
         - urls
+        - learner
+    ClusterState:
+      description: |
+        Status of etcd cluster process on the local node.
+      type: object
+      example:
+        exited: 1
+        running: false
+      properties:
+        exited:
+          description: |
+            Present when the cluster process has exited on the local node
+            with this exit code.
+            An exit code of 0 indicates success
+            (e.g. the node has cleanly left the cluster).
+          type: integer
+          minimum: 0
+          maximum: 255
+        signaled:
+          description: |
+            Present when the cluster process has been killed by
+            this signal.
+          type: integer
+          minimum: 0
+          maximum: 255
+        stopped:
+          description: |
+            Present when the cluster process has been stopped by
+            this signal.
+          type: integer
+          minimum: 0
+          maximum: 255
+        running:
+          description: |
+            Whether the cluster process is currently running.
+          type: boolean
+      required:
+        - running
     PeerURL:
       pattern: ^https://.+
       minLength: 1
@@ -3022,6 +3355,8 @@ components:
           $ref: "#/components/schemas/KeyPrivateData"
         restrictions:
           $ref: "#/components/schemas/KeyRestrictions"
+        label:
+          $ref: "#/components/schemas/KeyLabel"
       required:
         - mechanisms
         - type
@@ -3057,6 +3392,23 @@ components:
           $ref: "#/components/schemas/Base64"
         data:
           $ref: "#/components/schemas/Base64"
+    KeyLabel:
+      example: '"etestlabel✓"'
+      description: A valid UTF-8 string. For interoperability with PKCS#11 its length shouldn't exceed 32 bytes.
+      type: string
+      properties:
+        length:
+          minimum: 0
+          maximum: 32
+    KeySetLabel:
+      example:
+        label: "labeltoset"
+      type: object
+      properties:
+        label:
+          $ref: "#/components/schemas/KeyLabel"
+      required:
+        - label
     PublicKey:
       example:
         mechanisms:
@@ -3069,6 +3421,7 @@ components:
           modulus: FhJQl11CiY0ifRHXeAqFh4rdSl6
           publicExponent: FhJQl11CiY0ifRHXeAqFh4rdSl6
         operations: 242
+        label:
       type: object
       properties:
         mechanisms:
@@ -3081,6 +3434,8 @@ components:
           $ref: "#/components/schemas/KeyPublicData"
         operations:
           type: integer
+        label:
+          $ref: "#/components/schemas/KeyLabel"
       required:
         - mechanisms
         - type
@@ -3159,6 +3514,27 @@ components:
           $ref: "#/components/schemas/SystemState"
       required:
         - state
+    HealthDiagnoseData:
+      description: |
+        Information about the health of the etcd process on the current node,
+        including the process running state, exit code, and recent logs.
+      example:
+        clusterLogs:
+          - level: "error"
+            msg: "Mock: no etcd"
+        clusterState:
+          running: false
+      type: object
+      properties:
+        clusterLogs:
+          $ref: "#/components/schemas/ClusterLogList"
+        clusterSnapshot:
+          $ref: "#/components/schemas/ClusterSnapshot"
+        clusterState:
+          $ref: "#/components/schemas/ClusterState"
+      required:
+        - clusterLogs
+        - clusterState
     MetricsData:
       example:
         keyOperations: 1132412
@@ -3232,6 +3608,8 @@ components:
           $ref: "#/components/schemas/ID"
         restrictions:
           $ref: "#/components/schemas/KeyRestrictions"
+        label:
+          $ref: "#/components/schemas/KeyLabel"
       required:
         - mechanisms
         - type
@@ -3491,6 +3869,18 @@ components:
         backup_file:
           type: string
           format: binary
+    NtpConfig:
+      example:
+        ntpIP: 192.168.1.1
+        ntsName: nts.example.com
+      type: object
+      properties:
+        ntpIP:
+          type: string
+          description: IP address (v4 or v6) of the NTP server. If absent, means NTP is not configured.
+        ntsName:
+          type: string
+          description: Hostname of the NTS server (enables Network Time Security). If absent, means NTS is not configured.
     TimeConfig:
       example:
         time: "2018-10-30T11:20:50Z"

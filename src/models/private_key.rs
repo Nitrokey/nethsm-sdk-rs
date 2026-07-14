@@ -19,6 +19,9 @@ pub struct PrivateKey {
     pub private: Box<crate::models::KeyPrivateData>,
     #[serde(rename = "restrictions", skip_serializing_if = "Option::is_none")]
     pub restrictions: Option<Box<crate::models::KeyRestrictions>>,
+    /// A valid UTF-8 string. For interoperability with PKCS#11 its length shouldn't exceed 32 bytes.
+    #[serde(rename = "label", skip_serializing_if = "Option::is_none")]
+    pub label: Option<String>,
 }
 
 impl PrivateKey {
@@ -32,6 +35,7 @@ impl PrivateKey {
             r#type,
             private: Box::new(private),
             restrictions: None,
+            label: None,
         }
     }
 }

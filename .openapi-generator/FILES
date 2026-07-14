@@ -3,8 +3,11 @@ docs/BackupPassphraseConfig.md
 docs/ClusterAddReq.md
 docs/ClusterInitialMember.md
 docs/ClusterJoinReq.md
+docs/ClusterLogItem.md
 docs/ClusterMember.md
 docs/ClusterMemberAddResponse.md
+docs/ClusterSnapshot.md
+docs/ClusterState.md
 docs/CreateResourceId.md
 docs/DecryptData.md
 docs/DecryptMode.md
@@ -15,6 +18,7 @@ docs/EncryptData.md
 docs/EncryptMode.md
 docs/EncryptRequestData.md
 docs/ErrorResponse.md
+docs/HealthDiagnoseData.md
 docs/HealthStateData.md
 docs/InfoData.md
 docs/Ipv6Config.md
@@ -24,6 +28,7 @@ docs/KeyMechanism.md
 docs/KeyPrivateData.md
 docs/KeyPublicData.md
 docs/KeyRestrictions.md
+docs/KeySetLabel.md
 docs/KeyType.md
 docs/LogLevel.md
 docs/LoggingConfig.md
@@ -31,6 +36,7 @@ docs/MoveKeyRequest.md
 docs/NamespaceItem.md
 docs/NetworkConfigInput.md
 docs/NetworkConfigOutput.md
+docs/NtpConfig.md
 docs/Pcr.md
 docs/PrivateKey.md
 docs/PrivateKeyPemArguments.md
@@ -66,8 +72,11 @@ src/models/backup_passphrase_config.rs
 src/models/cluster_add_req.rs
 src/models/cluster_initial_member.rs
 src/models/cluster_join_req.rs
+src/models/cluster_log_item.rs
 src/models/cluster_member.rs
 src/models/cluster_member_add_response.rs
+src/models/cluster_snapshot.rs
+src/models/cluster_state.rs
 src/models/create_resource_id.rs
 src/models/decrypt_data.rs
 src/models/decrypt_mode.rs
@@ -77,6 +86,7 @@ src/models/encrypt_data.rs
 src/models/encrypt_mode.rs
 src/models/encrypt_request_data.rs
 src/models/error_response.rs
+src/models/health_diagnose_data.rs
 src/models/health_state_data.rs
 src/models/info_data.rs
 src/models/ipv6_config.rs
@@ -86,6 +96,7 @@ src/models/key_mechanism.rs
 src/models/key_private_data.rs
 src/models/key_public_data.rs
 src/models/key_restrictions.rs
+src/models/key_set_label.rs
 src/models/key_type.rs
 src/models/log_level.rs
 src/models/logging_config.rs
@@ -94,6 +105,7 @@ src/models/move_key_request.rs
 src/models/namespace_item.rs
 src/models/network_config_input.rs
 src/models/network_config_output.rs
+src/models/ntp_config.rs
 src/models/pcr.rs
 src/models/private_key.rs
 src/models/private_key_pem_arguments.rs
