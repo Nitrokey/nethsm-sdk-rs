@@ -4,6 +4,7 @@ All URIs are relative to *https://nethsmdemo.nitrokey.com/api/v1*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**cluster_force_new_post**](DefaultApi.md#cluster_force_new_post) | **POST** /cluster/force-new | 
 [**cluster_join_post**](DefaultApi.md#cluster_join_post) | **POST** /cluster/join | 
 [**cluster_members_get**](DefaultApi.md#cluster_members_get) | **GET** /cluster/members | 
 [**cluster_members_member_id_delete**](DefaultApi.md#cluster_members_member_id_delete) | **DELETE** /cluster/members/{MemberID} | 
@@ -27,6 +28,7 @@ Method | HTTP request | Description
 [**config_unattended_boot_put**](DefaultApi.md#config_unattended_boot_put) | **PUT** /config/unattended-boot | 
 [**config_unlock_passphrase_put**](DefaultApi.md#config_unlock_passphrase_put) | **PUT** /config/unlock-passphrase | 
 [**health_alive_get**](DefaultApi.md#health_alive_get) | **GET** /health/alive | 
+[**health_diagnose_get**](DefaultApi.md#health_diagnose_get) | **GET** /health/diagnose | 
 [**health_ready_get**](DefaultApi.md#health_ready_get) | **GET** /health/ready | 
 [**health_state_get**](DefaultApi.md#health_state_get) | **GET** /health/state | 
 [**info_get**](DefaultApi.md#info_get) | **GET** /info | 
@@ -40,6 +42,8 @@ Method | HTTP request | Description
 [**keys_key_id_delete**](DefaultApi.md#keys_key_id_delete) | **DELETE** /keys/{KeyID} | 
 [**keys_key_id_encrypt_post**](DefaultApi.md#keys_key_id_encrypt_post) | **POST** /keys/{KeyID}/encrypt | 
 [**keys_key_id_get**](DefaultApi.md#keys_key_id_get) | **GET** /keys/{KeyID} | 
+[**keys_key_id_label_delete**](DefaultApi.md#keys_key_id_label_delete) | **DELETE** /keys/{KeyID}/label | 
+[**keys_key_id_label_put**](DefaultApi.md#keys_key_id_label_put) | **PUT** /keys/{KeyID}/label | 
 [**keys_key_id_move_post**](DefaultApi.md#keys_key_id_move_post) | **POST** /keys/{KeyID}/move | 
 [**keys_key_id_public_pem_get**](DefaultApi.md#keys_key_id_public_pem_get) | **GET** /keys/{KeyID}/public.pem | 
 [**keys_key_id_put**](DefaultApi.md#keys_key_id_put) | **PUT** /keys/{KeyID} | 
@@ -76,6 +80,33 @@ Method | HTTP request | Description
 [**users_user_id_tags_tag_delete**](DefaultApi.md#users_user_id_tags_tag_delete) | **DELETE** /users/{UserID}/tags/{Tag} | 
 [**users_user_id_tags_tag_put**](DefaultApi.md#users_user_id_tags_tag_put) | **PUT** /users/{UserID}/tags/{Tag} | 
 
+
+
+## cluster_force_new_post
+
+> cluster_force_new_post()
+
+
+Rebuild etcd instance with the data on disk, switch to a single node cluster, and reboot. **WARNING** this will restore data only up to the last snapshot, and will result in data loss for any unconfirmed writes, or writes that occured on other NetHSM nodes that are now unreachable. This call is unauthenticated and available only in the Failed state. Before using this command it is recommended that you attempt to heal the cluster's network connectivity first and restore quorum. To that end, use the /health/diagnose endpoint to understand to cause of the current failure.
+
+### Parameters
+
+This endpoint does not need any parameter.
+
+### Return type
+
+ (empty response body)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: Not defined
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 
 ## cluster_join_post
@@ -742,6 +773,33 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 
+## health_diagnose_get
+
+> crate::models::HealthDiagnoseData health_diagnose_get()
+
+
+Retrieve NetHSM cluster diagnostics. This is always available, requiring authentication when operational, and no authentication otherwise (Locked, Failed, Unprovisioned).
+
+### Parameters
+
+This endpoint does not need any parameter.
+
+### Return type
+
+[**crate::models::HealthDiagnoseData**](HealthDiagnoseData.md)
+
+### Authorization
+
+[basic](../README.md#basic)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
 ## health_ready_get
 
 > health_ready_get()
@@ -855,7 +913,7 @@ Name | Type | Description  | Required | Notes
 
 ## keys_get
 
-> Vec<crate::models::KeyItem> keys_get(filter)
+> Vec<crate::models::KeyItem> keys_get(filter, label)
 
 
 Get a list of the identifiers of all keys that are currently stored in NetHSM. If the caller is in a namespace, only keys in that namespace are returned. Separate requests need to be made to request the individual key data. To fetch only a subset of keys, consider using `/keys/pfx*`. 
@@ -866,6 +924,7 @@ Get a list of the identifiers of all keys that are currently stored in NetHSM. I
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **filter** | Option<**String**> | Only return keys that can be used by the requester, according to restrictions, if this parameter is set to any value. |  |
+**label** | Option<**String**> | Only return keys that have a matching label, if this parameter is set to any value. |  |
 
 ### Return type
 
@@ -1123,6 +1182,67 @@ Name | Type | Description  | Required | Notes
 
 - **Content-Type**: Not defined
 - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
+## keys_key_id_label_delete
+
+> keys_key_id_label_delete(key_id)
+
+
+Delete the key's label. This operation is idempotent and succeeds if the key doesn't have a label already. 
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**key_id** | **String** |  | [required] |
+
+### Return type
+
+ (empty response body)
+
+### Authorization
+
+[basic](../README.md#basic)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: Not defined
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
+## keys_key_id_label_put
+
+> keys_key_id_label_put(key_id, key_set_label)
+
+
+Set or change the label for {KeyID}. The label is provided as a UTF-8 JSON string, and it cannot be longer than 32 bytes. By default keys have the empty string as a label. 
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**key_id** | **String** |  | [required] |
+**key_set_label** | [**KeySetLabel**](KeySetLabel.md) |  | [required] |
+
+### Return type
+
+ (empty response body)
+
+### Authorization
+
+[basic](../README.md#basic)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: Not defined
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1772,7 +1892,7 @@ Name | Type | Description  | Required | Notes
 > system_shutdown_post()
 
 
-Shut down NetHSM.  Authentication behavior varies by NetHSM state: - **Operational**: Requires Administrator authentication - **Locked** or **Unprovisioned**: No authentication required 
+Shut down NetHSM.  Authentication behavior varies by NetHSM state: - **Operational**: Requires Administrator authentication - **Locked**, **Unprovisioned** or **Failed**: No authentication required 
 
 ### Parameters
 

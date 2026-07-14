@@ -67,6 +67,29 @@ impl KeysPostBody {
     }
 }
 
+/// struct for typed errors of method [`cluster_force_new_post`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum ClusterForceNewPostError {
+    Status412(),
+    UnknownValue(serde_json::Value),
+}
+
+impl ClusterForceNewPostError {
+    fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
+        match status {
+            412 => Ok(Self::Status412()),
+            _ => {
+                if data.is_empty() {
+                    Ok(Self::UnknownValue(serde_json::Value::Null))
+                } else {
+                    serde_json::from_slice(data).map(Self::UnknownValue)
+                }
+            }
+        }
+    }
+}
+
 /// struct for typed errors of method [`cluster_join_post`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -764,6 +787,33 @@ impl HealthAliveGetError {
     }
 }
 
+/// struct for typed errors of method [`health_diagnose_get`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum HealthDiagnoseGetError {
+    Status401(),
+    Status403(),
+    Status406(),
+    UnknownValue(serde_json::Value),
+}
+
+impl HealthDiagnoseGetError {
+    fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
+        match status {
+            401 => Ok(Self::Status401()),
+            403 => Ok(Self::Status403()),
+            406 => Ok(Self::Status406()),
+            _ => {
+                if data.is_empty() {
+                    Ok(Self::UnknownValue(serde_json::Value::Null))
+                } else {
+                    serde_json::from_slice(data).map(Self::UnknownValue)
+                }
+            }
+        }
+    }
+}
+
 /// struct for typed errors of method [`health_ready_get`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -1140,6 +1190,64 @@ impl KeysKeyIdGetError {
             401 => Ok(Self::Status401()),
             403 => Ok(Self::Status403()),
             404 => Ok(Self::Status404()),
+            406 => Ok(Self::Status406()),
+            412 => Ok(Self::Status412()),
+            _ => {
+                if data.is_empty() {
+                    Ok(Self::UnknownValue(serde_json::Value::Null))
+                } else {
+                    serde_json::from_slice(data).map(Self::UnknownValue)
+                }
+            }
+        }
+    }
+}
+
+/// struct for typed errors of method [`keys_key_id_label_delete`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum KeysKeyIdLabelDeleteError {
+    Status401(),
+    Status403(),
+    Status404(),
+    Status412(),
+    UnknownValue(serde_json::Value),
+}
+
+impl KeysKeyIdLabelDeleteError {
+    fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
+        match status {
+            401 => Ok(Self::Status401()),
+            403 => Ok(Self::Status403()),
+            404 => Ok(Self::Status404()),
+            412 => Ok(Self::Status412()),
+            _ => {
+                if data.is_empty() {
+                    Ok(Self::UnknownValue(serde_json::Value::Null))
+                } else {
+                    serde_json::from_slice(data).map(Self::UnknownValue)
+                }
+            }
+        }
+    }
+}
+
+/// struct for typed errors of method [`keys_key_id_label_put`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum KeysKeyIdLabelPutError {
+    Status401(),
+    Status403(),
+    Status406(),
+    Status412(),
+    UnknownValue(serde_json::Value),
+}
+
+impl KeysKeyIdLabelPutError {
+    fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
+        match status {
+            401 => Ok(Self::Status401()),
+            403 => Ok(Self::Status403()),
             406 => Ok(Self::Status406()),
             412 => Ok(Self::Status412()),
             _ => {
@@ -2228,6 +2336,41 @@ impl UsersUserIdTagsTagPutError {
     }
 }
 
+/// Rebuild etcd instance with the data on disk, switch to a single node cluster, and reboot. **WARNING** this will restore data only up to the last snapshot, and will result in data loss for any unconfirmed writes, or writes that occured on other NetHSM nodes that are now unreachable. This call is unauthenticated and available only in the Failed state. Before using this command it is recommended that you attempt to heal the cluster's network connectivity first and restore quorum. To that end, use the /health/diagnose endpoint to understand to cause of the current failure.
+pub fn cluster_force_new_post(
+    configuration: &configuration::Configuration,
+) -> Result<ResponseContent<()>, Error<ClusterForceNewPostError>> {
+    let local_var_configuration = configuration;
+
+    let local_var_client = &local_var_configuration.client;
+
+    let local_var_uri_str = format!("{}/cluster/force-new", local_var_configuration.base_path);
+    let mut local_var_req_builder =
+        create_request!(local_var_client, POST, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
+
+    if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
+        local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
+    }
+
+    let local_var_result = local_var_req_builder.send_empty();
+
+    let local_var_resp = local_var_result?;
+
+    let local_var_status = local_var_resp.status().as_u16();
+    if local_var_status < 400 {
+        ResponseContent::unit(local_var_resp)
+    } else {
+        ResponseContent::new(local_var_resp, |data| {
+            ClusterForceNewPostError::new(local_var_status, data).map_err(From::from)
+        })
+        .and_then(|content| Err(Error::ResponseError(content)))
+    }
+}
+
 /// Attempt to join an existing NetHSM cluster i.e. **wipe all user data** and use the cluster data instead. This does **not** merge data on this node to cluster data. 'POST /cluster/members' *MUST* have been called on an existing member of the cluster beforehand. The data returned by that call must be passed here along with the backup passphrase *of the node that registered the new member*. On success, the node will end up in a *Locked* stated, unlockable with the unlock passphrase *of the node that registered the new member*. All device-specific configuration will be preserved from before the join. On immediate failure (e.g. if the cluster is not reachable), the NetHSM will attempt to reverse the join. **WARNING**. Existing data will be definitely wiped after a first successful connection to the cluster. Be sure to backup anything important.
 pub fn cluster_join_post(
     configuration: &configuration::Configuration,
@@ -3246,6 +3389,48 @@ pub fn health_alive_get(
     }
 }
 
+/// Retrieve NetHSM cluster diagnostics. This is always available, requiring authentication when operational, and no authentication otherwise (Locked, Failed, Unprovisioned).
+pub fn health_diagnose_get(
+    configuration: &configuration::Configuration,
+) -> Result<ResponseContent<crate::models::HealthDiagnoseData>, Error<HealthDiagnoseGetError>> {
+    let local_var_configuration = configuration;
+
+    let local_var_client = &local_var_configuration.client;
+
+    let local_var_uri_str = format!("{}/health/diagnose", local_var_configuration.base_path);
+    let mut local_var_req_builder =
+        create_request!(local_var_client, GET, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
+
+    if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
+        local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
+    }
+    if let Some(ref local_var_auth_conf) = local_var_configuration.basic_auth {
+        let value = super::basic_auth(local_var_auth_conf);
+
+        local_var_req_builder = local_var_req_builder.header("authorization", &value);
+    };
+    let accept_str = "application/json";
+    local_var_req_builder = local_var_req_builder.header("accept", accept_str);
+
+    let local_var_result = local_var_req_builder.send_empty();
+
+    let local_var_resp = local_var_result?;
+
+    let local_var_status = local_var_resp.status().as_u16();
+    if local_var_status < 400 {
+        ResponseContent::deserialized(local_var_resp)
+    } else {
+        ResponseContent::new(local_var_resp, |data| {
+            HealthDiagnoseGetError::new(local_var_status, data).map_err(From::from)
+        })
+        .and_then(|content| Err(Error::ResponseError(content)))
+    }
+}
+
 /// Retrieve whether NetHSM is in state *Operational* and thus ready to take traffic.
 pub fn health_ready_get(
     configuration: &configuration::Configuration,
@@ -3403,6 +3588,7 @@ pub fn keys_generate_post(
 pub fn keys_get(
     configuration: &configuration::Configuration,
     filter: Option<&str>,
+    label: Option<&str>,
 ) -> Result<ResponseContent<Vec<crate::models::KeyItem>>, Error<KeysGetError>> {
     let local_var_configuration = configuration;
 
@@ -3419,6 +3605,10 @@ pub fn keys_get(
     if let Some(local_var_str) = filter {
         local_var_req_builder =
             local_var_req_builder.query_pairs([("filter", local_var_str.to_string().as_str())]);
+    }
+    if let Some(local_var_str) = label {
+        local_var_req_builder =
+            local_var_req_builder.query_pairs([("label", local_var_str.to_string().as_str())]);
     }
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
         local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
@@ -3820,6 +4010,98 @@ pub fn keys_key_id_get(
     } else {
         ResponseContent::new(local_var_resp, |data| {
             KeysKeyIdGetError::new(local_var_status, data).map_err(From::from)
+        })
+        .and_then(|content| Err(Error::ResponseError(content)))
+    }
+}
+
+/// Delete the key's label. This operation is idempotent and succeeds if the key doesn't have a label already.
+pub fn keys_key_id_label_delete(
+    configuration: &configuration::Configuration,
+    key_id: &str,
+) -> Result<ResponseContent<()>, Error<KeysKeyIdLabelDeleteError>> {
+    let local_var_configuration = configuration;
+
+    let local_var_client = &local_var_configuration.client;
+
+    let local_var_uri_str = format!(
+        "{}/keys/{KeyID}/label",
+        local_var_configuration.base_path,
+        KeyID = crate::apis::urlencode(key_id)
+    );
+    let mut local_var_req_builder =
+        create_request!(local_var_client, DELETE, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
+
+    if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
+        local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
+    }
+    if let Some(ref local_var_auth_conf) = local_var_configuration.basic_auth {
+        let value = super::basic_auth(local_var_auth_conf);
+
+        local_var_req_builder = local_var_req_builder.header("authorization", &value);
+    };
+
+    let local_var_result = local_var_req_builder.send_empty();
+
+    let local_var_resp = local_var_result?;
+
+    let local_var_status = local_var_resp.status().as_u16();
+    if local_var_status < 400 {
+        ResponseContent::unit(local_var_resp)
+    } else {
+        ResponseContent::new(local_var_resp, |data| {
+            KeysKeyIdLabelDeleteError::new(local_var_status, data).map_err(From::from)
+        })
+        .and_then(|content| Err(Error::ResponseError(content)))
+    }
+}
+
+/// Set or change the label for {KeyID}. The label is provided as a UTF-8 JSON string, and it cannot be longer than 32 bytes. By default keys have the empty string as a label.
+pub fn keys_key_id_label_put(
+    configuration: &configuration::Configuration,
+    key_id: &str,
+    key_set_label: crate::models::KeySetLabel,
+) -> Result<ResponseContent<()>, Error<KeysKeyIdLabelPutError>> {
+    let local_var_configuration = configuration;
+
+    let local_var_client = &local_var_configuration.client;
+
+    let local_var_uri_str = format!(
+        "{}/keys/{KeyID}/label",
+        local_var_configuration.base_path,
+        KeyID = crate::apis::urlencode(key_id)
+    );
+    let mut local_var_req_builder =
+        create_request!(local_var_client, PUT, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
+
+    if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
+        local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
+    }
+    if let Some(ref local_var_auth_conf) = local_var_configuration.basic_auth {
+        let value = super::basic_auth(local_var_auth_conf);
+
+        local_var_req_builder = local_var_req_builder.header("authorization", &value);
+    };
+
+    local_var_req_builder = local_var_req_builder.header("content-type", "application/json");
+    let local_var_result = local_var_req_builder.send_json(key_set_label);
+
+    let local_var_resp = local_var_result?;
+
+    let local_var_status = local_var_resp.status().as_u16();
+    if local_var_status < 400 {
+        ResponseContent::unit(local_var_resp)
+    } else {
+        ResponseContent::new(local_var_resp, |data| {
+            KeysKeyIdLabelPutError::new(local_var_status, data).map_err(From::from)
         })
         .and_then(|content| Err(Error::ResponseError(content)))
     }
@@ -4841,7 +5123,7 @@ pub fn system_restore_post(
     }
 }
 
-/// Shut down NetHSM.  Authentication behavior varies by NetHSM state: - **Operational**: Requires Administrator authentication - **Locked** or **Unprovisioned**: No authentication required
+/// Shut down NetHSM.  Authentication behavior varies by NetHSM state: - **Operational**: Requires Administrator authentication - **Locked**, **Unprovisioned** or **Failed**: No authentication required
 pub fn system_shutdown_post(
     configuration: &configuration::Configuration,
 ) -> Result<ResponseContent<()>, Error<SystemShutdownPostError>> {

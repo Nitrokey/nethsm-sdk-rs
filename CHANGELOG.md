@@ -4,13 +4,22 @@
 
 ### Breaking Changes
 
-- `models`: Split `NetworkConfig` into `NetworkConfigInput` and `NetworkConfigOutput`
+- `models`:
+  - Split `NetworkConfig` into `NetworkConfigInput` and `NetworkConfigOutput`
+  - Add `SystemState::Failed` variant
 - Add response data for error responses
+- Add support for key labels (requires NetHSM v5.0):
+  - `apis::default_api`:
+    - Add `label` argument to `key_get`
+    - Add `keys_key_id_label_delete`, `keys_key_id_label_put` functions
+  - `models`: Add `label` field to `PrivateKey` and `PublicKey`
 
 ### Features
 
 - Add support for clustering (requires NetHSM v4.0):
   - `apis::default_api`: Add `cluster_join_post`, `cluster_members_get`, `cluster_members_member_id_delete`, `cluster_members_member_id_put`, `cluster_members_post`, `config_tls_cluster_ca_pem_get`, `config_tls_cluster_ca_pem_put` functions
+- Add support for cluster recovery (requires NetHSM v5.0):
+  - `apis::default_api`: Add `cluster_force_new_post`, `health_diagonse_get` functions
 - Add support for IPv6 network config (requires NetHSM v4.0)
 
 [All Changes](https://github.com/Nitrokey/nethsm-sdk-rs/compare/v3.0.0...HEAD)
