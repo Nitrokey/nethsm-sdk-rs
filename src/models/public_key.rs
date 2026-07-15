@@ -22,8 +22,8 @@ pub struct PublicKey {
     #[serde(rename = "operations")]
     pub operations: i32,
     /// A valid UTF-8 string. For interoperability with PKCS#11 its length shouldn't exceed 32 bytes.
-    #[serde(rename = "label")]
-    pub label: String,
+    #[serde(rename = "label", skip_serializing_if = "Option::is_none")]
+    pub label: Option<String>,
 }
 
 impl PublicKey {
@@ -32,7 +32,6 @@ impl PublicKey {
         r#type: crate::models::KeyType,
         restrictions: crate::models::KeyRestrictions,
         operations: i32,
-        label: String,
     ) -> PublicKey {
         PublicKey {
             mechanisms,
@@ -40,7 +39,7 @@ impl PublicKey {
             restrictions: Box::new(restrictions),
             public: None,
             operations,
-            label,
+            label: None,
         }
     }
 }
