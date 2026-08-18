@@ -3,6 +3,8 @@
 //   Author: David Runge <dvzrv@archlinux.org>
 //   License: Apache-2.0 OR MIT
 
+use std::env;
+
 use nethsm_sdk_rs::apis::configuration::Configuration;
 use rustainers::{
     runner::{RunOption, Runner},
@@ -43,8 +45,14 @@ struct Image {
 
 impl Image {
     fn new() -> Self {
+        let tag = env::var_os("NETHSM_IMAGE_TAG")
+            .map(|tag| tag.into_string().unwrap())
+            .unwrap_or_else(|| "testing".to_owned());
+        let mut name = ImageName::new("nitrokey/nethsm");
+        name.set_tag(tag);
+        println!("Running image {name}");
         Self {
-            name: ImageName::new_with_tag("nitrokey/nethsm", "testing"),
+            name,
             port: ExposedPort::new(8443),
         }
     }
