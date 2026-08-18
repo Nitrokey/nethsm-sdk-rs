@@ -7,9 +7,9 @@ use std::env;
 
 use nethsm_sdk_rs::apis::{configuration::Configuration, default_api};
 use rustainers::{
-    runner::{RunOption, Runner},
     ExposedPort, ImageName, RunnableContainer, RunnableContainerBuilder, ToRunnableContainer,
     WaitStrategy,
+    runner::{RunOption, Runner},
 };
 use ureq::tls::TlsConfig;
 

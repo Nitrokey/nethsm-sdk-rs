@@ -2,7 +2,7 @@ use std::collections::HashMap;
 use std::error;
 use std::fmt;
 
-use base64::{engine::general_purpose, Engine};
+use base64::{Engine, engine::general_purpose};
 use serde::de::DeserializeOwned;
 
 macro_rules! create_request {

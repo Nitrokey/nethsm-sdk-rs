@@ -4,7 +4,7 @@ use std::collections::BTreeSet;
 
 use chrono::Utc;
 use nethsm_sdk_rs::{
-    apis::{configuration::Configuration, default_api, Error},
+    apis::{Error, configuration::Configuration, default_api},
     models::{
         BackupPassphraseConfig, KeyGenerateRequestData, KeyMechanism, KeyType,
         ProvisionRequestData, RestoreRequestArguments, SystemState, UnlockRequestData,
