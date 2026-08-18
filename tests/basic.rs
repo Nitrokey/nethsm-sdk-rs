@@ -62,6 +62,12 @@ async fn test_namespaces() {
 
         config.basic_auth = Some(("admin".to_owned(), Some(admin_passphrase.to_owned())));
 
+        let version = utils::version(&config);
+        // namespace support was added in v2.0
+        if version.major < 2 {
+            return;
+        }
+
         let request = UserPostData::new(
             "N-Admin".to_owned(),
             UserRole::Administrator,

@@ -5,7 +5,7 @@
 
 use std::env;
 
-use nethsm_sdk_rs::apis::configuration::Configuration;
+use nethsm_sdk_rs::apis::{configuration::Configuration, default_api};
 use rustainers::{
     runner::{RunOption, Runner},
     ExposedPort, ImageName, RunnableContainer, RunnableContainerBuilder, ToRunnableContainer,
@@ -36,6 +36,19 @@ pub async fn with_container<F: FnOnce(Configuration) -> T, T>(f: F) -> T {
     let result = f(config);
     drop(container);
     result
+}
+
+pub struct Version {
+    pub major: u8,
+}
+
+#[must_use]
+pub fn version(config: &Configuration) -> Version {
+    let system_info = default_api::system_info_get(config).unwrap().entity;
+    let (major, _minor) = system_info.software_version.split_once(".").unwrap();
+    Version {
+        major: major.parse().unwrap(),
+    }
 }
 
 struct Image {

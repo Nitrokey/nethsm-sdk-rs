@@ -18,11 +18,24 @@ jobs:
   test:
     name: Run tests
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        tag:
+          - testing-v1.0
+          - testing-v2.0
+          - testing-v2.1
+          - testing-v2.2
+          - testing-v3.0
+          - testing-v3.1
+          - testing-v4.0
+          - testing
     steps:
     - uses: actions/checkout@v6
     - uses: dtolnay/rust-toolchain@stable
     - name: Run tests
       run: cargo test
+      env:
+        NETHSM_IMAGE_TAG: ${{ matrix.tag }}
 
   fmt:
     name: Run rustfmt
