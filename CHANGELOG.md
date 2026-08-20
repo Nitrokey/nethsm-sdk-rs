@@ -2,6 +2,12 @@
 
 ## Unreleased
 
+-
+
+[All Changes](https://github.com/Nitrokey/nethsm-sdk-rs/compare/v4.0.0-rc.1...HEAD)
+
+## [v4.0.0-rc.1](https://github.com/Nitrokey/nethsm-sdk-rs/releases/tag/v4.0.0-rc.1) (2026-08-20)
+
 ### Breaking Changes
 
 - `models`:
@@ -24,7 +30,7 @@
 - Add support for NTP config (requires NetHSM v5.0):
   - `apis::default_api`: Add `config_ntp_get`, `config_ntp_put` functions
 
-[All Changes](https://github.com/Nitrokey/nethsm-sdk-rs/compare/v3.0.0...HEAD)
+[All Changes](https://github.com/Nitrokey/nethsm-sdk-rs/compare/v3.0.0...v4.0.0-rc.1)
 
 ## [v3.0.0](https://github.com/Nitrokey/nethsm-sdk-rs/releases/tag/v3.0.0) (2025-10-15)
 
