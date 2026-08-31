@@ -2,12 +2,13 @@
 
 ## Unreleased
 
-- `model`: Add `label` field to `PrivateKeyPemArguments`
-- `apis::default_api`: Add `label` argument to `keys_key_prefix_get`
+-
 
-[All Changes](https://github.com/Nitrokey/nethsm-sdk-rs/compare/v4.0.0-rc.1...HEAD)
+[All Changes](https://github.com/Nitrokey/nethsm-sdk-rs/compare/v4.0.0...HEAD)
 
-## [v4.0.0-rc.1](https://github.com/Nitrokey/nethsm-sdk-rs/releases/tag/v4.0.0-rc.1) (2026-08-20)
+## [v4.0.0](https://github.com/Nitrokey/nethsm-sdk-rs/releases/tag/v4.0.0) (2026-08-31)
+
+This release adds support for the new features provided by NetHSM [v4.0](https://github.com/Nitrokey/nethsm/releases/tag/v4.0) and [v5.0](https://github.com/Nitrokey/nethsm/releases/tag/v5.0).
 
 ### Breaking Changes
 
@@ -17,9 +18,9 @@
 - Add response data for error responses
 - Add support for key labels (requires NetHSM v5.0):
   - `apis::default_api`:
-    - Add `label` argument to `key_get`
+    - Add `label` argument to `keys_get`, `keys_key_prefix_get`
     - Add `keys_key_id_label_delete`, `keys_key_id_label_put` functions
-  - `models`: Add `label` field to `KeyGenerateRequstData`, `PrivateKey` and `PublicKey`
+  - `models`: Add `label` field to `KeyGenerateRequstData`, `PrivateKey`, `PrivateKeyPemArguments` and `PublicKey`
 
 ### Features
 
@@ -31,7 +32,7 @@
 - Add support for NTP config (requires NetHSM v5.0):
   - `apis::default_api`: Add `config_ntp_get`, `config_ntp_put` functions
 
-[All Changes](https://github.com/Nitrokey/nethsm-sdk-rs/compare/v3.0.0...v4.0.0-rc.1)
+[All Changes](https://github.com/Nitrokey/nethsm-sdk-rs/compare/v3.0.0...v4.0.0)
 
 ## [v3.0.0](https://github.com/Nitrokey/nethsm-sdk-rs/releases/tag/v3.0.0) (2025-10-15)
 
