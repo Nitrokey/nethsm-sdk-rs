@@ -90,7 +90,7 @@ Method | HTTP request | Description
 > cluster_force_new_post()
 
 
-Rebuild etcd instance with the data on disk, switch to a single node cluster, and reboot. **WARNING** this will restore data only up to the last snapshot, and will result in data loss for any unconfirmed writes, or writes that occured on other NetHSM nodes that are now unreachable. This call is unauthenticated and available only in the Failed state. Before using this command it is recommended that you attempt to heal the cluster's network connectivity first and restore quorum. To that end, use the /health/diagnose endpoint to understand to cause of the current failure. As it is potentially destructive, this operation requires authentication even in *Failed* state, which differs from *Operational* authentication. The user *MUST* be `unlock` and the password *MUST* be the last known unlock passphrase. When upgrading to v5.0, this will only work after having unlocked the HSM at least once.
+Rebuild etcd instance with the data on disk, switch to a single node cluster, and reboot. **WARNING** this will restore data only up to the last snapshot, and will result in data loss for any unconfirmed writes, or writes that occured on other NetHSM nodes that are now unreachable. This call is only available in the Failed state. Before using this command it is recommended that you attempt to heal the cluster's network connectivity first and restore quorum. To that end, use the /health/diagnose endpoint to understand to cause of the current failure. As it is potentially destructive, this operation requires authentication even in *Failed* state, which differs from *Operational* authentication. The user *MUST* be `unlock` and the password *MUST* be the last known unlock passphrase. When upgrading to v5.0, this will only work after having unlocked the HSM at least once.
 
 ### Parameters
 
@@ -102,7 +102,7 @@ This endpoint does not need any parameter.
 
 ### Authorization
 
-No authorization required
+[basic](../README.md#basic)
 
 ### HTTP request headers
 
@@ -117,7 +117,7 @@ No authorization required
 > cluster_join_post(cluster_join_req)
 
 
-Attempt to join an existing NetHSM cluster i.e. **wipe all user data** and use the cluster data instead. This does **not** merge data on this node to cluster data. 'POST /cluster/members' *MUST* have been called on an existing member of the cluster beforehand. The data returned by that call must be passed here along with the backup passphrase *of the node that registered the new member*. The 'id' of the newly added node is also available in this reply. On success, the node will end up in a *Locked* stated, unlockable with the unlock passphrase *of the node that registered the new member*. All device-specific configuration will be preserved from before the join. On immediate failure (e.g. if the cluster is not reachable), the NetHSM will attempt to reverse the join. **WARNING**. Existing data will be definitely wiped after a first successful connection to the cluster. Be sure to backup anything important. The new node is added as a learner. Currently there is only 1 learner supported in a NetHSM cluster at a time, attempting to add another will return an HTTP 409 failure. A learner node observes changes in the cluster, but is not part of the quorum yet. *WARNING:*  The newly added node needs to be promoted by using the 'POST /cluster/members/{MemberID}/promote' API, where '{MemberID}' is returned by the 'POST /cluster/members' API above. Note that currently this API waits for the promotion to complete before returning, so the promotion API needs to be invoked concurrently with the join API.
+Attempt to join an existing NetHSM cluster i.e. **wipe all user data** and use the cluster data instead. This does **not** merge data on this node to cluster data. 'POST /cluster/members' *MUST* have been called on an existing member of the cluster beforehand. The data returned by that call must be passed here along with the backup passphrase *of the node that registered the new member*. The 'id' of the newly added node is also available in this reply. On success, the node will end up in a *Locked* stated, unlockable with the unlock passphrase *of the node that registered the new member*. All device-specific configuration will be preserved from before the join. On immediate failure (e.g. if the cluster is not reachable), the NetHSM will attempt to reverse the join. **WARNING**. Existing data will be definitely wiped after a first successful connection to the cluster. Be sure to backup anything important. The new node is added as a learner. Currently there is only 1 learner supported in a NetHSM cluster at a time, attempting to add another will return an HTTP 409 failure. A learner node observes changes in the cluster, but is not part of the quorum yet. *WARNING:*  The newly added node needs to be promoted by using the 'POST /cluster/members/{MemberID}/promote' API, where '{MemberID}' is returned by the 'POST /cluster/members' API above (look for the ID of the only learner in the list). Note that currently this API waits for the promotion to complete before returning, so the promotion API needs to be invoked concurrently with the join API.
 
 ### Parameters
 
@@ -265,7 +265,7 @@ Name | Type | Description  | Required | Notes
 > crate::models::ClusterMemberAddResponse cluster_members_post(cluster_add_req)
 
 
-Declare a new member to the cluster. The response of this call must be passed to a call to '/cluster/join' on the new member to finalize the join, along with the backup passphrase. A backup key must be configured prior to this call.  *WARNING*: adding a member will change the quorum needed for the cluster to operate. If the quorum is not met anymore (e.g. when adding a second node) to a one-node cluster, the cluster (and hence the HSM) will cease to operate until that new member actually joins. If it doesn't, the NetHSM is lost and must be factory reset. Make sure to backup before this operation. 
+Declare a new member to the cluster. The response of this call (along with the backup passphrase) must be passed to a call to '/cluster/join' on the new member to continue the join, followed by a call to '/cluster/members/{MemberID}/promote' to finalize it.  A backup key must be configured prior to this call. 
 
 ### Parameters
 
@@ -1524,7 +1524,7 @@ Name | Type | Description  | Required | Notes
 
 ## keys_key_prefix_get
 
-> Vec<crate::models::KeyItem> keys_key_prefix_get(key_prefix, filter)
+> Vec<crate::models::KeyItem> keys_key_prefix_get(key_prefix, filter, label)
 
 
 Get a list of the identifiers of all keys that have a KeyID that starts with KeyPrefix. If the caller is in a namespace, only keys in that namespace are returned. Separate requests need to be made to request the individual key data. 
@@ -1536,6 +1536,7 @@ Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **key_prefix** | **String** |  | [required] |
 **filter** | Option<**String**> | Only return keys that are can be used by the requester, according to restrictions. |  |
+**label** | Option<**String**> | Only return keys that have a matching label, if this parameter is set to any value. |  |
 
 ### Return type
 

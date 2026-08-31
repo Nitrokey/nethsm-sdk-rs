@@ -2433,7 +2433,7 @@ impl UsersUserIdTagsTagPutError {
     }
 }
 
-/// Rebuild etcd instance with the data on disk, switch to a single node cluster, and reboot. **WARNING** this will restore data only up to the last snapshot, and will result in data loss for any unconfirmed writes, or writes that occured on other NetHSM nodes that are now unreachable. This call is unauthenticated and available only in the Failed state. Before using this command it is recommended that you attempt to heal the cluster's network connectivity first and restore quorum. To that end, use the /health/diagnose endpoint to understand to cause of the current failure. As it is potentially destructive, this operation requires authentication even in *Failed* state, which differs from *Operational* authentication. The user *MUST* be `unlock` and the password *MUST* be the last known unlock passphrase. When upgrading to v5.0, this will only work after having unlocked the HSM at least once.
+/// Rebuild etcd instance with the data on disk, switch to a single node cluster, and reboot. **WARNING** this will restore data only up to the last snapshot, and will result in data loss for any unconfirmed writes, or writes that occured on other NetHSM nodes that are now unreachable. This call is only available in the Failed state. Before using this command it is recommended that you attempt to heal the cluster's network connectivity first and restore quorum. To that end, use the /health/diagnose endpoint to understand to cause of the current failure. As it is potentially destructive, this operation requires authentication even in *Failed* state, which differs from *Operational* authentication. The user *MUST* be `unlock` and the password *MUST* be the last known unlock passphrase. When upgrading to v5.0, this will only work after having unlocked the HSM at least once.
 pub fn cluster_force_new_post(
     configuration: &configuration::Configuration,
 ) -> Result<ResponseContent<()>, Error<ClusterForceNewPostError>> {
@@ -2452,6 +2452,11 @@ pub fn cluster_force_new_post(
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
         local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
     }
+    if let Some(ref local_var_auth_conf) = local_var_configuration.basic_auth {
+        let value = super::basic_auth(local_var_auth_conf);
+
+        local_var_req_builder = local_var_req_builder.header("authorization", &value);
+    };
 
     let local_var_result = local_var_req_builder.send_empty();
 
@@ -2468,7 +2473,7 @@ pub fn cluster_force_new_post(
     }
 }
 
-/// Attempt to join an existing NetHSM cluster i.e. **wipe all user data** and use the cluster data instead. This does **not** merge data on this node to cluster data. 'POST /cluster/members' *MUST* have been called on an existing member of the cluster beforehand. The data returned by that call must be passed here along with the backup passphrase *of the node that registered the new member*. The 'id' of the newly added node is also available in this reply. On success, the node will end up in a *Locked* stated, unlockable with the unlock passphrase *of the node that registered the new member*. All device-specific configuration will be preserved from before the join. On immediate failure (e.g. if the cluster is not reachable), the NetHSM will attempt to reverse the join. **WARNING**. Existing data will be definitely wiped after a first successful connection to the cluster. Be sure to backup anything important. The new node is added as a learner. Currently there is only 1 learner supported in a NetHSM cluster at a time, attempting to add another will return an HTTP 409 failure. A learner node observes changes in the cluster, but is not part of the quorum yet. *WARNING:*  The newly added node needs to be promoted by using the 'POST /cluster/members/{MemberID}/promote' API, where '{MemberID}' is returned by the 'POST /cluster/members' API above. Note that currently this API waits for the promotion to complete before returning, so the promotion API needs to be invoked concurrently with the join API.
+/// Attempt to join an existing NetHSM cluster i.e. **wipe all user data** and use the cluster data instead. This does **not** merge data on this node to cluster data. 'POST /cluster/members' *MUST* have been called on an existing member of the cluster beforehand. The data returned by that call must be passed here along with the backup passphrase *of the node that registered the new member*. The 'id' of the newly added node is also available in this reply. On success, the node will end up in a *Locked* stated, unlockable with the unlock passphrase *of the node that registered the new member*. All device-specific configuration will be preserved from before the join. On immediate failure (e.g. if the cluster is not reachable), the NetHSM will attempt to reverse the join. **WARNING**. Existing data will be definitely wiped after a first successful connection to the cluster. Be sure to backup anything important. The new node is added as a learner. Currently there is only 1 learner supported in a NetHSM cluster at a time, attempting to add another will return an HTTP 409 failure. A learner node observes changes in the cluster, but is not part of the quorum yet. *WARNING:*  The newly added node needs to be promoted by using the 'POST /cluster/members/{MemberID}/promote' API, where '{MemberID}' is returned by the 'POST /cluster/members' API above (look for the ID of the only learner in the list). Note that currently this API waits for the promotion to complete before returning, so the promotion API needs to be invoked concurrently with the join API.
 pub fn cluster_join_post(
     configuration: &configuration::Configuration,
     cluster_join_req: crate::models::ClusterJoinReq,
@@ -2697,7 +2702,7 @@ pub fn cluster_members_member_id_put(
     }
 }
 
-/// Declare a new member to the cluster. The response of this call must be passed to a call to '/cluster/join' on the new member to finalize the join, along with the backup passphrase. A backup key must be configured prior to this call.  *WARNING*: adding a member will change the quorum needed for the cluster to operate. If the quorum is not met anymore (e.g. when adding a second node) to a one-node cluster, the cluster (and hence the HSM) will cease to operate until that new member actually joins. If it doesn't, the NetHSM is lost and must be factory reset. Make sure to backup before this operation.
+/// Declare a new member to the cluster. The response of this call (along with the backup passphrase) must be passed to a call to '/cluster/join' on the new member to continue the join, followed by a call to '/cluster/members/{MemberID}/promote' to finalize it.  A backup key must be configured prior to this call.
 pub fn cluster_members_post(
     configuration: &configuration::Configuration,
     cluster_add_req: crate::models::ClusterAddReq,
@@ -4638,6 +4643,7 @@ pub fn keys_key_prefix_get(
     configuration: &configuration::Configuration,
     key_prefix: &str,
     filter: Option<&str>,
+    label: Option<&str>,
 ) -> Result<ResponseContent<Vec<crate::models::KeyItem>>, Error<KeysKeyPrefixGetError>> {
     let local_var_configuration = configuration;
 
@@ -4658,6 +4664,10 @@ pub fn keys_key_prefix_get(
     if let Some(local_var_str) = filter {
         local_var_req_builder =
             local_var_req_builder.query_pairs([("filter", local_var_str.to_string().as_str())]);
+    }
+    if let Some(local_var_str) = label {
+        local_var_req_builder =
+            local_var_req_builder.query_pairs([("label", local_var_str.to_string().as_str())]);
     }
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
         local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);

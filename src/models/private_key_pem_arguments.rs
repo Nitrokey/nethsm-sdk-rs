@@ -15,6 +15,9 @@ pub struct PrivateKeyPemArguments {
     pub mechanisms: Option<Vec<crate::models::KeyMechanism>>,
     #[serde(rename = "restrictions", skip_serializing_if = "Option::is_none")]
     pub restrictions: Option<Box<crate::models::KeyRestrictions>>,
+    /// A valid UTF-8 string. For interoperability with PKCS#11 its length shouldn't exceed 32 bytes.
+    #[serde(rename = "label", skip_serializing_if = "Option::is_none")]
+    pub label: Option<String>,
 }
 
 impl PrivateKeyPemArguments {
@@ -22,6 +25,7 @@ impl PrivateKeyPemArguments {
         PrivateKeyPemArguments {
             mechanisms: None,
             restrictions: None,
+            label: None,
         }
     }
 }

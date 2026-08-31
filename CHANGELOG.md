@@ -2,7 +2,8 @@
 
 ## Unreleased
 
--
+- `model`: Add `label` field to `PrivateKeyPemArguments`
+- `apis::default_api`: Add `label` argument to `keys_key_prefix_get`
 
 [All Changes](https://github.com/Nitrokey/nethsm-sdk-rs/compare/v4.0.0-rc.1...HEAD)
 
