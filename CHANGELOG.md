@@ -2,7 +2,9 @@
 
 ## Unreleased
 
--
+### Bugfixes
+
+- Only set `Accept` header if the endpoint produces multiple content types ([#61](https://github.com/Nitrokey/nethsm-sdk-rs/issues/61))
 
 [All Changes](https://github.com/Nitrokey/nethsm-sdk-rs/compare/v4.0.0...HEAD)
 

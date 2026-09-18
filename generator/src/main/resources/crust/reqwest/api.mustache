@@ -298,13 +298,11 @@ pub fn {{{operationId}}}(configuration: &configuration::Configuration, {{#allPar
     {{/hasAuthMethods}}
     {{#hasProduces}}
     {{#vendorExtensions.x-produceMultipleMediaTypes}}
-    let accept_str = accept.as_str();
     let is_json = accept.is_json();
+    local_var_req_builder = local_var_req_builder.header("accept", accept.as_str());
     {{/vendorExtensions.x-produceMultipleMediaTypes}}
     {{^vendorExtensions.x-produceMultipleMediaTypes}}
-    let accept_str = "{{vendorExtensions.x-contentType}}";
     {{/vendorExtensions.x-produceMultipleMediaTypes}}
-    local_var_req_builder = local_var_req_builder.header("accept", accept_str);
     {{/hasProduces}}
 
     {{#isMultipart}}

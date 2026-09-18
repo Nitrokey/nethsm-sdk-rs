@@ -2498,8 +2498,6 @@ pub fn cluster_join_post(
 
         local_var_req_builder = local_var_req_builder.header("authorization", &value);
     };
-    let accept_str = "application/json";
-    local_var_req_builder = local_var_req_builder.header("accept", accept_str);
 
     local_var_req_builder = local_var_req_builder.header("content-type", "application/json");
     let local_var_result = local_var_req_builder.send_json(cluster_join_req);
@@ -2541,8 +2539,6 @@ pub fn cluster_members_get(
 
         local_var_req_builder = local_var_req_builder.header("authorization", &value);
     };
-    let accept_str = "application/json";
-    local_var_req_builder = local_var_req_builder.header("accept", accept_str);
 
     let local_var_result = local_var_req_builder.send_empty();
 
@@ -2588,8 +2584,6 @@ pub fn cluster_members_member_id_delete(
 
         local_var_req_builder = local_var_req_builder.header("authorization", &value);
     };
-    let accept_str = "application/json";
-    local_var_req_builder = local_var_req_builder.header("accept", accept_str);
 
     let local_var_result = local_var_req_builder.send_empty();
 
@@ -2635,8 +2629,6 @@ pub fn cluster_members_member_id_promote_post(
 
         local_var_req_builder = local_var_req_builder.header("authorization", &value);
     };
-    let accept_str = "application/json";
-    local_var_req_builder = local_var_req_builder.header("accept", accept_str);
 
     let local_var_result = local_var_req_builder.send_empty();
 
@@ -2683,8 +2675,6 @@ pub fn cluster_members_member_id_put(
 
         local_var_req_builder = local_var_req_builder.header("authorization", &value);
     };
-    let accept_str = "application/json";
-    local_var_req_builder = local_var_req_builder.header("accept", accept_str);
 
     local_var_req_builder = local_var_req_builder.header("content-type", "application/json");
     let local_var_result = local_var_req_builder.send_json(cluster_add_req);
@@ -2728,8 +2718,6 @@ pub fn cluster_members_post(
 
         local_var_req_builder = local_var_req_builder.header("authorization", &value);
     };
-    let accept_str = "application/json";
-    local_var_req_builder = local_var_req_builder.header("accept", accept_str);
 
     local_var_req_builder = local_var_req_builder.header("content-type", "application/json");
     let local_var_result = local_var_req_builder.send_json(cluster_add_req);
@@ -2775,8 +2763,6 @@ pub fn config_backup_passphrase_put(
 
         local_var_req_builder = local_var_req_builder.header("authorization", &value);
     };
-    let accept_str = "application/json";
-    local_var_req_builder = local_var_req_builder.header("accept", accept_str);
 
     local_var_req_builder = local_var_req_builder.header("content-type", "application/json");
     let local_var_result = local_var_req_builder.send_json(backup_passphrase_config);
@@ -2818,8 +2804,6 @@ pub fn config_logging_get(
 
         local_var_req_builder = local_var_req_builder.header("authorization", &value);
     };
-    let accept_str = "application/json";
-    local_var_req_builder = local_var_req_builder.header("accept", accept_str);
 
     let local_var_result = local_var_req_builder.send_empty();
 
@@ -2861,8 +2845,6 @@ pub fn config_logging_put(
 
         local_var_req_builder = local_var_req_builder.header("authorization", &value);
     };
-    let accept_str = "application/json";
-    local_var_req_builder = local_var_req_builder.header("accept", accept_str);
 
     local_var_req_builder = local_var_req_builder.header("content-type", "application/json");
     let local_var_result = local_var_req_builder.send_json(logging_config);
@@ -2904,8 +2886,6 @@ pub fn config_network_get(
 
         local_var_req_builder = local_var_req_builder.header("authorization", &value);
     };
-    let accept_str = "application/json";
-    local_var_req_builder = local_var_req_builder.header("accept", accept_str);
 
     let local_var_result = local_var_req_builder.send_empty();
 
@@ -2947,8 +2927,6 @@ pub fn config_network_put(
 
         local_var_req_builder = local_var_req_builder.header("authorization", &value);
     };
-    let accept_str = "application/json";
-    local_var_req_builder = local_var_req_builder.header("accept", accept_str);
 
     local_var_req_builder = local_var_req_builder.header("content-type", "application/json");
     let local_var_result = local_var_req_builder.send_json(network_config_input);
@@ -2990,8 +2968,6 @@ pub fn config_ntp_get(
 
         local_var_req_builder = local_var_req_builder.header("authorization", &value);
     };
-    let accept_str = "application/json";
-    local_var_req_builder = local_var_req_builder.header("accept", accept_str);
 
     let local_var_result = local_var_req_builder.send_empty();
 
@@ -3033,8 +3009,6 @@ pub fn config_ntp_put(
 
         local_var_req_builder = local_var_req_builder.header("authorization", &value);
     };
-    let accept_str = "application/json";
-    local_var_req_builder = local_var_req_builder.header("accept", accept_str);
 
     local_var_req_builder = local_var_req_builder.header("content-type", "application/json");
     let local_var_result = local_var_req_builder.send_json(ntp_config);
@@ -3076,8 +3050,6 @@ pub fn config_time_get(
 
         local_var_req_builder = local_var_req_builder.header("authorization", &value);
     };
-    let accept_str = "application/json";
-    local_var_req_builder = local_var_req_builder.header("accept", accept_str);
 
     let local_var_result = local_var_req_builder.send_empty();
 
@@ -3119,8 +3091,6 @@ pub fn config_time_put(
 
         local_var_req_builder = local_var_req_builder.header("authorization", &value);
     };
-    let accept_str = "application/json";
-    local_var_req_builder = local_var_req_builder.header("accept", accept_str);
 
     local_var_req_builder = local_var_req_builder.header("content-type", "application/json");
     let local_var_result = local_var_req_builder.send_json(time_config);
@@ -3162,8 +3132,6 @@ pub fn config_tls_cert_pem_get(
 
         local_var_req_builder = local_var_req_builder.header("authorization", &value);
     };
-    let accept_str = "application/x-pem-file";
-    local_var_req_builder = local_var_req_builder.header("accept", accept_str);
 
     let local_var_result = local_var_req_builder.send_empty();
 
@@ -3205,8 +3173,6 @@ pub fn config_tls_cert_pem_put(
 
         local_var_req_builder = local_var_req_builder.header("authorization", &value);
     };
-    let accept_str = "application/json";
-    local_var_req_builder = local_var_req_builder.header("accept", accept_str);
 
     local_var_req_builder = local_var_req_builder.header("content-type", "application/x-pem-file");
     let local_var_result = local_var_req_builder.send(body);
@@ -3251,8 +3217,6 @@ pub fn config_tls_cluster_ca_pem_get(
 
         local_var_req_builder = local_var_req_builder.header("authorization", &value);
     };
-    let accept_str = "application/x-pem-file";
-    local_var_req_builder = local_var_req_builder.header("accept", accept_str);
 
     let local_var_result = local_var_req_builder.send_empty();
 
@@ -3297,8 +3261,6 @@ pub fn config_tls_cluster_ca_pem_put(
 
         local_var_req_builder = local_var_req_builder.header("authorization", &value);
     };
-    let accept_str = "application/json";
-    local_var_req_builder = local_var_req_builder.header("accept", accept_str);
 
     local_var_req_builder = local_var_req_builder.header("content-type", "application/x-pem-file");
     let local_var_result = local_var_req_builder.send(body);
@@ -3341,8 +3303,6 @@ pub fn config_tls_csr_pem_post(
 
         local_var_req_builder = local_var_req_builder.header("authorization", &value);
     };
-    let accept_str = "application/x-pem-file";
-    local_var_req_builder = local_var_req_builder.header("accept", accept_str);
 
     local_var_req_builder = local_var_req_builder.header("content-type", "application/json");
     let local_var_result = local_var_req_builder.send_json(distinguished_name);
@@ -3385,8 +3345,6 @@ pub fn config_tls_generate_post(
 
         local_var_req_builder = local_var_req_builder.header("authorization", &value);
     };
-    let accept_str = "application/json";
-    local_var_req_builder = local_var_req_builder.header("accept", accept_str);
 
     local_var_req_builder = local_var_req_builder.header("content-type", "application/json");
     let local_var_result = local_var_req_builder.send_json(tls_key_generate_request_data);
@@ -3431,8 +3389,6 @@ pub fn config_tls_public_pem_get(
 
         local_var_req_builder = local_var_req_builder.header("authorization", &value);
     };
-    let accept_str = "application/x-pem-file";
-    local_var_req_builder = local_var_req_builder.header("accept", accept_str);
 
     let local_var_result = local_var_req_builder.send_empty();
 
@@ -3477,8 +3433,6 @@ pub fn config_unattended_boot_get(
 
         local_var_req_builder = local_var_req_builder.header("authorization", &value);
     };
-    let accept_str = "application/json";
-    local_var_req_builder = local_var_req_builder.header("accept", accept_str);
 
     let local_var_result = local_var_req_builder.send_empty();
 
@@ -3523,8 +3477,6 @@ pub fn config_unattended_boot_put(
 
         local_var_req_builder = local_var_req_builder.header("authorization", &value);
     };
-    let accept_str = "application/json";
-    local_var_req_builder = local_var_req_builder.header("accept", accept_str);
 
     local_var_req_builder = local_var_req_builder.header("content-type", "application/json");
     let local_var_result = local_var_req_builder.send_json(unattended_boot_config);
@@ -3570,8 +3522,6 @@ pub fn config_unlock_passphrase_put(
 
         local_var_req_builder = local_var_req_builder.header("authorization", &value);
     };
-    let accept_str = "application/json";
-    local_var_req_builder = local_var_req_builder.header("accept", accept_str);
 
     local_var_req_builder = local_var_req_builder.header("content-type", "application/json");
     let local_var_result = local_var_req_builder.send_json(unlock_passphrase_config);
@@ -3648,8 +3598,6 @@ pub fn health_diagnose_get(
 
         local_var_req_builder = local_var_req_builder.header("authorization", &value);
     };
-    let accept_str = "application/json";
-    local_var_req_builder = local_var_req_builder.header("accept", accept_str);
 
     let local_var_result = local_var_req_builder.send_empty();
 
@@ -3720,8 +3668,6 @@ pub fn health_state_get(
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
         local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
     }
-    let accept_str = "application/json";
-    local_var_req_builder = local_var_req_builder.header("accept", accept_str);
 
     let local_var_result = local_var_req_builder.send_empty();
 
@@ -3757,8 +3703,6 @@ pub fn info_get(
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
         local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
     }
-    let accept_str = "application/json";
-    local_var_req_builder = local_var_req_builder.header("accept", accept_str);
 
     let local_var_result = local_var_req_builder.send_empty();
 
@@ -3800,8 +3744,6 @@ pub fn keys_generate_post(
 
         local_var_req_builder = local_var_req_builder.header("authorization", &value);
     };
-    let accept_str = "application/json";
-    local_var_req_builder = local_var_req_builder.header("accept", accept_str);
 
     local_var_req_builder = local_var_req_builder.header("content-type", "application/json");
     let local_var_result = local_var_req_builder.send_json(key_generate_request_data);
@@ -3853,8 +3795,6 @@ pub fn keys_get(
 
         local_var_req_builder = local_var_req_builder.header("authorization", &value);
     };
-    let accept_str = "application/json";
-    local_var_req_builder = local_var_req_builder.header("accept", accept_str);
 
     let local_var_result = local_var_req_builder.send_empty();
 
@@ -3945,8 +3885,6 @@ pub fn keys_key_id_cert_get(
 
         local_var_req_builder = local_var_req_builder.header("authorization", &value);
     };
-    let accept_str = "application/octet-stream";
-    local_var_req_builder = local_var_req_builder.header("accept", accept_str);
 
     let local_var_result = local_var_req_builder.send_empty();
 
@@ -4041,8 +3979,6 @@ pub fn keys_key_id_csr_pem_post(
 
         local_var_req_builder = local_var_req_builder.header("authorization", &value);
     };
-    let accept_str = "application/x-pem-file";
-    local_var_req_builder = local_var_req_builder.header("accept", accept_str);
 
     local_var_req_builder = local_var_req_builder.header("content-type", "application/json");
     let local_var_result = local_var_req_builder.send_json(distinguished_name);
@@ -4090,8 +4026,6 @@ pub fn keys_key_id_decrypt_post(
 
         local_var_req_builder = local_var_req_builder.header("authorization", &value);
     };
-    let accept_str = "application/json";
-    local_var_req_builder = local_var_req_builder.header("accept", accept_str);
 
     local_var_req_builder = local_var_req_builder.header("content-type", "application/json");
     let local_var_result = local_var_req_builder.send_json(decrypt_request_data);
@@ -4184,8 +4118,6 @@ pub fn keys_key_id_encrypt_post(
 
         local_var_req_builder = local_var_req_builder.header("authorization", &value);
     };
-    let accept_str = "application/json";
-    local_var_req_builder = local_var_req_builder.header("accept", accept_str);
 
     local_var_req_builder = local_var_req_builder.header("content-type", "application/json");
     let local_var_result = local_var_req_builder.send_json(encrypt_request_data);
@@ -4232,8 +4164,6 @@ pub fn keys_key_id_get(
 
         local_var_req_builder = local_var_req_builder.header("authorization", &value);
     };
-    let accept_str = "application/json";
-    local_var_req_builder = local_var_req_builder.header("accept", accept_str);
 
     let local_var_result = local_var_req_builder.send_empty();
 
@@ -4372,8 +4302,6 @@ pub fn keys_key_id_move_post(
 
         local_var_req_builder = local_var_req_builder.header("authorization", &value);
     };
-    let accept_str = "application/json";
-    local_var_req_builder = local_var_req_builder.header("accept", accept_str);
 
     local_var_req_builder = local_var_req_builder.header("content-type", "application/json");
     let local_var_result = local_var_req_builder.send_json(move_key_request);
@@ -4420,8 +4348,6 @@ pub fn keys_key_id_public_pem_get(
 
         local_var_req_builder = local_var_req_builder.header("authorization", &value);
     };
-    let accept_str = "application/x-pem-file";
-    local_var_req_builder = local_var_req_builder.header("accept", accept_str);
 
     let local_var_result = local_var_req_builder.send_empty();
 
@@ -4468,8 +4394,6 @@ pub fn keys_key_id_put(
 
         local_var_req_builder = local_var_req_builder.header("authorization", &value);
     };
-    let accept_str = "application/json";
-    local_var_req_builder = local_var_req_builder.header("accept", accept_str);
 
     let body_json = body.is_json();
     local_var_req_builder = local_var_req_builder.header("content-type", body.content_type());
@@ -4571,8 +4495,6 @@ pub fn keys_key_id_restrictions_tags_tag_put(
 
         local_var_req_builder = local_var_req_builder.header("authorization", &value);
     };
-    let accept_str = "application/json";
-    local_var_req_builder = local_var_req_builder.header("accept", accept_str);
 
     let local_var_result = local_var_req_builder.send_empty();
 
@@ -4619,8 +4541,6 @@ pub fn keys_key_id_sign_post(
 
         local_var_req_builder = local_var_req_builder.header("authorization", &value);
     };
-    let accept_str = "application/json";
-    local_var_req_builder = local_var_req_builder.header("accept", accept_str);
 
     local_var_req_builder = local_var_req_builder.header("content-type", "application/json");
     let local_var_result = local_var_req_builder.send_json(sign_request_data);
@@ -4677,8 +4597,6 @@ pub fn keys_key_prefix_get(
 
         local_var_req_builder = local_var_req_builder.header("authorization", &value);
     };
-    let accept_str = "application/json";
-    local_var_req_builder = local_var_req_builder.header("accept", accept_str);
 
     let local_var_result = local_var_req_builder.send_empty();
 
@@ -4720,8 +4638,6 @@ pub fn keys_post(
 
         local_var_req_builder = local_var_req_builder.header("authorization", &value);
     };
-    let accept_str = "application/json";
-    local_var_req_builder = local_var_req_builder.header("accept", accept_str);
 
     let body_json = body.is_json();
     local_var_req_builder = local_var_req_builder.header("content-type", body.content_type());
@@ -4809,8 +4725,6 @@ pub fn metrics_get(
 
         local_var_req_builder = local_var_req_builder.header("authorization", &value);
     };
-    let accept_str = "application/json";
-    local_var_req_builder = local_var_req_builder.header("accept", accept_str);
 
     let local_var_result = local_var_req_builder.send_empty();
 
@@ -4851,8 +4765,6 @@ pub fn namespaces_get(
 
         local_var_req_builder = local_var_req_builder.header("authorization", &value);
     };
-    let accept_str = "application/json";
-    local_var_req_builder = local_var_req_builder.header("accept", accept_str);
 
     let local_var_result = local_var_req_builder.send_empty();
 
@@ -4898,8 +4810,6 @@ pub fn namespaces_namespace_id_delete(
 
         local_var_req_builder = local_var_req_builder.header("authorization", &value);
     };
-    let accept_str = "application/json";
-    local_var_req_builder = local_var_req_builder.header("accept", accept_str);
 
     let local_var_result = local_var_req_builder.send_empty();
 
@@ -4945,8 +4855,6 @@ pub fn namespaces_namespace_id_put(
 
         local_var_req_builder = local_var_req_builder.header("authorization", &value);
     };
-    let accept_str = "application/json";
-    local_var_req_builder = local_var_req_builder.header("accept", accept_str);
 
     let local_var_result = local_var_req_builder.send_empty();
 
@@ -4983,8 +4891,6 @@ pub fn provision_post(
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
         local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
     }
-    let accept_str = "application/json";
-    local_var_req_builder = local_var_req_builder.header("accept", accept_str);
 
     local_var_req_builder = local_var_req_builder.header("content-type", "application/json");
     let local_var_result = local_var_req_builder.send_json(provision_request_data);
@@ -5027,8 +4933,6 @@ pub fn random_post(
 
         local_var_req_builder = local_var_req_builder.header("authorization", &value);
     };
-    let accept_str = "application/json";
-    local_var_req_builder = local_var_req_builder.header("accept", accept_str);
 
     local_var_req_builder = local_var_req_builder.header("content-type", "application/json");
     let local_var_result = local_var_req_builder.send_json(random_request_data);
@@ -5070,8 +4974,6 @@ pub fn system_backup_post(
 
         local_var_req_builder = local_var_req_builder.header("authorization", &value);
     };
-    let accept_str = "application/octet-stream";
-    local_var_req_builder = local_var_req_builder.header("accept", accept_str);
 
     let local_var_result = local_var_req_builder.send_empty();
 
@@ -5232,8 +5134,6 @@ pub fn system_info_get(
 
         local_var_req_builder = local_var_req_builder.header("authorization", &value);
     };
-    let accept_str = "application/json";
-    local_var_req_builder = local_var_req_builder.header("accept", accept_str);
 
     let local_var_result = local_var_req_builder.send_empty();
 
@@ -5316,8 +5216,6 @@ pub fn system_restore_post(
 
         local_var_req_builder = local_var_req_builder.header("authorization", &value);
     };
-    let accept_str = "application/json";
-    local_var_req_builder = local_var_req_builder.header("accept", accept_str);
 
     let mut local_var_multipart = ::multipart::client::lazy::Multipart::new();
 
@@ -5428,8 +5326,6 @@ pub fn system_update_post(
 
         local_var_req_builder = local_var_req_builder.header("authorization", &value);
     };
-    let accept_str = "application/json";
-    local_var_req_builder = local_var_req_builder.header("accept", accept_str);
 
     local_var_req_builder =
         local_var_req_builder.header("content-type", "application/octet-stream");
@@ -5468,8 +5364,6 @@ pub fn unlock_post(
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
         local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
     }
-    let accept_str = "application/json";
-    local_var_req_builder = local_var_req_builder.header("accept", accept_str);
 
     local_var_req_builder = local_var_req_builder.header("content-type", "application/json");
     let local_var_result = local_var_req_builder.send_json(unlock_request_data);
@@ -5511,8 +5405,6 @@ pub fn users_get(
 
         local_var_req_builder = local_var_req_builder.header("authorization", &value);
     };
-    let accept_str = "application/json";
-    local_var_req_builder = local_var_req_builder.header("accept", accept_str);
 
     let local_var_result = local_var_req_builder.send_empty();
 
@@ -5554,8 +5446,6 @@ pub fn users_post(
 
         local_var_req_builder = local_var_req_builder.header("authorization", &value);
     };
-    let accept_str = "application/json";
-    local_var_req_builder = local_var_req_builder.header("accept", accept_str);
 
     local_var_req_builder = local_var_req_builder.header("content-type", "application/json");
     let local_var_result = local_var_req_builder.send_json(user_post_data);
@@ -5602,8 +5492,6 @@ pub fn users_user_id_delete(
 
         local_var_req_builder = local_var_req_builder.header("authorization", &value);
     };
-    let accept_str = "application/json";
-    local_var_req_builder = local_var_req_builder.header("accept", accept_str);
 
     let local_var_result = local_var_req_builder.send_empty();
 
@@ -5649,8 +5537,6 @@ pub fn users_user_id_get(
 
         local_var_req_builder = local_var_req_builder.header("authorization", &value);
     };
-    let accept_str = "application/json";
-    local_var_req_builder = local_var_req_builder.header("accept", accept_str);
 
     let local_var_result = local_var_req_builder.send_empty();
 
@@ -5697,8 +5583,6 @@ pub fn users_user_id_passphrase_post(
 
         local_var_req_builder = local_var_req_builder.header("authorization", &value);
     };
-    let accept_str = "application/json";
-    local_var_req_builder = local_var_req_builder.header("accept", accept_str);
 
     local_var_req_builder = local_var_req_builder.header("content-type", "application/json");
     let local_var_result = local_var_req_builder.send_json(user_passphrase_post_data);
@@ -5746,8 +5630,6 @@ pub fn users_user_id_post(
 
         local_var_req_builder = local_var_req_builder.header("authorization", &value);
     };
-    let accept_str = "application/json";
-    local_var_req_builder = local_var_req_builder.header("accept", accept_str);
 
     local_var_req_builder = local_var_req_builder.header("content-type", "application/json");
     let local_var_result = local_var_req_builder.send_json(user_post_data);
@@ -5795,8 +5677,6 @@ pub fn users_user_id_put(
 
         local_var_req_builder = local_var_req_builder.header("authorization", &value);
     };
-    let accept_str = "application/json";
-    local_var_req_builder = local_var_req_builder.header("accept", accept_str);
 
     local_var_req_builder = local_var_req_builder.header("content-type", "application/json");
     let local_var_result = local_var_req_builder.send_json(user_post_data);
@@ -5843,8 +5723,6 @@ pub fn users_user_id_tags_get(
 
         local_var_req_builder = local_var_req_builder.header("authorization", &value);
     };
-    let accept_str = "application/json";
-    local_var_req_builder = local_var_req_builder.header("accept", accept_str);
 
     let local_var_result = local_var_req_builder.send_empty();
 
@@ -5939,8 +5817,6 @@ pub fn users_user_id_tags_tag_put(
 
         local_var_req_builder = local_var_req_builder.header("authorization", &value);
     };
-    let accept_str = "application/json";
-    local_var_req_builder = local_var_req_builder.header("accept", accept_str);
 
     let local_var_result = local_var_req_builder.send_empty();
 
