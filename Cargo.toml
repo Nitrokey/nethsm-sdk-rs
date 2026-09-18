@@ -33,6 +33,7 @@ http = "1"
 [dev-dependencies]
 chrono = "0.4.38"
 env_logger = "0.11.3"
+rcgen = { version = "0.14.7", features = ["crypto", "pem", "x509-parser"] }
 rustainers = "0.12.0"
 tokio = { version = "1.37.0", features = ["rt", "macros"] }
 ureq = "3.0.3"

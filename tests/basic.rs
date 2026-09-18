@@ -4,13 +4,18 @@ use std::collections::BTreeSet;
 
 use chrono::Utc;
 use nethsm_sdk_rs::{
-    apis::{Error, configuration::Configuration, default_api},
+    apis::{
+        Error,
+        configuration::Configuration,
+        default_api::{self, ConfigTlsCertPemPutError},
+    },
     models::{
-        BackupPassphraseConfig, KeyGenerateRequestData, KeyMechanism, KeySetLabel, KeyType,
-        LogLevel, LoggingConfig, ProvisionRequestData, RestoreRequestArguments, SystemState,
-        UnlockRequestData, UserPostData, UserRole,
+        BackupPassphraseConfig, DistinguishedName, KeyGenerateRequestData, KeyMechanism,
+        KeySetLabel, KeyType, LogLevel, LoggingConfig, ProvisionRequestData,
+        RestoreRequestArguments, SystemState, UnlockRequestData, UserPostData, UserRole,
     },
 };
+use rcgen::{CertificateParams, CertificateSigningRequestParams, Issuer, KeyPair};
 
 #[tokio::test]
 async fn test_health_state() {
@@ -283,6 +288,83 @@ async fn test_restore() {
     .await;
 
     assert_eq!(generated_keys, restored_keys);
+}
+
+#[tokio::test]
+async fn test_tls_cert() {
+    let admin_passphrase = "adminadmin";
+    let unlock_passphrase = "unlockunlock";
+
+    utils::with_container(|mut config| {
+        let request = ProvisionRequestData::new(
+            unlock_passphrase.to_owned(),
+            admin_passphrase.to_owned(),
+            Utc::now().to_rfc3339(),
+        );
+        default_api::provision_post(&config, request).unwrap();
+
+        config.basic_auth = Some(("admin".to_owned(), Some(admin_passphrase.to_owned())));
+
+        // Generate CA key
+        let ca_key = KeyPair::generate().unwrap();
+        let ca_params = CertificateParams::new(["localhost".to_owned()]).unwrap();
+        let issuer = Issuer::new(ca_params, &ca_key);
+
+        // Fetch CSR
+        let dn = DistinguishedName::new("localhost".to_owned());
+        let csr = default_api::config_tls_csr_pem_post(&config, dn)
+            .unwrap()
+            .entity;
+        let csr_params = CertificateSigningRequestParams::from_pem(&csr).unwrap();
+
+        // Create bad self-signed TLS cert
+        let bad_cert = csr_params.params.self_signed(&ca_key).unwrap().pem();
+
+        // Create good TLS cert using the CA key
+        let new_cert = csr_params
+            .params
+            .signed_by(&csr_params.public_key, &issuer)
+            .unwrap()
+            .pem();
+
+        let old_cert = default_api::config_tls_cert_pem_get(&config)
+            .unwrap()
+            .entity;
+
+        let result = default_api::config_tls_cert_pem_put(&config, &bad_cert);
+        let Err(Error::ResponseError(response_err)) = result else {
+            panic!("Expected response error, got: {result:?}");
+        };
+        assert_eq!(response_err.status, 400);
+        let ConfigTlsCertPemPutError::Status400(response) = response_err.entity else {
+            panic!("Expected 400 response, got: {response_err:?}");
+        };
+        let message = response.message.as_deref().unwrap();
+        assert!(
+            message.contains("public key in certificate does not match private key"),
+            "{message}"
+        );
+
+        let cert = default_api::config_tls_cert_pem_get(&config)
+            .unwrap()
+            .entity;
+        assert_eq!(old_cert, cert);
+
+        default_api::config_tls_cert_pem_put(&config, &new_cert).unwrap();
+
+        let cert = default_api::config_tls_cert_pem_get(&config)
+            .unwrap()
+            .entity;
+        assert_eq!(new_cert, cert);
+
+        default_api::config_tls_cert_pem_put(&config, &old_cert).unwrap();
+
+        let cert = default_api::config_tls_cert_pem_get(&config)
+            .unwrap()
+            .entity;
+        assert_eq!(cert, old_cert);
+    })
+    .await;
 }
 
 fn list_keys(config: &Configuration, label: Option<&str>) -> BTreeSet<String> {
