@@ -70,4 +70,4 @@ jobs:
     - uses: actions/checkout@v6
     - uses: dtolnay/rust-toolchain@1.86
     - name: Check library
-      run: cargo check --all-targets
+      run: cargo check --all-features
