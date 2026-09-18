@@ -11,7 +11,7 @@ use rustainers::{
     WaitStrategy,
     runner::{RunOption, Runner},
 };
-use ureq::tls::TlsConfig;
+use ureq::tls::{Certificate, RootCerts, TlsConfig};
 
 pub async fn with_container<F: FnOnce(Configuration) -> T, T>(f: F) -> T {
     let _ = env_logger::builder().is_test(true).try_init();
@@ -36,6 +36,18 @@ pub async fn with_container<F: FnOnce(Configuration) -> T, T>(f: F) -> T {
     let result = f(config);
     drop(container);
     result
+}
+
+pub fn set_root_ca(config: &Configuration, root_ca: &str) -> Configuration {
+    let root_cert = Certificate::from_pem(root_ca.as_bytes()).unwrap();
+    let root_certs = RootCerts::new_with_certs(&[root_cert]);
+    let mut config = config.clone();
+    config.client = ureq::Agent::new_with_config(
+        ureq::Agent::config_builder()
+            .tls_config(TlsConfig::builder().root_certs(root_certs).build())
+            .build(),
+    );
+    config
 }
 
 pub struct Version {

@@ -305,9 +305,13 @@ async fn test_tls_cert() {
 
         config.basic_auth = Some(("admin".to_owned(), Some(admin_passphrase.to_owned())));
 
+        let version = utils::version(&config);
+        let has_csr_san = version.major >= 3;
+
         // Generate CA key
         let ca_key = KeyPair::generate().unwrap();
         let ca_params = CertificateParams::new(["localhost".to_owned()]).unwrap();
+        let ca_cert = ca_params.self_signed(&ca_key).unwrap();
         let issuer = Issuer::new(ca_params, &ca_key);
 
         // Fetch CSR
@@ -330,6 +334,10 @@ async fn test_tls_cert() {
         let old_cert = default_api::config_tls_cert_pem_get(&config)
             .unwrap()
             .entity;
+
+        let ca_config = utils::set_root_ca(&config, &ca_cert.pem());
+        let result = default_api::health_state_get(&ca_config);
+        assert!(result.is_err(), "{result:?}");
 
         let result = default_api::config_tls_cert_pem_put(&config, &bad_cert);
         let Err(Error::ResponseError(response_err)) = result else {
@@ -357,12 +365,23 @@ async fn test_tls_cert() {
             .entity;
         assert_eq!(new_cert, cert);
 
+        // Older NetHSM versions don’t support setting the SAN in the CSR for the TLS certificate
+        // so trying to use the certificate will fail.
+        if has_csr_san {
+            let ca_config = utils::set_root_ca(&config, &ca_cert.pem());
+            default_api::health_state_get(&ca_config).unwrap();
+        }
+
         default_api::config_tls_cert_pem_put(&config, &old_cert).unwrap();
 
         let cert = default_api::config_tls_cert_pem_get(&config)
             .unwrap()
             .entity;
         assert_eq!(cert, old_cert);
+
+        let ca_config = utils::set_root_ca(&config, &ca_cert.pem());
+        let result = default_api::health_state_get(&ca_config);
+        assert!(result.is_err(), "{result:?}");
     })
     .await;
 }
