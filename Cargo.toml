@@ -9,7 +9,7 @@ repository = "https://github.com/Nitrokey/nethsm-sdk-rs"
 readme = "README.md"
 license = "MIT"
 edition = "2024"
-rust-version = "1.86"
+rust-version = "1.87"
 exclude = [
   "generator/*",
   "docs/*",
