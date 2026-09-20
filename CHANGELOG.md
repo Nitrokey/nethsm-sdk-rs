@@ -2,7 +2,9 @@
 
 ## Unreleased
 
--
+### Breaking Changes
+
+- Replace `multipart` dependency with `ureq::unversioned::multipart` and remove `Error::Multipart`
 
 [All Changes](https://github.com/Nitrokey/nethsm-sdk-rs/compare/v5.0.0...HEAD)
 
