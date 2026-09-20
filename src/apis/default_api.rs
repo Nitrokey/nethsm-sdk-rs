@@ -5217,36 +5217,22 @@ pub fn system_restore_post(
         local_var_req_builder = local_var_req_builder.header("authorization", &value);
     };
 
-    let mut local_var_multipart = ::multipart::client::lazy::Multipart::new();
+    let mut local_var_form = ::ureq::unversioned::multipart::Form::new();
 
-    if let Some(backup_file) = backup_file {
-        local_var_multipart.add_stream(
-            "backup_file",
-            ::std::io::Cursor::new(backup_file),
-            None::<&str>,
-            None,
-        );
+    if let Some(backup_file) = backup_file.as_ref() {
+        let part = ::ureq::unversioned::multipart::Part::bytes(backup_file)
+            .mime_str("application/octet-stream")?;
+        local_var_form = local_var_form.part("backup_file", part);
     }
     if let Some(arguments) = arguments {
         let arguments = ::serde_json::to_vec(&arguments)?;
-        local_var_multipart.add_stream(
-            "arguments",
-            ::std::io::Cursor::new(arguments),
-            None::<&str>,
-            None,
-        );
+        let part =
+            ::ureq::unversioned::multipart::Part::owned_reader(std::io::Cursor::new(arguments))
+                .mime_str("application/json")?;
+        local_var_form = local_var_form.part("arguments", part);
     }
 
-    let mut local_var_multipart = local_var_multipart.prepare()?;
-    local_var_req_builder = local_var_req_builder.header(
-        "content-type",
-        &format!(
-            "multipart/form-data; boundary={}",
-            local_var_multipart.boundary()
-        ),
-    );
-    let local_var_result =
-        local_var_req_builder.send(ureq::SendBody::from_reader(&mut local_var_multipart));
+    let local_var_result = local_var_req_builder.send(local_var_form);
 
     let local_var_resp = local_var_result?;
 
