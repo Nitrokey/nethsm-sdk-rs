@@ -3,6 +3,7 @@
 ## Unreleased
 
 - Add NetHSM release 5.0 to test matrix
+- Allow test matrix to continue if the test against the latest development version fails
 
 ### Bugfixes
 

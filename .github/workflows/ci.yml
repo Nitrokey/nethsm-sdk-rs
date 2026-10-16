@@ -34,6 +34,7 @@ jobs:
           - testing-v4.0
           - testing-v5.0
           - testing
+    continue-on-error: ${{ matrix.tag == 'testing' }}
     steps:
     - uses: actions/checkout@v6
     - uses: dtolnay/rust-toolchain@stable
