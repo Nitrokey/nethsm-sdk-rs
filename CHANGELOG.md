@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Add NetHSM release 5.0 to test matrix
+
 ### Bugfixes
 
 - Only set `Accept` header if the endpoint produces multiple content types ([#61](https://github.com/Nitrokey/nethsm-sdk-rs/issues/61))

@@ -32,6 +32,7 @@ jobs:
           - testing-v3.0
           - testing-v3.1
           - testing-v4.0
+          - testing-v5.0
           - testing
     steps:
     - uses: actions/checkout@v6
