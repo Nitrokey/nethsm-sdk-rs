@@ -2,12 +2,22 @@
 
 ## Unreleased
 
-- Add NetHSM release 5.0 to test matrix
-- Allow test matrix to continue if the test against the latest development version fails
+### Breaking Changes
+
+- Add support for separate cluster TLS certificates (requires NetHSM v5.1):
+  - `apis::default_api`:
+    - Remove `config_tls_cluster_ca_pem_get` and `config_tls_cluster_ca_pem_put` functions
+    - Add `cluster_tls_ca_pem_get`, `cluster_tls_ca_pem_put`, `cluster_tls_cert_pem_get`, `cluster_tls_cert_pem_put`, `cluster_tls_csr_pem_post`, `cluster_tls_generate_post`, `cluster_tls_public_pem_get` functions
+- `models`: Make the `learner` field optional for `ClusterMember`
 
 ### Bugfixes
 
 - Only set `Accept` header if the endpoint produces multiple content types ([#61](https://github.com/Nitrokey/nethsm-sdk-rs/issues/61))
+
+### Other Changes
+
+- Add NetHSM release 5.0 to test matrix
+- Allow test matrix to continue if the test against the latest development version fails
 
 [All Changes](https://github.com/Nitrokey/nethsm-sdk-rs/compare/v4.0.0...HEAD)
 

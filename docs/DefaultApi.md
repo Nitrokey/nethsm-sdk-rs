@@ -11,6 +11,13 @@ Method | HTTP request | Description
 [**cluster_members_member_id_promote_post**](DefaultApi.md#cluster_members_member_id_promote_post) | **POST** /cluster/members/{MemberID}/promote | 
 [**cluster_members_member_id_put**](DefaultApi.md#cluster_members_member_id_put) | **PUT** /cluster/members/{MemberID} | 
 [**cluster_members_post**](DefaultApi.md#cluster_members_post) | **POST** /cluster/members | 
+[**cluster_tls_ca_pem_get**](DefaultApi.md#cluster_tls_ca_pem_get) | **GET** /cluster/tls/ca.pem | 
+[**cluster_tls_ca_pem_put**](DefaultApi.md#cluster_tls_ca_pem_put) | **PUT** /cluster/tls/ca.pem | 
+[**cluster_tls_cert_pem_get**](DefaultApi.md#cluster_tls_cert_pem_get) | **GET** /cluster/tls/cert.pem | 
+[**cluster_tls_cert_pem_put**](DefaultApi.md#cluster_tls_cert_pem_put) | **PUT** /cluster/tls/cert.pem | 
+[**cluster_tls_csr_pem_post**](DefaultApi.md#cluster_tls_csr_pem_post) | **POST** /cluster/tls/csr.pem | 
+[**cluster_tls_generate_post**](DefaultApi.md#cluster_tls_generate_post) | **POST** /cluster/tls/generate | 
+[**cluster_tls_public_pem_get**](DefaultApi.md#cluster_tls_public_pem_get) | **GET** /cluster/tls/public.pem | 
 [**config_backup_passphrase_put**](DefaultApi.md#config_backup_passphrase_put) | **PUT** /config/backup-passphrase | 
 [**config_logging_get**](DefaultApi.md#config_logging_get) | **GET** /config/logging | 
 [**config_logging_put**](DefaultApi.md#config_logging_put) | **PUT** /config/logging | 
@@ -22,8 +29,6 @@ Method | HTTP request | Description
 [**config_time_put**](DefaultApi.md#config_time_put) | **PUT** /config/time | 
 [**config_tls_cert_pem_get**](DefaultApi.md#config_tls_cert_pem_get) | **GET** /config/tls/cert.pem | 
 [**config_tls_cert_pem_put**](DefaultApi.md#config_tls_cert_pem_put) | **PUT** /config/tls/cert.pem | 
-[**config_tls_cluster_ca_pem_get**](DefaultApi.md#config_tls_cluster_ca_pem_get) | **GET** /config/tls/cluster-ca.pem | 
-[**config_tls_cluster_ca_pem_put**](DefaultApi.md#config_tls_cluster_ca_pem_put) | **PUT** /config/tls/cluster-ca.pem | 
 [**config_tls_csr_pem_post**](DefaultApi.md#config_tls_csr_pem_post) | **POST** /config/tls/csr.pem | 
 [**config_tls_generate_post**](DefaultApi.md#config_tls_generate_post) | **POST** /config/tls/generate | 
 [**config_tls_public_pem_get**](DefaultApi.md#config_tls_public_pem_get) | **GET** /config/tls/public.pem | 
@@ -90,7 +95,7 @@ Method | HTTP request | Description
 > cluster_force_new_post()
 
 
-Rebuild etcd instance with the data on disk, switch to a single node cluster, and reboot. **WARNING** this will restore data only up to the last snapshot, and will result in data loss for any unconfirmed writes, or writes that occured on other NetHSM nodes that are now unreachable. This call is only available in the Failed state. Before using this command it is recommended that you attempt to heal the cluster's network connectivity first and restore quorum. To that end, use the /health/diagnose endpoint to understand to cause of the current failure. As it is potentially destructive, this operation requires authentication even in *Failed* state, which differs from *Operational* authentication. The user *MUST* be `unlock` and the password *MUST* be the last known unlock passphrase. When upgrading to v5.0, this will only work after having unlocked the HSM at least once.
+Rebuild etcd instance with the data on disk, switch to a single node cluster, and reboot. **WARNING** this will restore data only up to the last snapshot, and will result in data loss for any unconfirmed writes, or writes that occured on other NetHSM nodes that are now unreachable. This call is only available in the Failed state. Before using this command it is recommended that you attempt to heal the cluster's network connectivity first and restore quorum. To that end, use the /health/diagnose endpoint to understand the cause of the current failure. As it is potentially destructive, this operation requires authentication even in *Failed* state, which differs from *Operational* authentication. The user *MUST* be `unlock` and the password *MUST* be the last known unlock passphrase. When upgrading to v5.0, this will only work after having unlocked the HSM at least once.
 
 ### Parameters
 
@@ -286,6 +291,207 @@ Name | Type | Description  | Required | Notes
 
 - **Content-Type**: application/json
 - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
+## cluster_tls_ca_pem_get
+
+> String cluster_tls_ca_pem_get()
+
+
+Get currently set CA for cluster peer traffic (i.e. how cluster members communicate).
+
+### Parameters
+
+This endpoint does not need any parameter.
+
+### Return type
+
+**String**
+
+### Authorization
+
+[basic](../README.md#basic)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/x-pem-file
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
+## cluster_tls_ca_pem_put
+
+> cluster_tls_ca_pem_put(body)
+
+
+Set cluster certificate authority used for etcd peer traffic (i.e. how cluster members communicate). It is not set by default. When set, it cannot be unset (but it can be updated).  The NetHSM cert must be signed by this CA for this operation to succeed, it will be aborted otherwise. *Note that this is checked for this node but not for all members!* If you need to change the CA, ensure all nodes of the cluster have their cert signed by both the new and the old CA, then change the CA. Afterwards, you can update the individual certs to be signed only by the new CA.  When changed, the underlying etcd server is restarted with the new CA. 
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**body** | **String** |  | [required] |
+
+### Return type
+
+ (empty response body)
+
+### Authorization
+
+[basic](../README.md#basic)
+
+### HTTP request headers
+
+- **Content-Type**: application/x-pem-file
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
+## cluster_tls_cert_pem_get
+
+> String cluster_tls_cert_pem_get()
+
+
+Get certificate for NetHSM's cluster peer traffic (i.e. how cluster members communicate)
+
+### Parameters
+
+This endpoint does not need any parameter.
+
+### Return type
+
+**String**
+
+### Authorization
+
+[basic](../README.md#basic)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/x-pem-file
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
+## cluster_tls_cert_pem_put
+
+> cluster_tls_cert_pem_put(body)
+
+
+Set certificate for NetHSMs peer traffic (i.e. how cluster members communicate), e.g. to replace self-signed initial certificate.
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**body** | **String** |  | [required] |
+
+### Return type
+
+ (empty response body)
+
+### Authorization
+
+[basic](../README.md#basic)
+
+### HTTP request headers
+
+- **Content-Type**: application/x-pem-file
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
+## cluster_tls_csr_pem_post
+
+> String cluster_tls_csr_pem_post(distinguished_name)
+
+
+Get NetHSM certificate signing request for cluster peer traffic (i.e. how cluster members communicate), e.g. to replace self-signed initial certificate.
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**distinguished_name** | [**DistinguishedName**](DistinguishedName.md) |  | [required] |
+
+### Return type
+
+**String**
+
+### Authorization
+
+[basic](../README.md#basic)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/x-pem-file
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
+## cluster_tls_generate_post
+
+> cluster_tls_generate_post(tls_key_generate_request_data)
+
+
+Generate a new pair of public and private key for NetHSM's peer traffic (i.e. how cluster members communicate).
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**tls_key_generate_request_data** | [**TlsKeyGenerateRequestData**](TlsKeyGenerateRequestData.md) |  | [required] |
+
+### Return type
+
+ (empty response body)
+
+### Authorization
+
+[basic](../README.md#basic)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
+## cluster_tls_public_pem_get
+
+> String cluster_tls_public_pem_get()
+
+
+Get public key for NetHSM's cluster peer traffic (i.e. how cluster members communicate)
+
+### Parameters
+
+This endpoint does not need any parameter.
+
+### Return type
+
+**String**
+
+### Authorization
+
+[basic](../README.md#basic)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/x-pem-file
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -605,63 +811,6 @@ Name | Type | Description  | Required | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 
-## config_tls_cluster_ca_pem_get
-
-> String config_tls_cluster_ca_pem_get()
-
-
-Get currently set CA for cluster peer traffic (i.e. how cluster members communicate).
-
-### Parameters
-
-This endpoint does not need any parameter.
-
-### Return type
-
-**String**
-
-### Authorization
-
-[basic](../README.md#basic)
-
-### HTTP request headers
-
-- **Content-Type**: Not defined
-- **Accept**: application/x-pem-file
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-
-## config_tls_cluster_ca_pem_put
-
-> config_tls_cluster_ca_pem_put(body)
-
-
-Set cluster certificate authority used for etcd peer traffic (i.e. how cluster members communicate). It is not set by default. When set, it cannot be unset (but it can be updated).  The NetHSM cert must be signed by this CA for this operation to succeed, it will be aborted otherwise. *Note that this is checked for this node but not for all members!* If you need to change the CA, ensure all nodes of the cluster have their cert signed by both the new and the old CA, then change the CA. Afterwards, you can update the individual certs to be signed only by the new CA.  When changed, the underlying etcd server is restarted with the new CA. 
-
-### Parameters
-
-
-Name | Type | Description  | Required | Notes
-------------- | ------------- | ------------- | ------------- | -------------
-**body** | **String** |  | [required] |
-
-### Return type
-
- (empty response body)
-
-### Authorization
-
-[basic](../README.md#basic)
-
-### HTTP request headers
-
-- **Content-Type**: application/x-pem-file
-- **Accept**: application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-
 ## config_tls_csr_pem_post
 
 > String config_tls_csr_pem_post(distinguished_name)
@@ -727,7 +876,7 @@ Name | Type | Description  | Required | Notes
 > String config_tls_public_pem_get()
 
 
-Get public key for NetHSMs https API.
+Get public key for NetHSM's https API.
 
 ### Parameters
 

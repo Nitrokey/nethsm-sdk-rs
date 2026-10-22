@@ -17,17 +17,17 @@ pub struct ClusterMember {
     pub name: String,
     #[serde(rename = "urls")]
     pub urls: Vec<String>,
-    #[serde(rename = "learner")]
-    pub learner: bool,
+    #[serde(rename = "learner", skip_serializing_if = "Option::is_none")]
+    pub learner: Option<bool>,
 }
 
 impl ClusterMember {
-    pub fn new(id: String, name: String, urls: Vec<String>, learner: bool) -> ClusterMember {
+    pub fn new(id: String, name: String, urls: Vec<String>) -> ClusterMember {
         ClusterMember {
             id,
             name,
             urls,
-            learner,
+            learner: None,
         }
     }
 }

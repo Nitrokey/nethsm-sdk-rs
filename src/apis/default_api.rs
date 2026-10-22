@@ -282,6 +282,221 @@ impl ClusterMembersPostError {
     }
 }
 
+/// struct for typed errors of method [`cluster_tls_ca_pem_get`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum ClusterTlsCaPemGetError {
+    Status401(),
+    Status403(),
+    Status404(),
+    Status406(),
+    Status412(),
+    Status415(),
+    UnknownValue(serde_json::Value),
+}
+
+impl ClusterTlsCaPemGetError {
+    fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
+        match status {
+            401 => Ok(Self::Status401()),
+            403 => Ok(Self::Status403()),
+            404 => Ok(Self::Status404()),
+            406 => Ok(Self::Status406()),
+            412 => Ok(Self::Status412()),
+            415 => Ok(Self::Status415()),
+            _ => {
+                if data.is_empty() {
+                    Ok(Self::UnknownValue(serde_json::Value::Null))
+                } else {
+                    serde_json::from_slice(data).map(Self::UnknownValue)
+                }
+            }
+        }
+    }
+}
+
+/// struct for typed errors of method [`cluster_tls_ca_pem_put`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum ClusterTlsCaPemPutError {
+    Status400(crate::models::ErrorResponse),
+    Status401(),
+    Status403(),
+    Status406(),
+    Status412(),
+    UnknownValue(serde_json::Value),
+}
+
+impl ClusterTlsCaPemPutError {
+    fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
+        match status {
+            400 => Ok(Self::Status400(serde_json::from_slice(data)?)),
+            401 => Ok(Self::Status401()),
+            403 => Ok(Self::Status403()),
+            406 => Ok(Self::Status406()),
+            412 => Ok(Self::Status412()),
+            _ => {
+                if data.is_empty() {
+                    Ok(Self::UnknownValue(serde_json::Value::Null))
+                } else {
+                    serde_json::from_slice(data).map(Self::UnknownValue)
+                }
+            }
+        }
+    }
+}
+
+/// struct for typed errors of method [`cluster_tls_cert_pem_get`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum ClusterTlsCertPemGetError {
+    Status401(),
+    Status403(),
+    Status406(),
+    Status412(),
+    Status415(),
+    UnknownValue(serde_json::Value),
+}
+
+impl ClusterTlsCertPemGetError {
+    fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
+        match status {
+            401 => Ok(Self::Status401()),
+            403 => Ok(Self::Status403()),
+            406 => Ok(Self::Status406()),
+            412 => Ok(Self::Status412()),
+            415 => Ok(Self::Status415()),
+            _ => {
+                if data.is_empty() {
+                    Ok(Self::UnknownValue(serde_json::Value::Null))
+                } else {
+                    serde_json::from_slice(data).map(Self::UnknownValue)
+                }
+            }
+        }
+    }
+}
+
+/// struct for typed errors of method [`cluster_tls_cert_pem_put`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum ClusterTlsCertPemPutError {
+    Status400(crate::models::ErrorResponse),
+    Status401(),
+    Status403(),
+    Status406(),
+    Status412(),
+    UnknownValue(serde_json::Value),
+}
+
+impl ClusterTlsCertPemPutError {
+    fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
+        match status {
+            400 => Ok(Self::Status400(serde_json::from_slice(data)?)),
+            401 => Ok(Self::Status401()),
+            403 => Ok(Self::Status403()),
+            406 => Ok(Self::Status406()),
+            412 => Ok(Self::Status412()),
+            _ => {
+                if data.is_empty() {
+                    Ok(Self::UnknownValue(serde_json::Value::Null))
+                } else {
+                    serde_json::from_slice(data).map(Self::UnknownValue)
+                }
+            }
+        }
+    }
+}
+
+/// struct for typed errors of method [`cluster_tls_csr_pem_post`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum ClusterTlsCsrPemPostError {
+    Status401(),
+    Status403(),
+    Status406(),
+    Status412(),
+    UnknownValue(serde_json::Value),
+}
+
+impl ClusterTlsCsrPemPostError {
+    fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
+        match status {
+            401 => Ok(Self::Status401()),
+            403 => Ok(Self::Status403()),
+            406 => Ok(Self::Status406()),
+            412 => Ok(Self::Status412()),
+            _ => {
+                if data.is_empty() {
+                    Ok(Self::UnknownValue(serde_json::Value::Null))
+                } else {
+                    serde_json::from_slice(data).map(Self::UnknownValue)
+                }
+            }
+        }
+    }
+}
+
+/// struct for typed errors of method [`cluster_tls_generate_post`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum ClusterTlsGeneratePostError {
+    Status400(crate::models::ErrorResponse),
+    Status401(),
+    Status403(),
+    Status406(),
+    Status412(),
+    UnknownValue(serde_json::Value),
+}
+
+impl ClusterTlsGeneratePostError {
+    fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
+        match status {
+            400 => Ok(Self::Status400(serde_json::from_slice(data)?)),
+            401 => Ok(Self::Status401()),
+            403 => Ok(Self::Status403()),
+            406 => Ok(Self::Status406()),
+            412 => Ok(Self::Status412()),
+            _ => {
+                if data.is_empty() {
+                    Ok(Self::UnknownValue(serde_json::Value::Null))
+                } else {
+                    serde_json::from_slice(data).map(Self::UnknownValue)
+                }
+            }
+        }
+    }
+}
+
+/// struct for typed errors of method [`cluster_tls_public_pem_get`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum ClusterTlsPublicPemGetError {
+    Status401(),
+    Status403(),
+    Status406(),
+    Status412(),
+    UnknownValue(serde_json::Value),
+}
+
+impl ClusterTlsPublicPemGetError {
+    fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
+        match status {
+            401 => Ok(Self::Status401()),
+            403 => Ok(Self::Status403()),
+            406 => Ok(Self::Status406()),
+            412 => Ok(Self::Status412()),
+            _ => {
+                if data.is_empty() {
+                    Ok(Self::UnknownValue(serde_json::Value::Null))
+                } else {
+                    serde_json::from_slice(data).map(Self::UnknownValue)
+                }
+            }
+        }
+    }
+}
+
 /// struct for typed errors of method [`config_backup_passphrase_put`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -597,70 +812,6 @@ pub enum ConfigTlsCertPemPutError {
 }
 
 impl ConfigTlsCertPemPutError {
-    fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
-        match status {
-            400 => Ok(Self::Status400(serde_json::from_slice(data)?)),
-            401 => Ok(Self::Status401()),
-            403 => Ok(Self::Status403()),
-            406 => Ok(Self::Status406()),
-            412 => Ok(Self::Status412()),
-            _ => {
-                if data.is_empty() {
-                    Ok(Self::UnknownValue(serde_json::Value::Null))
-                } else {
-                    serde_json::from_slice(data).map(Self::UnknownValue)
-                }
-            }
-        }
-    }
-}
-
-/// struct for typed errors of method [`config_tls_cluster_ca_pem_get`]
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(untagged)]
-pub enum ConfigTlsClusterCaPemGetError {
-    Status401(),
-    Status403(),
-    Status404(),
-    Status406(),
-    Status412(),
-    Status415(),
-    UnknownValue(serde_json::Value),
-}
-
-impl ConfigTlsClusterCaPemGetError {
-    fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
-        match status {
-            401 => Ok(Self::Status401()),
-            403 => Ok(Self::Status403()),
-            404 => Ok(Self::Status404()),
-            406 => Ok(Self::Status406()),
-            412 => Ok(Self::Status412()),
-            415 => Ok(Self::Status415()),
-            _ => {
-                if data.is_empty() {
-                    Ok(Self::UnknownValue(serde_json::Value::Null))
-                } else {
-                    serde_json::from_slice(data).map(Self::UnknownValue)
-                }
-            }
-        }
-    }
-}
-
-/// struct for typed errors of method [`config_tls_cluster_ca_pem_put`]
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(untagged)]
-pub enum ConfigTlsClusterCaPemPutError {
-    Status400(crate::models::ErrorResponse),
-    Status401(),
-    Status403(),
-    Status406(),
-    Status412(),
-    UnknownValue(serde_json::Value),
-}
-
-impl ConfigTlsClusterCaPemPutError {
     fn new(status: u16, data: &[u8]) -> Result<Self, serde_json::Error> {
         match status {
             400 => Ok(Self::Status400(serde_json::from_slice(data)?)),
@@ -2433,7 +2584,7 @@ impl UsersUserIdTagsTagPutError {
     }
 }
 
-/// Rebuild etcd instance with the data on disk, switch to a single node cluster, and reboot. **WARNING** this will restore data only up to the last snapshot, and will result in data loss for any unconfirmed writes, or writes that occured on other NetHSM nodes that are now unreachable. This call is only available in the Failed state. Before using this command it is recommended that you attempt to heal the cluster's network connectivity first and restore quorum. To that end, use the /health/diagnose endpoint to understand to cause of the current failure. As it is potentially destructive, this operation requires authentication even in *Failed* state, which differs from *Operational* authentication. The user *MUST* be `unlock` and the password *MUST* be the last known unlock passphrase. When upgrading to v5.0, this will only work after having unlocked the HSM at least once.
+/// Rebuild etcd instance with the data on disk, switch to a single node cluster, and reboot. **WARNING** this will restore data only up to the last snapshot, and will result in data loss for any unconfirmed writes, or writes that occured on other NetHSM nodes that are now unreachable. This call is only available in the Failed state. Before using this command it is recommended that you attempt to heal the cluster's network connectivity first and restore quorum. To that end, use the /health/diagnose endpoint to understand the cause of the current failure. As it is potentially destructive, this operation requires authentication even in *Failed* state, which differs from *Operational* authentication. The user *MUST* be `unlock` and the password *MUST* be the last known unlock passphrase. When upgrading to v5.0, this will only work after having unlocked the HSM at least once.
 pub fn cluster_force_new_post(
     configuration: &configuration::Configuration,
 ) -> Result<ResponseContent<()>, Error<ClusterForceNewPostError>> {
@@ -2730,6 +2881,297 @@ pub fn cluster_members_post(
     } else {
         ResponseContent::new(local_var_resp, |data| {
             ClusterMembersPostError::new(local_var_status, data).map_err(From::from)
+        })
+        .and_then(|content| Err(Error::ResponseError(content)))
+    }
+}
+
+/// Get currently set CA for cluster peer traffic (i.e. how cluster members communicate).
+pub fn cluster_tls_ca_pem_get(
+    configuration: &configuration::Configuration,
+) -> Result<ResponseContent<String>, Error<ClusterTlsCaPemGetError>> {
+    let local_var_configuration = configuration;
+
+    let local_var_client = &local_var_configuration.client;
+
+    let local_var_uri_str = format!("{}/cluster/tls/ca.pem", local_var_configuration.base_path);
+    let mut local_var_req_builder =
+        create_request!(local_var_client, GET, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
+
+    if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
+        local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
+    }
+    if let Some(ref local_var_auth_conf) = local_var_configuration.basic_auth {
+        let value = super::basic_auth(local_var_auth_conf);
+
+        local_var_req_builder = local_var_req_builder.header("authorization", &value);
+    };
+
+    let local_var_result = local_var_req_builder.send_empty();
+
+    let local_var_resp = local_var_result?;
+
+    let local_var_status = local_var_resp.status().as_u16();
+    if local_var_status < 400 {
+        ResponseContent::string(local_var_resp)
+    } else {
+        ResponseContent::new(local_var_resp, |data| {
+            ClusterTlsCaPemGetError::new(local_var_status, data).map_err(From::from)
+        })
+        .and_then(|content| Err(Error::ResponseError(content)))
+    }
+}
+
+/// Set cluster certificate authority used for etcd peer traffic (i.e. how cluster members communicate). It is not set by default. When set, it cannot be unset (but it can be updated).  The NetHSM cert must be signed by this CA for this operation to succeed, it will be aborted otherwise. *Note that this is checked for this node but not for all members!* If you need to change the CA, ensure all nodes of the cluster have their cert signed by both the new and the old CA, then change the CA. Afterwards, you can update the individual certs to be signed only by the new CA.  When changed, the underlying etcd server is restarted with the new CA.
+pub fn cluster_tls_ca_pem_put(
+    configuration: &configuration::Configuration,
+    body: &str,
+) -> Result<ResponseContent<()>, Error<ClusterTlsCaPemPutError>> {
+    let local_var_configuration = configuration;
+
+    let local_var_client = &local_var_configuration.client;
+
+    let local_var_uri_str = format!("{}/cluster/tls/ca.pem", local_var_configuration.base_path);
+    let mut local_var_req_builder =
+        create_request!(local_var_client, PUT, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
+
+    if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
+        local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
+    }
+    if let Some(ref local_var_auth_conf) = local_var_configuration.basic_auth {
+        let value = super::basic_auth(local_var_auth_conf);
+
+        local_var_req_builder = local_var_req_builder.header("authorization", &value);
+    };
+
+    local_var_req_builder = local_var_req_builder.header("content-type", "application/x-pem-file");
+    let local_var_result = local_var_req_builder.send(body);
+
+    let local_var_resp = local_var_result?;
+
+    let local_var_status = local_var_resp.status().as_u16();
+    if local_var_status < 400 {
+        ResponseContent::unit(local_var_resp)
+    } else {
+        ResponseContent::new(local_var_resp, |data| {
+            ClusterTlsCaPemPutError::new(local_var_status, data).map_err(From::from)
+        })
+        .and_then(|content| Err(Error::ResponseError(content)))
+    }
+}
+
+/// Get certificate for NetHSM's cluster peer traffic (i.e. how cluster members communicate)
+pub fn cluster_tls_cert_pem_get(
+    configuration: &configuration::Configuration,
+) -> Result<ResponseContent<String>, Error<ClusterTlsCertPemGetError>> {
+    let local_var_configuration = configuration;
+
+    let local_var_client = &local_var_configuration.client;
+
+    let local_var_uri_str = format!("{}/cluster/tls/cert.pem", local_var_configuration.base_path);
+    let mut local_var_req_builder =
+        create_request!(local_var_client, GET, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
+
+    if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
+        local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
+    }
+    if let Some(ref local_var_auth_conf) = local_var_configuration.basic_auth {
+        let value = super::basic_auth(local_var_auth_conf);
+
+        local_var_req_builder = local_var_req_builder.header("authorization", &value);
+    };
+
+    let local_var_result = local_var_req_builder.send_empty();
+
+    let local_var_resp = local_var_result?;
+
+    let local_var_status = local_var_resp.status().as_u16();
+    if local_var_status < 400 {
+        ResponseContent::string(local_var_resp)
+    } else {
+        ResponseContent::new(local_var_resp, |data| {
+            ClusterTlsCertPemGetError::new(local_var_status, data).map_err(From::from)
+        })
+        .and_then(|content| Err(Error::ResponseError(content)))
+    }
+}
+
+/// Set certificate for NetHSMs peer traffic (i.e. how cluster members communicate), e.g. to replace self-signed initial certificate.
+pub fn cluster_tls_cert_pem_put(
+    configuration: &configuration::Configuration,
+    body: &str,
+) -> Result<ResponseContent<()>, Error<ClusterTlsCertPemPutError>> {
+    let local_var_configuration = configuration;
+
+    let local_var_client = &local_var_configuration.client;
+
+    let local_var_uri_str = format!("{}/cluster/tls/cert.pem", local_var_configuration.base_path);
+    let mut local_var_req_builder =
+        create_request!(local_var_client, PUT, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
+
+    if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
+        local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
+    }
+    if let Some(ref local_var_auth_conf) = local_var_configuration.basic_auth {
+        let value = super::basic_auth(local_var_auth_conf);
+
+        local_var_req_builder = local_var_req_builder.header("authorization", &value);
+    };
+
+    local_var_req_builder = local_var_req_builder.header("content-type", "application/x-pem-file");
+    let local_var_result = local_var_req_builder.send(body);
+
+    let local_var_resp = local_var_result?;
+
+    let local_var_status = local_var_resp.status().as_u16();
+    if local_var_status < 400 {
+        ResponseContent::unit(local_var_resp)
+    } else {
+        ResponseContent::new(local_var_resp, |data| {
+            ClusterTlsCertPemPutError::new(local_var_status, data).map_err(From::from)
+        })
+        .and_then(|content| Err(Error::ResponseError(content)))
+    }
+}
+
+/// Get NetHSM certificate signing request for cluster peer traffic (i.e. how cluster members communicate), e.g. to replace self-signed initial certificate.
+pub fn cluster_tls_csr_pem_post(
+    configuration: &configuration::Configuration,
+    distinguished_name: crate::models::DistinguishedName,
+) -> Result<ResponseContent<String>, Error<ClusterTlsCsrPemPostError>> {
+    let local_var_configuration = configuration;
+
+    let local_var_client = &local_var_configuration.client;
+
+    let local_var_uri_str = format!("{}/cluster/tls/csr.pem", local_var_configuration.base_path);
+    let mut local_var_req_builder =
+        create_request!(local_var_client, POST, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
+
+    if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
+        local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
+    }
+    if let Some(ref local_var_auth_conf) = local_var_configuration.basic_auth {
+        let value = super::basic_auth(local_var_auth_conf);
+
+        local_var_req_builder = local_var_req_builder.header("authorization", &value);
+    };
+
+    local_var_req_builder = local_var_req_builder.header("content-type", "application/json");
+    let local_var_result = local_var_req_builder.send_json(distinguished_name);
+
+    let local_var_resp = local_var_result?;
+
+    let local_var_status = local_var_resp.status().as_u16();
+    if local_var_status < 400 {
+        ResponseContent::string(local_var_resp)
+    } else {
+        ResponseContent::new(local_var_resp, |data| {
+            ClusterTlsCsrPemPostError::new(local_var_status, data).map_err(From::from)
+        })
+        .and_then(|content| Err(Error::ResponseError(content)))
+    }
+}
+
+/// Generate a new pair of public and private key for NetHSM's peer traffic (i.e. how cluster members communicate).
+pub fn cluster_tls_generate_post(
+    configuration: &configuration::Configuration,
+    tls_key_generate_request_data: crate::models::TlsKeyGenerateRequestData,
+) -> Result<ResponseContent<()>, Error<ClusterTlsGeneratePostError>> {
+    let local_var_configuration = configuration;
+
+    let local_var_client = &local_var_configuration.client;
+
+    let local_var_uri_str = format!("{}/cluster/tls/generate", local_var_configuration.base_path);
+    let mut local_var_req_builder =
+        create_request!(local_var_client, POST, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
+
+    if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
+        local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
+    }
+    if let Some(ref local_var_auth_conf) = local_var_configuration.basic_auth {
+        let value = super::basic_auth(local_var_auth_conf);
+
+        local_var_req_builder = local_var_req_builder.header("authorization", &value);
+    };
+
+    local_var_req_builder = local_var_req_builder.header("content-type", "application/json");
+    let local_var_result = local_var_req_builder.send_json(tls_key_generate_request_data);
+
+    let local_var_resp = local_var_result?;
+
+    let local_var_status = local_var_resp.status().as_u16();
+    if local_var_status < 400 {
+        ResponseContent::unit(local_var_resp)
+    } else {
+        ResponseContent::new(local_var_resp, |data| {
+            ClusterTlsGeneratePostError::new(local_var_status, data).map_err(From::from)
+        })
+        .and_then(|content| Err(Error::ResponseError(content)))
+    }
+}
+
+/// Get public key for NetHSM's cluster peer traffic (i.e. how cluster members communicate)
+pub fn cluster_tls_public_pem_get(
+    configuration: &configuration::Configuration,
+) -> Result<ResponseContent<String>, Error<ClusterTlsPublicPemGetError>> {
+    let local_var_configuration = configuration;
+
+    let local_var_client = &local_var_configuration.client;
+
+    let local_var_uri_str = format!(
+        "{}/cluster/tls/public.pem",
+        local_var_configuration.base_path
+    );
+    let mut local_var_req_builder =
+        create_request!(local_var_client, GET, local_var_uri_str.as_str());
+    local_var_req_builder = local_var_req_builder
+        .config()
+        .http_status_as_error(false)
+        .build();
+
+    if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
+        local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
+    }
+    if let Some(ref local_var_auth_conf) = local_var_configuration.basic_auth {
+        let value = super::basic_auth(local_var_auth_conf);
+
+        local_var_req_builder = local_var_req_builder.header("authorization", &value);
+    };
+
+    let local_var_result = local_var_req_builder.send_empty();
+
+    let local_var_resp = local_var_result?;
+
+    let local_var_status = local_var_resp.status().as_u16();
+    if local_var_status < 400 {
+        ResponseContent::string(local_var_resp)
+    } else {
+        ResponseContent::new(local_var_resp, |data| {
+            ClusterTlsPublicPemGetError::new(local_var_status, data).map_err(From::from)
         })
         .and_then(|content| Err(Error::ResponseError(content)))
     }
@@ -3190,94 +3632,6 @@ pub fn config_tls_cert_pem_put(
     }
 }
 
-/// Get currently set CA for cluster peer traffic (i.e. how cluster members communicate).
-pub fn config_tls_cluster_ca_pem_get(
-    configuration: &configuration::Configuration,
-) -> Result<ResponseContent<String>, Error<ConfigTlsClusterCaPemGetError>> {
-    let local_var_configuration = configuration;
-
-    let local_var_client = &local_var_configuration.client;
-
-    let local_var_uri_str = format!(
-        "{}/config/tls/cluster-ca.pem",
-        local_var_configuration.base_path
-    );
-    let mut local_var_req_builder =
-        create_request!(local_var_client, GET, local_var_uri_str.as_str());
-    local_var_req_builder = local_var_req_builder
-        .config()
-        .http_status_as_error(false)
-        .build();
-
-    if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
-        local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
-    }
-    if let Some(ref local_var_auth_conf) = local_var_configuration.basic_auth {
-        let value = super::basic_auth(local_var_auth_conf);
-
-        local_var_req_builder = local_var_req_builder.header("authorization", &value);
-    };
-
-    let local_var_result = local_var_req_builder.send_empty();
-
-    let local_var_resp = local_var_result?;
-
-    let local_var_status = local_var_resp.status().as_u16();
-    if local_var_status < 400 {
-        ResponseContent::string(local_var_resp)
-    } else {
-        ResponseContent::new(local_var_resp, |data| {
-            ConfigTlsClusterCaPemGetError::new(local_var_status, data).map_err(From::from)
-        })
-        .and_then(|content| Err(Error::ResponseError(content)))
-    }
-}
-
-/// Set cluster certificate authority used for etcd peer traffic (i.e. how cluster members communicate). It is not set by default. When set, it cannot be unset (but it can be updated).  The NetHSM cert must be signed by this CA for this operation to succeed, it will be aborted otherwise. *Note that this is checked for this node but not for all members!* If you need to change the CA, ensure all nodes of the cluster have their cert signed by both the new and the old CA, then change the CA. Afterwards, you can update the individual certs to be signed only by the new CA.  When changed, the underlying etcd server is restarted with the new CA.
-pub fn config_tls_cluster_ca_pem_put(
-    configuration: &configuration::Configuration,
-    body: &str,
-) -> Result<ResponseContent<()>, Error<ConfigTlsClusterCaPemPutError>> {
-    let local_var_configuration = configuration;
-
-    let local_var_client = &local_var_configuration.client;
-
-    let local_var_uri_str = format!(
-        "{}/config/tls/cluster-ca.pem",
-        local_var_configuration.base_path
-    );
-    let mut local_var_req_builder =
-        create_request!(local_var_client, PUT, local_var_uri_str.as_str());
-    local_var_req_builder = local_var_req_builder
-        .config()
-        .http_status_as_error(false)
-        .build();
-
-    if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
-        local_var_req_builder = local_var_req_builder.header("user-agent", local_var_user_agent);
-    }
-    if let Some(ref local_var_auth_conf) = local_var_configuration.basic_auth {
-        let value = super::basic_auth(local_var_auth_conf);
-
-        local_var_req_builder = local_var_req_builder.header("authorization", &value);
-    };
-
-    local_var_req_builder = local_var_req_builder.header("content-type", "application/x-pem-file");
-    let local_var_result = local_var_req_builder.send(body);
-
-    let local_var_resp = local_var_result?;
-
-    let local_var_status = local_var_resp.status().as_u16();
-    if local_var_status < 400 {
-        ResponseContent::unit(local_var_resp)
-    } else {
-        ResponseContent::new(local_var_resp, |data| {
-            ConfigTlsClusterCaPemPutError::new(local_var_status, data).map_err(From::from)
-        })
-        .and_then(|content| Err(Error::ResponseError(content)))
-    }
-}
-
 /// Get NetHSM certificate signing request e.g. to replace self-signed intital certificate.
 pub fn config_tls_csr_pem_post(
     configuration: &configuration::Configuration,
@@ -3362,7 +3716,7 @@ pub fn config_tls_generate_post(
     }
 }
 
-/// Get public key for NetHSMs https API.
+/// Get public key for NetHSM's https API.
 pub fn config_tls_public_pem_get(
     configuration: &configuration::Configuration,
 ) -> Result<ResponseContent<String>, Error<ConfigTlsPublicPemGetError>> {
