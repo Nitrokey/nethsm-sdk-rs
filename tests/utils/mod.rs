@@ -52,14 +52,16 @@ pub fn set_root_ca(config: &Configuration, root_ca: &str) -> Configuration {
 
 pub struct Version {
     pub major: u8,
+    pub minor: u8,
 }
 
 #[must_use]
 pub fn version(config: &Configuration) -> Version {
     let system_info = default_api::system_info_get(config).unwrap().entity;
-    let (major, _minor) = system_info.software_version.split_once(".").unwrap();
+    let (major, minor) = system_info.software_version.split_once(".").unwrap();
     Version {
         major: major.parse().unwrap(),
+        minor: minor.parse().unwrap(),
     }
 }
 

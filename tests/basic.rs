@@ -15,7 +15,10 @@ use nethsm_sdk_rs::{
         RestoreRequestArguments, SystemState, UnlockRequestData, UserPostData, UserRole,
     },
 };
-use rcgen::{CertificateParams, CertificateSigningRequestParams, Issuer, KeyPair};
+use rcgen::{
+    BasicConstraints, CertificateParams, CertificateSigningRequestParams, IsCa, Issuer, KeyPair,
+    KeyUsagePurpose,
+};
 
 #[tokio::test]
 async fn test_health_state() {
@@ -384,6 +387,77 @@ async fn test_tls_cert() {
         assert!(result.is_err(), "{result:?}");
     })
     .await;
+}
+
+#[tokio::test]
+async fn test_cluster_tls_cert() {
+    let admin_passphrase = "adminadmin";
+    let unlock_passphrase = "unlockunlock";
+
+    utils::with_container(|mut config| {
+        let request = ProvisionRequestData::new(
+            unlock_passphrase.to_owned(),
+            admin_passphrase.to_owned(),
+            Utc::now().to_rfc3339(),
+        );
+        default_api::provision_post(&config, request).unwrap();
+
+        config.basic_auth = Some(("admin".to_owned(), Some(admin_passphrase.to_owned())));
+
+        let version = utils::version(&config);
+        // support for separate cluster TLS certificates was added in v5.1
+        if version.major < 5 || (version.major == 5 && version.minor < 1) {
+            return;
+        }
+
+        // Generate CA key
+        let ca_key = KeyPair::generate().unwrap();
+        let mut ca_params = CertificateParams::new(["localhost".to_owned()]).unwrap();
+        ca_params.is_ca = IsCa::Ca(BasicConstraints::Unconstrained);
+        ca_params.key_usages = vec![KeyUsagePurpose::KeyCertSign];
+        let ca_cert = ca_params.self_signed(&ca_key).unwrap();
+        let ca_cert_pem = ca_cert.pem();
+        let issuer = Issuer::new(ca_params, &ca_key);
+
+        // Fetch CSR
+        let dn = DistinguishedName::new("localhost".to_owned());
+        let csr = default_api::cluster_tls_csr_pem_post(&config, dn)
+            .unwrap()
+            .entity;
+        let csr_params = CertificateSigningRequestParams::from_pem(&csr).unwrap();
+
+        // Create cluster cert using the CA key
+        let new_cert = csr_params
+            .params
+            .signed_by(&csr_params.public_key, &issuer)
+            .unwrap()
+            .pem();
+
+        // Cluster CA is not set by default
+        let result = default_api::cluster_tls_ca_pem_get(&config);
+        let Err(Error::ResponseError(response_err)) = result else {
+            panic!("Expected response error, got: {result:?}");
+        };
+        assert_eq!(response_err.status, 404);
+
+        // Setting the cluster CA fails if the cert is not signed yet
+        let result = default_api::cluster_tls_ca_pem_put(&config, &ca_cert_pem);
+        let Err(Error::ResponseError(response_err)) = result else {
+            panic!("Expected response error, got: {result:?}");
+        };
+        assert_eq!(response_err.status, 412);
+
+        default_api::cluster_tls_cert_pem_put(&config, &new_cert).unwrap();
+
+        let cert = default_api::cluster_tls_cert_pem_get(&config)
+            .unwrap()
+            .entity;
+        assert_eq!(new_cert, cert);
+
+        // Now we can set the cluster CA
+        default_api::cluster_tls_ca_pem_put(&config, &ca_cert_pem).unwrap();
+    })
+    .await
 }
 
 fn list_keys(config: &Configuration, label: Option<&str>) -> BTreeSet<String> {
