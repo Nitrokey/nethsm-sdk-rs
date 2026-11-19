@@ -18,6 +18,7 @@
 
 - Add NetHSM release 5.0 to test matrix
 - Allow test matrix to continue if the test against the latest development version fails
+- Replace the unmaintained `multipart` dependency with its maintained fork `multipart_ng` ([#29](https://github.com/Nitrokey/nethsm-sdk-rs/issues/29))
 
 [All Changes](https://github.com/Nitrokey/nethsm-sdk-rs/compare/v4.0.0...HEAD)
 

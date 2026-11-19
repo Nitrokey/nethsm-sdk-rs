@@ -42,7 +42,7 @@ url = "^2.2"
 ureq = { version = "3.0.3", features = ["json", "rustls"], default-features = false }
 base64 = { version = "0.21", default-features = false, features = ["alloc"] }
 mime = "0.3"
-multipart = { version = "0.18", default-features = false, features = ["client"] }
+multipart = { package = "multipart_ng", version = "0.18.1", default-features = false, features = ["client"] }
 http = "1"
 
 [dev-dependencies]

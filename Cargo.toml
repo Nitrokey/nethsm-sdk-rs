@@ -21,7 +21,7 @@ exclude = [
 
 [dependencies]
 mime = "0.3"
-multipart = { version = "0.18", default-features = false, features = ["client"] }
+multipart = { package = "multipart_ng", version = "0.18.1", default-features = false, features = ["client"] }
 serde = { default-features = false, version = "^1.0" }
 serde_derive = "^1.0"
 serde_json = { default-features = false, version = "^1.0" }
