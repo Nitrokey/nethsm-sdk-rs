@@ -21,12 +21,12 @@ exclude = [
 
 [dependencies]
 mime = "0.3"
-multipart = { version = "0.18", default-features = false, features = ["client"] }
 serde = { default-features = false, version = "^1.0" }
 serde_derive = "^1.0"
 serde_json = { default-features = false, version = "^1.0" }
 url = "^2.2"
-ureq = { version = "3.0.3", features = ["json", "rustls"], default-features = false }
+# we need to pin ureq to a minor version because we use ureq::unversioned::multipart
+ureq = { version = "~3.4", features = ["json", "multipart", "rustls"], default-features = false }
 base64 = { version = "0.21", default-features = false, features = ["alloc"] }
 http = "1"
 
