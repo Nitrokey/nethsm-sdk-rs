@@ -10,11 +10,24 @@ env:
   RUSTFLAGS: --deny warnings
 
 jobs:
+  verify-lockfile:
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - run: gh extension install github/gh-actions-lock --pin v0.4.1
+      - run: gh actions-lock --verify
+
   check:
     name: Check library
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v6
+    - uses: actions/checkout@v7
     - uses: dtolnay/rust-toolchain@stable
     - name: Check library
       run: cargo check --all-targets
@@ -37,7 +50,7 @@ jobs:
           - testing
     continue-on-error: ${{ matrix.tag == 'testing' }}
     steps:
-    - uses: actions/checkout@v6
+    - uses: actions/checkout@v7
     - uses: dtolnay/rust-toolchain@stable
     - name: Run tests
       run: cargo test
@@ -48,7 +61,7 @@ jobs:
     name: Run rustfmt
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v6
+    - uses: actions/checkout@v7
     - uses: dtolnay/rust-toolchain@stable
       with:
         components: "rustfmt"
@@ -59,7 +72,7 @@ jobs:
     name: Run clippy
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v6
+    - uses: actions/checkout@v7
     - uses: dtolnay/rust-toolchain@stable
       with:
         components: "clippy"
@@ -70,7 +83,7 @@ jobs:
     name: Check library (MSRV)
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v6
+    - uses: actions/checkout@v7
     - uses: dtolnay/rust-toolchain@1.87
     - name: Check library
       run: cargo check --all-features
