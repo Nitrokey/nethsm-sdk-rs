@@ -2,6 +2,12 @@
 
 ## Unreleased
 
+-
+
+[All Changes](https://github.com/Nitrokey/nethsm-sdk-rs/compare/v5.0.0...HEAD)
+
+## [v5.0.0](https://github.com/Nitrokey/nethsm-sdk-rs/releases/tag/v5.0.0) (2026-11-23)
+
 ### Breaking Changes
 
 - Add support for separate cluster TLS certificates (requires NetHSM v5.1):
@@ -19,7 +25,7 @@
 - Add NetHSM releases 5.0 and 5.1 to test matrix
 - Allow test matrix to continue if the test against the latest development version fails
 
-[All Changes](https://github.com/Nitrokey/nethsm-sdk-rs/compare/v4.0.0...HEAD)
+[All Changes](https://github.com/Nitrokey/nethsm-sdk-rs/compare/v4.0.0...v5.0.0)
 
 ## [v4.0.0](https://github.com/Nitrokey/nethsm-sdk-rs/releases/tag/v4.0.0) (2026-08-31)
 
