@@ -1292,7 +1292,7 @@ paths:
         **WARNING** this will restore data only up to the last snapshot, and will result in data loss for any unconfirmed writes, or writes that occured on other NetHSM nodes that are now unreachable.
         This call is only available in the Failed state. Before using this command it is recommended that you attempt to heal the cluster's network connectivity first and restore quorum.
         To that end, use the /health/diagnose endpoint to understand the cause of the current failure.
-        As it is potentially destructive, this operation requires authentication even in *Failed* state, which differs from *Operational* authentication. The user *MUST* be `unlock` and the password *MUST* be the last known unlock passphrase. When upgrading to v5.0, this will only work after having unlocked the HSM at least once.
+        As it is potentially destructive, this operation requires authentication even in *Failed* state, which differs from *Operational* authentication. The user *MUST* be `unlock` and the password *MUST* be the last known unlock passphrase. If no unlock passphrase is known, which is the case if it was never set, or after upgrading to v5.0 until the HSM has been unlocked with it, the password is `unlock`.
       security:
         - basic: []
       x-annotation-role:
@@ -2171,7 +2171,11 @@ paths:
           description: Content type in Accept header not supported.
         "412":
           description: Precondition failed (NetHSM was not *Operational*).
-      description: "Configure unattended boot: switch it on or off (flip the switch)."
+      description:
+        "Configure unattended boot: switch it on or off (flip the switch).
+        Unattended boot is skipped until the unlock passphrase has been entered
+        once, which enables the authentication in *Failed* state, for example
+        after an update to v5.0 or a restore into an *Unprovisioned* NetHSM."
       requestBody:
         content:
           application/json:
@@ -2397,7 +2401,10 @@ paths:
         "201":
           description: Successfully set certificate.
         "400":
-          description: Certificate malformed.
+          description: |
+            Certificate malformed, or its subject alternative names contain no IP address
+            that cluster members can connect to (i.e. none that is not loopback,
+            unspecified, broadcast or multicast).
           content:
             application/json:
               schema:
@@ -2411,7 +2418,7 @@ paths:
         "412":
           description: |
             Either NetHSM was not *Operational*, or "/cluster/tls/ca.pem" is set and the
-            provided certicicate is not signed by that CA.
+            provided certificate is not signed by that CA.
       description: Set certificate for NetHSMs peer traffic (i.e. how cluster members communicate), e.g. to replace self-signed initial certificate.
       requestBody:
         content:
@@ -2434,6 +2441,12 @@ paths:
             application/x-pem-file:
               schema:
                 $ref: "#/components/schemas/PemCSR"
+        "400":
+          description: The subjectAltNames are not usable for cluster peer traffic.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
         "401":
           description: Authentication required but none provided.
         "403":
@@ -2442,7 +2455,14 @@ paths:
           description: Content type in Accept header not supported.
         "412":
           description: Precondition failed (NetHSM was not *Operational*).
-      description: Get NetHSM certificate signing request for cluster peer traffic (i.e. how cluster members communicate), e.g. to replace self-signed initial certificate.
+      description: |
+        Get NetHSM certificate signing request for cluster peer traffic (i.e. how cluster members communicate), e.g. to replace self-signed initial certificate.
+
+        Cluster members connect to each other by IP address, so the subjectAltNames must
+        contain at least one IP address ("IP:" prefix), and every entry must be a valid IP
+        address or host name. Loopback, unspecified, broadcast and multicast addresses are
+        rejected. If subjectAltNames is omitted, it is set to the configured network IP
+        addresses and, if it is a valid host name, the commonName.
       requestBody:
         content:
           application/json:
@@ -2940,18 +2960,21 @@ paths:
         "204":
           description: About to reset NetHSM.
         "401":
-          description: Authentication required but none provided.
+          description: Authentication required but none provided (see description).
         "403":
           description: Access denied (e.g. user is in namespace)
         "406":
           description: Content type in Accept header not supported.
         "412":
           description: Precondition failed (NetHSM was not *Operational* or *Failed*).
-      description: Reset NetHSM to factory settings.
+      description:
+        Reset NetHSM to factory settings.
+        As it is destructive, this operation requires authentication even in *Failed* state, which differs from *Operational* authentication. The user *MUST* be `unlock` and the password *MUST* be the last known unlock passphrase. If no unlock passphrase is known, which is the case if it was never set, or after upgrading to v5.0 until the HSM has been unlocked with it, the password is `unlock`.
       security:
         - basic: []
       x-annotation-role:
         - Administrator
+        - FailedUnlock
       x-annotation-state:
         - Operational
         - Failed

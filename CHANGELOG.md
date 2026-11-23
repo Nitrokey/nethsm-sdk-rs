@@ -16,7 +16,7 @@
 
 ### Other Changes
 
-- Add NetHSM release 5.0 to test matrix
+- Add NetHSM releases 5.0 and 5.1 to test matrix
 - Allow test matrix to continue if the test against the latest development version fails
 
 [All Changes](https://github.com/Nitrokey/nethsm-sdk-rs/compare/v4.0.0...HEAD)

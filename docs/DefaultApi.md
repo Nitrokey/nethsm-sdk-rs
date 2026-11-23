@@ -95,7 +95,7 @@ Method | HTTP request | Description
 > cluster_force_new_post()
 
 
-Rebuild etcd instance with the data on disk, switch to a single node cluster, and reboot. **WARNING** this will restore data only up to the last snapshot, and will result in data loss for any unconfirmed writes, or writes that occured on other NetHSM nodes that are now unreachable. This call is only available in the Failed state. Before using this command it is recommended that you attempt to heal the cluster's network connectivity first and restore quorum. To that end, use the /health/diagnose endpoint to understand the cause of the current failure. As it is potentially destructive, this operation requires authentication even in *Failed* state, which differs from *Operational* authentication. The user *MUST* be `unlock` and the password *MUST* be the last known unlock passphrase. When upgrading to v5.0, this will only work after having unlocked the HSM at least once.
+Rebuild etcd instance with the data on disk, switch to a single node cluster, and reboot. **WARNING** this will restore data only up to the last snapshot, and will result in data loss for any unconfirmed writes, or writes that occured on other NetHSM nodes that are now unreachable. This call is only available in the Failed state. Before using this command it is recommended that you attempt to heal the cluster's network connectivity first and restore quorum. To that end, use the /health/diagnose endpoint to understand the cause of the current failure. As it is potentially destructive, this operation requires authentication even in *Failed* state, which differs from *Operational* authentication. The user *MUST* be `unlock` and the password *MUST* be the last known unlock passphrase. If no unlock passphrase is known, which is the case if it was never set, or after upgrading to v5.0 until the HSM has been unlocked with it, the password is `unlock`.
 
 ### Parameters
 
@@ -414,7 +414,7 @@ Name | Type | Description  | Required | Notes
 > String cluster_tls_csr_pem_post(distinguished_name)
 
 
-Get NetHSM certificate signing request for cluster peer traffic (i.e. how cluster members communicate), e.g. to replace self-signed initial certificate.
+Get NetHSM certificate signing request for cluster peer traffic (i.e. how cluster members communicate), e.g. to replace self-signed initial certificate.  Cluster members connect to each other by IP address, so the subjectAltNames must contain at least one IP address (\"IP:\" prefix), and every entry must be a valid IP address or host name. Loopback, unspecified, broadcast and multicast addresses are rejected. If subjectAltNames is omitted, it is set to the configured network IP addresses and, if it is a valid host name, the commonName. 
 
 ### Parameters
 
@@ -434,7 +434,7 @@ Name | Type | Description  | Required | Notes
 ### HTTP request headers
 
 - **Content-Type**: application/json
-- **Accept**: application/x-pem-file
+- **Accept**: application/x-pem-file, application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -930,7 +930,7 @@ This endpoint does not need any parameter.
 > config_unattended_boot_put(unattended_boot_config)
 
 
-Configure unattended boot: switch it on or off (flip the switch).
+Configure unattended boot: switch it on or off (flip the switch). Unattended boot is skipped until the unlock passphrase has been entered once, which enables the authentication in *Failed* state, for example after an update to v5.0 or a restore into an *Unprovisioned* NetHSM.
 
 ### Parameters
 
@@ -2020,7 +2020,7 @@ This endpoint does not need any parameter.
 > system_factory_reset_post()
 
 
-Reset NetHSM to factory settings.
+Reset NetHSM to factory settings. As it is destructive, this operation requires authentication even in *Failed* state, which differs from *Operational* authentication. The user *MUST* be `unlock` and the password *MUST* be the last known unlock passphrase. If no unlock passphrase is known, which is the case if it was never set, or after upgrading to v5.0 until the HSM has been unlocked with it, the password is `unlock`.
 
 ### Parameters
 
